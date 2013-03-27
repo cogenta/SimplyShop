@@ -22,6 +22,7 @@
 		BE3D4DF1170331AA00644AD6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD2170331AA00644AD6 /* Foundation.framework */; };
 		BE3D4DF9170331AA00644AD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4DF7170331AA00644AD6 /* InfoPlist.strings */; };
 		BE3D4DFC170331AA00644AD6 /* SimplyShopTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4DFB170331AA00644AD6 /* SimplyShopTests.m */; };
+		BE3D4E061703361800644AD6 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E051703361800644AD6 /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		BE3D4DF8170331AA00644AD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BE3D4DFA170331AA00644AD6 /* SimplyShopTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimplyShopTests.h; sourceTree = "<group>"; };
 		BE3D4DFB170331AA00644AD6 /* SimplyShopTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimplyShopTests.m; sourceTree = "<group>"; };
+		BE3D4E051703361800644AD6 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				BE3D4DDF170331AA00644AD6 /* CSAppDelegate.h */,
 				BE3D4DE0170331AA00644AD6 /* CSAppDelegate.m */,
 				BE3D4DD7170331AA00644AD6 /* Supporting Files */,
+				BE3D4E051703361800644AD6 /* Storyboard.storyboard */,
 			);
 			path = SimplyShop;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				BE3D4DE3170331AA00644AD6 /* Default.png in Resources */,
 				BE3D4DE5170331AA00644AD6 /* Default@2x.png in Resources */,
 				BE3D4DE7170331AA00644AD6 /* Default-568h@2x.png in Resources */,
+				BE3D4E061703361800644AD6 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
