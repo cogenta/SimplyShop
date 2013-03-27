@@ -23,6 +23,11 @@
 		BE3D4DF9170331AA00644AD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4DF7170331AA00644AD6 /* InfoPlist.strings */; };
 		BE3D4DFC170331AA00644AD6 /* SimplyShopTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4DFB170331AA00644AD6 /* SimplyShopTests.m */; };
 		BE3D4E061703361800644AD6 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E051703361800644AD6 /* Storyboard.storyboard */; };
+		BE3D4E0E170339E900644AD6 /* CSSimplyShopTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E0D170339E900644AD6 /* CSSimplyShopTheme.m */; };
+		BE3D4E1317036D5700644AD6 /* BackButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1017036D5700644AD6 /* BackButtonNormal@2x.png */; };
+		BE3D4E1417036D5700644AD6 /* ButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1117036D5700644AD6 /* ButtonNormal@2x.png */; };
+		BE3D4E1517036D5700644AD6 /* NavigationBarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */; };
+		BE3D4E171703719200644AD6 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E161703719200644AD6 /* Podfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +62,13 @@
 		BE3D4DFA170331AA00644AD6 /* SimplyShopTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimplyShopTests.h; sourceTree = "<group>"; };
 		BE3D4DFB170331AA00644AD6 /* SimplyShopTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimplyShopTests.m; sourceTree = "<group>"; };
 		BE3D4E051703361800644AD6 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		BE3D4E091703399300644AD6 /* CSTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTheme.h; sourceTree = "<group>"; };
+		BE3D4E0C170339E800644AD6 /* CSSimplyShopTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSimplyShopTheme.h; sourceTree = "<group>"; };
+		BE3D4E0D170339E900644AD6 /* CSSimplyShopTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSimplyShopTheme.m; sourceTree = "<group>"; };
+		BE3D4E1017036D5700644AD6 /* BackButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackButtonNormal@2x.png"; sourceTree = "<group>"; };
+		BE3D4E1117036D5700644AD6 /* ButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonNormal@2x.png"; sourceTree = "<group>"; };
+		BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBackground@2x.png"; sourceTree = "<group>"; };
+		BE3D4E161703719200644AD6 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -88,6 +100,7 @@
 		BE3D4DC4170331AA00644AD6 = {
 			isa = PBXGroup;
 			children = (
+				BE3D4E161703719200644AD6 /* Podfile */,
 				BE3D4DD6170331AA00644AD6 /* SimplyShop */,
 				BE3D4DF4170331AA00644AD6 /* SimplyShopTests */,
 				BE3D4DCF170331AA00644AD6 /* Frameworks */,
@@ -120,6 +133,7 @@
 		BE3D4DD6170331AA00644AD6 /* SimplyShop */ = {
 			isa = PBXGroup;
 			children = (
+				BE3D4E071703397400644AD6 /* Theme */,
 				BE3D4DDF170331AA00644AD6 /* CSAppDelegate.h */,
 				BE3D4DE0170331AA00644AD6 /* CSAppDelegate.m */,
 				BE3D4DD7170331AA00644AD6 /* Supporting Files */,
@@ -159,6 +173,27 @@
 				BE3D4DF7170331AA00644AD6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE3D4E071703397400644AD6 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				BE3D4E0F17036D3700644AD6 /* Assets */,
+				BE3D4E091703399300644AD6 /* CSTheme.h */,
+				BE3D4E0C170339E800644AD6 /* CSSimplyShopTheme.h */,
+				BE3D4E0D170339E900644AD6 /* CSSimplyShopTheme.m */,
+			);
+			name = Theme;
+			sourceTree = "<group>";
+		};
+		BE3D4E0F17036D3700644AD6 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				BE3D4E1017036D5700644AD6 /* BackButtonNormal@2x.png */,
+				BE3D4E1117036D5700644AD6 /* ButtonNormal@2x.png */,
+				BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +274,10 @@
 				BE3D4DE5170331AA00644AD6 /* Default@2x.png in Resources */,
 				BE3D4DE7170331AA00644AD6 /* Default-568h@2x.png in Resources */,
 				BE3D4E061703361800644AD6 /* Storyboard.storyboard in Resources */,
+				BE3D4E1317036D5700644AD6 /* BackButtonNormal@2x.png in Resources */,
+				BE3D4E1417036D5700644AD6 /* ButtonNormal@2x.png in Resources */,
+				BE3D4E1517036D5700644AD6 /* NavigationBarBackground@2x.png in Resources */,
+				BE3D4E171703719200644AD6 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +328,7 @@
 			files = (
 				BE3D4DDD170331AA00644AD6 /* main.m in Sources */,
 				BE3D4DE1170331AA00644AD6 /* CSAppDelegate.m in Sources */,
+				BE3D4E0E170339E900644AD6 /* CSSimplyShopTheme.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
