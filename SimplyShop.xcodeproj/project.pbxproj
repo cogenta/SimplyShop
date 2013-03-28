@@ -32,6 +32,8 @@
 		BE3D4E1C1704632900644AD6 /* CSRetailerSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E1B1704632900644AD6 /* CSRetailerSelectionCell.m */; };
 		BE3D4E1E1704651900644AD6 /* TileBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1D1704651900644AD6 /* TileBackground@2x.png */; };
 		BE3D4E21170465AD00644AD6 /* CSRetailerSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E20170465AD00644AD6 /* CSRetailerSelectionViewController.m */; };
+		BE3D4E241704A30300644AD6 /* CallToAction@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E221704A30300644AD6 /* CallToAction@2x.png */; };
+		BE3D4E251704A30300644AD6 /* TileBackgroundSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E231704A30300644AD6 /* TileBackgroundSelected@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		BE3D4E1D1704651900644AD6 /* TileBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TileBackground@2x.png"; sourceTree = "<group>"; };
 		BE3D4E1F170465AD00644AD6 /* CSRetailerSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailerSelectionViewController.h; sourceTree = "<group>"; };
 		BE3D4E20170465AD00644AD6 /* CSRetailerSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailerSelectionViewController.m; sourceTree = "<group>"; };
+		BE3D4E221704A30300644AD6 /* CallToAction@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CallToAction@2x.png"; sourceTree = "<group>"; };
+		BE3D4E231704A30300644AD6 /* TileBackgroundSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TileBackgroundSelected@2x.png"; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -203,6 +207,8 @@
 		BE3D4E0F17036D3700644AD6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BE3D4E221704A30300644AD6 /* CallToAction@2x.png */,
+				BE3D4E231704A30300644AD6 /* TileBackgroundSelected@2x.png */,
 				BE3D4E1D1704651900644AD6 /* TileBackground@2x.png */,
 				BE3D4E1817045F2C00644AD6 /* ButtonDone@2x.png */,
 				BE3D4E1017036D5700644AD6 /* BackButtonNormal@2x.png */,
@@ -296,6 +302,8 @@
 				BE3D4E171703719200644AD6 /* Podfile in Resources */,
 				BE3D4E1917045F2C00644AD6 /* ButtonDone@2x.png in Resources */,
 				BE3D4E1E1704651900644AD6 /* TileBackground@2x.png in Resources */,
+				BE3D4E241704A30300644AD6 /* CallToAction@2x.png in Resources */,
+				BE3D4E251704A30300644AD6 /* TileBackgroundSelected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

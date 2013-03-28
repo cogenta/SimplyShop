@@ -12,5 +12,6 @@
 
 - (void)apply;
 - (UIImage *)collectionViewCellBackgroundImage;
+- (UIImage *)collectionViewCellSelectedBackgroundImage;
 
 @end
