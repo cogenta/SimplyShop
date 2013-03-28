@@ -9,6 +9,7 @@
 #import "CSSimplyShopTheme.h"
 #import <UIKit/UIKit.h>
 #import <MBCategory/MBCategory.h>
+#import "CSRetailerSelectionCell.h"
 
 @implementation CSSimplyShopTheme
 
@@ -52,37 +53,45 @@
     return [UIColor colorWithHexString:@"#f5f5f5"];
 }
 
+- (UIImage *)collectionViewCellBackgroundImage
+{
+    return [[UIImage imageNamed:@"TileBackground"]
+            resizableImageWithCapInsets:UIEdgeInsetsMake(9.0, 9.0, 9.0, 9.0)
+            resizingMode:UIImageResizingModeStretch];
+}
 
 - (void)apply
 {
-    [(UINavigationBar *)[UINavigationBar appearance]
+    UINavigationBar *navBar = [UINavigationBar appearance];
+    [navBar
      setBackgroundImage:[self navigationBarBackgroundImage]
      forBarMetrics:UIBarMetricsDefault];
-    [(UINavigationBar *)[UINavigationBar appearance]
+    [navBar
      setTitleTextAttributes:[self navigationBarTitleTextAttributes]];
-    [(UIBarButtonItem *) [UIBarButtonItem
-                          appearanceWhenContainedIn:[UINavigationBar class],
-                          nil]
+    
+    UIBarButtonItem *navButtonItem = [UIBarButtonItem
+                                      appearanceWhenContainedIn:[UINavigationBar class],
+                                      nil];
+    [navButtonItem
      setBackgroundImage:[self navigationBarButtonNormalBackgroundImage]
      forState:UIControlStateNormal
      barMetrics:UIBarMetricsDefault];
-    [(UIBarButtonItem *) [UIBarButtonItem
-                          appearanceWhenContainedIn:[UINavigationBar class],
-                          nil]
+    [navButtonItem
      setBackgroundImage:[self navigationBarButtonDoneBackgroundImage]
      forState:UIControlStateNormal
      style:UIBarButtonItemStyleDone
      barMetrics:UIBarMetricsDefault];
-
-    [(UIBarButtonItem *) [UIBarButtonItem
-                          appearanceWhenContainedIn:[UINavigationBar class],
-                          nil]
+    [navButtonItem
      setBackButtonBackgroundImage:[self navigationBarBackNormalBackgroundImage]
      forState:UIControlStateNormal
      barMetrics:UIBarMetricsDefault];
 
-    [(UICollectionView *) [UICollectionView appearance]
+    UICollectionView *collectionView = [UICollectionView appearance];
+    [collectionView
      setBackgroundColor:[self collectionViewBackgroundColor]];
+    
+    CSRetailerSelectionCell *retailerCell = [CSRetailerSelectionCell appearance];
+    [retailerCell setTheme:self];
 }
 
 @end

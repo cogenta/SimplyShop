@@ -29,6 +29,9 @@
 		BE3D4E1517036D5700644AD6 /* NavigationBarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */; };
 		BE3D4E171703719200644AD6 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E161703719200644AD6 /* Podfile */; };
 		BE3D4E1917045F2C00644AD6 /* ButtonDone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1817045F2C00644AD6 /* ButtonDone@2x.png */; };
+		BE3D4E1C1704632900644AD6 /* CSRetailerSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E1B1704632900644AD6 /* CSRetailerSelectionCell.m */; };
+		BE3D4E1E1704651900644AD6 /* TileBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1D1704651900644AD6 /* TileBackground@2x.png */; };
+		BE3D4E21170465AD00644AD6 /* CSRetailerSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E20170465AD00644AD6 /* CSRetailerSelectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +74,11 @@
 		BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBackground@2x.png"; sourceTree = "<group>"; };
 		BE3D4E161703719200644AD6 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		BE3D4E1817045F2C00644AD6 /* ButtonDone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonDone@2x.png"; sourceTree = "<group>"; };
+		BE3D4E1A1704632900644AD6 /* CSRetailerSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailerSelectionCell.h; sourceTree = "<group>"; };
+		BE3D4E1B1704632900644AD6 /* CSRetailerSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailerSelectionCell.m; sourceTree = "<group>"; };
+		BE3D4E1D1704651900644AD6 /* TileBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TileBackground@2x.png"; sourceTree = "<group>"; };
+		BE3D4E1F170465AD00644AD6 /* CSRetailerSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailerSelectionViewController.h; sourceTree = "<group>"; };
+		BE3D4E20170465AD00644AD6 /* CSRetailerSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailerSelectionViewController.m; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -140,6 +148,10 @@
 				BE3D4DE0170331AA00644AD6 /* CSAppDelegate.m */,
 				BE3D4DD7170331AA00644AD6 /* Supporting Files */,
 				BE3D4E051703361800644AD6 /* Storyboard.storyboard */,
+				BE3D4E1A1704632900644AD6 /* CSRetailerSelectionCell.h */,
+				BE3D4E1B1704632900644AD6 /* CSRetailerSelectionCell.m */,
+				BE3D4E1F170465AD00644AD6 /* CSRetailerSelectionViewController.h */,
+				BE3D4E20170465AD00644AD6 /* CSRetailerSelectionViewController.m */,
 			);
 			path = SimplyShop;
 			sourceTree = "<group>";
@@ -191,6 +203,7 @@
 		BE3D4E0F17036D3700644AD6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BE3D4E1D1704651900644AD6 /* TileBackground@2x.png */,
 				BE3D4E1817045F2C00644AD6 /* ButtonDone@2x.png */,
 				BE3D4E1017036D5700644AD6 /* BackButtonNormal@2x.png */,
 				BE3D4E1117036D5700644AD6 /* ButtonNormal@2x.png */,
@@ -282,6 +295,7 @@
 				BE3D4E1517036D5700644AD6 /* NavigationBarBackground@2x.png in Resources */,
 				BE3D4E171703719200644AD6 /* Podfile in Resources */,
 				BE3D4E1917045F2C00644AD6 /* ButtonDone@2x.png in Resources */,
+				BE3D4E1E1704651900644AD6 /* TileBackground@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +347,8 @@
 				BE3D4DDD170331AA00644AD6 /* main.m in Sources */,
 				BE3D4DE1170331AA00644AD6 /* CSAppDelegate.m in Sources */,
 				BE3D4E0E170339E900644AD6 /* CSSimplyShopTheme.m in Sources */,
+				BE3D4E1C1704632900644AD6 /* CSRetailerSelectionCell.m in Sources */,
+				BE3D4E21170465AD00644AD6 /* CSRetailerSelectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

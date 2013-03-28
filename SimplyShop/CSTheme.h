@@ -11,5 +11,6 @@
 @protocol CSTheme
 
 - (void)apply;
+- (UIImage *)collectionViewCellBackgroundImage;
 
 @end
