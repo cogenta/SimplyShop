@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class CSAPI;
+
 @interface CSAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (readonly) CSAPI *api;
 
 @end

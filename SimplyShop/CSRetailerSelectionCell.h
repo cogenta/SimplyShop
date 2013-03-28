@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CSTheme.h"
+
+@protocol CSTheme;
+@protocol CSRetailerList;
 
 @interface CSRetailerSelectionCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *retailerNameLabel;
 @property (nonatomic, strong) id<CSTheme> theme UI_APPEARANCE_SELECTOR;
+
+- (void)setRetailerList:(NSObject<CSRetailerList> *)list
+                  index:(NSInteger)index;
 
 @end

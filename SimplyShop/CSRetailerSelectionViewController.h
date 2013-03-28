@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CSRetailerList;
+
 @interface CSRetailerSelectionViewController : UICollectionViewController
+
+@property (nonatomic, strong) NSObject<CSRetailerList> *retailerList;
 
 @end

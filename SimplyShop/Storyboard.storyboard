@@ -26,23 +26,53 @@
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="t6c-GB-0VU">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="30" id="UwG-CC-did">
-                            <size key="itemSize" width="224" height="224"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="16" minY="36" maxX="16" maxY="0.0"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UwG-CC-did">
+                            <size key="itemSize" width="130" height="130"/>
+                            <size key="headerReferenceSize" width="0.0" height="6"/>
+                            <size key="footerReferenceSize" width="0.0" height="6"/>
+                            <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CSRetailerSelectionCell" id="z4k-Dt-uwW" customClass="CSRetailerSelectionCell">
-                                <rect key="frame" x="16" y="36" width="224" height="224"/>
+                                <rect key="frame" x="16" y="6" width="130" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="224" height="224"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Retailer Name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="94" translatesAutoresizingMaskIntoConstraints="NO" id="hzC-sB-5m2">
+                                            <constraints>
+                                                <constraint firstAttribute="height" priority="684" constant="21" type="user" id="ACk-IJ-hIy"/>
+                                                <constraint firstAttribute="width" constant="94" type="user" id="GWe-EO-OZ5"/>
+                                                <constraint firstAttribute="height" constant="42" id="HAS-KQ-61D"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" type="user" id="ZtR-Wn-jgc"/>
+                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="94" type="user" id="tK5-cp-QKN"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="hzC-sB-5m2" firstAttribute="centerX" secondItem="z4k-Dt-uwW" secondAttribute="centerX" type="default" id="M0e-37-94Z"/>
+                                    <constraint firstAttribute="centerY" secondItem="hzC-sB-5m2" secondAttribute="centerY" type="user" id="b8j-t6-5sA"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="retailerNameLabel" destination="hzC-sB-5m2" id="py7-BK-zYM"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cbK-2A-TlC">
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="6"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </collectionReusableView>
+                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wEY-Pt-V1E">
+                            <rect key="frame" x="0.0" y="136" width="768" height="6"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="fQF-JY-mWk" id="vNO-sU-BuQ"/>
                             <outlet property="delegate" destination="fQF-JY-mWk" id="ZDg-7Q-11P"/>
@@ -58,9 +88,15 @@
     <classes>
         <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
+            </relationships>
         </class>
         <class className="CSRetailerSelectionViewController" superclassName="UICollectionViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>

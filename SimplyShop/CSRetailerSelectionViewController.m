@@ -8,6 +8,7 @@
 
 #import "CSRetailerSelectionViewController.h"
 #import "CSRetailerSelectionCell.h"
+#import <CSApi/CSAPI.h>
 
 @interface CSRetailerSelectionViewController ()
 
@@ -27,8 +28,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.collectionView registerClass:[CSRetailerSelectionCell class]
-            forCellWithReuseIdentifier:@"CSRetailerSelectionCell"];
+//    [self.collectionView registerClass:[CSRetailerSelectionCell class]
+//            forCellWithReuseIdentifier:@"CSRetailerSelectionCell"];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self addObserver:self
+           forKeyPath:@"retailerList"
+              options:NSKeyValueObservingOptionNew
+              context:NULL];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self removeObserver:self forKeyPath:@"retailerList"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"retailerList"]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,13 +67,15 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return self.retailerList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CSRetailerSelectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CSRetailerSelectionCell"
-                                                                              forIndexPath:indexPath];
+    CSRetailerSelectionCell *cell =
+    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSRetailerSelectionCell"
+                                              forIndexPath:indexPath];
+    [cell setRetailerList:self.retailerList index:indexPath.row];
     return cell;
 }
 
