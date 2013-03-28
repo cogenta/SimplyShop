@@ -28,14 +28,22 @@
 - (UIImage *)navigationBarButtonNormalBackgroundImage
 {
     return [[UIImage imageNamed:@"ButtonNormal"]
-            resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 5.5, 0.0, 5.5)
+            resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 6.0, 0.0, 6.0)
+            resizingMode:UIImageResizingModeStretch];
+}
+
+
+- (UIImage *)navigationBarButtonDoneBackgroundImage
+{
+    return [[UIImage imageNamed:@"ButtonDone"]
+            resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 6.0, 0.0, 6.0)
             resizingMode:UIImageResizingModeStretch];
 }
 
 - (UIImage *)navigationBarBackNormalBackgroundImage
 {
     return [[UIImage imageNamed:@"BackButtonNormal"]
-            resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 14.0, 0.0, 5.5)
+            resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 14.0, 0.0, 5.0)
             resizingMode:UIImageResizingModeStretch];
 }
 
@@ -61,9 +69,18 @@
     [(UIBarButtonItem *) [UIBarButtonItem
                           appearanceWhenContainedIn:[UINavigationBar class],
                           nil]
+     setBackgroundImage:[self navigationBarButtonDoneBackgroundImage]
+     forState:UIControlStateNormal
+     style:UIBarButtonItemStyleDone
+     barMetrics:UIBarMetricsDefault];
+
+    [(UIBarButtonItem *) [UIBarButtonItem
+                          appearanceWhenContainedIn:[UINavigationBar class],
+                          nil]
      setBackButtonBackgroundImage:[self navigationBarBackNormalBackgroundImage]
      forState:UIControlStateNormal
      barMetrics:UIBarMetricsDefault];
+
     [(UICollectionView *) [UICollectionView appearance]
      setBackgroundColor:[self collectionViewBackgroundColor]];
 }

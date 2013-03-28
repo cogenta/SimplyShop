@@ -28,6 +28,7 @@
 		BE3D4E1417036D5700644AD6 /* ButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1117036D5700644AD6 /* ButtonNormal@2x.png */; };
 		BE3D4E1517036D5700644AD6 /* NavigationBarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */; };
 		BE3D4E171703719200644AD6 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E161703719200644AD6 /* Podfile */; };
+		BE3D4E1917045F2C00644AD6 /* ButtonDone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E1817045F2C00644AD6 /* ButtonDone@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		BE3D4E1117036D5700644AD6 /* ButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonNormal@2x.png"; sourceTree = "<group>"; };
 		BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBackground@2x.png"; sourceTree = "<group>"; };
 		BE3D4E161703719200644AD6 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		BE3D4E1817045F2C00644AD6 /* ButtonDone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonDone@2x.png"; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -189,6 +191,7 @@
 		BE3D4E0F17036D3700644AD6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BE3D4E1817045F2C00644AD6 /* ButtonDone@2x.png */,
 				BE3D4E1017036D5700644AD6 /* BackButtonNormal@2x.png */,
 				BE3D4E1117036D5700644AD6 /* ButtonNormal@2x.png */,
 				BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */,
@@ -278,6 +281,7 @@
 				BE3D4E1417036D5700644AD6 /* ButtonNormal@2x.png in Resources */,
 				BE3D4E1517036D5700644AD6 /* NavigationBarBackground@2x.png in Resources */,
 				BE3D4E171703719200644AD6 /* Podfile in Resources */,
+				BE3D4E1917045F2C00644AD6 /* ButtonDone@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
