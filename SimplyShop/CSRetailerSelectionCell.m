@@ -78,6 +78,7 @@
     self.index = NSNotFound;
     self.retailerList = nil;
     self.retailer = nil;
+    self.selected = NO;
     [self updateContent];
 }
 
@@ -85,7 +86,9 @@
 {
     theme = newTheme;
     UIImage *backgroundImage = [theme collectionViewCellBackgroundImage];
+    UIImage *selectedBackgroundImage = [theme collectionViewCellSelectedBackgroundImage];
     self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+    self.selectedBackgroundView = [[UIImageView alloc] initWithImage:selectedBackgroundImage];
 }
 
 - (void)setRetailerList:(NSObject<CSRetailerList> *)list

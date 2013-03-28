@@ -60,6 +60,13 @@
             resizingMode:UIImageResizingModeStretch];
 }
 
+- (UIImage *)collectionViewCellSelectedBackgroundImage
+{
+    return [[UIImage imageNamed:@"TileBackgroundSelected"]
+            resizableImageWithCapInsets:UIEdgeInsetsMake(9.0, 9.0, 9.0, 9.0)
+            resizingMode:UIImageResizingModeStretch];
+}
+
 - (void)apply
 {
     UINavigationBar *navBar = [UINavigationBar appearance];
