@@ -10,8 +10,9 @@
 
 @protocol CSRetailerList;
 
-@interface CSRetailerSelectionViewController : UICollectionViewController
+@interface CSRetailerSelectionViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) NSObject<CSRetailerList> *retailerList;
+@property (nonatomic, weak)  IBOutlet UICollectionView *collectionView;
 
 @end

@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <MBCategory/MBCategory.h>
 #import "CSRetailerSelectionCell.h"
+#import "CSCTAButton.h"
 
 @implementation CSSimplyShopTheme
 
@@ -67,6 +68,23 @@
             resizingMode:UIImageResizingModeStretch];
 }
 
+- (UIImage *)callToActionButtonBackgroundImage
+{
+    return [[UIImage imageNamed:@"CallToAction"]
+            resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 7.0, 0.0, 7.0)
+            resizingMode:UIImageResizingModeStretch];
+}
+
+- (UIFont *)callToActionButtonFont
+{
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+}
+
+- (UIColor *)callToActionButtonTextColor
+{
+    return [UIColor colorWithHexString:@"#ffffff"];
+}
+
 - (void)apply
 {
     UINavigationBar *navBar = [UINavigationBar appearance];
@@ -99,6 +117,12 @@
     
     CSRetailerSelectionCell *retailerCell = [CSRetailerSelectionCell appearance];
     [retailerCell setTheme:self];
+    
+    CSCTAButton *ctaButton = [CSCTAButton appearance];
+    [ctaButton setBackgroundImage:[self callToActionButtonBackgroundImage]
+                         forState:UIControlStateNormal];
+    [ctaButton setTextFont:[self callToActionButtonFont]];
+    [ctaButton setTextColor:[self callToActionButtonTextColor]];
 }
 
 @end

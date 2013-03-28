@@ -12,88 +12,135 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="fQF-JY-mWk" kind="relationship" relationship="rootViewController" id="QSf-Fa-x2g"/>
+                        <segue destination="UPD-Qs-LFs" kind="relationship" relationship="rootViewController" id="lfe-M1-gJu"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2a-pb-kCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2543" y="-1244"/>
         </scene>
-        <!--Retailer Selection View Controller - Favorite Stores-->
-        <scene sceneID="MIw-iX-ip2">
+        <!--Retailer Selection View Controller - Favourite Stores-->
+        <scene sceneID="huO-qq-cWy">
             <objects>
-                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="fQF-JY-mWk" customClass="CSRetailerSelectionViewController" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="t6c-GB-0VU">
+                <viewController id="UPD-Qs-LFs" customClass="CSRetailerSelectionViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YXR-kj-RZg">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UwG-CC-did">
-                            <size key="itemSize" width="130" height="130"/>
-                            <size key="headerReferenceSize" width="0.0" height="6"/>
-                            <size key="footerReferenceSize" width="0.0" height="6"/>
-                            <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CSRetailerSelectionCell" id="z4k-Dt-uwW" customClass="CSRetailerSelectionCell">
-                                <rect key="frame" x="16" y="6" width="130" height="130"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="t6c-GB-0VU">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UwG-CC-did">
+                                    <size key="itemSize" width="130" height="130"/>
+                                    <size key="headerReferenceSize" width="0.0" height="6"/>
+                                    <size key="footerReferenceSize" width="0.0" height="113"/>
+                                    <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CSRetailerSelectionCell" id="z4k-Dt-uwW" customClass="CSRetailerSelectionCell">
+                                        <rect key="frame" x="16" y="6" width="130" height="130"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Retailer Name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="94" translatesAutoresizingMaskIntoConstraints="NO" id="hzC-sB-5m2">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" priority="684" constant="21" type="user" id="ACk-IJ-hIy"/>
+                                                        <constraint firstAttribute="width" constant="94" type="user" id="GWe-EO-OZ5"/>
+                                                        <constraint firstAttribute="height" constant="42" id="HAS-KQ-61D"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" type="user" id="ZtR-Wn-jgc"/>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="94" type="user" id="tK5-cp-QKN"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="hzC-sB-5m2" firstAttribute="centerX" secondItem="z4k-Dt-uwW" secondAttribute="centerX" type="default" id="M0e-37-94Z"/>
+                                            <constraint firstAttribute="centerY" secondItem="hzC-sB-5m2" secondAttribute="centerY" type="user" id="b8j-t6-5sA"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="retailerNameLabel" destination="hzC-sB-5m2" id="py7-BK-zYM"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cbK-2A-TlC">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="6"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Retailer Name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="94" translatesAutoresizingMaskIntoConstraints="NO" id="hzC-sB-5m2">
-                                            <constraints>
-                                                <constraint firstAttribute="height" priority="684" constant="21" type="user" id="ACk-IJ-hIy"/>
-                                                <constraint firstAttribute="width" constant="94" type="user" id="GWe-EO-OZ5"/>
-                                                <constraint firstAttribute="height" constant="42" id="HAS-KQ-61D"/>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" type="user" id="ZtR-Wn-jgc"/>
-                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="94" type="user" id="tK5-cp-QKN"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <constraints>
-                                    <constraint firstItem="hzC-sB-5m2" firstAttribute="centerX" secondItem="z4k-Dt-uwW" secondAttribute="centerX" type="default" id="M0e-37-94Z"/>
-                                    <constraint firstAttribute="centerY" secondItem="hzC-sB-5m2" secondAttribute="centerY" type="user" id="b8j-t6-5sA"/>
-                                </constraints>
+                                </collectionReusableView>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wEY-Pt-V1E">
+                                    <rect key="frame" x="0.0" y="136" width="768" height="113"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
                                 <connections>
-                                    <outlet property="retailerNameLabel" destination="hzC-sB-5m2" id="py7-BK-zYM"/>
+                                    <outlet property="dataSource" destination="UPD-Qs-LFs" id="IY5-fR-2fv"/>
+                                    <outlet property="delegate" destination="UPD-Qs-LFs" id="wz0-sH-ADD"/>
                                 </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cbK-2A-TlC">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="6"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </collectionReusableView>
-                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wEY-Pt-V1E">
-                            <rect key="frame" x="0.0" y="136" width="768" height="6"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </collectionReusableView>
-                        <connections>
-                            <outlet property="dataSource" destination="fQF-JY-mWk" id="vNO-sU-BuQ"/>
-                            <outlet property="delegate" destination="fQF-JY-mWk" id="ZDg-7Q-11P"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" title="Favorite Stores" id="M5h-pb-9zk"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JG0-b9-Vav" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a7M-9R-LHE" userLabel="Gutter">
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P22-wL-biE" customClass="CSCTAButton">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="53" type="user" id="7VJ-f6-e7e"/>
+                                            <constraint firstAttribute="width" constant="196" type="user" id="sfq-KX-QsT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Shop!">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="P22-wL-biE" secondAttribute="centerX" type="user" id="6XT-ll-pNH"/>
+                                    <constraint firstAttribute="centerY" secondItem="P22-wL-biE" secondAttribute="centerY" type="user" id="ZYQ-bt-81a"/>
+                                    <constraint firstAttribute="height" constant="107" type="user" id="jDK-hR-5Vq"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="t6c-GB-0VU" firstAttribute="top" secondItem="YXR-kj-RZg" secondAttribute="top" type="user" id="PNZ-CS-QSs"/>
+                            <constraint firstAttribute="bottom" secondItem="a7M-9R-LHE" secondAttribute="bottom" type="user" id="Rhu-TI-ZyK"/>
+                            <constraint firstAttribute="bottom" secondItem="t6c-GB-0VU" secondAttribute="bottom" type="user" id="V4S-KN-22k"/>
+                            <constraint firstItem="a7M-9R-LHE" firstAttribute="trailing" secondItem="YXR-kj-RZg" secondAttribute="trailing" type="default" id="Zeq-py-z3z"/>
+                            <constraint firstItem="t6c-GB-0VU" firstAttribute="leading" secondItem="YXR-kj-RZg" secondAttribute="leading" type="user" id="b8A-BZ-nRd"/>
+                            <constraint firstItem="t6c-GB-0VU" firstAttribute="trailing" secondItem="YXR-kj-RZg" secondAttribute="trailing" type="user" id="bDG-na-a8r"/>
+                            <constraint firstItem="a7M-9R-LHE" firstAttribute="leading" secondItem="YXR-kj-RZg" secondAttribute="leading" type="default" id="y0b-hX-9pF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Favourite Stores" id="Mxo-bT-Mn9"/>
+                    <connections>
+                        <outlet property="collectionView" destination="t6c-GB-0VU" id="4nd-3l-vpj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XSX-OL-I5w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1582" y="-1244"/>
+            <point key="canvasLocation" x="-1634" y="-1244"/>
         </scene>
     </scenes>
     <classes>
+        <class className="CSCTAButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCTAButton.h"/>
+        </class>
         <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
-        <class className="CSRetailerSelectionViewController" superclassName="UICollectionViewController">
+        <class className="CSRetailerSelectionViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+            </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
@@ -103,9 +150,6 @@
         </class>
         <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
