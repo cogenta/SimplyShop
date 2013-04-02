@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *retailerNameLabel;
 @property (nonatomic, strong) id<CSTheme> theme UI_APPEARANCE_SELECTOR;
+@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 
 - (void)setRetailerList:(NSObject<CSRetailerList> *)list
                   index:(NSInteger)index;

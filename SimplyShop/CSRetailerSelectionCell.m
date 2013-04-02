@@ -9,6 +9,7 @@
 #import "CSRetailerSelectionCell.h"
 #import "CSTheme.h"
 #import <CSApi/CSAPI.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface CSRetailerSelectionCell ()
 
@@ -79,6 +80,10 @@
     self.retailerList = nil;
     self.retailer = nil;
     self.selected = NO;
+    self.retailerNameLabel.hidden = NO;
+    self.logoImageView.hidden = YES;
+    [self.logoImageView cancelCurrentImageLoad];
+    self.logoImageView.image = nil;
     [self updateContent];
 }
 
@@ -128,6 +133,42 @@
 {
     if (self.retailer) {
         self.retailerNameLabel.text = self.retailer.name;
+        
+        [self.retailer getLogo:^(id<CSPicture> picture, NSError *error) {
+            if (error) {
+                // TODO: Handle error
+                return;
+            }
+            
+            id<CSImageList> images = picture.imageList;
+            
+            __block id<CSImage> bestImage = nil;
+            for (NSInteger i = 0 ; i < images.count; ++i) {
+                [images getImageAtIndex:i
+                               callback:^(id<CSImage> image, NSError *error)
+                {
+                    if (error) {
+                        return;
+                    }
+                    
+                    if (image.width >= bestImage.width) {
+                        bestImage = image;
+                    }
+                    
+                    if (i == images.count - 1 && bestImage) {
+                        [self.logoImageView setImageWithURL:bestImage.enclosureURL
+                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType)
+                        {
+                            if ( ! image) {
+                                return;
+                            }
+                            self.retailerNameLabel.hidden = YES;
+                            self.logoImageView.hidden = NO;
+                        }];
+                    }
+                }];
+            }
+        }];
     } else {
         self.retailerNameLabel.text = @"...";
     }
