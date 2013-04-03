@@ -11,7 +11,7 @@
 #import <CSApi/CSAPI.h>
 #import "CSRetailerSelectionViewController.h"
 
-#define kAPIBookmark @"http://192.168.1.16:5000/apps/51139a687046797035ad6db6"
+#define kAPIBookmark @"http://lrrr.local:5000/apps/51139a687046797035ad6db6"
 #define kAPIUsername @"53a2abd8-5a96-47a8-8a1f-82cf4a462b57"
 #define kAPIPassword @"ecd50b80-f1f1-4500-816e-ae16f179dd98"
 
@@ -43,7 +43,17 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     CSRetailerSelectionViewController *top = (id) nav.topViewController;
     [self.api getApplication:^(id<CSApplication> app, NSError *error) {
+        if (error) {
+            // TODO: report errot
+            return;
+        }
+        
         [app getRetailers:^(id<CSRetailerListPage> firstPage, NSError *error) {
+            if (error) {
+                // TODO: report error
+                return;
+            }
+            
             top.retailerList = firstPage.retailerList;
         }];
     }];
