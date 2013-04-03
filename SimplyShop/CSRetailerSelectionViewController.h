@@ -14,8 +14,9 @@
 @interface CSRetailerSelectionViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) CSAPI *api;
-@property (nonatomic, weak)  IBOutlet UICollectionView *collectionView;
 
-- (IBAction)didTapShopButton:(id)sender;
+@property (nonatomic, strong) NSMutableSet *selectedRetailerURLs;
+
+@property (nonatomic, weak)  IBOutlet UICollectionView *collectionView;
 
 @end

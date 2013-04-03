@@ -8,6 +8,7 @@
 
 #import "CSRetailerSelectionViewController.h"
 #import "CSRetailerSelectionCell.h"
+#import "CSHomePageViewController.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSRetailerSelectionViewController ()
@@ -15,7 +16,6 @@
 @property (nonatomic, strong) NSObject<CSRetailerList> *retailerList;
 
 @property (nonatomic, strong) NSMutableIndexSet *selectedIndexes;
-@property (nonatomic, strong) NSMutableSet *selectedRetailerURLs;
 
 - (void)loadRetailers;
 
@@ -143,35 +143,6 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
          
          [self.selectedRetailerURLs removeObject:retailer.URL];
      }];
-}
-
-- (IBAction)didTapShopButton:(id)sender {
-    // TODO: present saving state
-    
-    [self.api login:^(id<CSUser> user, NSError *error) {
-        [user createGroupWithChange:^(id<CSMutableGroup> mutableGroup) {
-            mutableGroup.reference = @"favoriteRetailers";
-        } callback:^(id<CSGroup> group, NSError *error) {
-            if (error) {
-                // TODO: handle error
-                return;
-            }
-            
-            __block NSUInteger likesToAdd = self.selectedRetailerURLs.count;
-            for (NSURL *url in self.selectedRetailerURLs) {
-                [group createLikeWithChange:^(id<CSMutableLike> like) {
-                    like.likedURL = url;
-                } callback:^(id<CSLike> like, NSError *error) {
-                    --likesToAdd;
-                    // TODO: handle error
-                    
-                    if (likesToAdd == 0) {
-                        [[[UIAlertView alloc] initWithTitle:@"Done" message:@"Added" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
-                    }
-                }];
-            }
-        }];
-    }];
 }
 
 - (void)loadRetailers

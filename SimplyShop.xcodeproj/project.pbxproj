@@ -35,6 +35,9 @@
 		BE3D4E241704A30300644AD6 /* CallToAction@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E221704A30300644AD6 /* CallToAction@2x.png */; };
 		BE3D4E251704A30300644AD6 /* TileBackgroundSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E231704A30300644AD6 /* TileBackgroundSelected@2x.png */; };
 		BE3D4E281704B5A600644AD6 /* CSCTAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E271704B5A600644AD6 /* CSCTAButton.m */; };
+		BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */; };
+		BE3D4E2E170C6B3500644AD6 /* CSRetailerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2D170C6B3500644AD6 /* CSRetailerView.m */; };
+		BE3D4E30170C6C6000644AD6 /* CSRetailerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E2F170C6C6000644AD6 /* CSRetailerView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +89,11 @@
 		BE3D4E231704A30300644AD6 /* TileBackgroundSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TileBackgroundSelected@2x.png"; sourceTree = "<group>"; };
 		BE3D4E261704B5A600644AD6 /* CSCTAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCTAButton.h; sourceTree = "<group>"; };
 		BE3D4E271704B5A600644AD6 /* CSCTAButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCTAButton.m; sourceTree = "<group>"; };
+		BE3D4E29170C572800644AD6 /* CSHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSHomePageViewController.h; sourceTree = "<group>"; };
+		BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSHomePageViewController.m; sourceTree = "<group>"; };
+		BE3D4E2C170C6B3500644AD6 /* CSRetailerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailerView.h; sourceTree = "<group>"; };
+		BE3D4E2D170C6B3500644AD6 /* CSRetailerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailerView.m; sourceTree = "<group>"; };
+		BE3D4E2F170C6C6000644AD6 /* CSRetailerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRetailerView.xib; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -161,6 +169,11 @@
 				BE3D4E20170465AD00644AD6 /* CSRetailerSelectionViewController.m */,
 				BE3D4E261704B5A600644AD6 /* CSCTAButton.h */,
 				BE3D4E271704B5A600644AD6 /* CSCTAButton.m */,
+				BE3D4E29170C572800644AD6 /* CSHomePageViewController.h */,
+				BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */,
+				BE3D4E2C170C6B3500644AD6 /* CSRetailerView.h */,
+				BE3D4E2D170C6B3500644AD6 /* CSRetailerView.m */,
+				BE3D4E2F170C6C6000644AD6 /* CSRetailerView.xib */,
 			);
 			path = SimplyShop;
 			sourceTree = "<group>";
@@ -309,6 +322,7 @@
 				BE3D4E1E1704651900644AD6 /* TileBackground@2x.png in Resources */,
 				BE3D4E241704A30300644AD6 /* CallToAction@2x.png in Resources */,
 				BE3D4E251704A30300644AD6 /* TileBackgroundSelected@2x.png in Resources */,
+				BE3D4E30170C6C6000644AD6 /* CSRetailerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +377,8 @@
 				BE3D4E1C1704632900644AD6 /* CSRetailerSelectionCell.m in Sources */,
 				BE3D4E21170465AD00644AD6 /* CSRetailerSelectionViewController.m in Sources */,
 				BE3D4E281704B5A600644AD6 /* CSCTAButton.m in Sources */,
+				BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */,
+				BE3D4E2E170C6B3500644AD6 /* CSRetailerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,12 +12,27 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="UPD-Qs-LFs" kind="relationship" relationship="rootViewController" id="lfe-M1-gJu"/>
+                        <segue destination="xEY-py-EMq" kind="relationship" relationship="rootViewController" id="PIK-Fb-TqV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2a-pb-kCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2543" y="-1244"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YdK-bY-ZSW">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="oRR-M6-WOS" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oZa-pF-QrX">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="UPD-Qs-LFs" kind="relationship" relationship="rootViewController" id="3LN-xW-lzN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UzH-ms-J1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-46" y="-105"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="huO-qq-cWy">
@@ -106,7 +121,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="didTapShopButton:" destination="UPD-Qs-LFs" eventType="touchUpInside" id="uDx-yQ-jwU"/>
+                                            <segue destination="aYb-e4-eYg" kind="unwind" unwindAction="doneInitialRetailerSelection:" id="x8o-re-q1D"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -136,12 +151,73 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSX-OL-I5w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1634" y="-1244"/>
+            <point key="canvasLocation" x="1014" y="-105"/>
+        </scene>
+        <!--Home Page View Controller - Dashboard-->
+        <scene sceneID="Gix-Es-flg">
+            <objects>
+                <tableViewController id="xEY-py-EMq" customClass="CSHomePageViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" id="w42-11-Xqh">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection headerTitle="Favorite Stores" id="WAN-Ok-Bfq">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="130" id="EYf-RC-NBp">
+                                        <rect key="frame" x="0.0" y="22" width="768" height="130"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="129"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U3n-yj-jj8" userLabel="Retailers" customClass="SwipeView">
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="xEY-py-EMq" id="TpH-FL-taQ"/>
+                                                    </connections>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="U3n-yj-jj8" secondAttribute="bottom" constant="1" id="G0i-oW-2eu"/>
+                                            <constraint firstItem="U3n-yj-jj8" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" type="default" id="UQP-80-vQZ"/>
+                                            <constraint firstItem="U3n-yj-jj8" firstAttribute="trailing" secondItem="EYf-RC-NBp" secondAttribute="trailing" type="default" id="eNp-dz-y2t"/>
+                                            <constraint firstItem="U3n-yj-jj8" firstAttribute="top" secondItem="EYf-RC-NBp" secondAttribute="top" type="default" id="hZ8-yY-6RY"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="xEY-py-EMq" id="Ebf-X0-B0B"/>
+                            <outlet property="delegate" destination="xEY-py-EMq" id="Xxh-As-scL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Dashboard" id="NXv-dU-jYd"/>
+                    <connections>
+                        <outlet property="retailersSwipeView" destination="U3n-yj-jj8" id="swH-mI-T0j"/>
+                        <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="crossDissolve" animates="NO" id="4ft-LW-QE4"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aYb-e4-eYg" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-1363" y="-1268"/>
         </scene>
     </scenes>
     <classes>
         <class className="CSCTAButton" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCTAButton.h"/>
+        </class>
+        <class className="CSHomePageViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSHomePageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneInitialRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="retailersSwipeView" candidateClass="SwipeView"/>
+            </relationships>
         </class>
         <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionCell.h"/>
@@ -153,12 +229,18 @@
         <class className="CSRetailerSelectionViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionViewController.h"/>
             <relationships>
-                <relationship kind="action" name="didTapShopButton:"/>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="SwipeView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SwipeView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dataSource"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
@@ -168,6 +250,9 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

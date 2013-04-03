@@ -9,7 +9,7 @@
 #import "CSAppDelegate.h"
 #import "CSSimplyShopTheme.h"
 #import <CSApi/CSAPI.h>
-#import "CSRetailerSelectionViewController.h"
+#import "CSHomePageViewController.h"
 
 #define kAPIBookmark @"http://lrrr.local:5000/apps/51139a687046797035ad6db6"
 #define kAPIUsername @"53a2abd8-5a96-47a8-8a1f-82cf4a462b57"
@@ -41,7 +41,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     UINavigationController *nav = [storyboard instantiateInitialViewController];
     [self.window setRootViewController:nav];
     
-    CSRetailerSelectionViewController *top = (id) nav.topViewController;
+    CSHomePageViewController *top = (id) nav.topViewController;
     top.api = self.api;
     
     [self.window makeKeyAndVisible];

@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <MBCategory/MBCategory.h>
 #import "CSRetailerSelectionCell.h"
+#import "CSRetailerView.h"
 #import "CSCTAButton.h"
 
 @implementation CSSimplyShopTheme
@@ -68,6 +69,11 @@
             resizingMode:UIImageResizingModeStretch];
 }
 
+- (UIColor *)tableViewBackgroundColor
+{
+    return [self collectionViewBackgroundColor];
+}
+
 - (UIImage *)callToActionButtonBackgroundImage
 {
     return [[UIImage imageNamed:@"CallToAction"]
@@ -118,11 +124,17 @@
     CSRetailerSelectionCell *retailerCell = [CSRetailerSelectionCell appearance];
     [retailerCell setTheme:self];
     
+    CSRetailerView *retailerView = [CSRetailerView appearance];
+    [retailerView setTheme:self];
+    
     CSCTAButton *ctaButton = [CSCTAButton appearance];
     [ctaButton setBackgroundImage:[self callToActionButtonBackgroundImage]
                          forState:UIControlStateNormal];
     [ctaButton setTextFont:[self callToActionButtonFont]];
     [ctaButton setTextColor:[self callToActionButtonTextColor]];
+    
+    UITableView *tableView = [UITableView appearance];
+    [tableView setBackgroundColor:[self tableViewBackgroundColor]];
 }
 
 @end
