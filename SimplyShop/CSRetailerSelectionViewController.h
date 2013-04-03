@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSRetailerList;
+@class CSAPI;
 
 @interface CSRetailerSelectionViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, strong) NSObject<CSRetailerList> *retailerList;
+@property (nonatomic, strong) CSAPI *api;
 @property (nonatomic, weak)  IBOutlet UICollectionView *collectionView;
+
+- (IBAction)didTapShopButton:(id)sender;
 
 @end

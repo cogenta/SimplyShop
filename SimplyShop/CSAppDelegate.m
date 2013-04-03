@@ -42,21 +42,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [self.window setRootViewController:nav];
     
     CSRetailerSelectionViewController *top = (id) nav.topViewController;
-    [self.api getApplication:^(id<CSApplication> app, NSError *error) {
-        if (error) {
-            // TODO: report errot
-            return;
-        }
-        
-        [app getRetailers:^(id<CSRetailerListPage> firstPage, NSError *error) {
-            if (error) {
-                // TODO: report error
-                return;
-            }
-            
-            top.retailerList = firstPage.retailerList;
-        }];
-    }];
+    top.api = self.api;
     
     [self.window makeKeyAndVisible];
     
