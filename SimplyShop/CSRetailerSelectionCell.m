@@ -151,7 +151,7 @@
                         return;
                     }
                     
-                    if (image.width >= bestImage.width) {
+                    if ([image.width doubleValue] > [bestImage.width doubleValue]) {
                         bestImage = image;
                     }
                     
