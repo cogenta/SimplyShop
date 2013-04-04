@@ -14,6 +14,9 @@
 @interface CSRetailerView ()
 
 @property (strong, nonatomic) UIImageView *backgroundView;
+@property (strong, nonatomic) NSURL *URL;
+@property (strong, nonatomic) id<CSRetailer> retailer;
+
 - (void)updateContent;
 - (void)initialize;
 
@@ -77,6 +80,22 @@
     }
     
     [self.backgroundView setImage:backgroundImage];
+}
+
+- (void)setLoadingURL:(NSURL *)URL
+{
+    self.retailer = nil;
+    self.URL = URL;
+}
+
+- (void)setRetailer:(id<CSRetailer>)retailer URL:(NSURL *)URL
+{
+    if ( ! [URL isEqual:self.URL]) {
+        // The view has been reused with another URL.
+        return;
+    }
+    
+    self.retailer = retailer;
 }
 
 - (void)updateContent

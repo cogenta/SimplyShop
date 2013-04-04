@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @property (strong, nonatomic) id<CSTheme> theme UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) id<CSRetailer> retailer;
+
+- (void)setLoadingURL:(NSURL *)URL;
+- (void)setRetailer:(id<CSRetailer>)retailer URL:(NSURL *)URL;
 
 @end

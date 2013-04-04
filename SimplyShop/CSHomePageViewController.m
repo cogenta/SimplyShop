@@ -13,9 +13,8 @@
 
 @interface CSHomePageViewController ()
 
-@property (strong, nonatomic) NSObject<CSLikeList> *retailerLikes;
 @property (strong, nonatomic) NSObject<CSUser> *user;
-@property (strong, nonatomic) NSSet *selectedRetailerURLs;
+@property (strong, nonatomic) NSArray *selectedRetailerURLs;
 
 - (void)reloadRetailers;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
@@ -64,7 +63,7 @@
               options:NSKeyValueObservingOptionNew
               context:NULL];
     [self addObserver:self
-           forKeyPath:@"retailerLikes"
+           forKeyPath:@"selectedRetailerURLs"
               options:NSKeyValueObservingOptionNew
               context:NULL];
 }
@@ -72,7 +71,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self removeObserver:self forKeyPath:@"retailerLikes"];
+    [self removeObserver:self forKeyPath:@"selectedRetailerURLs"];
     [self removeObserver:self forKeyPath:@"user"];
 }
 
@@ -86,7 +85,7 @@
         return;
     }
     
-    if ([keyPath isEqualToString:@"retailerLikes"]) {
+    if ([keyPath isEqualToString:@"selectedRetailerURLs"]) {
         [self.retailersSwipeView reloadData];
         return;
     }
@@ -109,8 +108,8 @@
         
         __block NSInteger urlsToGet = likeList.count;
         if (urlsToGet == 0) {
-            self.selectedRetailerURLs = [NSSet set];
-            self.retailerLikes = likeList;
+            self.selectedRetailerURLs = [NSArray array];
+            return;
         }
         
         NSMutableSet *urls = [NSMutableSet setWithCapacity:urlsToGet];
@@ -122,8 +121,7 @@
                     [urls addObject:like.likedURL];
                 }
                 if (urlsToGet == 0) {
-                    self.selectedRetailerURLs = [NSSet setWithSet:urls];
-                    self.retailerLikes = likeList;
+                    self.selectedRetailerURLs = [urls allObjects];
                 }
             }];
         }
@@ -137,7 +135,7 @@
         UINavigationController *nav = segue.destinationViewController;
         CSRetailerSelectionViewController *vc = (id) nav.topViewController;
         vc.api = self.api;
-        vc.selectedRetailerURLs = [self.selectedRetailerURLs mutableCopy];
+        vc.selectedRetailerURLs = [NSMutableSet setWithArray:self.selectedRetailerURLs];
         
         return;
     }
@@ -145,7 +143,7 @@
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return self.retailerLikes.count;
+    return [self.selectedRetailerURLs count];
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView
@@ -165,7 +163,18 @@
                         objectAtIndex:0];
     }
     
-    retailerView.retailerNameLabel.text = [NSString stringWithFormat:@"%d", index];
+    NSURL *retailerURL = [self.selectedRetailerURLs objectAtIndex:index];
+    [retailerView setLoadingURL:retailerURL];
+    [self.api getRetailer:retailerURL
+                 callback:^(id<CSRetailer> retailer, NSError *error)
+    {
+        if (error) {
+            // TODO: handle error
+            return;
+        }
+        
+        [retailerView setRetailer:retailer URL:retailerURL];
+    }];
     return retailerView;
 }
 
@@ -247,14 +256,15 @@
         __block NSInteger likesToCheck = likeList.count;
         void (^applyChanges)() = ^{
             __block NSInteger changesToApply = [likesToDelete count] + [urlsToAdd count];
+            if (changesToApply == 0) {
+                self.selectedRetailerURLs = [selectedURLs allObjects];
+            }
             for (id<CSLike> like in likesToDelete) {
                 [like remove:^(BOOL success, NSError *error) {
                     // TODO: handle error and failure
                     --changesToApply;
                     if (changesToApply == 0) {
-                        self.selectedRetailerURLs = [NSSet setWithSet:selectedURLs];
-                        self.retailerLikes = likeList;
-                        [self reloadRetailers];
+                        self.selectedRetailerURLs = [selectedURLs allObjects];
                     }
                 }];
             }
@@ -266,9 +276,7 @@
                     // TODO: handle error
                     --changesToApply;
                     if (changesToApply == 0) {
-                        self.selectedRetailerURLs = [NSSet setWithSet:selectedURLs];
-                        self.retailerLikes = likeList;
-                        [self reloadRetailers];
+                        self.selectedRetailerURLs = [selectedURLs allObjects];
                     }
                 }];
             }
