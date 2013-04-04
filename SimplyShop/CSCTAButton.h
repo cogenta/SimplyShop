@@ -6,11 +6,8 @@
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CSAppearanceButton.h"
 
-@interface CSCTAButton : UIButton
-
-@property (nonatomic, strong) UIFont *textFont UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *textColor UI_APPEARANCE_SELECTOR;
+@interface CSCTAButton : CSAppearanceButton
 
 @end

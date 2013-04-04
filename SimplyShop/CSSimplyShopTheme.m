@@ -12,6 +12,7 @@
 #import "CSRetailerSelectionCell.h"
 #import "CSRetailerView.h"
 #import "CSCTAButton.h"
+#import "CSAppearanceButton.h"
 
 @implementation CSSimplyShopTheme
 
@@ -91,6 +92,26 @@
     return [UIColor colorWithHexString:@"#ffffff"];
 }
 
+- (UIFont *)homePageSmallButtonTitleFont
+{
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
+}
+
+- (UIColor *)homePageSmallButtonTitleColor
+{
+    return [UIColor colorWithHexString:@"#606060"];
+}
+
+- (UIColor *)homePageSmallButtonTitleShadowColor
+{
+    return [UIColor colorWithHexString:@"#ffffff"];
+}
+
+- (CGSize)homePageSmallButtonTitleShadowOffset
+{
+    return CGSizeMake(0.0, 1.0);
+}
+
 - (void)apply
 {
     UINavigationBar *navBar = [UINavigationBar appearance];
@@ -130,11 +151,19 @@
     CSCTAButton *ctaButton = [CSCTAButton appearance];
     [ctaButton setBackgroundImage:[self callToActionButtonBackgroundImage]
                          forState:UIControlStateNormal];
-    [ctaButton setTextFont:[self callToActionButtonFont]];
-    [ctaButton setTextColor:[self callToActionButtonTextColor]];
+    [ctaButton setTitleFont:[self callToActionButtonFont]];
+    [ctaButton setTitleColor:[self callToActionButtonTextColor]];
     
     UITableView *tableView = [UITableView appearance];
     [tableView setBackgroundColor:[self tableViewBackgroundColor]];
+    
+    CSAppearanceButton *
+    retailerEditButton = [CSAppearanceButton appearanceWhenContainedIn:
+                          [UITableViewCell class], nil];
+    [retailerEditButton setTitleFont:[self homePageSmallButtonTitleFont]];
+    [retailerEditButton setTitleColor:[self homePageSmallButtonTitleColor]];
+    [retailerEditButton setTitleShadowColor:[self homePageSmallButtonTitleShadowColor]];
+    [retailerEditButton setTitleLabelShadowOffset:[self homePageSmallButtonTitleShadowOffset]];
 }
 
 @end

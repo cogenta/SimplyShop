@@ -10,14 +10,4 @@
 
 @implementation CSCTAButton
 
-- (void)setTextFont:(UIFont *)titleFont
-{
-    self.titleLabel.font = titleFont;
-}
-
-- (void)setTextColor:(UIColor *)color
-{
-    [self setTitleColor:color forState:UIControlStateNormal];
-}
-
 @end

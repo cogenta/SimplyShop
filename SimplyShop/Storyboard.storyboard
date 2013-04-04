@@ -189,14 +189,15 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVq-q7-aoI">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVq-q7-aoI" customClass="CSAppearanceButton">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="PBp-Gh-GcJ"/>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="73" type="user" id="Pbm-qI-GKs"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                                     <state key="normal" title="Choose Stores">
-                                                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <state key="highlighted">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -265,11 +266,11 @@
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Z91-j2-BLD">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <inset key="scrollIndicatorInsets" minX="0.0" minY="6" maxX="0.0" maxY="113"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="6" maxX="0.0" maxY="6"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rRo-BX-zUs">
                                     <size key="itemSize" width="130" height="130"/>
                                     <size key="headerReferenceSize" width="0.0" height="6"/>
-                                    <size key="footerReferenceSize" width="0.0" height="113"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
@@ -317,10 +318,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="6"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="_paddingFooter" id="iED-T2-PId">
-                                    <rect key="frame" x="0.0" y="136" width="768" height="113"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="Q6I-9h-FrI" id="uh7-bp-XEn"/>
                                     <outlet property="delegate" destination="Q6I-9h-FrI" id="5Xu-dw-wX9"/>
@@ -352,6 +349,9 @@
         </scene>
     </scenes>
     <classes>
+        <class className="CSAppearanceButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSAppearanceButton.h"/>
+        </class>
         <class className="CSCTAButton" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCTAButton.h"/>
         </class>
