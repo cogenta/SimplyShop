@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *retailerNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @property (strong, nonatomic) id<CSTheme> theme UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) id<CSRetailer> retailer;

@@ -43,10 +43,6 @@
 
 - (void)initialize
 {
-    self.backgroundView = [[UIImageView alloc] initWithFrame:self.frame];
-    self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self insertSubview:self.backgroundView atIndex:0];
-    
     [self addObserver:self
            forKeyPath:@"retailer"
               options:NSKeyValueObservingOptionNew
@@ -73,6 +69,13 @@
 {
     theme = newTheme;
     UIImage *backgroundImage = [theme collectionViewCellBackgroundImage];
+    
+    if ( ! self.backgroundView) {
+        self.backgroundView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
+        self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.contentView insertSubview:self.backgroundView atIndex:0];
+    }
+    
     [self.backgroundView setImage:backgroundImage];
 }
 

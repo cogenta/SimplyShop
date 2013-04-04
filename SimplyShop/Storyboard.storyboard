@@ -17,7 +17,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2a-pb-kCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2543" y="-1244"/>
+            <point key="canvasLocation" x="-2327" y="-1268"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YdK-bY-ZSW">
@@ -32,7 +32,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UzH-ms-J1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-46" y="-105"/>
+            <point key="canvasLocation" x="-390" y="-1268"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="huO-qq-cWy">
@@ -151,7 +151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSX-OL-I5w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1014" y="-105"/>
+            <point key="canvasLocation" x="550" y="-1268"/>
         </scene>
         <!--Home Page View Controller - Dashboard-->
         <scene sceneID="Gix-Es-flg">
@@ -160,32 +160,62 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" id="w42-11-Xqh">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
-                            <tableViewSection headerTitle="Favorite Stores" id="WAN-Ok-Bfq">
+                            <tableViewSection id="WAN-Ok-Bfq">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="130" id="EYf-RC-NBp">
-                                        <rect key="frame" x="0.0" y="22" width="768" height="130"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="212" id="EYf-RC-NBp">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="212"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="129"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="211"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U3n-yj-jj8" userLabel="Retailers" customClass="SwipeView">
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="130" type="user" id="dZe-eU-kiE"/>
+                                                    </constraints>
                                                     <connections>
                                                         <outlet property="dataSource" destination="xEY-py-EMq" id="TpH-FL-taQ"/>
                                                     </connections>
                                                 </view>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Favorite Stores" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLr-Vs-uCp">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" priority="490" constant="163" type="user" id="EDh-md-MOd"/>
+                                                        <constraint firstAttribute="height" constant="21" id="lEx-t0-Rom"/>
+                                                        <constraint firstAttribute="width" constant="657" id="vsh-T3-pOT"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVq-q7-aoI">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="PBp-Gh-GcJ"/>
+                                                        <constraint firstAttribute="width" priority="434" constant="73" type="user" id="Pbm-qI-GKs"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                                    <state key="normal" title="Choose Stores">
+                                                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="U3n-yj-jj8" secondAttribute="bottom" constant="1" id="G0i-oW-2eu"/>
+                                            <constraint firstItem="MLr-Vs-uCp" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" constant="20" type="default" id="Bit-xY-EL8"/>
                                             <constraint firstItem="U3n-yj-jj8" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" type="default" id="UQP-80-vQZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="U3n-yj-jj8" secondAttribute="bottom" type="user" id="arF-kk-qsI"/>
                                             <constraint firstItem="U3n-yj-jj8" firstAttribute="trailing" secondItem="EYf-RC-NBp" secondAttribute="trailing" type="default" id="eNp-dz-y2t"/>
-                                            <constraint firstItem="U3n-yj-jj8" firstAttribute="top" secondItem="EYf-RC-NBp" secondAttribute="top" type="default" id="hZ8-yY-6RY"/>
+                                            <constraint firstItem="YVq-q7-aoI" firstAttribute="baseline" secondItem="MLr-Vs-uCp" secondAttribute="baseline" type="default" id="fcn-kp-fMl"/>
+                                            <constraint firstItem="YVq-q7-aoI" firstAttribute="leading" secondItem="MLr-Vs-uCp" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="h3T-Ks-h7I"/>
+                                            <constraint firstItem="YVq-q7-aoI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MLr-Vs-uCp" secondAttribute="trailing" constant="8" symbolic="YES" type="user" id="nRG-8k-fTE"/>
+                                            <constraint firstItem="U3n-yj-jj8" firstAttribute="top" secondItem="MLr-Vs-uCp" secondAttribute="bottom" constant="20" type="user" id="zff-Z3-4Af"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -205,7 +235,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="aYb-e4-eYg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1363" y="-1268"/>
+            <point key="canvasLocation" x="-1387" y="-1268"/>
         </scene>
     </scenes>
     <classes>

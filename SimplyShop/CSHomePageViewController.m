@@ -203,4 +203,9 @@
 
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [[[NSBundle mainBundle] loadNibNamed:@"CSRetailersHeaderView" owner:nil options:nil] objectAtIndex:0];
+}
+
 @end
