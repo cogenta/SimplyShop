@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet SwipeView *retailersSwipeView;
 @property (strong, nonatomic) CSAPI *api;
 
+- (IBAction)didTapChooseRetailersButton:(id)sender;
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
+- (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;
 
 @end

@@ -14,12 +14,10 @@
 @interface CSRetailerSelectionCell ()
 
 @property (nonatomic, weak) NSObject<CSRetailerList> *retailerList;
+@property (nonatomic, weak) NSSet *selectedURLs;
 @property (nonatomic, assign) NSInteger index;
 @property (nonatomic, strong) NSObject<CSRetailer> *retailer;
 
-- (void)gotRetailer:(NSObject<CSRetailer> *)retailer
-           fromList:(NSObject<CSRetailerList> *)list
-              index:(NSInteger)index;
 - (void)initialize;
 - (void)updateContent;
 
@@ -28,6 +26,7 @@
 @implementation CSRetailerSelectionCell
 
 @synthesize theme;
+@synthesize isReady;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -62,6 +61,15 @@
     [self removeObserver:self forKeyPath:@"retailer"];
 }
 
+- (void)setIsReady:(BOOL)newIsReady
+{
+    if (newIsReady != isReady) {
+        [self willChangeValueForKey:@"isReady"];
+        isReady = newIsReady;
+        [self didChangeValueForKey:@"isReady"];
+    }
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -76,14 +84,17 @@
 
 - (void)prepareForReuse
 {
+    [super prepareForReuse];
     self.index = NSNotFound;
     self.retailerList = nil;
     self.retailer = nil;
+    self.selectedURLs = nil;
     self.selected = NO;
     self.retailerNameLabel.hidden = NO;
     self.logoImageView.hidden = YES;
     [self.logoImageView cancelCurrentImageLoad];
     self.logoImageView.image = nil;
+    self.isReady = NO;
     [self updateContent];
 }
 
@@ -96,37 +107,26 @@
     self.selectedBackgroundView = [[UIImageView alloc] initWithImage:selectedBackgroundImage];
 }
 
-- (void)setRetailerList:(NSObject<CSRetailerList> *)list
-                  index:(NSInteger)newIndex
+- (void)setLoadingRetailerForIndex:(NSInteger)index
 {
-    self.retailerList = list;
-    self.index = newIndex;
-    
-    [self.retailerList getRetailerAtIndex:newIndex
-                                 callback:^(id<CSRetailer> retailer,
-                                            NSError *error)
-    {
-        if (error) {
-            // TODO: report error to parent view controller
-            return;
-        }
-        
-        [self gotRetailer:retailer fromList:list index:newIndex];
-    }];
+    self.retailer = nil;
+    self.index = index;
+    self.isReady = NO;
+    [self updateContent];
 }
 
-
-- (void)gotRetailer:(NSObject<CSRetailer> *)retailer
-           fromList:(NSObject<CSRetailerList> *)list
+- (void)setRetailer:(NSObject<CSRetailer> *)retailer
               index:(NSInteger)index
 {
-    if (index != self.index || list != self.retailerList) {
+    if (index != self.index) {
         // We ignore the retailer data because the cell has been reused for a
         // different index or list.
         return;
     }
     
     self.retailer = retailer;
+    self.isReady = YES;
+    [self updateContent];
 }
 
 - (void)updateContent

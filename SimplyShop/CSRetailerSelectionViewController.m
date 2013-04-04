@@ -15,8 +15,6 @@
 
 @property (nonatomic, strong) NSObject<CSRetailerList> *retailerList;
 
-@property (nonatomic, strong) NSMutableIndexSet *selectedIndexes;
-
 - (void)loadRetailers;
 
 @end
@@ -27,7 +25,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.selectedIndexes = [NSMutableIndexSet indexSet];
         self.selectedRetailerURLs = [NSMutableSet set];
     }
     return self;
@@ -37,7 +34,6 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.selectedIndexes = [NSMutableIndexSet indexSet];
         self.selectedRetailerURLs = [NSMutableSet set];
     }
     return self;
@@ -105,17 +101,46 @@
     CSRetailerSelectionCell *cell =
     [collectionView dequeueReusableCellWithReuseIdentifier:@"CSRetailerSelectionCell"
                                               forIndexPath:indexPath];
-    [cell setRetailerList:self.retailerList index:indexPath.row];
-    BOOL selected = [self.selectedIndexes containsIndex:indexPath.row];
-    cell.selected = selected;
+    [cell setLoadingRetailerForIndex:indexPath.row];
+    
+    [self.retailerList getRetailerAtIndex:indexPath.row
+                                 callback:^(id<CSRetailer> retailer, NSError *error)
+    {
+        if (error) {
+            // TODO: handle error
+            return;
+        }
+        
+        [cell setRetailer:retailer index:indexPath.row];
+        BOOL selected = [self.selectedRetailerURLs containsObject:retailer.URL];
+        if (selected && ! cell.isSelected) {
+            [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        }
+        
+        if ( ! selected && cell.isSelected) {
+            [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+        }
+    }];
     return cell;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView
+shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CSRetailerSelectionCell *cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+    return cell.isReady;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView
+shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CSRetailerSelectionCell *cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+    return cell.isReady;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [collectionView cellForItemAtIndexPath:indexPath].selected = YES;
-    [self.selectedIndexes addIndex:indexPath.row];
     [self.retailerList getRetailerAtIndex:indexPath.row
                                  callback:^(id<CSRetailer> retailer, NSError *error)
     {
@@ -131,8 +156,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 - (void)collectionView:(UICollectionView *)collectionView
 didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [collectionView cellForItemAtIndexPath:indexPath].selected = NO;
-    [self.selectedIndexes removeIndex:indexPath.row];
     [self.retailerList getRetailerAtIndex:indexPath.row
                                  callback:^(id<CSRetailer> retailer, NSError *error)
      {

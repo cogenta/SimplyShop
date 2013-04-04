@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSTheme;
-@protocol CSRetailerList;
+@protocol CSRetailer;
 
 @interface CSRetailerSelectionCell : UICollectionViewCell
 
@@ -17,7 +17,10 @@
 @property (nonatomic, strong) id<CSTheme> theme UI_APPEARANCE_SELECTOR;
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 
-- (void)setRetailerList:(NSObject<CSRetailerList> *)list
-                  index:(NSInteger)index;
+@property (readonly) BOOL isReady;
+
+- (void)setLoadingRetailerForIndex:(NSInteger)index;
+- (void)setRetailer:(NSObject<CSRetailer> *)retailer
+              index:(NSInteger)index;
 
 @end

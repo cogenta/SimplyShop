@@ -181,9 +181,8 @@
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Favorite Stores" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLr-Vs-uCp">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" priority="490" constant="163" type="user" id="EDh-md-MOd"/>
+                                                        <constraint firstAttribute="width" priority="1" constant="657" type="user" id="Aez-rM-1iZ"/>
                                                         <constraint firstAttribute="height" constant="21" id="lEx-t0-Rom"/>
-                                                        <constraint firstAttribute="width" constant="657" id="vsh-T3-pOT"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -193,7 +192,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVq-q7-aoI">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="PBp-Gh-GcJ"/>
-                                                        <constraint firstAttribute="width" priority="434" constant="73" type="user" id="Pbm-qI-GKs"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="73" type="user" id="Pbm-qI-GKs"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                                     <state key="normal" title="Choose Stores">
@@ -202,19 +201,22 @@
                                                     <state key="highlighted">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="didTapChooseRetailersButton:" destination="xEY-py-EMq" eventType="touchUpInside" id="6cj-WQ-aHR"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="MLr-Vs-uCp" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" constant="20" type="default" id="Bit-xY-EL8"/>
+                                            <constraint firstItem="MLr-Vs-uCp" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" constant="20" type="user" id="Bit-xY-EL8"/>
+                                            <constraint firstAttribute="trailing" secondItem="YVq-q7-aoI" secondAttribute="trailing" constant="10" type="user" id="C6r-2n-k33"/>
                                             <constraint firstItem="U3n-yj-jj8" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" type="default" id="UQP-80-vQZ"/>
                                             <constraint firstAttribute="bottom" secondItem="U3n-yj-jj8" secondAttribute="bottom" type="user" id="arF-kk-qsI"/>
                                             <constraint firstItem="U3n-yj-jj8" firstAttribute="trailing" secondItem="EYf-RC-NBp" secondAttribute="trailing" type="default" id="eNp-dz-y2t"/>
                                             <constraint firstItem="YVq-q7-aoI" firstAttribute="baseline" secondItem="MLr-Vs-uCp" secondAttribute="baseline" type="default" id="fcn-kp-fMl"/>
-                                            <constraint firstItem="YVq-q7-aoI" firstAttribute="leading" secondItem="MLr-Vs-uCp" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="h3T-Ks-h7I"/>
-                                            <constraint firstItem="YVq-q7-aoI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MLr-Vs-uCp" secondAttribute="trailing" constant="8" symbolic="YES" type="user" id="nRG-8k-fTE"/>
+                                            <constraint firstItem="YVq-q7-aoI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MLr-Vs-uCp" secondAttribute="trailing" priority="747" constant="8" symbolic="YES" type="user" id="nRG-8k-fTE"/>
                                             <constraint firstItem="U3n-yj-jj8" firstAttribute="top" secondItem="MLr-Vs-uCp" secondAttribute="bottom" constant="20" type="user" id="zff-Z3-4Af"/>
                                         </constraints>
                                     </tableViewCell>
@@ -229,13 +231,124 @@
                     <navigationItem key="navigationItem" title="Dashboard" id="NXv-dU-jYd"/>
                     <connections>
                         <outlet property="retailersSwipeView" destination="U3n-yj-jj8" id="swH-mI-T0j"/>
-                        <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="crossDissolve" animates="NO" id="4ft-LW-QE4"/>
+                        <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
+                        <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="thN-oO-ZtE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="aYb-e4-eYg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1387" y="-1268"/>
+            <point key="canvasLocation" x="-1301" y="-1268"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rfq-Rh-lQt">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="WPV-1r-rpg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3fE-YM-Fvx">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Q6I-9h-FrI" kind="relationship" relationship="rootViewController" id="cSZ-mO-DKg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gie-98-FEK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-390" y="-120"/>
+        </scene>
+        <!--Retailer Selection View Controller - Favourite Stores-->
+        <scene sceneID="fWV-7s-YXx">
+            <objects>
+                <viewController id="Q6I-9h-FrI" customClass="CSRetailerSelectionViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pXZ-N7-t78">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Z91-j2-BLD">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="6" maxX="0.0" maxY="113"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rRo-BX-zUs">
+                                    <size key="itemSize" width="130" height="130"/>
+                                    <size key="headerReferenceSize" width="0.0" height="6"/>
+                                    <size key="footerReferenceSize" width="0.0" height="113"/>
+                                    <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CSRetailerSelectionCell" id="omA-oF-vUy" customClass="CSRetailerSelectionCell">
+                                        <rect key="frame" x="16" y="6" width="130" height="130"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Retailer Name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="94" translatesAutoresizingMaskIntoConstraints="NO" id="1ld-Sb-qXO">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" priority="684" constant="21" type="user" id="6f2-ci-Pfd"/>
+                                                        <constraint firstAttribute="width" constant="94" type="user" id="CJ2-uR-1cw"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" type="user" id="LU9-bg-kDj"/>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="94" type="user" id="csm-h8-w7i"/>
+                                                        <constraint firstAttribute="height" constant="42" id="hMy-uz-Au6"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="SbI-Cb-O5q" userLabel="Logo">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="lCP-YB-JOi"/>
+                                                        <constraint firstAttribute="height" constant="24" id="tqG-Qt-5la"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="SbI-Cb-O5q" firstAttribute="centerX" secondItem="1ld-Sb-qXO" secondAttribute="centerX" type="default" id="AjD-b0-UtV"/>
+                                            <constraint firstAttribute="centerY" secondItem="1ld-Sb-qXO" secondAttribute="centerY" type="user" id="UgU-io-hT0"/>
+                                            <constraint firstItem="SbI-Cb-O5q" firstAttribute="centerX" secondItem="omA-oF-vUy" secondAttribute="centerX" type="default" id="ksL-Ha-siS"/>
+                                            <constraint firstItem="SbI-Cb-O5q" firstAttribute="centerY" secondItem="1ld-Sb-qXO" secondAttribute="centerY" type="default" id="l8b-DB-GBQ"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="logoImageView" destination="SbI-Cb-O5q" id="yMC-en-b78"/>
+                                            <outlet property="retailerNameLabel" destination="1ld-Sb-qXO" id="QBu-om-wgL"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="_paddingHeader" id="xbe-Ih-hHK">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="6"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="_paddingFooter" id="iED-T2-PId">
+                                    <rect key="frame" x="0.0" y="136" width="768" height="113"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
+                                <connections>
+                                    <outlet property="dataSource" destination="Q6I-9h-FrI" id="uh7-bp-XEn"/>
+                                    <outlet property="delegate" destination="Q6I-9h-FrI" id="5Xu-dw-wX9"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Z91-j2-BLD" firstAttribute="top" secondItem="pXZ-N7-t78" secondAttribute="top" type="user" id="Cer-iy-Ssg"/>
+                            <constraint firstItem="Z91-j2-BLD" firstAttribute="trailing" secondItem="pXZ-N7-t78" secondAttribute="trailing" type="user" id="bFk-RH-hav"/>
+                            <constraint firstAttribute="bottom" secondItem="Z91-j2-BLD" secondAttribute="bottom" type="user" id="dyW-vO-bfn"/>
+                            <constraint firstItem="Z91-j2-BLD" firstAttribute="leading" secondItem="pXZ-N7-t78" secondAttribute="leading" type="user" id="laP-Re-Od0"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Favourite Stores" id="Kym-Jv-fco">
+                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="uZR-nU-Aif">
+                            <connections>
+                                <segue destination="aYb-e4-eYg" kind="unwind" unwindAction="doneChangeRetailerSelection:" id="qrK-bP-P6n"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="Z91-j2-BLD" id="NFp-CL-Qh8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VJb-3J-1nG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="550" y="-120"/>
         </scene>
     </scenes>
     <classes>
@@ -245,6 +358,8 @@
         <class className="CSHomePageViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSHomePageViewController.h"/>
             <relationships>
+                <relationship kind="action" name="didTapChooseRetailersButton:"/>
+                <relationship kind="action" name="doneChangeRetailerSelection:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="action" name="doneInitialRetailerSelection:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="outlet" name="retailersSwipeView" candidateClass="SwipeView"/>
             </relationships>
