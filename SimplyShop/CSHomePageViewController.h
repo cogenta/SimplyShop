@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SwipeView/SwipeView.h>
 
 @protocol CSUser;
 @class CSAPI;
+@class CSFavoriteStoresCell;
 
-@interface CSHomePageViewController : UITableViewController <SwipeViewDataSource>
+@interface CSHomePageViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet SwipeView *retailersSwipeView;
 @property (strong, nonatomic) CSAPI *api;
+
+@property (weak, nonatomic) IBOutlet CSFavoriteStoresCell *favoriteStoresCell;
 
 - (IBAction)didTapChooseRetailersButton:(id)sender;
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;

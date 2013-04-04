@@ -163,7 +163,7 @@
                         <sections>
                             <tableViewSection id="WAN-Ok-Bfq">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="212" id="EYf-RC-NBp">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="212" id="EYf-RC-NBp" customClass="CSFavoriteStoresCell">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="212"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -176,7 +176,7 @@
                                                         <constraint firstAttribute="height" constant="130" type="user" id="dZe-eU-kiE"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outlet property="dataSource" destination="xEY-py-EMq" id="TpH-FL-taQ"/>
+                                                        <outlet property="dataSource" destination="EYf-RC-NBp" id="UiQ-m0-cEp"/>
                                                     </connections>
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Favorite Stores" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLr-Vs-uCp">
@@ -220,6 +220,9 @@
                                             <constraint firstItem="YVq-q7-aoI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MLr-Vs-uCp" secondAttribute="trailing" priority="747" constant="8" symbolic="YES" type="user" id="nRG-8k-fTE"/>
                                             <constraint firstItem="U3n-yj-jj8" firstAttribute="top" secondItem="MLr-Vs-uCp" secondAttribute="bottom" constant="20" type="user" id="zff-Z3-4Af"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="retailersSwipeView" destination="U3n-yj-jj8" id="CzH-YW-KlA"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -231,7 +234,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Dashboard" id="NXv-dU-jYd"/>
                     <connections>
-                        <outlet property="retailersSwipeView" destination="U3n-yj-jj8" id="swH-mI-T0j"/>
+                        <outlet property="favoriteStoresCell" destination="EYf-RC-NBp" id="i9P-OY-g61"/>
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="thN-oO-ZtE"/>
                     </connections>
@@ -348,58 +351,6 @@
             <point key="canvasLocation" x="550" y="-120"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CSAppearanceButton" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSAppearanceButton.h"/>
-        </class>
-        <class className="CSCTAButton" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCTAButton.h"/>
-        </class>
-        <class className="CSHomePageViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSHomePageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="didTapChooseRetailersButton:"/>
-                <relationship kind="action" name="doneChangeRetailerSelection:" candidateClass="UIStoryboardSegue"/>
-                <relationship kind="action" name="doneInitialRetailerSelection:" candidateClass="UIStoryboardSegue"/>
-                <relationship kind="outlet" name="retailersSwipeView" candidateClass="SwipeView"/>
-            </relationships>
-        </class>
-        <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="logoImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CSRetailerSelectionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="SwipeView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SwipeView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dataSource"/>
-                <relationship kind="outlet" name="delegate"/>
-            </relationships>
-        </class>
-        <class className="UICollectionReusableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
-        </class>
-        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UIStoryboardSegue" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

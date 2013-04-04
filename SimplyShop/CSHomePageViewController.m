@@ -9,12 +9,12 @@
 #import "CSHomePageViewController.h"
 #import "CSRetailerView.h"
 #import "CSRetailerSelectionViewController.h"
+#import "CSFavoriteStoresCell.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSHomePageViewController ()
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
-@property (strong, nonatomic) NSArray *selectedRetailerURLs;
 
 - (void)reloadRetailers;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
@@ -35,8 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.retailersSwipeView.truncateFinalPage = YES;
-    self.retailersSwipeView.pagingEnabled = NO;
+    self.favoriteStoresCell.api = self.api;
     
     [self.api login:^(id<CSUser> user, NSError *error) {
         if (error) {
@@ -62,16 +61,13 @@
            forKeyPath:@"user"
               options:NSKeyValueObservingOptionNew
               context:NULL];
-    [self addObserver:self
-           forKeyPath:@"selectedRetailerURLs"
-              options:NSKeyValueObservingOptionNew
-              context:NULL];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self removeObserver:self forKeyPath:@"selectedRetailerURLs"];
+
     [self removeObserver:self forKeyPath:@"user"];
 }
 
@@ -82,11 +78,6 @@
 {
     if ([keyPath isEqualToString:@"user"]) {
         [self reloadRetailers];
-        return;
-    }
-    
-    if ([keyPath isEqualToString:@"selectedRetailerURLs"]) {
-        [self.retailersSwipeView reloadData];
         return;
     }
 }
@@ -108,7 +99,7 @@
         
         __block NSInteger urlsToGet = likeList.count;
         if (urlsToGet == 0) {
-            self.selectedRetailerURLs = [NSArray array];
+            self.favoriteStoresCell.selectedRetailerURLs = [NSArray array];
             return;
         }
         
@@ -121,7 +112,7 @@
                     [urls addObject:like.likedURL];
                 }
                 if (urlsToGet == 0) {
-                    self.selectedRetailerURLs = [urls allObjects];
+                    self.favoriteStoresCell.selectedRetailerURLs = [urls allObjects];
                 }
             }];
         }
@@ -135,48 +126,12 @@
         UINavigationController *nav = segue.destinationViewController;
         CSRetailerSelectionViewController *vc = (id) nav.topViewController;
         vc.api = self.api;
-        vc.selectedRetailerURLs = [NSMutableSet setWithArray:self.selectedRetailerURLs];
+        vc.selectedRetailerURLs = [NSMutableSet setWithArray:self.favoriteStoresCell.selectedRetailerURLs];
         
         return;
     }
 }
 
-- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
-{
-    return [self.selectedRetailerURLs count];
-}
-
-- (UIView *)swipeView:(SwipeView *)swipeView
-   viewForItemAtIndex:(NSInteger)index
-          reusingView:(UIView *)view
-{
-    CSRetailerView *retailerView = nil;
-    if (view) {
-        retailerView = (CSRetailerView *)view;
-    }
-    
-    if ( ! retailerView) {
-        retailerView = [[[NSBundle mainBundle]
-                         loadNibNamed:@"CSRetailerView"
-                         owner:nil
-                         options:nil]
-                        objectAtIndex:0];
-    }
-    
-    NSURL *retailerURL = [self.selectedRetailerURLs objectAtIndex:index];
-    [retailerView setLoadingURL:retailerURL];
-    [self.api getRetailer:retailerURL
-                 callback:^(id<CSRetailer> retailer, NSError *error)
-    {
-        if (error) {
-            // TODO: handle error
-            return;
-        }
-        
-        [retailerView setRetailer:retailer URL:retailerURL];
-    }];
-    return retailerView;
-}
 
 - (IBAction)didTapChooseRetailersButton:(id)sender {
     [self performSegueWithIdentifier:@"changeRetailerSelection" sender:nil];
@@ -257,14 +212,14 @@
         void (^applyChanges)() = ^{
             __block NSInteger changesToApply = [likesToDelete count] + [urlsToAdd count];
             if (changesToApply == 0) {
-                self.selectedRetailerURLs = [selectedURLs allObjects];
+                self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
             }
             for (id<CSLike> like in likesToDelete) {
                 [like remove:^(BOOL success, NSError *error) {
                     // TODO: handle error and failure
                     --changesToApply;
                     if (changesToApply == 0) {
-                        self.selectedRetailerURLs = [selectedURLs allObjects];
+                        self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
                     }
                 }];
             }
@@ -276,7 +231,7 @@
                     // TODO: handle error
                     --changesToApply;
                     if (changesToApply == 0) {
-                        self.selectedRetailerURLs = [selectedURLs allObjects];
+                        self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
                     }
                 }];
             }
@@ -307,13 +262,6 @@
             }];
         }
     }];
-    
-
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return [[[NSBundle mainBundle] loadNibNamed:@"CSRetailersHeaderView" owner:nil options:nil] objectAtIndex:0];
 }
 
 @end

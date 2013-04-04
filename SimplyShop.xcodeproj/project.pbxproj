@@ -39,6 +39,7 @@
 		BE3D4E2E170C6B3500644AD6 /* CSRetailerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2D170C6B3500644AD6 /* CSRetailerView.m */; };
 		BE3D4E30170C6C6000644AD6 /* CSRetailerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E2F170C6C6000644AD6 /* CSRetailerView.xib */; };
 		BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */; };
+		BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,8 @@
 		BE3D4E2F170C6C6000644AD6 /* CSRetailerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRetailerView.xib; sourceTree = "<group>"; };
 		BE3D4E33170DDF9100644AD6 /* CSAppearanceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAppearanceButton.h; sourceTree = "<group>"; };
 		BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAppearanceButton.m; sourceTree = "<group>"; };
+		BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFavoriteStoresCell.h; sourceTree = "<group>"; };
+		BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFavoriteStoresCell.m; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -242,6 +245,8 @@
 				BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */,
 				BE3D4E1A1704632900644AD6 /* CSRetailerSelectionCell.h */,
 				BE3D4E1B1704632900644AD6 /* CSRetailerSelectionCell.m */,
+				BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */,
+				BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -401,6 +406,7 @@
 				BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */,
 				BE3D4E2E170C6B3500644AD6 /* CSRetailerView.m in Sources */,
 				BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */,
+				BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
