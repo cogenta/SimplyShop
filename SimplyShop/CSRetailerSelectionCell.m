@@ -10,6 +10,7 @@
 #import "CSTheme.h"
 #import <CSApi/CSAPI.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface CSRetailerSelectionCell ()
 
@@ -27,6 +28,7 @@
 
 @synthesize theme;
 @synthesize isReady;
+@synthesize logoImageView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -48,6 +50,8 @@
 
 - (void)initialize
 {
+    self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    self.layer.shouldRasterize = YES;
     self.index = NSNotFound;
     [self updateContent];
     [self addObserver:self

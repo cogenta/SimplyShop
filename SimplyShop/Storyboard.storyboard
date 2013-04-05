@@ -17,7 +17,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2a-pb-kCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2327" y="-1268"/>
+            <point key="canvasLocation" x="-2325" y="-1282"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YdK-bY-ZSW">
@@ -32,7 +32,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UzH-ms-J1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-390" y="-1268"/>
+            <point key="canvasLocation" x="-560" y="-1282"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="huO-qq-cWy">
@@ -71,7 +71,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="iBg-9X-aQL" userLabel="Logo">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="iBg-9X-aQL" userLabel="Logo" customClass="CSRoundImageView">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="A6i-JY-VO5"/>
                                                         <constraint firstAttribute="width" constant="80" id="wWJ-il-WSk"/>
@@ -151,7 +151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSX-OL-I5w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="550" y="-1268"/>
+            <point key="canvasLocation" x="316" y="-1282"/>
         </scene>
         <!--Home Page View Controller - Dashboard-->
         <scene sceneID="Gix-Es-flg">
@@ -242,7 +242,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="aYb-e4-eYg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1301" y="-1268"/>
+            <point key="canvasLocation" x="-1443" y="-1282"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rfq-Rh-lQt">
@@ -257,7 +257,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gie-98-FEK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-390" y="-120"/>
+            <point key="canvasLocation" x="-560" y="-80"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="fWV-7s-YXx">
@@ -296,7 +296,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="SbI-Cb-O5q" userLabel="Logo">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="SbI-Cb-O5q" userLabel="Logo" customClass="CSRoundImageView">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="lCP-YB-JOi"/>
                                                         <constraint firstAttribute="height" constant="24" id="tqG-Qt-5la"/>
@@ -348,7 +348,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VJb-3J-1nG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="550" y="-120"/>
+            <point key="canvasLocation" x="316" y="-80"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
