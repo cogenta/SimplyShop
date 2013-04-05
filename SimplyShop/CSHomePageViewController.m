@@ -16,7 +16,7 @@
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
 
-- (void)reloadRetailers;
+- (void)loadRetailers;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
 
 @end
@@ -44,6 +44,8 @@
         }
         
         self.user = user;
+        [self loadRetailers];
+
         
         [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList, id<CSGroup> group, NSError *error) {
             if (likeList.count < 3) {
@@ -54,41 +56,13 @@
     }];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self addObserver:self
-           forKeyPath:@"user"
-              options:NSKeyValueObservingOptionNew
-              context:NULL];
-
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-
-    [self removeObserver:self forKeyPath:@"user"];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if ([keyPath isEqualToString:@"user"]) {
-        [self reloadRetailers];
-        return;
-    }
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)reloadRetailers
+- (void)loadRetailers
 {
     [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList, id<CSGroup> group, NSError *error)
     {
