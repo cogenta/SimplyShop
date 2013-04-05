@@ -19,6 +19,8 @@
 
 @implementation CSFavoriteStoresCell
 
+@synthesize retailersSwipeView;
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -47,11 +49,15 @@
     return self;
 }
 
-- (void)initialize
+- (void)setRetailersSwipeView:(SwipeView *)newRetailersSwipeView
 {
+    retailersSwipeView = newRetailersSwipeView;
     self.retailersSwipeView.truncateFinalPage = YES;
     self.retailersSwipeView.pagingEnabled = NO;
-    
+}
+
+- (void)initialize
+{
     [self addObserver:self
            forKeyPath:@"selectedRetailerURLs"
               options:NSKeyValueObservingOptionNew
