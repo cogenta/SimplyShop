@@ -45,14 +45,6 @@
         
         self.user = user;
         [self loadRetailers];
-
-        
-        [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList, id<CSGroup> group, NSError *error) {
-            if (likeList.count < 3) {
-                [self performSegueWithIdentifier:@"showRetailerSelection"
-                                          sender:self];
-            }
-        }];
     }];
 }
 
@@ -60,6 +52,13 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)didLoadRetailers
+{
+    if ([self.favoriteStoresCell.selectedRetailerURLs count] < 3) {
+        [self performSegueWithIdentifier:@"showRetailerSelection" sender:self];
+    }
 }
 
 - (void)loadRetailers
@@ -74,6 +73,7 @@
         __block NSInteger urlsToGet = likeList.count;
         if (urlsToGet == 0) {
             self.favoriteStoresCell.selectedRetailerURLs = [NSArray array];
+            [self didLoadRetailers];
             return;
         }
         
@@ -87,6 +87,7 @@
                 }
                 if (urlsToGet == 0) {
                     self.favoriteStoresCell.selectedRetailerURLs = [urls allObjects];
+                    [self didLoadRetailers];
                 }
             }];
         }
