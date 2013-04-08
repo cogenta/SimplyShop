@@ -26,6 +26,11 @@
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:1024*1024*10
+                                                            diskCapacity:1024*1024*20
+                                                                diskPath:@"shared_cache"];
+    [NSURLCache setSharedURLCache:sharedCache];
+    
     api = [CSAPI apiWithBookmark:kAPIBookmark
                         username:kAPIUsername
                         password:kAPIPassword];

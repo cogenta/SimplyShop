@@ -13,6 +13,7 @@
 
 @interface CSFavoriteStoresCell ()
 
+@property (strong, nonatomic) NSMutableDictionary *retailers;
 - (void)initialize;
 
 @end
@@ -58,6 +59,7 @@
 
 - (void)initialize
 {
+    self.retailers = [NSMutableDictionary dictionary];
     [self addObserver:self
            forKeyPath:@"selectedRetailerURLs"
               options:NSKeyValueObservingOptionNew
@@ -104,17 +106,24 @@
     }
     
     NSURL *retailerURL = [self.selectedRetailerURLs objectAtIndex:index];
+    
+    id<CSRetailer> retailer = [self.retailers objectForKey:retailerURL];
     [retailerView setLoadingURL:retailerURL];
-    [self.api getRetailer:retailerURL
-                 callback:^(id<CSRetailer> retailer, NSError *error)
-     {
-         if (error) {
-             // TODO: handle error
-             return;
-         }
-         
-         [retailerView setRetailer:retailer URL:retailerURL];
-     }];
+    if (retailer) {
+        [retailerView setRetailer:retailer URL:retailerURL];
+    } else {
+        [self.api getRetailer:retailerURL
+                     callback:^(id<CSRetailer> retailer, NSError *error)
+         {
+             if (error) {
+                 // TODO: handle error
+                 return;
+             }
+             
+             [self.retailers setObject:retailer forKey:retailerURL];
+             [retailerView setRetailer:retailer URL:retailerURL];
+         }];
+    }
     return retailerView;
 }
 
