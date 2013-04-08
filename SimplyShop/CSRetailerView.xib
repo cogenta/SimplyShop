@@ -48,7 +48,6 @@
 								<string key="NSFrame">{{18, 44}, {94, 42}}</string>
 								<reference key="NSSuperview" ref="14317397"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1007012766"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -86,7 +85,7 @@
 								<string key="NSFrame">{{18, 18}, {94, 94}}</string>
 								<reference key="NSSuperview" ref="14317397"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="401244699"/>
 								<int key="IBUIContentMode">1</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -95,7 +94,7 @@
 						<string key="NSFrame">{{20, 0}, {130, 130}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="401244699"/>
+						<reference key="NSNextKeyView" ref="1007012766"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="419245159">
 							<int key="NSColorSpace">3</int>
@@ -133,6 +132,14 @@
 						<reference key="destination" ref="1007012766"/>
 					</object>
 					<int key="connectionID">69</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">retailerNameLabel</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="401244699"/>
+					</object>
+					<int key="connectionID">77</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -569,7 +576,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">76</int>
+			<int key="maxID">77</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
