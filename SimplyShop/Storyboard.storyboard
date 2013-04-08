@@ -73,18 +73,18 @@
                                                 </label>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="iBg-9X-aQL" userLabel="Logo" customClass="CSRoundImageView">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="24" id="A6i-JY-VO5"/>
-                                                        <constraint firstAttribute="width" constant="80" id="wWJ-il-WSk"/>
+                                                        <constraint firstAttribute="width" constant="94" type="user" id="HJ0-RA-21z"/>
+                                                        <constraint firstAttribute="height" constant="94" id="MGv-8o-cEk"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="iBg-9X-aQL" firstAttribute="centerX" secondItem="z4k-Dt-uwW" secondAttribute="centerX" type="default" id="Gkb-ID-wt9"/>
-                                            <constraint firstItem="iBg-9X-aQL" firstAttribute="centerY" secondItem="hzC-sB-5m2" secondAttribute="centerY" type="default" id="M1T-rr-HKo"/>
+                                            <constraint firstAttribute="centerY" secondItem="iBg-9X-aQL" secondAttribute="centerY" type="user" id="K06-NJ-bal"/>
+                                            <constraint firstAttribute="centerX" secondItem="iBg-9X-aQL" secondAttribute="centerX" type="user" id="Mtk-tV-2RP"/>
                                             <constraint firstAttribute="centerY" secondItem="hzC-sB-5m2" secondAttribute="centerY" type="user" id="b8j-t6-5sA"/>
-                                            <constraint firstItem="iBg-9X-aQL" firstAttribute="centerX" secondItem="hzC-sB-5m2" secondAttribute="centerX" type="default" id="jV0-eZ-oIG"/>
+                                            <constraint firstItem="hzC-sB-5m2" firstAttribute="leading" secondItem="iBg-9X-aQL" secondAttribute="leading" priority="422" type="user" id="pqb-MF-bL8"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="logoImageView" destination="iBg-9X-aQL" id="qMB-Vv-S2Q"/>
@@ -298,18 +298,18 @@
                                                 </label>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="SbI-Cb-O5q" userLabel="Logo" customClass="CSRoundImageView">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="lCP-YB-JOi"/>
-                                                        <constraint firstAttribute="height" constant="24" id="tqG-Qt-5la"/>
+                                                        <constraint firstAttribute="height" constant="94" id="4RT-uV-8nM"/>
+                                                        <constraint firstAttribute="width" constant="94" type="user" id="s0s-oi-DrS"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="SbI-Cb-O5q" firstAttribute="centerX" secondItem="1ld-Sb-qXO" secondAttribute="centerX" type="default" id="AjD-b0-UtV"/>
+                                            <constraint firstAttribute="centerY" secondItem="SbI-Cb-O5q" secondAttribute="centerY" type="user" id="68z-5I-cIy"/>
                                             <constraint firstAttribute="centerY" secondItem="1ld-Sb-qXO" secondAttribute="centerY" type="user" id="UgU-io-hT0"/>
-                                            <constraint firstItem="SbI-Cb-O5q" firstAttribute="centerX" secondItem="omA-oF-vUy" secondAttribute="centerX" type="default" id="ksL-Ha-siS"/>
-                                            <constraint firstItem="SbI-Cb-O5q" firstAttribute="centerY" secondItem="1ld-Sb-qXO" secondAttribute="centerY" type="default" id="l8b-DB-GBQ"/>
+                                            <constraint firstItem="1ld-Sb-qXO" firstAttribute="leading" secondItem="SbI-Cb-O5q" secondAttribute="leading" type="default" id="eWJ-sO-p1U"/>
+                                            <constraint firstAttribute="centerX" secondItem="SbI-Cb-O5q" secondAttribute="centerX" type="user" id="yq4-A8-c1P"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="logoImageView" destination="SbI-Cb-O5q" id="yMC-en-b78"/>
