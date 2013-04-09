@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class CSCTAButton;
+
 @protocol CSTheme
 
 - (void)apply;
 - (UIImage *)collectionViewCellBackgroundImage;
 - (UIImage *)collectionViewCellSelectedBackgroundImage;
 - (SEL)producNameTransform;
+- (void)themeCTAButton:(CSCTAButton *)button;
 
 @end

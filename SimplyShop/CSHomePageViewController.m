@@ -12,7 +12,7 @@
 #import "CSProductSummariesCell.h"
 #import <CSApi/CSAPI.h>
 
-@interface CSHomePageViewController ()
+@interface CSHomePageViewController () <UIAlertViewDelegate>
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
@@ -20,6 +20,9 @@
 - (void)loadRetailers;
 - (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
+
+- (void)loadEverything;
+- (void)setErrorState;
 
 @end
 
@@ -39,15 +42,7 @@
     [super viewDidLoad];
     self.favoriteStoresCell.api = self.api;
     
-    [self.api login:^(id<CSUser> user, NSError *error) {
-        if (error) {
-            // TODO: handle erro
-            return;
-        }
-        
-        self.user = user;
-        [self loadRetailers];
-    }];
+    [self loadEverything];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,12 +58,25 @@
     }
 }
 
+- (void)loadEverything
+{
+    [self.api login:^(id<CSUser> user, NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        self.user = user;
+        [self loadRetailers];
+    }];
+}
+
 - (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group
 {
     [group getProductSummaries:^(id<CSProductSummaryListPage> firstPage,
                                  NSError *error) {
         if (error) {
-            // TODO: handle error
+            [self setErrorState];
             return;
         }
         
@@ -82,7 +90,7 @@
     [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList, id<CSGroup> group, NSError *error)
     {
         if (error) {
-            // TODO: handle error
+            [self setErrorState];
             return;
         }
         
@@ -110,6 +118,22 @@
             }];
         }
     }];
+}
+
+- (void)setErrorState
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:@"Failed to communicate with the server."
+                                                   delegate:self
+                                          cancelButtonTitle:@"Retry"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView
+didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [self loadEverything];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -200,7 +224,7 @@
     [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList, id<CSGroup> group, NSError *error)
     {
         if (error) {
-            // TODO: handle error
+            [self setErrorState];
             return;
         }
         
@@ -213,7 +237,11 @@
             }
             for (id<CSLike> like in likesToDelete) {
                 [like remove:^(BOOL success, NSError *error) {
-                    // TODO: handle error and failure
+                    if (error) {
+                        [self setErrorState];
+                        return;
+                    }
+                    
                     --changesToApply;
                     if (changesToApply == 0) {
                         self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
@@ -226,7 +254,11 @@
                 [group createLikeWithChange:^(id<CSMutableLike> like) {
                     like.likedURL = url;
                 } callback:^(id<CSLike> like, NSError *error) {
-                    // TODO: handle error
+                    if (error) {
+                        [self setErrorState];
+                        return;
+                    }
+                    
                     --changesToApply;
                     if (changesToApply == 0) {
                         self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
@@ -242,17 +274,20 @@
         
         for (NSInteger i = 0 ; i < likeList.count; ++i) {
             [likeList getLikeAtIndex:i callback:^(id<CSLike> like, NSError *error) {
-                // TODO: handle error
-                if (like) {
-                    NSURL *url = like.likedURL;
-                    if ([urlsToAdd containsObject:url]) {
-                        [urlsToAdd removeObject:url];
-                    }
-                    
-                    if ( ! [selectedURLs containsObject:url]) {
-                        [likesToDelete addObject:like];
-                    }
+                if (error) {
+                    [self setErrorState];
+                    return;
                 }
+                
+                NSURL *url = like.likedURL;
+                if ([urlsToAdd containsObject:url]) {
+                    [urlsToAdd removeObject:url];
+                }
+                
+                if ( ! [selectedURLs containsObject:url]) {
+                    [likesToDelete addObject:like];
+                }
+                
                 --likesToCheck;
                 
                 if (likesToCheck == 0) {

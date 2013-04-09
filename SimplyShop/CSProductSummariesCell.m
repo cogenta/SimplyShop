@@ -10,7 +10,7 @@
 #import "CSProductSummaryCell.h"
 #import <CSApi/CSAPI.h>
 
-@interface CSProductSummariesCell ()
+@interface CSProductSummariesCell () <CSProductSummaryCellDelegate>
 
 - (void)initialize;
 
@@ -85,20 +85,25 @@
                                               forIndexPath:indexPath];
     
     
-    [cell setLoadingAddress:indexPath];
-    [self.productSummaries getProductSummaryAtIndex:indexPath.row
-                                           callback:^(id<CSProductSummary> result,
-                                                      NSError *error)
-    {
-        if (error) {
-            // TODO: handle error
-            return;
-        }
-        
-        [cell setProductSummary:result address:indexPath];
-    }];
+    [self productSummaryCell:cell needsReloadWithAddress:indexPath];
     
     return cell;
+}
+
+- (void)productSummaryCell:(CSProductSummaryCell *)cell needsReloadWithAddress:(NSObject *)address
+{
+    [cell setLoadingAddress:address];
+    [self.productSummaries getProductSummaryAtIndex:((NSIndexPath *)address).row
+                                           callback:^(id<CSProductSummary> result,
+                                                      NSError *error)
+     {
+         if (error) {
+             [cell setError:error address:address];
+             return;
+         }
+         
+         [cell setProductSummary:result address:address];
+     }];
 }
 
 @end

@@ -11,16 +11,29 @@
 @protocol CSTheme;
 @protocol CSProductSummary;
 
+@class CSCTAButton;
+@class CSProductSummaryCell;
+
+@protocol CSProductSummaryCellDelegate <NSObject>
+- (void)productSummaryCell:(CSProductSummaryCell *)cell
+    needsReloadWithAddress:(NSObject *)address;
+@end
+
 @interface CSProductSummaryCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *productImageView;
+@property (weak, nonatomic) IBOutlet CSCTAButton *retryButton;
 
 @property (strong, nonatomic) id<CSTheme> theme UI_APPEARANCE_SELECTOR;
 
+@property (weak, nonatomic) IBOutlet id<CSProductSummaryCellDelegate> delegate;
+
+- (IBAction)didTapRetryButton:(id)sender;
 - (void)setLoadingAddress:(NSObject *)address;
 - (void)setProductSummary:(id<CSProductSummary>)productSummary
                   address:(NSObject *)address;
+- (void)setError:(NSError *)error address:(NSObject *)address;
 
 @end

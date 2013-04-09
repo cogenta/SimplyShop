@@ -10,12 +10,14 @@
 #import <CSApi/CSAPI.h>
 #import <UIImageView+WebCache.h>
 #import "CSTheme.h"
+#import "CSCTAButton.h"
 
 @interface CSProductSummaryCell ()
 
 @property (strong, nonatomic) UIImageView *backgroundView;
 @property (strong, nonatomic) NSObject *address;
 @property (strong, nonatomic) id<CSProductSummary> productSummary;
+@property (strong, nonatomic) NSError *error;
 @property (assign, nonatomic) SEL nameTransform;
 
 - (void)updateContent;
@@ -61,6 +63,7 @@
     [super prepareForReuse];
     self.selected = NO;
     self.productImageView.hidden = YES;
+    self.retryButton.hidden = YES;
     [self.productImageView cancelCurrentImageLoad];
     
     self.productNameLabel.text = @"";
@@ -85,15 +88,23 @@
     
     [self.backgroundView setImage:backgroundImage];
     self.nameTransform = [theme producNameTransform];
+    
+    [newTheme themeCTAButton:self.retryButton];
+}
+
+- (IBAction)didTapRetryButton:(id)sender {
+    [self.delegate productSummaryCell:self
+               needsReloadWithAddress:self.address];
 }
 
 - (void)setLoadingAddress:(NSObject *)address
 {
-    if ([address isEqual:self.address]) {
+    if ([address isEqual:self.address] && self.productSummary) {
         return;
     }
     
     self.productSummary = nil;
+    self.error = nil;
     self.address = address;
     [self updateContent];
 }
@@ -106,12 +117,40 @@
         return;
     }
     
+    if (self.error) {
+        // An error is already set.
+        return;
+    }
+    
     if ( ! [address isEqual:self.address]) {
         // The view has been reused with another address.
         return;
     }
     
+    self.error = nil;
     self.productSummary = productSummary;
+    [self updateContent];
+}
+
+- (void)setError:(NSError *)error address:(NSObject *)address
+{
+    if (self.productSummary) {
+        // A product summary is already set.
+        return;
+    }
+    
+    if (self.error) {
+        // An error is already set.
+        return;
+    }
+    
+    if ( ! [address isEqual:self.address]) {
+        // The view has been reused with another address.
+        return;
+    }
+    
+    self.error = error;
+    self.productSummary = nil;
     [self updateContent];
 }
 
@@ -123,15 +162,25 @@
 #pragma clang diagnostic pop
 }
 
-- (void)updateContent
+- (void)showLoadingState
 {
-    if ( ! self.productSummary) {
-        self.productNameLabel.text = [self transformedName:@"Loading"];
-        self.productDescriptionLabel.text = @"...";
-        self.productImageView.hidden = YES;
-        return;
-    }
-    
+    self.productNameLabel.text = [self transformedName:@"Loading"];
+    self.productDescriptionLabel.text = @"...";
+    self.productImageView.hidden = YES;
+    self.retryButton.hidden = YES;
+}
+
+- (void)showError
+{
+    self.productNameLabel.text = [self transformedName:@"Error"];
+    self.productDescriptionLabel.text = @"...";
+    self.productImageView.hidden = YES;
+    self.retryButton.hidden = NO;
+}
+
+- (void)showProductSummary
+{
+    self.retryButton.hidden = YES;
     self.productNameLabel.text = [self transformedName:self.productSummary.name];
     if (self.productSummary.description != (id) [NSNull null]) {
         self.productDescriptionLabel.text = self.productSummary.description;
@@ -150,7 +199,7 @@
                                                     NSError *error)
           {
               if (error) {
-                  // TODO: Handle error
+                  /// Ignore picture error.
                   return;
               };
               
@@ -162,6 +211,7 @@
                                  callback:^(id<CSImage> image, NSError *error)
                    {
                        if (error) {
+                           // Ignore image error.
                            return;
                        }
                        
@@ -188,6 +238,21 @@
           }];
          
      }];
+}
+
+- (void)updateContent
+{
+    if (self.productSummary) {
+        [self showProductSummary];
+        return;
+    }
+    
+    if (self.error) {
+        [self showError];
+        return;
+    }
+    
+    [self showLoadingState];
 }
 
 

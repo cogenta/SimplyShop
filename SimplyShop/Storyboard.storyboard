@@ -186,6 +186,9 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             </view>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="hv6-34-2sh" id="Bgs-Ux-o7O"/>
+                                                            </connections>
                                                         </collectionViewCell>
                                                     </cells>
                                                     <connections>
@@ -420,9 +423,12 @@
         <class className="CSProductSummaryCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummaryCell.h"/>
             <relationships>
+                <relationship kind="action" name="didTapRetryButton:"/>
+                <relationship kind="outlet" name="delegate"/>
                 <relationship kind="outlet" name="productDescriptionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="productNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="retryButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
@@ -449,6 +455,9 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
         <class className="UIStoryboardSegue" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>

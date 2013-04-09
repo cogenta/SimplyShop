@@ -11,11 +11,12 @@
 #import "CSHomePageViewController.h"
 #import <CSApi/CSAPI.h>
 
-@interface CSRetailerSelectionViewController ()
+@interface CSRetailerSelectionViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSObject<CSRetailerList> *retailerList;
 
 - (void)loadRetailers;
+- (void)setErrorState;
 
 @end
 
@@ -84,6 +85,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setErrorState
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:@"Failed to load the list of shops."
+                                                   delegate:self
+                                          cancelButtonTitle:@"Retry"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView
+didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [self loadRetailers];
+}
+
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
@@ -107,7 +124,8 @@
                                  callback:^(id<CSRetailer> retailer, NSError *error)
     {
         if (error) {
-            // TODO: handle error
+            [self setErrorState];
+            self.retailerList = nil;
             return;
         }
         
@@ -145,7 +163,8 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
                                  callback:^(id<CSRetailer> retailer, NSError *error)
     {
         if (error) {
-            // TODO: report error
+            self.retailerList = nil;
+            [self setErrorState];
             return;
         }
         
@@ -160,7 +179,8 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
                                  callback:^(id<CSRetailer> retailer, NSError *error)
      {
          if (error) {
-             // TODO: report error
+             self.retailerList = nil;
+             [self setErrorState];
              return;
          }
          
@@ -172,13 +192,13 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.api getApplication:^(id<CSApplication> app, NSError *error) {
         if (error) {
-            // TODO: report error
+            [self setErrorState];
             return;
         }
         
         [app getRetailers:^(id<CSRetailerListPage> firstPage, NSError *error) {
             if (error) {
-                // TODO: report error
+                [self setErrorState];
                 return;
             }
             

@@ -155,10 +155,7 @@
     [productSummaryCell setTheme:self];
     
     CSCTAButton *ctaButton = [CSCTAButton appearance];
-    [ctaButton setBackgroundImage:[self callToActionButtonBackgroundImage]
-                         forState:UIControlStateNormal];
-    [ctaButton setTitleFont:[self callToActionButtonFont]];
-    [ctaButton setTitleColor:[self callToActionButtonTextColor]];
+    [self themeCTAButton:ctaButton];
     
     UITableView *tableView = [UITableView appearance];
     [tableView setBackgroundColor:[self tableViewBackgroundColor]];
@@ -170,6 +167,15 @@
     [retailerEditButton setTitleColor:[self homePageSmallButtonTitleColor]];
     [retailerEditButton setTitleShadowColor:[self homePageSmallButtonTitleShadowColor]];
     [retailerEditButton setTitleLabelShadowOffset:[self homePageSmallButtonTitleShadowOffset]];
+}
+
+- (void)themeCTAButton:(CSCTAButton *)button
+{
+    [button setBackgroundImage:[self callToActionButtonBackgroundImage]
+                      forState:UIControlStateNormal];
+    [button setTitleFont:[self callToActionButtonFont]];
+    [button setTitleColor:[self callToActionButtonTextColor]];
+
 }
 
 @end
