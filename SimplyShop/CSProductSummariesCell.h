@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SwipeView/SwipeView.h>
 
 @protocol CSProductSummaryList;
 
-@interface CSProductSummariesCell : UITableViewCell <SwipeViewDataSource>
+@interface CSProductSummariesCell : UITableViewCell
+<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *productSummaries;
 
-@property (weak, nonatomic) IBOutlet SwipeView *swipeView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end

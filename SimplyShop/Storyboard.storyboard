@@ -140,12 +140,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="381"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7A-p0-fAW" userLabel="Retailers" customClass="SwipeView">
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <connections>
-                                                        <outlet property="dataSource" destination="hv6-34-2sh" id="WZ8-DR-5py"/>
-                                                    </connections>
-                                                </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Top Products" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Wz-X8-VJw">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="146" id="482-DB-rVi"/>
@@ -173,24 +167,48 @@
                                                         <action selector="didTapSeeAllTopProductsButton:" destination="xEY-py-EMq" eventType="touchUpInside" id="uzO-S7-2Vs"/>
                                                     </connections>
                                                 </button>
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZK2-r3-fXt">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="300" id="wVy-IU-Ulh"/>
+                                                    </constraints>
+                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lOQ-WL-z6j">
+                                                        <size key="itemSize" width="300" height="300"/>
+                                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                        <inset key="sectionInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    </collectionViewFlowLayout>
+                                                    <cells>
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CSProductSummaryCell" id="HEh-3G-tUq" customClass="CSProductSummaryCell">
+                                                            <rect key="frame" x="20" y="0.0" width="300" height="300"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                                <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            </view>
+                                                        </collectionViewCell>
+                                                    </cells>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="hv6-34-2sh" id="aie-0f-nel"/>
+                                                        <outlet property="delegate" destination="hv6-34-2sh" id="Hmx-PP-ZDT"/>
+                                                    </connections>
+                                                </collectionView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="q7A-p0-fAW" firstAttribute="top" secondItem="6Wz-X8-VJw" secondAttribute="bottom" constant="20" type="user" id="4Mc-4X-eTY"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="q7A-p0-fAW" secondAttribute="bottom" constant="1" type="user" id="J0i-mo-n4N"/>
                                             <constraint firstItem="Ppl-Fk-biT" firstAttribute="baseline" secondItem="6Wz-X8-VJw" secondAttribute="baseline" type="default" id="MhH-tU-OrE"/>
-                                            <constraint firstItem="q7A-p0-fAW" firstAttribute="trailing" secondItem="hv6-34-2sh" secondAttribute="trailing" type="default" id="NjN-eG-Hlb"/>
+                                            <constraint firstItem="ZK2-r3-fXt" firstAttribute="trailing" secondItem="hv6-34-2sh" secondAttribute="trailing" type="user" id="Qd6-RP-r08"/>
                                             <constraint firstAttribute="trailing" secondItem="Ppl-Fk-biT" secondAttribute="trailing" constant="20" type="default" id="gHJ-6x-gRh"/>
-                                            <constraint firstItem="q7A-p0-fAW" firstAttribute="leading" secondItem="hv6-34-2sh" secondAttribute="leading" type="default" id="jdi-1t-M65"/>
+                                            <constraint firstItem="ZK2-r3-fXt" firstAttribute="leading" secondItem="hv6-34-2sh" secondAttribute="leading" type="user" id="m59-fu-c7W"/>
                                             <constraint firstItem="Ppl-Fk-biT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Wz-X8-VJw" secondAttribute="trailing" priority="747" constant="8" symbolic="YES" type="user" id="n4l-Ms-ohs"/>
                                             <constraint firstItem="6Wz-X8-VJw" firstAttribute="leading" secondItem="hv6-34-2sh" secondAttribute="leading" constant="20" type="user" id="nkA-kj-l0h"/>
-                                            <constraint firstAttribute="bottom" secondItem="q7A-p0-fAW" secondAttribute="bottom" constant="1" id="uap-DG-1xm"/>
+                                            <constraint firstItem="ZK2-r3-fXt" firstAttribute="top" secondItem="hv6-34-2sh" secondAttribute="top" constant="81" id="pFw-Pz-48Z"/>
                                             <constraint firstItem="6Wz-X8-VJw" firstAttribute="top" secondItem="hv6-34-2sh" secondAttribute="top" constant="34" id="zJG-YY-nE2"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="swipeView" destination="q7A-p0-fAW" id="5Wv-hl-d2K"/>
+                                            <outlet property="collectionView" destination="ZK2-r3-fXt" id="xtz-Fp-mg0"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="212" id="EYf-RC-NBp" customClass="CSFavoriteStoresCell">
@@ -396,7 +414,15 @@
         <class className="CSProductSummariesCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummariesCell.h"/>
             <relationships>
-                <relationship kind="outlet" name="swipeView" candidateClass="SwipeView"/>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+            </relationships>
+        </class>
+        <class className="CSProductSummaryCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummaryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="productDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="productNameLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
@@ -414,13 +440,6 @@
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="SwipeView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SwipeView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dataSource"/>
-                <relationship kind="outlet" name="delegate"/>
-            </relationships>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>

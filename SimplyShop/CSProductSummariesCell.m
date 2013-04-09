@@ -7,9 +7,8 @@
 //
 
 #import "CSProductSummariesCell.h"
-#import "CSProductSummaryView.h"
+#import "CSProductSummaryCell.h"
 #import <CSApi/CSAPI.h>
-#import <SwipeView/SwipeView.h>
 
 @interface CSProductSummariesCell ()
 
@@ -18,8 +17,6 @@
 @end
 
 @implementation CSProductSummariesCell
-
-@synthesize swipeView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -45,13 +42,6 @@
     return self;
 }
 
-- (void)setSwipeView:(SwipeView *)newSwipeView
-{
-    swipeView = newSwipeView;
-    self.swipeView.truncateFinalPage = YES;
-    self.swipeView.pagingEnabled = NO;
-}
-
 - (void)initialize
 {
     [self addObserver:self
@@ -71,47 +61,44 @@
                        context:(void *)context
 {
     if ([keyPath isEqualToString:@"productSummaries"]) {
-        [self.swipeView reloadData];
+        [self.collectionView reloadData];
         return;
     }
 }
 
-- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section
 {
     return self.productSummaries.count;
 }
 
-
-- (UIView *)swipeView:(SwipeView *)swipeView
-   viewForItemAtIndex:(NSInteger)index
-          reusingView:(UIView *)view
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CSProductSummaryView *productSummaryView = nil;
-    if (view) {
-        productSummaryView = (CSProductSummaryView *)view;
-    }
+    CSProductSummaryCell *cell =
+    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSProductSummaryCell"
+                                              forIndexPath:indexPath];
     
-    if ( ! productSummaryView) {
-        productSummaryView = [[[NSBundle mainBundle]
-                               loadNibNamed:@"CSProductSummaryView"
-                               owner:nil
-                               options:nil]
-                              objectAtIndex:0];
-    }
     
-    [productSummaryView setLoadingAddress:@(index)];
-    [self.productSummaries getProductSummaryAtIndex:index
-                                           callback:^(id<CSProductSummary> result, NSError *error)
+    [cell setLoadingAddress:indexPath];
+    [self.productSummaries getProductSummaryAtIndex:indexPath.row
+                                           callback:^(id<CSProductSummary> result,
+                                                      NSError *error)
     {
         if (error) {
             // TODO: handle error
             return;
         }
         
-        [productSummaryView setProductSummary:result address:@(index)];
+        [cell setProductSummary:result address:indexPath];
     }];
     
-    return productSummaryView;
+    return cell;
 }
 
 @end
