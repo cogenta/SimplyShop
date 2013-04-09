@@ -85,12 +85,21 @@
 
 - (void)setLoadingAddress:(NSObject *)address
 {
+    if ([address isEqual:self.address]) {
+        return;
+    }
+    
     self.productSummary = nil;
     self.address = address;
 }
 
 - (void)setProductSummary:(id<CSProductSummary>)productSummary address:(NSObject *)address
 {
+    if (self.productSummary) {
+        // A product summary is already set.
+        return;
+    }
+    
     if ( ! [address isEqual:self.address]) {
         // The view has been reused with another address.
         return;

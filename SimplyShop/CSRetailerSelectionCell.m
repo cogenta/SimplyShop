@@ -14,8 +14,6 @@
 
 @interface CSRetailerSelectionCell ()
 
-@property (nonatomic, weak) NSObject<CSRetailerList> *retailerList;
-@property (nonatomic, weak) NSSet *selectedURLs;
 @property (nonatomic, strong) NSObject *address;
 @property (nonatomic, strong) NSObject<CSRetailer> *retailer;
 
@@ -50,15 +48,6 @@
     self.layer.shouldRasterize = YES;
     self.address = nil;
     [self updateContent];
-    [self addObserver:self
-           forKeyPath:@"retailer"
-              options:NSKeyValueObservingOptionNew
-              context:NULL];
-}
-
-- (void)dealloc
-{
-    [self removeObserver:self forKeyPath:@"retailer"];
 }
 
 - (void)setIsReady:(BOOL)newIsReady
@@ -70,36 +59,28 @@
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if ([keyPath isEqualToString:@"retailer"]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self updateContent];
-        });
-    }
-}
-
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    self.address = nil;
-    self.retailerList = nil;
-    self.retailer = nil;
-    self.selectedURLs = nil;
     self.selected = NO;
-    self.retailerNameLabel.hidden = NO;
     self.logoImageView.hidden = YES;
     [self.logoImageView cancelCurrentImageLoad];
-    self.logoImageView.image = nil;
+
+    self.retailerNameLabel.text = @"";
+    self.retailerNameLabel.hidden = NO;
+    
+    self.address = nil;
+    self.retailer = nil;
+
     self.isReady = NO;
-    [self updateContent];
 }
 
 - (void)setTheme:(id<CSTheme>)newTheme
 {
+    if (newTheme == theme) {
+        return;
+    }
+    
     theme = newTheme;
     UIImage *backgroundImage = [theme collectionViewCellBackgroundImage];
     UIImage *selectedBackgroundImage = [theme collectionViewCellSelectedBackgroundImage];
