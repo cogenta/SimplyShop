@@ -11,7 +11,6 @@
 #import <MBCategory/MBCategory.h>
 #import "CSRetailerSelectionCell.h"
 #import "CSProductSummariesCell.h"
-#import "CSRetailerView.h"
 #import "CSProductSummaryView.h"
 #import "CSCTAButton.h"
 #import "CSAppearanceButton.h"
@@ -151,9 +150,6 @@
     
     CSRetailerSelectionCell *retailerCell = [CSRetailerSelectionCell appearance];
     [retailerCell setTheme:self];
-    
-    CSRetailerView *retailerView = [CSRetailerView appearance];
-    [retailerView setTheme:self];
     
     CSProductSummaryView *productSummaryView = [CSProductSummaryView appearance];
     [productSummaryView setTheme:self];

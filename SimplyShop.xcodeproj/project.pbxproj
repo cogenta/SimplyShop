@@ -36,8 +36,6 @@
 		BE3D4E251704A30300644AD6 /* TileBackgroundSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E231704A30300644AD6 /* TileBackgroundSelected@2x.png */; };
 		BE3D4E281704B5A600644AD6 /* CSCTAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E271704B5A600644AD6 /* CSCTAButton.m */; };
 		BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */; };
-		BE3D4E2E170C6B3500644AD6 /* CSRetailerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2D170C6B3500644AD6 /* CSRetailerView.m */; };
-		BE3D4E30170C6C6000644AD6 /* CSRetailerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4E2F170C6C6000644AD6 /* CSRetailerView.xib */; };
 		BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */; };
 		BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */; };
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
@@ -98,9 +96,6 @@
 		BE3D4E271704B5A600644AD6 /* CSCTAButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCTAButton.m; sourceTree = "<group>"; };
 		BE3D4E29170C572800644AD6 /* CSHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSHomePageViewController.h; sourceTree = "<group>"; };
 		BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSHomePageViewController.m; sourceTree = "<group>"; };
-		BE3D4E2C170C6B3500644AD6 /* CSRetailerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailerView.h; sourceTree = "<group>"; };
-		BE3D4E2D170C6B3500644AD6 /* CSRetailerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailerView.m; sourceTree = "<group>"; };
-		BE3D4E2F170C6C6000644AD6 /* CSRetailerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRetailerView.xib; sourceTree = "<group>"; };
 		BE3D4E33170DDF9100644AD6 /* CSAppearanceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAppearanceButton.h; sourceTree = "<group>"; };
 		BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAppearanceButton.m; sourceTree = "<group>"; };
 		BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFavoriteStoresCell.h; sourceTree = "<group>"; };
@@ -253,9 +248,6 @@
 			children = (
 				BE3D4E261704B5A600644AD6 /* CSCTAButton.h */,
 				BE3D4E271704B5A600644AD6 /* CSCTAButton.m */,
-				BE3D4E2C170C6B3500644AD6 /* CSRetailerView.h */,
-				BE3D4E2D170C6B3500644AD6 /* CSRetailerView.m */,
-				BE3D4E2F170C6C6000644AD6 /* CSRetailerView.xib */,
 				BE3D4E33170DDF9100644AD6 /* CSAppearanceButton.h */,
 				BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */,
 				BE3D4E1A1704632900644AD6 /* CSRetailerSelectionCell.h */,
@@ -370,7 +362,6 @@
 				BE3D4E1E1704651900644AD6 /* TileBackground@2x.png in Resources */,
 				BE3D4E241704A30300644AD6 /* CallToAction@2x.png in Resources */,
 				BE3D4E251704A30300644AD6 /* TileBackgroundSelected@2x.png in Resources */,
-				BE3D4E30170C6C6000644AD6 /* CSRetailerView.xib in Resources */,
 				BEDC02D6171312BC0023059E /* CSProductSummaryView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,7 +418,6 @@
 				BE3D4E21170465AD00644AD6 /* CSRetailerSelectionViewController.m in Sources */,
 				BE3D4E281704B5A600644AD6 /* CSCTAButton.m in Sources */,
 				BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */,
-				BE3D4E2E170C6B3500644AD6 /* CSRetailerView.m in Sources */,
 				BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */,
 				BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */,
 				BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */,

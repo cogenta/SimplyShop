@@ -7,7 +7,6 @@
 //
 
 #import "CSHomePageViewController.h"
-#import "CSRetailerView.h"
 #import "CSRetailerSelectionViewController.h"
 #import "CSFavoriteStoresCell.h"
 #import "CSProductSummariesCell.h"
