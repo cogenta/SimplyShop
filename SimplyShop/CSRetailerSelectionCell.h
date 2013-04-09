@@ -19,8 +19,8 @@
 
 @property (readonly) BOOL isReady;
 
-- (void)setLoadingRetailerForIndex:(NSInteger)index;
+- (void)setLoadingAddress:(NSObject *)address;
 - (void)setRetailer:(NSObject<CSRetailer> *)retailer
-              index:(NSInteger)index;
+            address:(NSObject *)address;
 
 @end

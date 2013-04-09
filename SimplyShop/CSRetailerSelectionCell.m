@@ -16,7 +16,7 @@
 
 @property (nonatomic, weak) NSObject<CSRetailerList> *retailerList;
 @property (nonatomic, weak) NSSet *selectedURLs;
-@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) NSObject *address;
 @property (nonatomic, strong) NSObject<CSRetailer> *retailer;
 
 - (void)initialize;
@@ -52,7 +52,7 @@
 {
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     self.layer.shouldRasterize = YES;
-    self.index = NSNotFound;
+    self.address = nil;
     [self updateContent];
     [self addObserver:self
            forKeyPath:@"retailer"
@@ -89,7 +89,7 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    self.index = NSNotFound;
+    self.address = nil;
     self.retailerList = nil;
     self.retailer = nil;
     self.selectedURLs = nil;
@@ -111,20 +111,20 @@
     self.selectedBackgroundView = [[UIImageView alloc] initWithImage:selectedBackgroundImage];
 }
 
-- (void)setLoadingRetailerForIndex:(NSInteger)index
+- (void)setLoadingAddress:(NSObject *)address
 {
     self.retailer = nil;
-    self.index = index;
+    self.address = address;
     self.isReady = NO;
     [self updateContent];
 }
 
 - (void)setRetailer:(NSObject<CSRetailer> *)retailer
-              index:(NSInteger)index
+            address:(NSObject *)address
 {
-    if (index != self.index) {
+    if (address != self.address) {
         // We ignore the retailer data because the cell has been reused for a
-        // different index or list.
+        // different retailer.
         return;
     }
     

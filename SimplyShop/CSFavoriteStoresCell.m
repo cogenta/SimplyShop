@@ -7,9 +7,8 @@
 //
 
 #import "CSFavoriteStoresCell.h"
-#import "CSRetailerView.h"
+#import "CSRetailerSelectionCell.h"
 #import <CSApi/CSAPI.h>
-#import <SwipeView/SwipeView.h>
 
 @interface CSFavoriteStoresCell ()
 
@@ -20,13 +19,10 @@
 
 @implementation CSFavoriteStoresCell
 
-@synthesize swipeView;
-
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self initialize];
     }
     return self;
 }
@@ -40,6 +36,11 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    [self initialize];
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -50,13 +51,6 @@
     return self;
 }
 
-- (void)setSwipeView:(SwipeView *)newSwipeView
-{
-    swipeView = newSwipeView;
-    self.swipeView.truncateFinalPage = YES;
-    self.swipeView.pagingEnabled = NO;
-}
-
 - (void)initialize
 {
     self.retailers = [NSMutableDictionary dictionary];
@@ -64,6 +58,7 @@
            forKeyPath:@"selectedRetailerURLs"
               options:NSKeyValueObservingOptionNew
               context:NULL];
+    self.collectionView.alwaysBounceHorizontal = YES;
 }
 
 - (void)dealloc
@@ -77,40 +72,34 @@
                        context:(void *)context
 {
     if ([keyPath isEqualToString:@"selectedRetailerURLs"]) {
-        [self.swipeView reloadData];
+        [self.collectionView reloadData];
         return;
     }
 }
 
-- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return [self.selectedRetailerURLs count];
 }
 
 
-- (UIView *)swipeView:(SwipeView *)swipeView
-   viewForItemAtIndex:(NSInteger)index
-          reusingView:(UIView *)view
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CSRetailerView *retailerView = nil;
-    if (view) {
-        retailerView = (CSRetailerView *)view;
-    }
+    CSRetailerSelectionCell *cell =
+    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSRetailerSelectionCell"
+                                              forIndexPath:indexPath];
     
-    if ( ! retailerView) {
-        retailerView = [[[NSBundle mainBundle]
-                         loadNibNamed:@"CSRetailerView"
-                         owner:nil
-                         options:nil]
-                        objectAtIndex:0];
-    }
-    
-    NSURL *retailerURL = [self.selectedRetailerURLs objectAtIndex:index];
+    NSURL *retailerURL = [self.selectedRetailerURLs objectAtIndex:indexPath.row];
     
     id<CSRetailer> retailer = [self.retailers objectForKey:retailerURL];
-    [retailerView setLoadingURL:retailerURL];
+    [cell setLoadingAddress:retailerURL];
     if (retailer) {
-        [retailerView setRetailer:retailer URL:retailerURL];
+        [cell setRetailer:retailer address:retailerURL];
     } else {
         [self.api getRetailer:retailerURL
                      callback:^(id<CSRetailer> retailer, NSError *error)
@@ -121,10 +110,20 @@
              }
              
              [self.retailers setObject:retailer forKey:retailerURL];
-             [retailerView setRetailer:retailer URL:retailerURL];
+             [cell setRetailer:retailer address:retailerURL];
          }];
     }
-    return retailerView;
+    return cell;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
 }
 
 @end

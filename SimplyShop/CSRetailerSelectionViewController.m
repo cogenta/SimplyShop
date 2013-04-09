@@ -101,7 +101,7 @@
     CSRetailerSelectionCell *cell =
     [collectionView dequeueReusableCellWithReuseIdentifier:@"CSRetailerSelectionCell"
                                               forIndexPath:indexPath];
-    [cell setLoadingRetailerForIndex:indexPath.row];
+    [cell setLoadingAddress:indexPath];
     
     [self.retailerList getRetailerAtIndex:indexPath.row
                                  callback:^(id<CSRetailer> retailer, NSError *error)
@@ -111,7 +111,7 @@
             return;
         }
         
-        [cell setRetailer:retailer index:indexPath.row];
+        [cell setRetailer:retailer address:indexPath];
         BOOL selected = [self.selectedRetailerURLs containsObject:retailer.URL];
         if (selected && ! cell.isSelected) {
             [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];

@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SwipeView/SwipeView.h>
 
 @class CSAPI;
 
-@interface CSFavoriteStoresCell : UITableViewCell <SwipeViewDataSource>
+@interface CSFavoriteStoresCell : UITableViewCell
+<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) NSArray *selectedRetailerURLs;
 
-@property (weak, nonatomic) IBOutlet SwipeView *swipeView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
