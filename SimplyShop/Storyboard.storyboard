@@ -163,8 +163,68 @@
                         <sections>
                             <tableViewSection id="WAN-Ok-Bfq">
                                 <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSProductSummaryView_TopProducts" rowHeight="382" id="hv6-34-2sh" customClass="CSProductSummariesCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="382"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="381"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7A-p0-fAW" userLabel="Retailers" customClass="SwipeView">
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="hv6-34-2sh" id="WZ8-DR-5py"/>
+                                                    </connections>
+                                                </view>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Top Products" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Wz-X8-VJw">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="146" id="482-DB-rVi"/>
+                                                        <constraint firstAttribute="width" priority="1" constant="657" type="user" id="ZM7-pA-HUV"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppl-Fk-biT" userLabel="See All Top Products" customClass="CSAppearanceButton">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="73" type="user" id="2bI-Gz-qJl"/>
+                                                        <constraint firstAttribute="height" constant="18" id="Za3-nZ-CBk"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                                    <state key="normal" title="See All >">
+                                                        <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="didTapSeeAllTopProductsButton:" destination="xEY-py-EMq" eventType="touchUpInside" id="uzO-S7-2Vs"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="q7A-p0-fAW" firstAttribute="top" secondItem="6Wz-X8-VJw" secondAttribute="bottom" constant="20" type="user" id="4Mc-4X-eTY"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="q7A-p0-fAW" secondAttribute="bottom" constant="1" type="user" id="J0i-mo-n4N"/>
+                                            <constraint firstItem="Ppl-Fk-biT" firstAttribute="baseline" secondItem="6Wz-X8-VJw" secondAttribute="baseline" type="default" id="MhH-tU-OrE"/>
+                                            <constraint firstItem="q7A-p0-fAW" firstAttribute="trailing" secondItem="hv6-34-2sh" secondAttribute="trailing" type="default" id="NjN-eG-Hlb"/>
+                                            <constraint firstAttribute="trailing" secondItem="Ppl-Fk-biT" secondAttribute="trailing" constant="20" type="default" id="gHJ-6x-gRh"/>
+                                            <constraint firstItem="q7A-p0-fAW" firstAttribute="leading" secondItem="hv6-34-2sh" secondAttribute="leading" type="default" id="jdi-1t-M65"/>
+                                            <constraint firstItem="Ppl-Fk-biT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Wz-X8-VJw" secondAttribute="trailing" priority="747" constant="8" symbolic="YES" type="user" id="n4l-Ms-ohs"/>
+                                            <constraint firstItem="6Wz-X8-VJw" firstAttribute="leading" secondItem="hv6-34-2sh" secondAttribute="leading" constant="20" type="user" id="nkA-kj-l0h"/>
+                                            <constraint firstAttribute="bottom" secondItem="q7A-p0-fAW" secondAttribute="bottom" constant="1" id="uap-DG-1xm"/>
+                                            <constraint firstItem="6Wz-X8-VJw" firstAttribute="top" secondItem="hv6-34-2sh" secondAttribute="top" constant="34" id="zJG-YY-nE2"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="swipeView" destination="q7A-p0-fAW" id="5Wv-hl-d2K"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="212" id="EYf-RC-NBp" customClass="CSFavoriteStoresCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="768" height="212"/>
+                                        <rect key="frame" x="0.0" y="382" width="768" height="212"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="211"/>
@@ -189,7 +249,7 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVq-q7-aoI" customClass="CSAppearanceButton">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVq-q7-aoI" userLabel="Choose Stores Button" customClass="CSAppearanceButton">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="PBp-Gh-GcJ"/>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="73" type="user" id="Pbm-qI-GKs"/>
@@ -221,7 +281,7 @@
                                             <constraint firstItem="U3n-yj-jj8" firstAttribute="top" secondItem="MLr-Vs-uCp" secondAttribute="bottom" constant="20" type="user" id="zff-Z3-4Af"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="retailersSwipeView" destination="U3n-yj-jj8" id="CzH-YW-KlA"/>
+                                            <outlet property="swipeView" destination="U3n-yj-jj8" id="TFR-IO-lYI"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -235,6 +295,7 @@
                     <navigationItem key="navigationItem" title="Dashboard" id="NXv-dU-jYd"/>
                     <connections>
                         <outlet property="favoriteStoresCell" destination="EYf-RC-NBp" id="i9P-OY-g61"/>
+                        <outlet property="topProductsCell" destination="hv6-34-2sh" id="25P-Sf-vpu"/>
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="thN-oO-ZtE"/>
                     </connections>
@@ -351,6 +412,75 @@
             <point key="canvasLocation" x="316" y="-80"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CSAppearanceButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSAppearanceButton.h"/>
+        </class>
+        <class className="CSCTAButton" superclassName="CSAppearanceButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCTAButton.h"/>
+        </class>
+        <class className="CSFavoriteStoresCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSFavoriteStoresCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="swipeView" candidateClass="SwipeView"/>
+            </relationships>
+        </class>
+        <class className="CSHomePageViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSHomePageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="didTapChooseRetailersButton:"/>
+                <relationship kind="action" name="didTapSeeAllTopProductsButton:"/>
+                <relationship kind="action" name="doneChangeRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="doneInitialRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="favoriteStoresCell" candidateClass="CSFavoriteStoresCell"/>
+                <relationship kind="outlet" name="topProductsCell" candidateClass="CSProductSummariesCell"/>
+            </relationships>
+        </class>
+        <class className="CSProductSummariesCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummariesCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="swipeView" candidateClass="SwipeView"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerSelectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+            </relationships>
+        </class>
+        <class className="CSRoundImageView" superclassName="UIImageView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRoundImageView.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="SwipeView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SwipeView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dataSource"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -20,7 +20,7 @@
 
 @implementation CSFavoriteStoresCell
 
-@synthesize retailersSwipeView;
+@synthesize swipeView;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -50,11 +50,11 @@
     return self;
 }
 
-- (void)setRetailersSwipeView:(SwipeView *)newRetailersSwipeView
+- (void)setSwipeView:(SwipeView *)newSwipeView
 {
-    retailersSwipeView = newRetailersSwipeView;
-    self.retailersSwipeView.truncateFinalPage = YES;
-    self.retailersSwipeView.pagingEnabled = NO;
+    swipeView = newSwipeView;
+    self.swipeView.truncateFinalPage = YES;
+    self.swipeView.pagingEnabled = NO;
 }
 
 - (void)initialize
@@ -77,7 +77,7 @@
                        context:(void *)context
 {
     if ([keyPath isEqualToString:@"selectedRetailerURLs"]) {
-        [self.retailersSwipeView reloadData];
+        [self.swipeView reloadData];
         return;
     }
 }

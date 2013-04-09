@@ -10,15 +10,18 @@
 
 @protocol CSUser;
 @class CSAPI;
+@class CSProductSummariesCell;
 @class CSFavoriteStoresCell;
 
 @interface CSHomePageViewController : UITableViewController
 
 @property (strong, nonatomic) CSAPI *api;
 
+@property (weak, nonatomic) IBOutlet CSProductSummariesCell *topProductsCell;
 @property (weak, nonatomic) IBOutlet CSFavoriteStoresCell *favoriteStoresCell;
 
 - (IBAction)didTapChooseRetailersButton:(id)sender;
+- (IBAction)didTapSeeAllTopProductsButton:(id)sender;
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;
 

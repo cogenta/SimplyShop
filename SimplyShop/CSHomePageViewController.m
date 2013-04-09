@@ -10,13 +10,16 @@
 #import "CSRetailerView.h"
 #import "CSRetailerSelectionViewController.h"
 #import "CSFavoriteStoresCell.h"
+#import "CSProductSummariesCell.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSHomePageViewController ()
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
+@property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
 
 - (void)loadRetailers;
+- (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
 
 @end
@@ -61,6 +64,20 @@
     }
 }
 
+- (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group
+{
+    [group getProductSummaries:^(id<CSProductSummaryListPage> firstPage,
+                                 NSError *error) {
+        if (error) {
+            // TODO: handle error
+            return;
+        }
+        
+        self.topProductSummaries = firstPage.productSummaryList;
+        self.topProductsCell.productSummaries = firstPage.productSummaryList;
+    }];
+}
+
 - (void)loadRetailers
 {
     [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList, id<CSGroup> group, NSError *error)
@@ -69,6 +86,8 @@
             // TODO: handle error
             return;
         }
+        
+        [self loadTopProductSummariesFromGroup:group];
         
         __block NSInteger urlsToGet = likeList.count;
         if (urlsToGet == 0) {
@@ -110,6 +129,9 @@
 
 - (IBAction)didTapChooseRetailersButton:(id)sender {
     [self performSegueWithIdentifier:@"changeRetailerSelection" sender:nil];
+}
+
+- (IBAction)didTapSeeAllTopProductsButton:(id)sender {
 }
 
 - (void)doneInitialRetailerSelection:(UIStoryboardSegue *)segue
@@ -182,6 +204,8 @@
             // TODO: handle error
             return;
         }
+        
+        [self loadTopProductSummariesFromGroup:group];
         
         __block NSInteger likesToCheck = likeList.count;
         void (^applyChanges)() = ^{

@@ -16,6 +16,6 @@
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) NSArray *selectedRetailerURLs;
 
-@property (weak, nonatomic) IBOutlet SwipeView *retailersSwipeView;
+@property (weak, nonatomic) IBOutlet SwipeView *swipeView;
 
 @end
