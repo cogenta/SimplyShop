@@ -204,13 +204,12 @@
             return;
         }
         
-        [self loadTopProductSummariesFromGroup:group];
-        
         __block NSInteger likesToCheck = likeList.count;
         void (^applyChanges)() = ^{
             __block NSInteger changesToApply = [likesToDelete count] + [urlsToAdd count];
             if (changesToApply == 0) {
                 self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
+                [self loadTopProductSummariesFromGroup:group];
             }
             for (id<CSLike> like in likesToDelete) {
                 [like remove:^(BOOL success, NSError *error) {
@@ -218,6 +217,7 @@
                     --changesToApply;
                     if (changesToApply == 0) {
                         self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
+                        [self loadTopProductSummariesFromGroup:group];
                     }
                 }];
             }
@@ -230,6 +230,7 @@
                     --changesToApply;
                     if (changesToApply == 0) {
                         self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
+                        [self loadTopProductSummariesFromGroup:group];
                     }
                 }];
             }
