@@ -114,6 +114,11 @@
     return CGSizeMake(0.0, 1.0);
 }
 
+- (SEL)producNameTransform
+{
+    return @selector(uppercaseString);
+}
+
 - (void)apply
 {
     UINavigationBar *navBar = [UINavigationBar appearance];

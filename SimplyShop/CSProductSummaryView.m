@@ -16,6 +16,7 @@
 @property (strong, nonatomic) UIImageView *backgroundView;
 @property (strong, nonatomic) NSObject *address;
 @property (strong, nonatomic) id<CSProductSummary> productSummary;
+@property (assign, nonatomic) SEL nameTransform;
 
 - (void)updateContent;
 - (void)initialize;
@@ -46,6 +47,8 @@
 
 - (void)initialize
 {
+    self.nameTransform = @selector(self);
+    
     [self addObserver:self
            forKeyPath:@"productSummary"
               options:NSKeyValueObservingOptionNew
@@ -81,6 +84,7 @@
     }
     
     [self.backgroundView setImage:backgroundImage];
+    self.nameTransform = [theme producNameTransform];
 }
 
 - (void)setLoadingAddress:(NSObject *)address
@@ -99,16 +103,24 @@
     self.productSummary = productSummary;
 }
 
+- (NSString *)transformedName:(NSString *)name
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    return [name performSelector:self.nameTransform];
+#pragma clang diagnostic pop
+}
+
 - (void)updateContent
 {
     if ( ! self.productSummary) {
-        self.productNameLabel.text = @"Loading";
+        self.productNameLabel.text = [self transformedName:@"Loading"];
         self.productDescriptionLabel.text = @"...";
         self.productImageView.hidden = YES;
         return;
     }
     
-    self.productNameLabel.text = self.productSummary.name;
+    self.productNameLabel.text = [self transformedName:self.productSummary.name];
     if (self.productSummary.description != (id) [NSNull null]) {
         self.productDescriptionLabel.text = self.productSummary.description;
     }

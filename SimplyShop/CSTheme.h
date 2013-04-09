@@ -13,5 +13,6 @@
 - (void)apply;
 - (UIImage *)collectionViewCellBackgroundImage;
 - (UIImage *)collectionViewCellSelectedBackgroundImage;
+- (SEL)producNameTransform;
 
 @end
