@@ -37,13 +37,22 @@
     return self;
 }
 
-- (void)awakeFromNib
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    [self initialize];
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initialize];
+    }
+    return self;
 }
 
 - (void)initialize
 {
+    [self addSubview:[[[NSBundle mainBundle]
+                       loadNibNamed:@"CSRetailerSelectionCell"
+                       owner:self
+                       options:nil]
+                      objectAtIndex:0]];
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     self.layer.shouldRasterize = YES;
     self.address = nil;

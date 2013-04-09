@@ -43,6 +43,7 @@
 		BEDC02D417130F220023059E /* CSProductSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDC02D317130F220023059E /* CSProductSummaryView.m */; };
 		BEDC02D6171312BC0023059E /* CSProductSummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02D5171312BC0023059E /* CSProductSummaryView.xib */; };
 		BEDC02D9171317A90023059E /* CSProductSummariesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDC02D8171317A90023059E /* CSProductSummariesCell.m */; };
+		BEDC02DB17144DB20023059E /* CSRetailerSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		BEDC02D5171312BC0023059E /* CSProductSummaryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductSummaryView.xib; sourceTree = "<group>"; };
 		BEDC02D7171317A80023059E /* CSProductSummariesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductSummariesCell.h; sourceTree = "<group>"; };
 		BEDC02D8171317A90023059E /* CSProductSummariesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductSummariesCell.m; sourceTree = "<group>"; };
+		BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRetailerSelectionCell.xib; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -252,6 +254,7 @@
 				BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */,
 				BE3D4E1A1704632900644AD6 /* CSRetailerSelectionCell.h */,
 				BE3D4E1B1704632900644AD6 /* CSRetailerSelectionCell.m */,
+				BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */,
 				BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */,
 				BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */,
 				BEA6DA38170EE8C6001AC881 /* CSRoundImageView.h */,
@@ -363,6 +366,7 @@
 				BE3D4E241704A30300644AD6 /* CallToAction@2x.png in Resources */,
 				BE3D4E251704A30300644AD6 /* TileBackgroundSelected@2x.png in Resources */,
 				BEDC02D6171312BC0023059E /* CSProductSummaryView.xib in Resources */,
+				BEDC02DB17144DB20023059E /* CSRetailerSelectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
