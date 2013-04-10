@@ -12,7 +12,7 @@
 #import "CSProductSummariesCell.h"
 #import <CSApi/CSAPI.h>
 
-@interface CSHomePageViewController () <UIAlertViewDelegate>
+@interface CSHomePageViewController () <UIAlertViewDelegate, CSFavoriteStoresCellDelegate>
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
@@ -118,6 +118,33 @@
             }];
         }
     }];
+}
+
+- (void)showMissingRetailer:(NSURL *)retailerURL
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Store Gone"
+                                                    message:@"One of your favorite stores cannot be found on the server and will be removed from your favorites."
+                                                   delegate:self
+                                          cancelButtonTitle:@"Okay"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
+   failedToLoadRetailerURL:(NSURL *)retailerURL
+                     error:(NSError *)error
+{
+    if ([error.userInfo[@"NSHTTPPropertyStatusCodeKey"] isEqual:@(404)]) {
+        [self showMissingRetailer:retailerURL];
+        
+        NSMutableSet *retailerSet = [NSMutableSet setWithArray:cell.selectedRetailerURLs];
+        [retailerSet removeObject:retailerURL];
+        [self saveRetailerSelection:retailerSet];
+        
+        return;
+    }
+    
+    [self setErrorState];
 }
 
 - (void)setErrorState

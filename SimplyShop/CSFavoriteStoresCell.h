@@ -9,13 +9,23 @@
 #import <UIKit/UIKit.h>
 
 @class CSAPI;
+@class CSFavoriteStoresCell;
+
+@protocol CSFavoriteStoresCellDelegate <NSObject>
+
+- (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
+   failedToLoadRetailerURL:(NSURL *)retailerURL
+                     error:(NSError *)error;
+
+@end
 
 @interface CSFavoriteStoresCell : UITableViewCell
 <UICollectionViewDataSource, UICollectionViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet id<CSFavoriteStoresCellDelegate> delegate;
+
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) NSArray *selectedRetailerURLs;
-
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end

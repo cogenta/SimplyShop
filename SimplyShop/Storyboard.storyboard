@@ -290,6 +290,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="collectionView" destination="ClB-SG-9Zd" id="hfa-MO-dVf"/>
+                                            <outlet property="delegate" destination="xEY-py-EMq" id="pzT-U3-NKm"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -401,6 +402,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSFavoriteStoresCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="delegate"/>
             </relationships>
         </class>
         <class className="CSHomePageViewController" superclassName="UITableViewController">
@@ -428,7 +430,7 @@
                 <relationship kind="outlet" name="productDescriptionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="productNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="retryButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="retryButton" candidateClass="CSCTAButton"/>
             </relationships>
         </class>
         <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">

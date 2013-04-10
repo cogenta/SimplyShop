@@ -126,7 +126,7 @@
         
         [self.retailer getLogo:^(id<CSPicture> picture, NSError *error) {
             if (error) {
-                // TODO: Handle error
+                // Ignore error.
                 return;
             }
             

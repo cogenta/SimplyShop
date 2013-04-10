@@ -105,7 +105,9 @@
                      callback:^(id<CSRetailer> retailer, NSError *error)
          {
              if (error) {
-                 // TODO: handle error
+                 [self.delegate favoriteStoresCell:self
+                           failedToLoadRetailerURL:retailerURL
+                                             error:error];
                  return;
              }
              
