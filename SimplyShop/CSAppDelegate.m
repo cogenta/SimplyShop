@@ -11,9 +11,9 @@
 #import <CSApi/CSAPI.h>
 #import "CSHomePageViewController.h"
 
-#define kAPIBookmark @"http://lrrr.local:5000/apps/51139a687046797035ad6db6"
-#define kAPIUsername @"53a2abd8-5a96-47a8-8a1f-82cf4a462b57"
-#define kAPIPassword @"ecd50b80-f1f1-4500-816e-ae16f179dd98"
+#define kAPIBookmark @"http://192.168.1.16:5000/apps/5166c038704679e1be1b2c6e"
+#define kAPIUsername @"224f32de-b1df-4bc7-9ef5-c71d8d9c7349"
+#define kAPIPassword @"0647e17d-8813-40b7-adbe-c9553312b1b6"
 
 @interface CSAppDelegate ()
 @property (readonly) NSObject<CSTheme> *theme;
