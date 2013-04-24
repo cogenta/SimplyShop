@@ -8,7 +8,7 @@
 
 #import "CSProductSummaryCell.h"
 #import <CSApi/CSAPI.h>
-#import <UIImageView+WebCache.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "CSTheme.h"
 #import "CSCTAButton.h"
 
