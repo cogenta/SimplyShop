@@ -10,9 +10,14 @@
 #import "CSRetailerSelectionViewController.h"
 #import "CSFavoriteStoresCell.h"
 #import "CSProductSummariesCell.h"
+#import "CSProductDetailViewController.h"
 #import <CSApi/CSAPI.h>
 
-@interface CSHomePageViewController () <UIAlertViewDelegate, CSFavoriteStoresCellDelegate>
+@interface CSHomePageViewController () <
+    UIAlertViewDelegate,
+    CSFavoriteStoresCellDelegate,
+    CSProductSummariesCellDelegate
+>
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
@@ -174,6 +179,36 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         
         return;
     }
+    
+    if ([segue.identifier isEqualToString:@"showProduct"]) {
+        UINavigationController *nav = segue.destinationViewController;
+        CSProductDetailViewController *vc = (id) nav.topViewController;
+        NSDictionary *address = sender;
+        CSProductSummariesCell *cell = address[@"cell"];
+        id<CSProductSummaryList> list = cell.productSummaries;
+        NSInteger index = [address[@"index"] integerValue];
+        [list
+         getProductSummaryAtIndex:index
+         callback:^(id<CSProductSummary> result, NSError *error)
+        {
+            if (error) {
+                [self setErrorState];
+                [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
+                return;
+            }
+            vc.productSummary = result;
+            [result getProduct:^(id<CSProduct> product, NSError *error) {
+                if (error) {
+                    [self setErrorState];
+                    [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
+                    return;
+                }
+                vc.product = product;
+            }];
+        }];
+
+        return;
+    }
 }
 
 
@@ -323,6 +358,19 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             }];
         }
     }];
+}
+
+- (void)productSummariesCell:(CSProductSummariesCell *)cell
+        didSelectItemAtIndex:(NSUInteger)index
+{
+    NSDictionary *address = @{@"cell": cell,
+                              @"index": @(index)};
+    [self performSegueWithIdentifier:@"showProduct" sender:address];
+}
+
+- (void)doneShowProduct:(UIStoryboardSegue *)segue
+{
+    [segue.destinationViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

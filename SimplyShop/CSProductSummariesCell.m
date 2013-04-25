@@ -90,6 +90,18 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SEL sel = @selector(productSummariesCell:didSelectItemAtIndex:);
+    if ( ! [self.delegate respondsToSelector:sel]) {
+        return;
+    }
+    
+    [self.delegate productSummariesCell:self
+                   didSelectItemAtIndex:indexPath.row];
+}
+
 - (void)productSummaryCell:(CSProductSummaryCell *)cell needsReloadWithAddress:(NSObject *)address
 {
     [cell setLoadingAddress:address];

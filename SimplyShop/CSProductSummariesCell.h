@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSProductSummaryList;
+@protocol CSProductSummariesCellDelegate;
 
 @interface CSProductSummariesCell : UITableViewCell
 <UICollectionViewDelegate, UICollectionViewDataSource>
@@ -16,5 +17,17 @@
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *productSummaries;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet id<CSProductSummariesCellDelegate> delegate;
 
 @end
+
+@protocol CSProductSummariesCellDelegate <NSObject>
+
+@optional
+
+- (void)productSummariesCell:(CSProductSummariesCell *)cell
+        didSelectItemAtIndex:(NSUInteger)index;
+
+@end
+
+
