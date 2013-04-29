@@ -32,7 +32,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UzH-ms-J1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-560" y="-1282"/>
+            <point key="canvasLocation" x="-324" y="-2"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YIU-Gg-FhG">
@@ -51,36 +51,49 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gba-ZO-oos" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-358" y="-2892"/>
+            <point key="canvasLocation" x="-324" y="-1120"/>
         </scene>
         <!--Product Detail View Controller-->
         <scene sceneID="b1o-hg-sQX">
             <objects>
                 <viewController id="F7K-1c-g0S" customClass="CSProductDetailViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="7Jl-tx-P64">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="GKj-7V-1lk">
                         <rect key="frame" x="0.0" y="64" width="540" height="556"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0n-3p-0vu">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Loading ..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="500" translatesAutoresizingMaskIntoConstraints="NO" id="eFX-oT-gf9">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CY3-yf-aKT" customClass="CSProductDetailsView">
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Loading Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="500" translatesAutoresizingMaskIntoConstraints="NO" id="0mQ-NE-bhP">
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="731" constant="21" type="user" id="LyF-Jv-mEm"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" red="0.37647058823529411" green="0.37647058823529411" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0mQ-NE-bhP" secondAttribute="bottom" priority="336" constant="20" symbolic="YES" type="user" id="CyM-eh-OrT"/>
+                                    <constraint firstItem="0mQ-NE-bhP" firstAttribute="top" secondItem="CY3-yf-aKT" secondAttribute="top" constant="20" symbolic="YES" type="user" id="GmR-KE-VAT"/>
+                                    <constraint firstItem="0mQ-NE-bhP" firstAttribute="leading" secondItem="CY3-yf-aKT" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="hdP-1d-cQX"/>
+                                    <constraint firstAttribute="bottom" secondItem="0mQ-NE-bhP" secondAttribute="bottom" priority="1" constant="20" symbolic="YES" type="user" id="u9y-ge-cae"/>
+                                    <constraint firstAttribute="trailing" secondItem="0mQ-NE-bhP" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="wPj-i1-6Ah"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="0mQ-NE-bhP" id="D4U-Pa-ulP"/>
+                                </connections>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="m0n-3p-0vu" firstAttribute="leading" secondItem="7Jl-tx-P64" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="B6h-LK-Fc7"/>
-                            <constraint firstItem="m0n-3p-0vu" firstAttribute="top" secondItem="7Jl-tx-P64" secondAttribute="top" constant="20" symbolic="YES" type="default" id="akv-Bz-d69"/>
-                            <constraint firstAttribute="trailing" secondItem="eFX-oT-gf9" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="i2V-Gw-L4T"/>
-                            <constraint firstItem="eFX-oT-gf9" firstAttribute="leading" secondItem="7Jl-tx-P64" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="lzS-BK-927"/>
-                            <constraint firstItem="eFX-oT-gf9" firstAttribute="top" secondItem="m0n-3p-0vu" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="p3k-aV-H5s"/>
+                            <constraint firstItem="CY3-yf-aKT" firstAttribute="centerX" secondItem="GKj-7V-1lk" secondAttribute="centerX" type="default" id="Cqt-K2-5zd"/>
+                            <constraint firstItem="CY3-yf-aKT" firstAttribute="top" secondItem="GKj-7V-1lk" secondAttribute="top" type="user" id="Pvl-sH-svD"/>
+                            <constraint firstItem="CY3-yf-aKT" firstAttribute="bottom" secondItem="GKj-7V-1lk" secondAttribute="bottom" type="default" id="eTb-Hd-LMz"/>
+                            <constraint firstItem="CY3-yf-aKT" firstAttribute="trailing" secondItem="GKj-7V-1lk" secondAttribute="trailing" type="default" id="esX-fK-lgf"/>
+                            <constraint firstItem="CY3-yf-aKT" firstAttribute="leading" secondItem="GKj-7V-1lk" secondAttribute="leading" type="default" id="otF-Fz-zLv"/>
+                            <constraint firstItem="CY3-yf-aKT" firstAttribute="centerY" secondItem="GKj-7V-1lk" secondAttribute="centerY" type="user" id="tIQ-Ls-4pI"/>
                         </constraints>
-                    </view>
+                    </scrollView>
                     <navigationItem key="navigationItem" id="KIR-G7-hYt">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="ux8-Lk-L1B">
                             <connections>
@@ -89,12 +102,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="descriptionLabel" destination="eFX-oT-gf9" id="yDF-xb-rLW"/>
+                        <outlet property="productDetailsView" destination="CY3-yf-aKT" id="urf-2t-T9M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pxr-0e-PSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="546" y="-2912"/>
+            <point key="canvasLocation" x="640" y="-1120"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="huO-qq-cWy">
@@ -183,7 +196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSX-OL-I5w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="316" y="-1282"/>
+            <point key="canvasLocation" x="640" y="-2"/>
         </scene>
         <!--Home Page View Controller - Dashboard-->
         <scene sceneID="Gix-Es-flg">
@@ -391,7 +404,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gie-98-FEK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-560" y="-80"/>
+            <point key="canvasLocation" x="-304" y="1272"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="fWV-7s-YXx">
@@ -452,9 +465,94 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VJb-3J-1nG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="316" y="-80"/>
+            <point key="canvasLocation" x="572" y="1272"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CSAppearanceButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSAppearanceButton.h"/>
+        </class>
+        <class className="CSCTAButton" superclassName="CSAppearanceButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCTAButton.h"/>
+        </class>
+        <class className="CSFavoriteStoresCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSFavoriteStoresCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="CSHomePageViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSHomePageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="didTapChooseRetailersButton:"/>
+                <relationship kind="action" name="didTapSeeAllTopProductsButton:"/>
+                <relationship kind="action" name="doneChangeRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="doneInitialRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="doneShowProduct:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="favoriteStoresCell" candidateClass="CSFavoriteStoresCell"/>
+                <relationship kind="outlet" name="topProductsCell" candidateClass="CSProductSummariesCell"/>
+            </relationships>
+        </class>
+        <class className="CSProductDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="productDetailsView" candidateClass="CSProductDetailsView"/>
+            </relationships>
+        </class>
+        <class className="CSProductDetailsView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailsView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CSProductSummariesCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummariesCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="CSProductSummaryCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummaryCell.h"/>
+            <relationships>
+                <relationship kind="action" name="didTapRetryButton:"/>
+                <relationship kind="outlet" name="delegate"/>
+                <relationship kind="outlet" name="productDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="productNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="retryButton" candidateClass="CSCTAButton"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerSelectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

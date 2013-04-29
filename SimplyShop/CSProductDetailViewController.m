@@ -7,6 +7,7 @@
 //
 
 #import "CSProductDetailViewController.h"
+#import "CSProductDetailsView.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSProductDetailViewController ()
@@ -32,7 +33,7 @@
     [self.recognizer setNumberOfTapsRequired:1];
     self.recognizer.cancelsTouchesInView = NO;
     [self.view.window addGestureRecognizer:self.recognizer];
-
+    
     [super viewDidAppear:animated];
 }
 
@@ -78,16 +79,27 @@
     [self performSegueWithIdentifier:@"doneShowProduct" sender:self];
 }
 
+- (void)updateSizing
+{
+    [self.productDetailsView sizeToFit];
+    CGSize detailsSize = self.productDetailsView.bounds.size;
+    [(UIScrollView *) self.view setContentSize:detailsSize];
+    [self.productDetailsView.descriptionLabel sizeToFit];
+    detailsSize = self.productDetailsView.frame.size;
+}
+
 - (void)setProduct:(id<CSProduct>)product
 {
     self.navigationItem.title = [product.name uppercaseString];
-    self.descriptionLabel.text = product.description;
+    self.productDetailsView.description = product.description;
+    [self updateSizing];
 }
 
 - (void)setProductSummary:(id<CSProductSummary>)productSummary
 {
     self.navigationItem.title = [productSummary.name uppercaseString];
-    self.descriptionLabel.text = productSummary.description;
+    self.productDetailsView.description = productSummary.description;
+    [self updateSizing];
 }
 
 @end
