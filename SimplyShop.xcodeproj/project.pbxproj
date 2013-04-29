@@ -42,6 +42,11 @@
 		BE6BF4011725428C004B6D85 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6BF4001725428C004B6D85 /* Icon@2x.png */; };
 		BE73677D1729614000B4691C /* CSProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE73677C1729614000B4691C /* CSProductDetailViewController.m */; };
 		BE73678A172A7E5E00B4691C /* CSProductDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE736789172A7E5E00B4691C /* CSProductDetailsView.m */; };
+		BE736790172E7E3700B4691C /* CSTabArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE73678F172E7E3700B4691C /* CSTabArrowView.m */; };
+		BE736792172E7E6100B4691C /* CSTabArrowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE736791172E7E6100B4691C /* CSTabArrowView.xib */; };
+		BE736795172E867700B4691C /* TabArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE736793172E867700B4691C /* TabArrow@2x.png */; };
+		BE736796172E867700B4691C /* TabUnderline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE736794172E867700B4691C /* TabUnderline@2x.png */; };
+		BE736798172EB65E00B4691C /* CSProductDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE736797172EB65E00B4691C /* CSProductDetailsView.xib */; };
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
 		BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */; };
 		BEDC02D6171312BC0023059E /* CSProductSummaryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02D5171312BC0023059E /* CSProductSummaryCell.xib */; };
@@ -111,6 +116,12 @@
 		BE73677C1729614000B4691C /* CSProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductDetailViewController.m; sourceTree = "<group>"; };
 		BE736788172A7E5E00B4691C /* CSProductDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductDetailsView.h; sourceTree = "<group>"; };
 		BE736789172A7E5E00B4691C /* CSProductDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductDetailsView.m; sourceTree = "<group>"; };
+		BE73678E172E7E3700B4691C /* CSTabArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTabArrowView.h; sourceTree = "<group>"; };
+		BE73678F172E7E3700B4691C /* CSTabArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTabArrowView.m; sourceTree = "<group>"; };
+		BE736791172E7E6100B4691C /* CSTabArrowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSTabArrowView.xib; sourceTree = "<group>"; };
+		BE736793172E867700B4691C /* TabArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabArrow@2x.png"; sourceTree = "<group>"; };
+		BE736794172E867700B4691C /* TabUnderline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabUnderline@2x.png"; sourceTree = "<group>"; };
+		BE736797172EB65E00B4691C /* CSProductDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductDetailsView.xib; sourceTree = "<group>"; };
 		BEA6DA36170EDD82001AC881 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BEA6DA38170EE8C6001AC881 /* CSRoundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRoundImageView.h; sourceTree = "<group>"; };
 		BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRoundImageView.m; sourceTree = "<group>"; };
@@ -251,6 +262,8 @@
 		BE3D4E0F17036D3700644AD6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BE736793172E867700B4691C /* TabArrow@2x.png */,
+				BE736794172E867700B4691C /* TabUnderline@2x.png */,
 				BE3D4E221704A30300644AD6 /* CallToAction@2x.png */,
 				BE3D4E231704A30300644AD6 /* TileBackgroundSelected@2x.png */,
 				BE3D4E1D1704651900644AD6 /* TileBackground@2x.png */,
@@ -273,6 +286,10 @@
 				BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */,
 				BE736788172A7E5E00B4691C /* CSProductDetailsView.h */,
 				BE736789172A7E5E00B4691C /* CSProductDetailsView.m */,
+				BE736797172EB65E00B4691C /* CSProductDetailsView.xib */,
+				BE73678E172E7E3700B4691C /* CSTabArrowView.h */,
+				BE73678F172E7E3700B4691C /* CSTabArrowView.m */,
+				BE736791172E7E6100B4691C /* CSTabArrowView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -411,6 +428,10 @@
 				BEDC02DB17144DB20023059E /* CSRetailerSelectionCell.xib in Resources */,
 				BE6BF3FF1725426E004B6D85 /* Icon.png in Resources */,
 				BE6BF4011725428C004B6D85 /* Icon@2x.png in Resources */,
+				BE736792172E7E6100B4691C /* CSTabArrowView.xib in Resources */,
+				BE736795172E867700B4691C /* TabArrow@2x.png in Resources */,
+				BE736796172E867700B4691C /* TabUnderline@2x.png in Resources */,
+				BE736798172EB65E00B4691C /* CSProductDetailsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +494,7 @@
 				BEDC02E0171455510023059E /* CSProductSummaryCell.m in Sources */,
 				BE73677D1729614000B4691C /* CSProductDetailViewController.m in Sources */,
 				BE73678A172A7E5E00B4691C /* CSProductDetailsView.m in Sources */,
+				BE736790172E7E3700B4691C /* CSTabArrowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

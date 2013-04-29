@@ -81,11 +81,7 @@
 
 - (void)updateSizing
 {
-    [self.productDetailsView sizeToFit];
-    CGSize detailsSize = self.productDetailsView.bounds.size;
-    [(UIScrollView *) self.view setContentSize:detailsSize];
-    [self.productDetailsView.descriptionLabel sizeToFit];
-    detailsSize = self.productDetailsView.frame.size;
+    [self.productDetailsView setNeedsLayout];
 }
 
 - (void)setProduct:(id<CSProduct>)product

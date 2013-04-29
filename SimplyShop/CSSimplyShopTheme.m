@@ -14,6 +14,7 @@
 #import "CSProductSummaryCell.h"
 #import "CSCTAButton.h"
 #import "CSAppearanceButton.h"
+#import "CSTabArrowView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -167,6 +168,11 @@
     [retailerEditButton setTitleColor:[self homePageSmallButtonTitleColor]];
     [retailerEditButton setTitleShadowColor:[self homePageSmallButtonTitleShadowColor]];
     [retailerEditButton setTitleLabelShadowOffset:[self homePageSmallButtonTitleShadowOffset]];
+    
+    CSTabArrowView *tabArrowView = [CSTabArrowView appearance];
+    tabArrowView.leftImage = [[UIImage imageNamed:@"TabUnderline"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 0.0, 7.0, 0.0)];
+    tabArrowView.arrowImage = [UIImage imageNamed:@"TabArrow"];
+    tabArrowView.rightImage = [[UIImage imageNamed:@"TabUnderline"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 0.0, 7.0, 0.0)];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button

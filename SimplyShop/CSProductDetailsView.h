@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class CSTabArrowView;
+
 @interface CSProductDetailsView : UIScrollView
 
 @property (nonatomic, weak) IBOutlet UILabel *descriptionLabel;
-
+@property (nonatomic, weak) IBOutlet CSTabArrowView *tabArrowView;
 @property (nonatomic, copy) NSString *description;
 
 @end

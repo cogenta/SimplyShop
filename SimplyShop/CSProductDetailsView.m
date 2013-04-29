@@ -7,6 +7,15 @@
 //
 
 #import "CSProductDetailsView.h"
+#import "CSTabArrowView.h"
+
+@interface CSProductDetailsView ()
+
+@property (weak, nonatomic) UIView *subview;
+
+- (void)load;
+
+@end
 
 @implementation CSProductDetailsView
 
@@ -14,9 +23,31 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self load];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self load];
+    }
+    return self;
+}
+
+- (void)load
+{
+    self.subview = [[[NSBundle mainBundle]
+                     loadNibNamed:@"CSProductDetailsView"
+                     owner:self
+                     options:nil]
+                    objectAtIndex:0];
+    [self addSubview:self.subview];
+    self.tabArrowView.position = 52.0;
+    
+    [self layoutSubviews];
 }
 
 - (void)setDescription:(NSString *)description
@@ -26,16 +57,43 @@
         description = @"No Description";
     }
     self.descriptionLabel.text = description;
-    [self.descriptionLabel sizeToFit];
-    [self sizeToFit];
-}   
+    [self setNeedsLayout];
+}
 
-- (CGSize)sizeThatFits:(CGSize)size
+- (void)layoutSubviews
 {
-    CGSize marginSize = CGSizeMake(self.descriptionLabel.frame.size.width - 20.0,
-                                   [UIScreen mainScreen].bounds.size.height - 20.0);
+    // Margin on left, right, and bottom description label.
+    CGFloat margin = CGRectGetMinX(self.descriptionLabel.frame);
+    
+    // Height in addition to description label's height.
+    CGFloat fixedHeight = CGRectGetMinY(self.descriptionLabel.frame) + margin;
+    
+    // Size of the scroll view.
+    CGSize size = self.bounds.size;
+    
+    // Maximum height of the description label.
+    CGFloat maxHeight = [UIScreen mainScreen].bounds.size.height - fixedHeight;
+    
+    // Size in which to fit the description.
+    CGSize marginSize = CGSizeMake(size.width - 2 * margin, maxHeight);
+    
+    // Size of the description.
     CGSize descriptionSize = [self.descriptionLabel sizeThatFits:marginSize];
-    return CGSizeMake(descriptionSize.width + 20.0, descriptionSize.height + 20.0);
+    
+    // Height for the content.
+    CGFloat contentHeight = descriptionSize.height + fixedHeight;
+
+    // Set the content's frame.
+    CGRect subviewFrame;
+    subviewFrame.size = CGSizeMake(size.width, contentHeight);
+    subviewFrame.origin = CGPointZero;
+    self.contentSize = subviewFrame.size;
+    self.subview.frame = subviewFrame;    
+    
+    // Set description size.
+    CGRect descriptionFrame = self.descriptionLabel.frame;
+    descriptionFrame.size = descriptionSize;
+    self.descriptionLabel.frame = descriptionFrame;
 }
 
 @end
