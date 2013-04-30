@@ -9,6 +9,7 @@
 #import "CSProductDetailsView.h"
 #import "CSTabArrowView.h"
 #import "CSTabFooterView.h"
+#import "CSProductStatsView.h"
 
 @interface CSProductDetailsView ()
 
@@ -49,7 +50,7 @@
     self.descriptionTabArrowView.position = 52.0;
     self.productStatsTabArrowView.position = 58.0;
     
-    [self layoutSubviews];
+    [self setNeedsLayout];
 }
 
 - (void)setDescription:(NSString *)description
@@ -62,13 +63,23 @@
     [self setNeedsLayout];
 }
 
+- (void)setStats:(CSProductStats *)stats
+{
+    _stats = stats;
+    self.productStatsView.stats = stats;
+    [self setNeedsLayout];
+}
+
 - (void)layoutSubviews
 {
     // Margin on left, right, and bottom description label.
     CGFloat margin = CGRectGetMinX(self.descriptionLabel.frame);
-    
+
+    CGSize statsViewSize = [self.productStatsView
+                            sizeThatFits:self.productStatsView.frame.size];
     CGFloat statsHeight = (CGRectGetMaxY(self.productStatsTabArrowView.frame) -
-                           CGRectGetMinY(self.tabFooterView.frame));
+                           CGRectGetMinY(self.tabFooterView.frame) +
+                           statsViewSize.height);
     
     // Height in addition to description label's height.
     CGFloat fixedHeight = CGRectGetMinY(self.descriptionLabel.frame) + margin + statsHeight;
@@ -99,7 +110,6 @@
     CGRect descriptionFrame = self.descriptionLabel.frame;
     descriptionFrame.size = descriptionSize;
     self.descriptionLabel.frame = descriptionFrame;
-    
 }
 
 @end

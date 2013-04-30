@@ -10,6 +10,8 @@
 
 @class CSTabArrowView;
 @class CSTabFooterView;
+@class CSProductStatsView;
+@class CSProductStats;
 
 @interface CSProductDetailsView : UIScrollView
 
@@ -19,7 +21,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *producStatsTabLabel;
 @property (weak, nonatomic) IBOutlet CSTabArrowView *productStatsTabArrowView;
+@property (weak, nonatomic) IBOutlet CSProductStatsView *productStatsView;
 
 @property (nonatomic, copy) NSString *description;
+@property (nonatomic, strong) CSProductStats *stats;
 
 @end

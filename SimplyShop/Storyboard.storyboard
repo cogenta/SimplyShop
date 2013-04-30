@@ -196,7 +196,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppl-Fk-biT" userLabel="See All Top Products" customClass="CSAppearanceButton">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="XmY-FR-khC"/>
-                                                        <constraint firstAttribute="width" constant="73" id="uXb-a5-OIX"/>
+                                                        <constraint firstAttribute="width" priority="1" constant="73" type="user" id="uXb-a5-OIX"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
                                                     <state key="normal" title="See All >">
@@ -245,7 +245,6 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="ZK2-r3-fXt" firstAttribute="trailing" secondItem="hv6-34-2sh" secondAttribute="trailing" type="default" id="4yl-Jg-G4R"/>
-                                            <constraint firstItem="Ppl-Fk-biT" firstAttribute="bottom" secondItem="6Wz-X8-VJw" secondAttribute="bottom" type="default" id="Kkd-yA-gJt"/>
                                             <constraint firstItem="ZK2-r3-fXt" firstAttribute="leading" secondItem="hv6-34-2sh" secondAttribute="leading" type="default" id="PL7-lF-PPp"/>
                                             <constraint firstItem="6Wz-X8-VJw" firstAttribute="top" secondItem="hv6-34-2sh" secondAttribute="top" constant="34" id="iif-ON-pET"/>
                                             <constraint firstItem="ZK2-r3-fXt" firstAttribute="top" secondItem="hv6-34-2sh" secondAttribute="top" constant="81" id="kTh-kP-40E"/>
@@ -276,7 +275,7 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVq-q7-aoI" userLabel="Choose Stores Button" customClass="CSAppearanceButton">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="73" id="gZi-6P-Zbe"/>
+                                                        <constraint firstAttribute="width" priority="1" constant="73" type="user" id="gZi-6P-Zbe"/>
                                                         <constraint firstAttribute="height" constant="18" id="m1K-n3-ZBX"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
@@ -322,7 +321,6 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="YVq-q7-aoI" firstAttribute="bottom" secondItem="MLr-Vs-uCp" secondAttribute="bottom" type="default" id="5xX-hJ-JQI"/>
                                             <constraint firstItem="MLr-Vs-uCp" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" constant="20" type="default" id="AH7-Qh-scN"/>
                                             <constraint firstItem="ClB-SG-9Zd" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" type="default" id="C1W-Yb-aiV"/>
                                             <constraint firstItem="MLr-Vs-uCp" firstAttribute="top" secondItem="EYf-RC-NBp" secondAttribute="top" constant="41" id="UB3-ir-vvI"/>
@@ -471,8 +469,15 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailsView.h"/>
             <relationships>
                 <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tabArrowView" candidateClass="CSTabArrowView"/>
+                <relationship kind="outlet" name="descriptionTabArrowView" candidateClass="CSTabArrowView"/>
+                <relationship kind="outlet" name="producStatsTabLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="productStatsTabArrowView" candidateClass="CSTabArrowView"/>
+                <relationship kind="outlet" name="productStatsView" candidateClass="CSProductStatsView"/>
+                <relationship kind="outlet" name="tabFooterView" candidateClass="CSTabFooterView"/>
             </relationships>
+        </class>
+        <class className="CSProductStatsView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductStatsView.h"/>
         </class>
         <class className="CSProductSummariesCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummariesCell.h"/>
@@ -513,6 +518,9 @@
                 <relationship kind="outlet" name="rightImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
+        <class className="CSTabFooterView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTabFooterView.h"/>
+        </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
@@ -524,6 +532,9 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
         <class className="UIStoryboardSegue" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>

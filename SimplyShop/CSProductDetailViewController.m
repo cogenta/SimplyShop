@@ -8,6 +8,7 @@
 
 #import "CSProductDetailViewController.h"
 #import "CSProductDetailsView.h"
+#import "CSProductStats.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSProductDetailViewController ()
@@ -88,6 +89,9 @@
 {
     self.navigationItem.title = [product.name uppercaseString];
     self.productDetailsView.description = product.description;
+    CSProductStats *stats = [[CSProductStats alloc] init];
+    stats.product = product;
+    self.productDetailsView.stats = stats;
     [self updateSizing];
 }
 

@@ -16,6 +16,7 @@
 #import "CSAppearanceButton.h"
 #import "CSTabArrowView.h"
 #import "CSTabFooterView.h"
+#import "CSProductStatsView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -177,6 +178,15 @@
     
     CSTabFooterView *tabFooterView = [CSTabFooterView appearance];
     tabFooterView.backgroundImage = [[UIImage imageNamed:@"TabBottom"] resizableImageWithCapInsets:UIEdgeInsetsMake(7.0, 0.0, 0.0, 0.0)];
+    
+    CSProductStatsView *productStatsView = [CSProductStatsView appearance];
+    productStatsView.labelFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
+    productStatsView.labelColor = [UIColor colorWithHexString:@"#606060"];
+    productStatsView.valueFont = [UIFont fontWithName:@"HelveticaNeue" size:12.0];
+    productStatsView.valueColor = [UIColor colorWithHexString:@"#606060"];
+    CGSize marginSize = [@"X" sizeWithFont:productStatsView.labelFont];
+    productStatsView.heightForRow = marginSize.height + 2.0;
+    productStatsView.margin = marginSize.width;
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
