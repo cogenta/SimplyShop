@@ -15,6 +15,7 @@
 #import "CSCTAButton.h"
 #import "CSAppearanceButton.h"
 #import "CSTabArrowView.h"
+#import "CSTabFooterView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -173,6 +174,9 @@
     tabArrowView.leftImage = [[UIImage imageNamed:@"TabUnderline"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 0.0, 7.0, 0.0)];
     tabArrowView.arrowImage = [UIImage imageNamed:@"TabArrow"];
     tabArrowView.rightImage = [[UIImage imageNamed:@"TabUnderline"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 0.0, 7.0, 0.0)];
+    
+    CSTabFooterView *tabFooterView = [CSTabFooterView appearance];
+    tabFooterView.backgroundImage = [[UIImage imageNamed:@"TabBottom"] resizableImageWithCapInsets:UIEdgeInsetsMake(7.0, 0.0, 0.0, 0.0)];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button

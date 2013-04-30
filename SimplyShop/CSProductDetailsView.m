@@ -8,6 +8,7 @@
 
 #import "CSProductDetailsView.h"
 #import "CSTabArrowView.h"
+#import "CSTabFooterView.h"
 
 @interface CSProductDetailsView ()
 
@@ -45,7 +46,8 @@
                      options:nil]
                     objectAtIndex:0];
     [self addSubview:self.subview];
-    self.tabArrowView.position = 52.0;
+    self.descriptionTabArrowView.position = 52.0;
+    self.productStatsTabArrowView.position = 58.0;
     
     [self layoutSubviews];
 }
@@ -65,8 +67,11 @@
     // Margin on left, right, and bottom description label.
     CGFloat margin = CGRectGetMinX(self.descriptionLabel.frame);
     
+    CGFloat statsHeight = (CGRectGetMaxY(self.productStatsTabArrowView.frame) -
+                           CGRectGetMinY(self.tabFooterView.frame));
+    
     // Height in addition to description label's height.
-    CGFloat fixedHeight = CGRectGetMinY(self.descriptionLabel.frame) + margin;
+    CGFloat fixedHeight = CGRectGetMinY(self.descriptionLabel.frame) + margin + statsHeight;
     
     // Size of the scroll view.
     CGSize size = self.bounds.size;
@@ -94,6 +99,7 @@
     CGRect descriptionFrame = self.descriptionLabel.frame;
     descriptionFrame.size = descriptionSize;
     self.descriptionLabel.frame = descriptionFrame;
+    
 }
 
 @end
