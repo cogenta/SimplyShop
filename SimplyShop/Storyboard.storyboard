@@ -34,34 +34,71 @@
             </objects>
             <point key="canvasLocation" x="-324" y="-2"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="YIU-Gg-FhG">
-            <objects>
-                <navigationController modalPresentationStyle="formSheet" id="5Z8-Eh-FsE" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NdU-HH-kK4">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0md-CQ-yo9">
-                        <rect key="frame" x="0.0" y="960" width="768" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="F7K-1c-g0S" kind="relationship" relationship="rootViewController" id="bKN-p4-FPg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gba-ZO-oos" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-324" y="-1120"/>
-        </scene>
         <!--Product Detail View Controller-->
         <scene sceneID="b1o-hg-sQX">
             <objects>
                 <viewController id="F7K-1c-g0S" customClass="CSProductDetailViewController" sceneMemberID="viewController">
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pji-Ub-6Rp" customClass="CSProductDetailsView">
-                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
+                    <view key="view" contentMode="scaleToFill" id="K4h-XI-Nj5">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </scrollView>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ll8-s4-Ka1" customClass="CSTitleBarView">
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9k-qY-95G" userLabel="Background Image"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I49-kc-DLW">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBJ-u1-haM">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="1By-eT-vs8"/>
+                                            <constraint firstAttribute="width" constant="26" id="2lz-Qk-12d"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" image="BigX@2x.png">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="faX-58-B8I" kind="unwind" unwindAction="doneShowProduct:" id="H2V-vL-aes"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="u9k-qY-95G" firstAttribute="top" secondItem="ll8-s4-Ka1" secondAttribute="top" type="default" id="EJ1-Qc-4lz"/>
+                                    <constraint firstAttribute="trailing" secondItem="fBJ-u1-haM" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="EaQ-uo-300"/>
+                                    <constraint firstItem="u9k-qY-95G" firstAttribute="leading" secondItem="ll8-s4-Ka1" secondAttribute="leading" type="default" id="LAZ-xp-0km"/>
+                                    <constraint firstAttribute="centerY" secondItem="I49-kc-DLW" secondAttribute="centerY" type="user" id="W30-Iv-SiG"/>
+                                    <constraint firstAttribute="centerY" secondItem="fBJ-u1-haM" secondAttribute="centerY" type="user" id="ZgO-rH-fWP"/>
+                                    <constraint firstAttribute="centerY" secondItem="fBJ-u1-haM" secondAttribute="centerY" type="user" id="a0B-IR-C58"/>
+                                    <constraint firstItem="I49-kc-DLW" firstAttribute="leading" secondItem="ll8-s4-Ka1" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="l2r-fA-bjI"/>
+                                    <constraint firstAttribute="height" constant="48" type="user" id="nng-N6-moa"/>
+                                    <constraint firstItem="u9k-qY-95G" firstAttribute="bottom" secondItem="ll8-s4-Ka1" secondAttribute="bottom" type="default" id="q1I-Mn-aPY"/>
+                                    <constraint firstItem="u9k-qY-95G" firstAttribute="trailing" secondItem="ll8-s4-Ka1" secondAttribute="trailing" type="default" id="scj-Bw-Gwn"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="backgroundImageView" destination="u9k-qY-95G" id="jDy-7B-phX"/>
+                                    <outlet property="titleLabel" destination="I49-kc-DLW" id="Wx9-zV-gnr"/>
+                                </connections>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UxW-m9-Hqb" customClass="CSProductDetailsView"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UxW-m9-Hqb" firstAttribute="trailing" secondItem="K4h-XI-Nj5" secondAttribute="trailing" type="default" id="AQA-3E-kSY"/>
+                            <constraint firstItem="ll8-s4-Ka1" firstAttribute="leading" secondItem="K4h-XI-Nj5" secondAttribute="leading" type="default" id="GJn-tl-IfJ"/>
+                            <constraint firstItem="ll8-s4-Ka1" firstAttribute="top" secondItem="K4h-XI-Nj5" secondAttribute="top" type="user" id="KTG-C6-zwv"/>
+                            <constraint firstItem="ll8-s4-Ka1" firstAttribute="trailing" secondItem="K4h-XI-Nj5" secondAttribute="trailing" type="default" id="YRP-Pm-5Rn"/>
+                            <constraint firstAttribute="bottom" secondItem="UxW-m9-Hqb" secondAttribute="bottom" type="user" id="t68-cY-Zoa"/>
+                            <constraint firstItem="UxW-m9-Hqb" firstAttribute="leading" secondItem="K4h-XI-Nj5" secondAttribute="leading" type="default" id="wyv-IJ-uPi"/>
+                            <constraint firstItem="UxW-m9-Hqb" firstAttribute="top" secondItem="ll8-s4-Ka1" secondAttribute="bottom" type="user" id="xr8-CA-tYQ"/>
+                        </constraints>
+                    </view>
                     <navigationItem key="navigationItem" id="KIR-G7-hYt">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="ux8-Lk-L1B">
                             <connections>
@@ -71,10 +108,12 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="productDetailsView" destination="Pji-Ub-6Rp" id="4uX-Lb-YdF"/>
+                        <outlet property="productDetailsView" destination="UxW-m9-Hqb" id="mZp-ea-e3m"/>
+                        <outlet property="titleBarView" destination="ll8-s4-Ka1" id="d0Z-KO-4zs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pxr-0e-PSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="faX-58-B8I" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="640" y="-1120"/>
         </scene>
@@ -348,7 +387,7 @@
                         <outlet property="topProductsCell" destination="hv6-34-2sh" id="25P-Sf-vpu"/>
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="thN-oO-ZtE"/>
-                        <segue destination="5Z8-Eh-FsE" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="EUZ-2J-Z3L"/>
+                        <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="ZYU-Pi-qDu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -433,6 +472,9 @@
             <point key="canvasLocation" x="572" y="1272"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="BigX@2x.png" width="51" height="51"/>
+    </resources>
     <classes>
         <class className="CSAppearanceButton" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSAppearanceButton.h"/>
@@ -463,6 +505,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="productDetailsView" candidateClass="CSProductDetailsView"/>
+                <relationship kind="outlet" name="titleBarView" candidateClass="CSTitleBarView"/>
             </relationships>
         </class>
         <class className="CSProductDetailsView" superclassName="UIScrollView">
@@ -470,10 +513,19 @@
             <relationships>
                 <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="descriptionTabArrowView" candidateClass="CSTabArrowView"/>
+                <relationship kind="outlet" name="galleryView" candidateClass="CSProductGalleryView"/>
                 <relationship kind="outlet" name="producStatsTabLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="productStatsTabArrowView" candidateClass="CSTabArrowView"/>
                 <relationship kind="outlet" name="productStatsView" candidateClass="CSProductStatsView"/>
                 <relationship kind="outlet" name="tabFooterView" candidateClass="CSTabFooterView"/>
+            </relationships>
+        </class>
+        <class className="CSProductGalleryView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductGalleryView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="footerImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="CSProductStatsView" superclassName="UIView">
@@ -521,6 +573,13 @@
         <class className="CSTabFooterView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTabFooterView.h"/>
         </class>
+        <class className="CSTitleBarView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTitleBarView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
@@ -532,9 +591,6 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
         <class className="UIStoryboardSegue" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>

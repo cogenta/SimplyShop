@@ -18,6 +18,7 @@
 #import "CSTabFooterView.h"
 #import "CSProductStatsView.h"
 #import "CSProductGalleryView.h"
+#import "CSTitleBarView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -31,7 +32,14 @@
 - (NSDictionary *)navigationBarTitleTextAttributes
 {
     return @{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0],
-             UITextAttributeTextColor: [UIColor colorWithHexString:@"#606060"]};
+             UITextAttributeTextColor:[UIColor colorWithHexString:@"#606060"]};
+}
+
+- (UIImage *)titleBarBackgroundImage
+{
+    return [[UIImage imageNamed:@"TitleBarBg"]
+            resizableImageWithCapInsets:UIEdgeInsetsMake(4.5, 5.0, 1.0, 5.0)
+            resizingMode:UIImageResizingModeStretch];
 }
 
 - (UIImage *)navigationBarButtonNormalBackgroundImage
@@ -131,6 +139,8 @@
     [navBar
      setTitleTextAttributes:[self navigationBarTitleTextAttributes]];
     
+    //
+        
     UIBarButtonItem *navButtonItem = [UIBarButtonItem
                                       appearanceWhenContainedIn:[UINavigationBar class],
                                       nil];
@@ -147,6 +157,8 @@
      setBackButtonBackgroundImage:[self navigationBarBackNormalBackgroundImage]
      forState:UIControlStateNormal
      barMetrics:UIBarMetricsDefault];
+    
+    //
 
     UICollectionView *collectionView = [UICollectionView appearance];
     [collectionView
@@ -192,6 +204,11 @@
     CSProductGalleryView *productGalleryView = [CSProductGalleryView appearance];
     productGalleryView.backgroundImage = [[UIImage imageNamed:@"GalleryBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(6.0, 6.0, 0.0, 6.0)];
     productGalleryView.footerBackgroundImage = [[UIImage imageNamed:@"GalleryFooter"] resizableImageWithCapInsets:UIEdgeInsetsMake(1.0, 9.0, 10.0, 9.0)];
+
+    CSTitleBarView *titleBarView = [CSTitleBarView appearance];
+    titleBarView.titleColor = [UIColor colorWithHexString:@"#000000"];
+    titleBarView.titleFont = [UIFont fontWithName:@"Gill Sans" size:15.0];
+    titleBarView.backgroundImage = [self titleBarBackgroundImage];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
@@ -200,7 +217,6 @@
                       forState:UIControlStateNormal];
     [button setTitleFont:[self callToActionButtonFont]];
     [button setTitleColor:[self callToActionButtonTextColor]];
-
 }
 
 @end

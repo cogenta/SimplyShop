@@ -8,6 +8,7 @@
 
 #import "CSProductDetailViewController.h"
 #import "CSProductDetailsView.h"
+#import "CSTitleBarView.h"
 #import "CSProductStats.h"
 #import <CSApi/CSAPI.h>
 
@@ -69,10 +70,10 @@
     
     CGPoint location = [sender locationInView:nil];
     
-    CGPoint converted = [self.navigationController.view
+    CGPoint converted = [self.view
                          convertPoint:location
                          fromView:self.view.window];
-    if ([self.navigationController.view pointInside:converted withEvent:nil]) {
+    if ([self.view pointInside:converted withEvent:nil]) {
         return;
     }
     
@@ -87,7 +88,7 @@
 
 - (void)setProduct:(id<CSProduct>)product
 {
-    self.navigationItem.title = [product.name uppercaseString];
+    self.titleBarView.title = [product.name uppercaseString];
     self.productDetailsView.description = product.description;
     CSProductStats *stats = [[CSProductStats alloc] init];
     stats.product = product;
@@ -106,7 +107,7 @@
 
 - (void)setProductSummary:(id<CSProductSummary>)productSummary
 {
-    self.navigationItem.title = [productSummary.name uppercaseString];
+    self.titleBarView.title = [productSummary.name uppercaseString];
     self.productDetailsView.description = productSummary.description;
     [self updateSizing];
 }

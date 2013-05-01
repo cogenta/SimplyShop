@@ -181,8 +181,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
     
     if ([segue.identifier isEqualToString:@"showProduct"]) {
-        UINavigationController *nav = segue.destinationViewController;
-        CSProductDetailViewController *vc = (id) nav.topViewController;
+        CSProductDetailViewController *vc = (id) segue.destinationViewController;
         NSDictionary *address = sender;
         CSProductSummariesCell *cell = address[@"cell"];
         id<CSProductSummaryList> list = cell.productSummaries;
