@@ -10,6 +10,12 @@
 
 @interface CSProductGalleryView : UIView
 
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *footerImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *productImageView;
+
 @property (strong, nonatomic) UIImage *backgroundImage UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIImage *footerBackgroundImage UI_APPEARANCE_SELECTOR;
+
 
 @end

@@ -10,7 +10,8 @@
 
 @interface CSProductGalleryView ()
 
-@property (nonatomic, strong) UIImageView *backgroundView;
+@property (nonatomic, strong) UIView *subview;
+
 - (void)initialize;
 
 @end
@@ -37,23 +38,33 @@
 
 - (void)initialize
 {
-    _backgroundView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    [self addSubview:_backgroundView];    
+    self.subview = [[[NSBundle mainBundle]
+                     loadNibNamed:@"CSProductGalleryView"
+                     owner:self
+                     options:nil]
+                    objectAtIndex:0];
+    [self addSubview:self.subview];
+    [self layoutSubviews];
 }
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage
 {
-    _backgroundView.image = backgroundImage;
+    _backgroundImageView.image = backgroundImage;
 }
 
 - (UIImage *)backgroundImage
 {
-    return _backgroundView.image;
+    return _backgroundImageView.image;
 }
 
-- (void)layoutSubviews
+- (void)setFooterBackgroundImage:(UIImage *)footerBackgroundImage
 {
-    _backgroundView.frame = self.bounds;
+    _footerImageView.image = footerBackgroundImage;
+}
+
+- (UIImage *)footerBackgroundImage
+{
+    return _footerImageView.image;
 }
 
 @end

@@ -190,7 +190,8 @@
     productStatsView.margin = marginSize.width;
     
     CSProductGalleryView *productGalleryView = [CSProductGalleryView appearance];
-    productGalleryView.backgroundImage = [self collectionViewCellBackgroundImage];
+    productGalleryView.backgroundImage = [[UIImage imageNamed:@"GalleryBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(6.0, 6.0, 0.0, 6.0)];
+    productGalleryView.footerBackgroundImage = [[UIImage imageNamed:@"GalleryFooter"] resizableImageWithCapInsets:UIEdgeInsetsMake(1.0, 9.0, 10.0, 9.0)];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
