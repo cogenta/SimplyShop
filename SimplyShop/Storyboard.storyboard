@@ -72,10 +72,12 @@
                                 <constraints>
                                     <constraint firstItem="u9k-qY-95G" firstAttribute="top" secondItem="ll8-s4-Ka1" secondAttribute="top" type="default" id="EJ1-Qc-4lz"/>
                                     <constraint firstAttribute="trailing" secondItem="fBJ-u1-haM" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="EaQ-uo-300"/>
+                                    <constraint firstAttribute="centerY" secondItem="I49-kc-DLW" secondAttribute="centerY" type="user" id="FB8-r2-4tX"/>
                                     <constraint firstItem="u9k-qY-95G" firstAttribute="leading" secondItem="ll8-s4-Ka1" secondAttribute="leading" type="default" id="LAZ-xp-0km"/>
-                                    <constraint firstAttribute="centerY" secondItem="I49-kc-DLW" secondAttribute="centerY" type="user" id="W30-Iv-SiG"/>
+                                    <constraint firstItem="fBJ-u1-haM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="I49-kc-DLW" secondAttribute="trailing" constant="8" symbolic="YES" type="user" id="Y1X-W2-zgv"/>
                                     <constraint firstAttribute="centerY" secondItem="fBJ-u1-haM" secondAttribute="centerY" type="user" id="ZgO-rH-fWP"/>
                                     <constraint firstAttribute="centerY" secondItem="fBJ-u1-haM" secondAttribute="centerY" type="user" id="a0B-IR-C58"/>
+                                    <constraint firstItem="fBJ-u1-haM" firstAttribute="leading" secondItem="I49-kc-DLW" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="c4e-gD-0fy"/>
                                     <constraint firstItem="I49-kc-DLW" firstAttribute="leading" secondItem="ll8-s4-Ka1" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="l2r-fA-bjI"/>
                                     <constraint firstAttribute="height" constant="48" type="user" id="nng-N6-moa"/>
                                     <constraint firstItem="u9k-qY-95G" firstAttribute="bottom" secondItem="ll8-s4-Ka1" secondAttribute="bottom" type="default" id="q1I-Mn-aPY"/>
