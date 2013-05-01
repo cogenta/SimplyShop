@@ -13,6 +13,7 @@
 @class CSProductStatsView;
 @class CSProductStats;
 @class CSProductGalleryView;
+@protocol CSPictureList;
 
 @interface CSProductDetailsView : UIScrollView
 
@@ -27,5 +28,6 @@
 
 @property (nonatomic, copy) NSString *description;
 @property (nonatomic, strong) CSProductStats *stats;
+@property (nonatomic, strong) id<CSPictureList> pictures;
 
 @end

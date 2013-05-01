@@ -7,6 +7,8 @@
 //
 
 #import "CSProductGalleryView.h"
+#import <CSApi/CSAPI.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface CSProductGalleryView ()
 
@@ -17,6 +19,8 @@
 @end
 
 @implementation CSProductGalleryView
+
+@synthesize pictures;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -65,6 +69,59 @@
 - (UIImage *)footerBackgroundImage
 {
     return _footerImageView.image;
+}
+
+- (void)setPictures:(id<CSPictureList>)newPictures
+{
+    pictures = newPictures;
+    
+    [pictures getPictureAtIndex:0
+                       callback:^(id<CSPicture> picture,
+                                  NSError *error)
+     {
+         if (error) {
+             /// Ignore picture error.
+             return;
+         };
+         
+         id<CSImageList> images = picture.imageList;
+         
+         __block id<CSImage> bestImage = nil;
+         for (NSInteger i = 0 ; i < images.count; ++i) {
+             [images getImageAtIndex:i
+                            callback:^(id<CSImage> image, NSError *error)
+              {
+                  if (error) {
+                      // Ignore image error.
+                      return;
+                  }
+                  
+                  if ([image.width doubleValue]
+                      > [bestImage.width doubleValue]) {
+                      bestImage = image;
+                  }
+                  
+                  if (i == images.count - 1 && bestImage) {
+                      [self.productImageView
+                       setImageWithURL:bestImage.enclosureURL
+                       completed:^(UIImage *image,
+                                   NSError *error,
+                                   SDImageCacheType cacheType)
+                       {
+                           if ( ! image) {
+                               return;
+                           }
+                           self.productImageView.hidden = NO;
+                       }];
+                  }
+              }];
+         }
+     }];
+}
+
+- (id<CSPictureList>)pictures
+{
+    return pictures;
 }
 
 @end

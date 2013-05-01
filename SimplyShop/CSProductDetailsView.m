@@ -10,6 +10,7 @@
 #import "CSTabArrowView.h"
 #import "CSTabFooterView.h"
 #import "CSProductStatsView.h"
+#import "CSProductGalleryView.h"
 
 @interface CSProductDetailsView ()
 
@@ -68,6 +69,16 @@
     _stats = stats;
     self.productStatsView.stats = stats;
     [self setNeedsLayout];
+}
+
+- (void)setPictures:(id<CSPictureList>)pictures
+{
+    self.galleryView.pictures = pictures;
+}
+
+- (id<CSPictureList>)pictures
+{
+    return self.galleryView.pictures;
 }
 
 - (void)layoutSubviews

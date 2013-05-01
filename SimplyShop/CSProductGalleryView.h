@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CSPictureList;
+
 @interface CSProductGalleryView : UIView
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
@@ -17,5 +19,6 @@
 @property (strong, nonatomic) UIImage *backgroundImage UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIImage *footerBackgroundImage UI_APPEARANCE_SELECTOR;
 
+@property (strong, nonatomic) id<CSPictureList> pictures;
 
 @end

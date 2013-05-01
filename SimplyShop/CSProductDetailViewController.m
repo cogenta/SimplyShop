@@ -92,6 +92,15 @@
     CSProductStats *stats = [[CSProductStats alloc] init];
     stats.product = product;
     self.productDetailsView.stats = stats;
+    [product getPictures:^(id<CSPictureListPage> firstPage, NSError *error) {
+        if (error) {
+            // Do nothing
+            return;
+        }
+        
+        self.productDetailsView.pictures = firstPage.pictureList;
+    }];
+    
     [self updateSizing];
 }
 
