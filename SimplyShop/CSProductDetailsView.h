@@ -12,12 +12,14 @@
 @class CSTabFooterView;
 @class CSProductStatsView;
 @class CSProductStats;
+@class CSProductGalleryView;
 
 @interface CSProductDetailsView : UIScrollView
 
-@property (nonatomic, weak) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet CSProductGalleryView *galleryView;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet CSTabArrowView *descriptionTabArrowView;
-@property (nonatomic, weak) IBOutlet CSTabFooterView *tabFooterView;
+@property (weak, nonatomic) IBOutlet CSTabFooterView *tabFooterView;
 
 @property (weak, nonatomic) IBOutlet UILabel *producStatsTabLabel;
 @property (weak, nonatomic) IBOutlet CSTabArrowView *productStatsTabArrowView;

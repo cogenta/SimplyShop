@@ -39,6 +39,7 @@
 		BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */; };
 		BE6BF3FF1725426E004B6D85 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6BF3FE1725426E004B6D85 /* Icon.png */; };
 		BE6BF4011725428C004B6D85 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6BF4001725428C004B6D85 /* Icon@2x.png */; };
+		BE6E2F1F17313FF100DCE47E /* CSProductGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6E2F1E17313FF100DCE47E /* CSProductGalleryView.m */; };
 		BE73677D1729614000B4691C /* CSProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE73677C1729614000B4691C /* CSProductDetailViewController.m */; };
 		BE73678A172A7E5E00B4691C /* CSProductDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE736789172A7E5E00B4691C /* CSProductDetailsView.m */; };
 		BE736790172E7E3700B4691C /* CSTabArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE73678F172E7E3700B4691C /* CSTabArrowView.m */; };
@@ -116,6 +117,8 @@
 		BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFavoriteStoresCell.m; sourceTree = "<group>"; };
 		BE6BF3FE1725426E004B6D85 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		BE6BF4001725428C004B6D85 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		BE6E2F1D17313FF100DCE47E /* CSProductGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductGalleryView.h; sourceTree = "<group>"; };
+		BE6E2F1E17313FF100DCE47E /* CSProductGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductGalleryView.m; sourceTree = "<group>"; };
 		BE73677B1729614000B4691C /* CSProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductDetailViewController.h; sourceTree = "<group>"; };
 		BE73677C1729614000B4691C /* CSProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductDetailViewController.m; sourceTree = "<group>"; };
 		BE736788172A7E5E00B4691C /* CSProductDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductDetailsView.h; sourceTree = "<group>"; };
@@ -309,6 +312,8 @@
 				BE73679A172ED79300B4691C /* CSTabFooterView.m */,
 				BE7367A0172FCFE700B4691C /* CSProductStatsView.h */,
 				BE7367A1172FCFE700B4691C /* CSProductStatsView.m */,
+				BE6E2F1D17313FF100DCE47E /* CSProductGalleryView.h */,
+				BE6E2F1E17313FF100DCE47E /* CSProductGalleryView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -534,6 +539,7 @@
 				BE73679B172ED79400B4691C /* CSTabFooterView.m in Sources */,
 				BE7367A2172FCFE800B4691C /* CSProductStatsView.m in Sources */,
 				BE7367A5172FD02700B4691C /* CSProductStats.m in Sources */,
+				BE6E2F1F17313FF100DCE47E /* CSProductGalleryView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

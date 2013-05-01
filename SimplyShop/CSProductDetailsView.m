@@ -104,7 +104,7 @@
     subviewFrame.size = CGSizeMake(size.width, contentHeight);
     subviewFrame.origin = CGPointZero;
     self.contentSize = subviewFrame.size;
-    self.subview.frame = subviewFrame;    
+    self.subview.frame = subviewFrame;
     
     // Set description size.
     CGRect descriptionFrame = self.descriptionLabel.frame;

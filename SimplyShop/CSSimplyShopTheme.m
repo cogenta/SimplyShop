@@ -17,6 +17,7 @@
 #import "CSTabArrowView.h"
 #import "CSTabFooterView.h"
 #import "CSProductStatsView.h"
+#import "CSProductGalleryView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -187,6 +188,9 @@
     CGSize marginSize = [@"X" sizeWithFont:productStatsView.labelFont];
     productStatsView.heightForRow = marginSize.height + 2.0;
     productStatsView.margin = marginSize.width;
+    
+    CSProductGalleryView *productGalleryView = [CSProductGalleryView appearance];
+    productGalleryView.backgroundImage = [self collectionViewCellBackgroundImage];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
