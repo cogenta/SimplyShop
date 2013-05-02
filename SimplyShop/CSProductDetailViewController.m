@@ -39,6 +39,11 @@
     [super viewDidAppear:animated];
 }
 
+- (void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    self.view.superview.bounds = CGRectMake(0, 0, 660.0, 620.0);
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
