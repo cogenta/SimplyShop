@@ -54,6 +54,14 @@
     self.selectedButton.selected = YES;
     
     self.arrowView.position = CGRectGetMidX(self.selectedButton.frame);
+    
+    if (sender.tag == 1) {
+        [self.delegate selectDescription];
+    }
+    
+    if (sender.tag == 2) {
+        [self.delegate selectStats];
+    }
 }
 
 - (void)layoutSubviews

@@ -10,10 +10,18 @@
 
 @class CSTabArrowView;
 
+@protocol CSTabBarViewDelegate <NSObject>
+
+- (void)selectDescription;
+- (void)selectStats;
+
+@end
+
 @interface CSTabBarView : UIView
 
 @property (weak, nonatomic) IBOutlet CSTabArrowView *arrowView;
 @property (weak, nonatomic) IBOutlet UIButton *defaultButton;
+@property (weak, nonatomic) IBOutlet id<CSTabBarViewDelegate> delegate;
 
 - (IBAction)didSelectTab:(UIButton *)sender;
 

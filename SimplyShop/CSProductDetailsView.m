@@ -7,16 +7,19 @@
 //
 
 #import "CSProductDetailsView.h"
-#import "CSTabArrowView.h"
-#import "CSTabFooterView.h"
+#import "CSTabBarView.h"
 #import "CSProductStatsView.h"
 #import "CSProductGalleryView.h"
+#import "CSTabFooterView.h"
 
-@interface CSProductDetailsView ()
+@interface CSProductDetailsView () <CSTabBarViewDelegate>
 
 @property (weak, nonatomic) UIView *subview;
+@property (weak, nonatomic) UIView *selectedView;
 
 - (void)load;
+
+- (void)selectView:(UIView *)newSelectedView;
 
 @end
 
@@ -48,10 +51,8 @@
                      options:nil]
                     objectAtIndex:0];
     [self addSubview:self.subview];
-    self.descriptionTabArrowView.position = 52.0;
-    self.productStatsTabArrowView.position = 58.0;
     
-    [self setNeedsLayout];
+    [self selectView:self.descriptionLabel];
 }
 
 - (void)setDescription:(NSString *)description
@@ -83,44 +84,44 @@
 
 - (void)layoutSubviews
 {
-    // Margin on left, right, and bottom description label.
-    CGFloat margin = CGRectGetMinX(self.descriptionLabel.frame);
-
-    CGSize statsViewSize = [self.productStatsView
-                            sizeThatFits:self.productStatsView.frame.size];
-    CGFloat statsHeight = (CGRectGetMaxY(self.productStatsTabArrowView.frame) -
-                           CGRectGetMinY(self.tabFooterView.frame) +
-                           statsViewSize.height);
+    CGFloat fixedHeight = (self.subview.frame.size.height -
+                           self.selectedView.frame.size.height);
     
-    // Height in addition to description label's height.
-    CGFloat fixedHeight = CGRectGetMinY(self.descriptionLabel.frame) + margin + statsHeight;
-    
-    // Size of the scroll view.
-    CGSize size = self.bounds.size;
-    
-    // Maximum height of the description label.
     CGFloat maxHeight = [UIScreen mainScreen].bounds.size.height - fixedHeight;
     
-    // Size in which to fit the description.
+    CGFloat margin = CGRectGetMinX(self.selectedView.frame);
+    
+    CGSize size = self.bounds.size;
     CGSize marginSize = CGSizeMake(size.width - 2 * margin, maxHeight);
     
-    // Size of the description.
-    CGSize descriptionSize = [self.descriptionLabel sizeThatFits:marginSize];
+    CGSize selectedSize = [self.selectedView sizeThatFits:marginSize];
     
-    // Height for the content.
-    CGFloat contentHeight = descriptionSize.height + fixedHeight;
-
-    // Set the content's frame.
+    CGFloat contentHeight = selectedSize.height + fixedHeight;
+    
     CGRect subviewFrame;
     subviewFrame.size = CGSizeMake(size.width, contentHeight);
     subviewFrame.origin = CGPointZero;
+    
     self.contentSize = subviewFrame.size;
     self.subview.frame = subviewFrame;
-    
-    // Set description size.
-    CGRect descriptionFrame = self.descriptionLabel.frame;
-    descriptionFrame.size = descriptionSize;
-    self.descriptionLabel.frame = descriptionFrame;
+}
+
+- (void)selectView:(UIView *)newSelectedView
+{
+    self.selectedView.hidden = YES;
+    self.selectedView = newSelectedView;
+    self.selectedView.hidden = NO;
+    [self setNeedsLayout];
+}
+
+- (void)selectDescription
+{
+    [self selectView:self.descriptionLabel];
+}
+
+- (void)selectStats
+{
+    [self selectView:self.productStatsView];
 }
 
 @end
