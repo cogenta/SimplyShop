@@ -19,6 +19,7 @@
 #import "CSProductStatsView.h"
 #import "CSProductGalleryView.h"
 #import "CSTitleBarView.h"
+#import "CSTabBarView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -209,6 +210,13 @@
     titleBarView.titleColor = [UIColor colorWithHexString:@"#000000"];
     titleBarView.titleFont = [UIFont fontWithName:@"Gill Sans" size:15.0];
     titleBarView.backgroundImage = [self titleBarBackgroundImage];
+    
+    UIButton *tabBarButton = [UIButton appearanceWhenContainedIn:[CSTabBarView class], nil];
+    UILabel *tabBarButtonLabel = [UILabel appearanceWhenContainedIn:[UIButton class], [CSTabBarView class], nil];
+    tabBarButtonLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12.5];
+    [tabBarButton setTitleColor:[UIColor colorWithHexString:@"#606060"] forState:UIControlStateNormal];
+    UIImage *selectedTabBg = [[UIImage imageNamed:@"SelectedTabBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(11.0, 5.0, 6.0, 5.0)];
+    [tabBarButton setBackgroundImage:selectedTabBg forState:UIControlStateSelected];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
