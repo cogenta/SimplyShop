@@ -20,6 +20,7 @@
 #import "CSProductGalleryView.h"
 #import "CSTitleBarView.h"
 #import "CSTabBarView.h"
+#import "CSProductSidebarView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -217,6 +218,9 @@
     [tabBarButton setTitleColor:[UIColor colorWithHexString:@"#606060"] forState:UIControlStateNormal];
     UIImage *selectedTabBg = [[UIImage imageNamed:@"SelectedTabBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(11.0, 5.0, 6.0, 5.0)];
     [tabBarButton setBackgroundImage:selectedTabBg forState:UIControlStateSelected];
+    
+    CSProductSidebarView *sidebarView = [CSProductSidebarView appearance];
+    sidebarView.backgroundImage = [[UIImage imageNamed:@"ProductRightBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 1.0, 0.0, 0.0)];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button

@@ -39,7 +39,7 @@
             <objects>
                 <viewController id="F7K-1c-g0S" customClass="CSProductDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K4h-XI-Nj5">
-                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <rect key="frame" x="0.0" y="0.0" width="660" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ll8-s4-Ka1" customClass="CSTitleBarView">
@@ -88,16 +88,25 @@
                                 </connections>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UxW-m9-Hqb" customClass="CSProductDetailsView"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2WM-cd-FZu" userLabel="Sidebar View" customClass="CSProductSidebarView">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="212" type="user" id="mId-R1-hNc"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="UxW-m9-Hqb" firstAttribute="trailing" secondItem="K4h-XI-Nj5" secondAttribute="trailing" type="default" id="AQA-3E-kSY"/>
+                            <constraint firstItem="2WM-cd-FZu" firstAttribute="leading" secondItem="UxW-m9-Hqb" secondAttribute="trailing" type="user" id="CYg-yf-dyb"/>
+                            <constraint firstItem="2WM-cd-FZu" firstAttribute="trailing" secondItem="K4h-XI-Nj5" secondAttribute="trailing" type="default" id="CcB-JE-gIw"/>
                             <constraint firstItem="ll8-s4-Ka1" firstAttribute="leading" secondItem="K4h-XI-Nj5" secondAttribute="leading" type="default" id="GJn-tl-IfJ"/>
-                            <constraint firstItem="ll8-s4-Ka1" firstAttribute="top" secondItem="K4h-XI-Nj5" secondAttribute="top" type="user" id="KTG-C6-zwv"/>
-                            <constraint firstItem="ll8-s4-Ka1" firstAttribute="trailing" secondItem="K4h-XI-Nj5" secondAttribute="trailing" type="default" id="YRP-Pm-5Rn"/>
-                            <constraint firstAttribute="bottom" secondItem="UxW-m9-Hqb" secondAttribute="bottom" type="user" id="t68-cY-Zoa"/>
-                            <constraint firstItem="UxW-m9-Hqb" firstAttribute="leading" secondItem="K4h-XI-Nj5" secondAttribute="leading" type="default" id="wyv-IJ-uPi"/>
-                            <constraint firstItem="UxW-m9-Hqb" firstAttribute="top" secondItem="ll8-s4-Ka1" secondAttribute="bottom" type="user" id="xr8-CA-tYQ"/>
+                            <constraint firstItem="ll8-s4-Ka1" firstAttribute="top" secondItem="K4h-XI-Nj5" secondAttribute="top" type="default" id="QCB-J9-6Qf"/>
+                            <constraint firstAttribute="bottom" secondItem="2WM-cd-FZu" secondAttribute="bottom" type="user" id="Rh7-BO-VHo"/>
+                            <constraint firstItem="ll8-s4-Ka1" firstAttribute="trailing" secondItem="K4h-XI-Nj5" secondAttribute="trailing" type="default" id="TLT-HI-n07"/>
+                            <constraint firstAttribute="bottom" secondItem="UxW-m9-Hqb" secondAttribute="bottom" type="user" id="WgM-c4-mfF"/>
+                            <constraint firstItem="UxW-m9-Hqb" firstAttribute="leading" secondItem="K4h-XI-Nj5" secondAttribute="leading" type="user" id="Wv6-92-LfE"/>
+                            <constraint firstItem="UxW-m9-Hqb" firstAttribute="top" secondItem="ll8-s4-Ka1" secondAttribute="bottom" type="user" id="ajW-58-Ofv"/>
+                            <constraint firstItem="2WM-cd-FZu" firstAttribute="top" secondItem="ll8-s4-Ka1" secondAttribute="bottom" type="user" id="cf3-RC-wuF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KIR-G7-hYt">
@@ -108,6 +117,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="productDetailsView" destination="UxW-m9-Hqb" id="mZp-ea-e3m"/>
                         <outlet property="titleBarView" destination="ll8-s4-Ka1" id="d0Z-KO-4zs"/>
@@ -526,6 +536,9 @@
                 <relationship kind="outlet" name="footerImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
             </relationships>
+        </class>
+        <class className="CSProductSidebarView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSidebarView.h"/>
         </class>
         <class className="CSProductStatsView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductStatsView.h"/>
