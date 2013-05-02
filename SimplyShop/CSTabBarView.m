@@ -16,6 +16,8 @@
 
 - (void)initialize;
 
+- (void)activateTab:(UIButton *)tab animated:(BOOL)animated;
+
 @end
 
 @implementation CSTabBarView
@@ -45,15 +47,21 @@
                                             options:nil]
                 objectAtIndex:0];
     [self addSubview:_subview];
-    [self didSelectTab:self.defaultButton];
+    [self activateTab:self.defaultButton animated:NO];
+}
+
+- (void)activateTab:(UIButton *)tab animated:(BOOL)animated
+{
+    self.selectedButton.selected = NO;
+    self.selectedButton = tab;
+    self.selectedButton.selected = YES;
+    
+    [self.arrowView setPosition:CGRectGetMidX(self.selectedButton.frame)
+                       animated:animated];
 }
 
 - (IBAction)didSelectTab:(UIButton *)sender {
-    self.selectedButton.selected = NO;
-    self.selectedButton = sender;
-    self.selectedButton.selected = YES;
-    
-    self.arrowView.position = CGRectGetMidX(self.selectedButton.frame);
+    [self activateTab:sender animated:YES];
     
     if (sender.tag == 1) {
         [self.delegate selectDescription];

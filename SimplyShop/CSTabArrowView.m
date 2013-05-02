@@ -51,7 +51,8 @@
                      options:nil]
                     objectAtIndex:0];
     [self addSubview:self.subview];
-    [self layoutSubviews];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void)setLeftImage:(UIImage *)image
@@ -121,8 +122,22 @@
 
 - (void)setPosition:(CGFloat)newPosition
 {
+    [self setPosition:newPosition animated:NO];
+}
+
+- (void)setPosition:(CGFloat)newPosition animated:(BOOL)animated
+{
+    if (animated) {
+        [UIView beginAnimations:@"MoveArrow" context:NULL];
+        [UIView setAnimationDuration:0.25];
+    }
     position = newPosition;
-    [self layoutSubviews];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+    
+    if (animated) {
+        [UIView commitAnimations];
+    }
 }
 
 @end

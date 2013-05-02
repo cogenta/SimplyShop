@@ -20,4 +20,6 @@
 
 @property (nonatomic) CGFloat position;
 
+- (void)setPosition:(CGFloat)position animated:(BOOL)animated;
+
 @end
