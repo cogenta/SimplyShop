@@ -192,6 +192,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="108" type="user" id="NQR-48-0Mf"/>
                                     <constraint firstItem="P22-wL-biE" firstAttribute="centerY" secondItem="a7M-9R-LHE" secondAttribute="centerY" type="default" id="YWG-jr-KSd"/>
                                     <constraint firstItem="P22-wL-biE" firstAttribute="centerX" secondItem="a7M-9R-LHE" secondAttribute="centerX" type="default" id="vLS-qN-iw3"/>
                                 </constraints>
@@ -199,14 +200,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="a7M-9R-LHE" firstAttribute="bottom" secondItem="YXR-kj-RZg" secondAttribute="bottom" type="default" id="0Nf-g7-6Ix"/>
                             <constraint firstItem="t6c-GB-0VU" firstAttribute="leading" secondItem="YXR-kj-RZg" secondAttribute="leading" type="default" id="25G-9l-RC3"/>
                             <constraint firstItem="t6c-GB-0VU" firstAttribute="trailing" secondItem="YXR-kj-RZg" secondAttribute="trailing" type="default" id="7I7-ZV-oYb"/>
-                            <constraint firstItem="a7M-9R-LHE" firstAttribute="top" secondItem="YXR-kj-RZg" secondAttribute="top" constant="853" id="Idp-Zk-AYA"/>
                             <constraint firstItem="a7M-9R-LHE" firstAttribute="leading" secondItem="YXR-kj-RZg" secondAttribute="leading" type="default" id="OGE-x6-LRh"/>
                             <constraint firstItem="t6c-GB-0VU" firstAttribute="bottom" secondItem="YXR-kj-RZg" secondAttribute="bottom" type="default" id="UXU-Y0-VLm"/>
                             <constraint firstItem="a7M-9R-LHE" firstAttribute="trailing" secondItem="YXR-kj-RZg" secondAttribute="trailing" type="default" id="WME-Ak-xYp"/>
                             <constraint firstItem="t6c-GB-0VU" firstAttribute="top" secondItem="YXR-kj-RZg" secondAttribute="top" type="default" id="vUB-Lo-IvF"/>
+                            <constraint firstAttribute="bottom" secondItem="a7M-9R-LHE" secondAttribute="bottom" type="user" id="xml-2n-FUh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Favourite Stores" id="Mxo-bT-Mn9"/>
@@ -487,6 +487,148 @@
     <resources>
         <image name="BigX@2x.png" width="51" height="51"/>
     </resources>
+    <classes>
+        <class className="CSAppearanceButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSAppearanceButton.h"/>
+        </class>
+        <class className="CSCTAButton" superclassName="CSAppearanceButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCTAButton.h"/>
+        </class>
+        <class className="CSFavoriteStoresCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSFavoriteStoresCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="CSHomePageViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSHomePageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="didTapChooseRetailersButton:"/>
+                <relationship kind="action" name="didTapSeeAllTopProductsButton:"/>
+                <relationship kind="action" name="doneChangeRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="doneInitialRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="doneShowProduct:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="favoriteStoresCell" candidateClass="CSFavoriteStoresCell"/>
+                <relationship kind="outlet" name="topProductsCell" candidateClass="CSProductSummariesCell"/>
+            </relationships>
+        </class>
+        <class className="CSProductDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="productDetailsView" candidateClass="CSProductDetailsView"/>
+                <relationship kind="outlet" name="sidebarView" candidateClass="CSProductSidebarView"/>
+                <relationship kind="outlet" name="titleBarView" candidateClass="CSTitleBarView"/>
+            </relationships>
+        </class>
+        <class className="CSProductDetailsView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailsView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="galleryView" candidateClass="CSProductGalleryView"/>
+                <relationship kind="outlet" name="productStatsView" candidateClass="CSProductStatsView"/>
+                <relationship kind="outlet" name="tabBarView" candidateClass="CSTabBarView"/>
+                <relationship kind="outlet" name="tabFooterView" candidateClass="CSTabFooterView"/>
+            </relationships>
+        </class>
+        <class className="CSProductGalleryView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductGalleryView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="footerImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="CSProductSidebarView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSidebarView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logoView" candidateClass="CSRetailerLogoView"/>
+            </relationships>
+        </class>
+        <class className="CSProductStatsView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductStatsView.h"/>
+        </class>
+        <class className="CSProductSummariesCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummariesCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="CSProductSummaryCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummaryCell.h"/>
+            <relationships>
+                <relationship kind="action" name="didTapRetryButton:"/>
+                <relationship kind="outlet" name="delegate"/>
+                <relationship kind="outlet" name="productDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="productNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="retryButton" candidateClass="CSCTAButton"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerLogoView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerLogoView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerSelectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+            </relationships>
+        </class>
+        <class className="CSTabArrowView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTabArrowView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="arrowImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="CSTabBarView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTabBarView.h"/>
+            <relationships>
+                <relationship kind="action" name="didSelectTab:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="arrowView" candidateClass="CSTabArrowView"/>
+                <relationship kind="outlet" name="defaultButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="CSTabFooterView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTabFooterView.h"/>
+        </class>
+        <class className="CSTitleBarView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTitleBarView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
