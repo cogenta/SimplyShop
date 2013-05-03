@@ -8,6 +8,7 @@
 
 #import "CSProductDetailViewController.h"
 #import "CSProductDetailsView.h"
+#import "CSProductSidebarView.h"
 #import "CSTitleBarView.h"
 #import "CSProductStats.h"
 #import <CSApi/CSAPI.h>
@@ -108,12 +109,34 @@
     }];
     
     [self updateSizing];
+    
+    [product getPrices:^(id<CSPriceListPage> firstPage, NSError *error) {
+        if (error) {
+            // TODO: better error handling
+            self.sidebarView.price = nil;
+            return;
+        }
+        
+        [firstPage.priceList getPriceAtIndex:0
+                                    callback:^(id<CSPrice> result,
+                                               NSError *error) {
+            if (error) {
+                // TODO: better error handling
+                self.sidebarView.price = nil;
+                return ;
+            }
+            
+            self.sidebarView.price = result;
+        }];
+    }];
 }
 
 - (void)setProductSummary:(id<CSProductSummary>)productSummary
 {
     self.titleBarView.title = [productSummary.name uppercaseString];
     self.productDetailsView.description = productSummary.description;
+    
+    self.sidebarView.price = nil;
     [self updateSizing];
 }
 

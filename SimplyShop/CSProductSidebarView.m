@@ -7,51 +7,102 @@
 //
 
 #import "CSProductSidebarView.h"
+#import "CSRetailerLogoView.h"
+#import <CSApi/CSAPI.h>
 
 @interface CSProductSidebarView ()
 
-@property (nonatomic, strong) UIImageView *backgroundView;
+@property (strong, nonatomic) UIView *subview;
+@property (strong, nonatomic) UIImageView *backgroundView;
+
+- (void)initialize;
+- (void)updateContent;
 
 @end
 
 @implementation CSProductSidebarView
 
+@synthesize price;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self initialize];
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    // Drawing code
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initialize];
+    }
+    return self;
 }
-*/
+
+- (void)initialize
+{
+    _subview = [[[NSBundle mainBundle] loadNibNamed:@"CSProductSidebarView"
+                                              owner:self
+                                            options:nil]
+                objectAtIndex:0];
+    _subview.frame = self.bounds;
+    [self addSubview:_subview];
+    [self updateContent];
+}
 
 - (UIImage *)backgroundImage
 {
     return self.backgroundView.image;
 }
 
-- (void)setBackgroundImage:(UIImage *)newBackgroundImage
+- (void)setBackgroundImage:(UIImage *)backgroundImage
 {
-    if ( ! self.backgroundView) {
-        self.backgroundView = [[UIImageView alloc] initWithImage:newBackgroundImage];
-        [self insertSubview:self.backgroundView atIndex:0];
-        [self setNeedsLayout];
-        [self layoutIfNeeded];
+    if (self.backgroundView) {
+        self.backgroundView.image = backgroundImage;
+        return;
     }
+    
+    self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+    self.backgroundView.frame = self.subview.bounds;
+    [self.subview insertSubview:self.backgroundView atIndex:0];
 }
 
 - (void)layoutSubviews
 {
-    self.backgroundView.frame = self.bounds;
+    self.backgroundView.frame = self.subview.bounds;
+    [self.subview insertSubview:self.backgroundView atIndex:0];
+}
+
+- (id<CSPrice>)price
+{
+    return price;
+}
+
+- (void)setPrice:(id<CSPrice>)newPrice
+{
+    price = newPrice;
+    [self updateContent];
+}
+
+- (void)updateContent
+{
+    if ( ! self.price) {
+        self.logoView.retailer = nil;
+        return;
+    }
+    
+    [self.price getRetailer:^(id<CSRetailer> retailer, NSError *error) {
+        if (error) {
+            // TODO: handle error better
+            self.logoView.retailer = nil;
+            return;
+        }
+        
+        self.logoView.retailer = retailer;
+    }];
 }
 
 @end

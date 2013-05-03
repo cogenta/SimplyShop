@@ -10,13 +10,15 @@
 
 @protocol CSProduct;
 @protocol CSProductSummary;
-@class CSProductDetailsView;
 @class CSTitleBarView;
+@class CSProductDetailsView;
+@class CSProductSidebarView;
 
 @interface CSProductDetailViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet CSProductDetailsView *productDetailsView;
 @property (weak, nonatomic) IBOutlet CSTitleBarView *titleBarView;
+@property (weak, nonatomic) IBOutlet CSProductDetailsView *productDetailsView;
+@property (weak, nonatomic) IBOutlet CSProductSidebarView *sidebarView;
 
 @property (nonatomic, strong) id<CSProductSummary> productSummary;
 @property (nonatomic, strong) id<CSProduct> product;

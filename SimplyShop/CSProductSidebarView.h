@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CSPrice;
+@class  CSRetailerLogoView;
+
 @interface CSProductSidebarView : UIView
 
+@property (weak, nonatomic) IBOutlet CSRetailerLogoView *logoView;
+
 @property (strong, nonatomic) UIImage *backgroundImage UI_APPEARANCE_SELECTOR;
+
+@property (strong, nonatomic) id<CSPrice> price;
 
 @end

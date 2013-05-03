@@ -21,6 +21,7 @@
 #import "CSTitleBarView.h"
 #import "CSTabBarView.h"
 #import "CSProductSidebarView.h"
+#import "CSRetailerLogoView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -221,6 +222,11 @@
     
     CSProductSidebarView *sidebarView = [CSProductSidebarView appearance];
     sidebarView.backgroundImage = [[UIImage imageNamed:@"ProductRightBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 1.0, 0.0, 0.0)];
+    
+    CSRetailerLogoView *retailerLogoView = [CSRetailerLogoView appearance];
+    retailerLogoView.backgroundImage = [[UIImage imageNamed:@"BigRetailerBackground"]
+                                        resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
+    retailerLogoView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
