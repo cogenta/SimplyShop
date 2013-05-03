@@ -101,6 +101,10 @@
         
         id<CSImageList> images = picture.imageList;
         
+        CGSize targetSize = self.logoImageView.frame.size;
+        targetSize.width *= 2.0;
+        targetSize.height *= 2.0;
+        
         __block id<CSImage> bestImage = nil;
         for (NSInteger i = 0 ; i < images.count; ++i) {
             [images getImageAtIndex:i
@@ -110,7 +114,14 @@
                      return;
                  }
                  
-                 if ([image.width doubleValue] > [bestImage.width doubleValue]) {
+                 if ( ! bestImage) {
+                     bestImage = image;
+                 }
+                 
+                 if ([image.width doubleValue] <= targetSize.width &&
+                     [image.height doubleValue] <= targetSize.height &&
+                     ([image.width doubleValue] > [bestImage.width doubleValue] ||
+                      [image.height doubleValue] > [bestImage.height doubleValue])) {
                      bestImage = image;
                  }
                  
