@@ -56,6 +56,7 @@
 		BE6E2F461733BE2400DCE47E /* CSRetailerLogoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F451733BE2400DCE47E /* CSRetailerLogoView.xib */; };
 		BE6E2F481733C32300DCE47E /* CSProductSidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F471733C32300DCE47E /* CSProductSidebarView.xib */; };
 		BE6E2F4A1733C82300DCE47E /* BigRetailerBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F491733C82300DCE47E /* BigRetailerBackground@2x.png */; };
+		BE6E2F4D1733EDBD00DCE47E /* UIImageView+CSImageSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6E2F4C1733EDBD00DCE47E /* UIImageView+CSImageSelection.m */; };
 		BE73677D1729614000B4691C /* CSProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE73677C1729614000B4691C /* CSProductDetailViewController.m */; };
 		BE73678A172A7E5E00B4691C /* CSProductDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE736789172A7E5E00B4691C /* CSProductDetailsView.m */; };
 		BE736790172E7E3700B4691C /* CSTabArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE73678F172E7E3700B4691C /* CSTabArrowView.m */; };
@@ -155,6 +156,8 @@
 		BE6E2F451733BE2400DCE47E /* CSRetailerLogoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRetailerLogoView.xib; sourceTree = "<group>"; };
 		BE6E2F471733C32300DCE47E /* CSProductSidebarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductSidebarView.xib; sourceTree = "<group>"; };
 		BE6E2F491733C82300DCE47E /* BigRetailerBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BigRetailerBackground@2x.png"; path = "../../../Desktop/Extracted Assets/BigRetailerBackground@2x.png"; sourceTree = "<group>"; };
+		BE6E2F4B1733EDBC00DCE47E /* UIImageView+CSImageSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+CSImageSelection.h"; sourceTree = "<group>"; };
+		BE6E2F4C1733EDBD00DCE47E /* UIImageView+CSImageSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+CSImageSelection.m"; sourceTree = "<group>"; };
 		BE73677B1729614000B4691C /* CSProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductDetailViewController.h; sourceTree = "<group>"; };
 		BE73677C1729614000B4691C /* CSProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductDetailViewController.m; sourceTree = "<group>"; };
 		BE736788172A7E5E00B4691C /* CSProductDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductDetailsView.h; sourceTree = "<group>"; };
@@ -371,6 +374,8 @@
 				BE6E2F3E1733BD1300DCE47E /* CSRetailerLogoView.h */,
 				BE6E2F3F1733BD1400DCE47E /* CSRetailerLogoView.m */,
 				BE6E2F451733BE2400DCE47E /* CSRetailerLogoView.xib */,
+				BE6E2F4B1733EDBC00DCE47E /* UIImageView+CSImageSelection.h */,
+				BE6E2F4C1733EDBD00DCE47E /* UIImageView+CSImageSelection.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 				BE6E2F3417329E4B00DCE47E /* CSTabBarView.m in Sources */,
 				BE6E2F3B1732D7B300DCE47E /* CSProductSidebarView.m in Sources */,
 				BE6E2F401733BD1400DCE47E /* CSRetailerLogoView.m in Sources */,
+				BE6E2F4D1733EDBD00DCE47E /* UIImageView+CSImageSelection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,7 @@
 #import <CSApi/CSAPI.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
+#import "UIImageView+CSImageSelection.h"
 
 @interface CSRetailerSelectionCell ()
 
@@ -130,45 +131,16 @@
                 return;
             }
             
-            id<CSImageList> images = picture.imageList;
-            
-            CGSize targetSize = self.logoImageView.frame.size;
-            targetSize.width *= 2.0;
-            targetSize.height *= 2.0;
-
-            __block id<CSImage> bestImage = nil;
-            for (NSInteger i = 0 ; i < images.count; ++i) {
-                [images getImageAtIndex:i
-                               callback:^(id<CSImage> image, NSError *error)
-                {
-                    if (error) {
-                        return;
-                    }
-                    
-                    if ( ! bestImage) {
-                        bestImage = image;
-                    }
-                    
-                    if ([image.width doubleValue] <= targetSize.width &&
-                        [image.height doubleValue] <= targetSize.height &&
-                        ([image.width doubleValue] > [bestImage.width doubleValue] ||
-                         [image.height doubleValue] > [bestImage.height doubleValue])) {
-                        bestImage = image;
-                    }
-                    
-                    if (i == images.count - 1 && bestImage) {
-                        [self.logoImageView setImageWithURL:bestImage.enclosureURL
-                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType)
-                        {
-                            if ( ! image) {
-                                return;
-                            }
-                            self.retailerNameLabel.hidden = YES;
-                            self.logoImageView.hidden = NO;
-                        }];
-                    }
-                }];
-            }
+            [self.logoImageView setImageWithPicture:picture
+                                          completed:^(UIImage *image,
+                                                      NSError *error)
+            {
+                if ( ! image) {
+                    return;
+                }
+                self.retailerNameLabel.hidden = YES;
+                self.logoImageView.hidden = NO;
+            }];
         }];
     } else {
         self.retailerNameLabel.text = @"...";
