@@ -114,7 +114,7 @@
     [[[mockProduct stub] andReturn:softwarePlatform] softwarePlatform];
     [[[mockProduct stub] andReturn:softwarePlatform] valueForKey:@"softwarePlatform"];
 
-    [[[mockProduct stub] andReturn:manufacturer] manufacuturer];
+    [[[mockProduct stub] andReturn:manufacturer] manufacturer];
     [[[mockProduct stub] andReturn:manufacturer] valueForKey:@"manufacturer"];
 
     [[[mockProduct stub] andReturn:coverType] coverType];

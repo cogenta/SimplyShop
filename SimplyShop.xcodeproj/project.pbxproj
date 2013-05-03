@@ -57,6 +57,8 @@
 		BE6E2F481733C32300DCE47E /* CSProductSidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F471733C32300DCE47E /* CSProductSidebarView.xib */; };
 		BE6E2F4A1733C82300DCE47E /* BigRetailerBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F491733C82300DCE47E /* BigRetailerBackground@2x.png */; };
 		BE6E2F4D1733EDBD00DCE47E /* UIImageView+CSImageSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6E2F4C1733EDBD00DCE47E /* UIImageView+CSImageSelection.m */; };
+		BE6E2F501733FD7600DCE47E /* CSPriceContextTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6E2F4F1733FD7600DCE47E /* CSPriceContextTests.m */; };
+		BE6E2F531733FDAF00DCE47E /* CSPriceContext.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6E2F521733FDAF00DCE47E /* CSPriceContext.m */; };
 		BE73677D1729614000B4691C /* CSProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE73677C1729614000B4691C /* CSProductDetailViewController.m */; };
 		BE73678A172A7E5E00B4691C /* CSProductDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE736789172A7E5E00B4691C /* CSProductDetailsView.m */; };
 		BE736790172E7E3700B4691C /* CSTabArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE73678F172E7E3700B4691C /* CSTabArrowView.m */; };
@@ -158,6 +160,9 @@
 		BE6E2F491733C82300DCE47E /* BigRetailerBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BigRetailerBackground@2x.png"; path = "../../../Desktop/Extracted Assets/BigRetailerBackground@2x.png"; sourceTree = "<group>"; };
 		BE6E2F4B1733EDBC00DCE47E /* UIImageView+CSImageSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+CSImageSelection.h"; sourceTree = "<group>"; };
 		BE6E2F4C1733EDBD00DCE47E /* UIImageView+CSImageSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+CSImageSelection.m"; sourceTree = "<group>"; };
+		BE6E2F4F1733FD7600DCE47E /* CSPriceContextTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPriceContextTests.m; sourceTree = "<group>"; };
+		BE6E2F511733FDAF00DCE47E /* CSPriceContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPriceContext.h; sourceTree = "<group>"; };
+		BE6E2F521733FDAF00DCE47E /* CSPriceContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPriceContext.m; sourceTree = "<group>"; };
 		BE73677B1729614000B4691C /* CSProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductDetailViewController.h; sourceTree = "<group>"; };
 		BE73677C1729614000B4691C /* CSProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductDetailViewController.m; sourceTree = "<group>"; };
 		BE736788172A7E5E00B4691C /* CSProductDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductDetailsView.h; sourceTree = "<group>"; };
@@ -292,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				BE7367A9172FD0E700B4691C /* CSProductStatsTests.m */,
+				BE6E2F4F1733FD7600DCE47E /* CSPriceContextTests.m */,
 				BE3D4DF5170331AA00644AD6 /* Supporting Files */,
 			);
 			path = SimplyShopTests;
@@ -398,6 +404,8 @@
 			children = (
 				BE7367A3172FD02700B4691C /* CSProductStats.h */,
 				BE7367A4172FD02700B4691C /* CSProductStats.m */,
+				BE6E2F511733FDAF00DCE47E /* CSPriceContext.h */,
+				BE6E2F521733FDAF00DCE47E /* CSPriceContext.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -618,6 +626,7 @@
 				BE6E2F3B1732D7B300DCE47E /* CSProductSidebarView.m in Sources */,
 				BE6E2F401733BD1400DCE47E /* CSRetailerLogoView.m in Sources */,
 				BE6E2F4D1733EDBD00DCE47E /* UIImageView+CSImageSelection.m in Sources */,
+				BE6E2F531733FDAF00DCE47E /* CSPriceContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +635,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE7367AA172FD0E700B4691C /* CSProductStatsTests.m in Sources */,
+				BE6E2F501733FD7600DCE47E /* CSPriceContextTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
