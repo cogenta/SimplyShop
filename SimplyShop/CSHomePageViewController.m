@@ -300,7 +300,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             __block NSInteger changesToApply = [likesToDelete count] + [urlsToAdd count];
             if (changesToApply == 0) {
                 self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
-                [self loadTopProductSummariesFromGroup:group];
+                [self loadRetailers];
             }
             for (id<CSLike> like in likesToDelete) {
                 [like remove:^(BOOL success, NSError *error) {
@@ -312,7 +312,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                     --changesToApply;
                     if (changesToApply == 0) {
                         self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
-                        [self loadTopProductSummariesFromGroup:group];
+                        [self loadRetailers];
                     }
                 }];
             }
@@ -329,7 +329,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                     --changesToApply;
                     if (changesToApply == 0) {
                         self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
-                        [self loadTopProductSummariesFromGroup:group];
+                        [self loadRetailers];
                     }
                 }];
             }
