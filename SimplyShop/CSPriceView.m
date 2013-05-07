@@ -77,11 +77,11 @@
 {
     NSNumber *deliveryPrice = self.price.deliveryPrice;
     if ( ! [deliveryPrice respondsToSelector:@selector(isEqualToNumber:)]) {
-        return @"+ unknown delivery";
+        return @"+ delivery";
     }
     
     if ([deliveryPrice isEqualToNumber:@(0.00)]) {
-        return @"with free delivery";
+        return @"incl. delivery";
     }
     
     return [NSString stringWithFormat:@"+ %@%@ delivery",
