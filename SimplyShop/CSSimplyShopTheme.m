@@ -22,6 +22,7 @@
 #import "CSTabBarView.h"
 #import "CSProductSidebarView.h"
 #import "CSRetailerLogoView.h"
+#import "CSPriceView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -215,7 +216,7 @@
     
     UIButton *tabBarButton = [UIButton appearanceWhenContainedIn:[CSTabBarView class], nil];
     UILabel *tabBarButtonLabel = [UILabel appearanceWhenContainedIn:[UIButton class], [CSTabBarView class], nil];
-    tabBarButtonLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12.5];
+    tabBarButtonLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12.5];
     [tabBarButton setTitleColor:[UIColor colorWithHexString:@"#606060"] forState:UIControlStateNormal];
     UIImage *selectedTabBg = [[UIImage imageNamed:@"SelectedTabBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(11.0, 5.0, 6.0, 5.0)];
     [tabBarButton setBackgroundImage:selectedTabBg forState:UIControlStateSelected];
@@ -227,6 +228,12 @@
     retailerLogoView.backgroundImage = [[UIImage imageNamed:@"BigRetailerBackground"]
                                         resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
     retailerLogoView.backgroundColor = [UIColor clearColor];
+    
+    CSPriceView *priceView = [CSPriceView appearance];
+    priceView.priceLabelFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:17.0];
+    priceView.priceLabelColor = [UIColor colorWithHexString:@"#606060"];
+    priceView.deliveryLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:8.0];
+    priceView.deliveryLabelColor = [UIColor colorWithHexString:@"#999999"];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button

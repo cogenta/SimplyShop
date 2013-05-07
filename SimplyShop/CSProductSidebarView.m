@@ -8,6 +8,7 @@
 
 #import "CSProductSidebarView.h"
 #import "CSRetailerLogoView.h"
+#import "CSPriceView.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSProductSidebarView ()
@@ -91,8 +92,11 @@
 {
     if ( ! self.price) {
         self.logoView.retailer = nil;
+        self.priceView.price = nil;
         return;
     }
+    
+    self.priceView.price = self.price;
     
     [self.price getRetailer:^(id<CSRetailer> retailer, NSError *error) {
         if (error) {

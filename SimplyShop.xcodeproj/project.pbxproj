@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8795017384E8439AB90A9230 /* libPods-test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2B2CCA674454E08BDE20C2B /* libPods-test.a */; };
 		A172FB01282545C594A858F8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 745CEB81A3744A0A93F6CAC6 /* libPods.a */; };
+		BE08AFAA17394584007184E0 /* CSPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE08AFA917394584007184E0 /* CSPriceView.m */; };
+		BE08AFAC17394EB4007184E0 /* CSPriceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE08AFAB17394EB4007184E0 /* CSPriceView.xib */; };
 		BE3D4DD1170331AA00644AD6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD0170331AA00644AD6 /* UIKit.framework */; };
 		BE3D4DD3170331AA00644AD6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD2170331AA00644AD6 /* Foundation.framework */; };
 		BE3D4DD5170331AA00644AD6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD4170331AA00644AD6 /* CoreGraphics.framework */; };
@@ -93,6 +95,9 @@
 		556CD3EBC7A04BBBA707A657 /* Pods-test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test.xcconfig"; path = "Pods/Pods-test.xcconfig"; sourceTree = SOURCE_ROOT; };
 		745CEB81A3744A0A93F6CAC6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B2CCA674454E08BDE20C2B /* libPods-test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE08AFA817394584007184E0 /* CSPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPriceView.h; sourceTree = "<group>"; };
+		BE08AFA917394584007184E0 /* CSPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPriceView.m; sourceTree = "<group>"; };
+		BE08AFAB17394EB4007184E0 /* CSPriceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSPriceView.xib; sourceTree = "<group>"; };
 		BE3D4DCD170331AA00644AD6 /* Simply Shop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simply Shop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3D4DD0170331AA00644AD6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BE3D4DD2170331AA00644AD6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -382,6 +387,9 @@
 				BE6E2F451733BE2400DCE47E /* CSRetailerLogoView.xib */,
 				BE6E2F4B1733EDBC00DCE47E /* UIImageView+CSImageSelection.h */,
 				BE6E2F4C1733EDBD00DCE47E /* UIImageView+CSImageSelection.m */,
+				BE08AFA817394584007184E0 /* CSPriceView.h */,
+				BE08AFA917394584007184E0 /* CSPriceView.m */,
+				BE08AFAB17394EB4007184E0 /* CSPriceView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -540,6 +548,7 @@
 				BE6E2F461733BE2400DCE47E /* CSRetailerLogoView.xib in Resources */,
 				BE6E2F481733C32300DCE47E /* CSProductSidebarView.xib in Resources */,
 				BE6E2F4A1733C82300DCE47E /* BigRetailerBackground@2x.png in Resources */,
+				BE08AFAC17394EB4007184E0 /* CSPriceView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +636,7 @@
 				BE6E2F401733BD1400DCE47E /* CSRetailerLogoView.m in Sources */,
 				BE6E2F4D1733EDBD00DCE47E /* UIImageView+CSImageSelection.m in Sources */,
 				BE6E2F531733FDAF00DCE47E /* CSPriceContext.m in Sources */,
+				BE08AFAA17394584007184E0 /* CSPriceView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
