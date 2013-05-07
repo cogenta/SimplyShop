@@ -13,6 +13,7 @@
 @class CSTitleBarView;
 @class CSProductDetailsView;
 @class CSProductSidebarView;
+@class CSPriceContext;
 
 @interface CSProductDetailViewController : UIViewController
 
@@ -22,5 +23,6 @@
 
 @property (nonatomic, strong) id<CSProductSummary> productSummary;
 @property (nonatomic, strong) id<CSProduct> product;
+@property (nonatomic, strong) CSPriceContext *priceContext;
 
 @end

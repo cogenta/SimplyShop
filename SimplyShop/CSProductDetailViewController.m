@@ -11,6 +11,7 @@
 #import "CSProductSidebarView.h"
 #import "CSTitleBarView.h"
 #import "CSProductStats.h"
+#import "CSPriceContext.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSProductDetailViewController ()
@@ -109,7 +110,6 @@
     }];
     
     [self updateSizing];
-    
     [product getPrices:^(id<CSPriceListPage> firstPage, NSError *error) {
         if (error) {
             // TODO: better error handling
@@ -117,16 +117,10 @@
             return;
         }
         
-        [firstPage.priceList getPriceAtIndex:0
-                                    callback:^(id<CSPrice> result,
-                                               NSError *error) {
-            if (error) {
-                // TODO: better error handling
-                self.sidebarView.price = nil;
-                return ;
-            }
-            
-            self.sidebarView.price = result;
+        [self.priceContext getBestPrice:firstPage.priceList
+                               callback:^(id<CSPrice> bestPrice)
+        {
+            self.sidebarView.price = bestPrice;
         }];
     }];
 }

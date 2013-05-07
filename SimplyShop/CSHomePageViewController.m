@@ -11,6 +11,7 @@
 #import "CSFavoriteStoresCell.h"
 #import "CSProductSummariesCell.h"
 #import "CSProductDetailViewController.h"
+#import "CSPriceContext.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSHomePageViewController () <
@@ -21,6 +22,7 @@
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
+@property (strong, nonatomic) NSObject<CSLikeList> *likeList;
 
 - (void)loadRetailers;
 - (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group;
@@ -98,6 +100,8 @@
             [self setErrorState];
             return;
         }
+        
+        self.likeList = likeList;
         
         [self loadTopProductSummariesFromGroup:group];
         
@@ -182,6 +186,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     if ([segue.identifier isEqualToString:@"showProduct"]) {
         CSProductDetailViewController *vc = (id) segue.destinationViewController;
+        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
+        
         NSDictionary *address = sender;
         CSProductSummariesCell *cell = address[@"cell"];
         id<CSProductSummaryList> list = cell.productSummaries;
