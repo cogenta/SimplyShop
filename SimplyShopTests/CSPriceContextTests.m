@@ -10,6 +10,7 @@
 #import "CSPriceContext.h"
 #import <OCMock/OCMock.h>
 #import <CSApi/CSAPI.h>
+#import <NSArray+Functional/NSArray+Functional.h>
 
 #define CALL_AND_WAIT(blk) \
 { \
@@ -23,6 +24,7 @@
 @property (strong, nonatomic) NSArray *things;
 
 + (id)fakeListWithThings:(NSArray *)things;
++ (id)fakeListWithLikedURLs:(NSArray *)likedURLs;
 
 @end
 
@@ -33,6 +35,16 @@
     FakeList *result = [[FakeList alloc] init];
     result.things = things;
     return result;
+}
+
++ (id)fakeListWithLikedURLs:(NSArray *)likedURLs
+{
+    NSArray *things = [likedURLs mapUsingBlock:^id<CSLike>(NSURL *obj) {
+        id result = [OCMockObject mockForProtocol:@protocol(CSLike)];
+        [[[result stub] andReturn:obj] likedURL];
+        return result;
+    }];
+    return [FakeList fakeListWithThings:things];
 }
 
 - (NSUInteger)count
@@ -64,6 +76,11 @@
                callback:(void (^)(id<CSLike>, NSError *))callback
 {
     [self getThingAtIndex:index callback:callback];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<FakeList: things=%@>", self.things];
 }
 
 @end
@@ -203,7 +220,7 @@
 
 - (id<CSLikeList>)someLikes
 {
-    return [FakeList fakeListWithThings:@[
+    return [FakeList fakeListWithLikedURLs:@[
             [self likedRetailer3],
             [self likedRetailer4],
             [self likedRetailer5]]];
@@ -393,10 +410,6 @@
     });
     
     STAssertEqualObjects(bestPrice, expectedPrice, nil);
-}
-
-- (void)testChoosesLowestEffectivePriceWhenStickerPriceIsNotLowest
-{
 }
 
 

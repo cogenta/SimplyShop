@@ -59,6 +59,10 @@
                     continue;
                 }
                 
+                if (bestPriceLiked && ! liked) {
+                    continue;
+                }
+                
                 NSComparisonResult comparison = [[bestPrice effectivePrice]
                                                  compare:[price effectivePrice]];
                 if (comparison == NSOrderedDescending) {
