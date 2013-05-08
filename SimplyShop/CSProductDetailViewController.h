@@ -25,4 +25,6 @@
 @property (nonatomic, strong) id<CSProduct> product;
 @property (nonatomic, strong) CSPriceContext *priceContext;
 
+- (IBAction)doneShowPurchasePage:(UIStoryboardSegue *)segue;
+
 @end

@@ -125,12 +125,50 @@
                         <outlet property="productDetailsView" destination="UxW-m9-Hqb" id="mZp-ea-e3m"/>
                         <outlet property="sidebarView" destination="2WM-cd-FZu" id="kmQ-jg-ejp"/>
                         <outlet property="titleBarView" destination="ll8-s4-Ka1" id="d0Z-KO-4zs"/>
+                        <segue destination="73x-w4-o3C" kind="modal" identifier="showPurchasePage" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="bTn-Ph-7le"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pxr-0e-PSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="faX-58-B8I" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="640" y="-1120"/>
+            <point key="canvasLocation" x="680" y="-1146"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hc5-CI-TXP">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="73x-w4-o3C" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UbR-Kq-4mG">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="xeE-dP-NAT" kind="relationship" relationship="rootViewController" id="GjA-VK-LDv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qZM-gm-bMr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6IA-Ac-6YR" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1590" y="-1339"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="YlF-p7-wPo">
+            <objects>
+                <viewController id="xeE-dP-NAT" customClass="PBWebViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4tm-j3-g5K">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="kfn-nF-wHb">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="xBJ-xA-iBH">
+                            <connections>
+                                <segue destination="6IA-Ac-6YR" kind="unwind" unwindAction="doneShowPurchasePage:" id="4mV-Cg-UoA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XI2-Wb-bPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2557" y="-1339"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="huO-qq-cWy">
@@ -527,6 +565,7 @@
         <class className="CSProductDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailViewController.h"/>
             <relationships>
+                <relationship kind="action" name="doneShowPurchasePage:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="outlet" name="productDetailsView" candidateClass="CSProductDetailsView"/>
                 <relationship kind="outlet" name="sidebarView" candidateClass="CSProductSidebarView"/>
                 <relationship kind="outlet" name="titleBarView" candidateClass="CSTitleBarView"/>
@@ -553,7 +592,6 @@
         <class className="CSProductSidebarView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSidebarView.h"/>
             <relationships>
-                <relationship kind="action" name="didTapBuyNow:"/>
                 <relationship kind="outlet" name="delegate"/>
                 <relationship kind="outlet" name="logoView" candidateClass="CSRetailerLogoView"/>
                 <relationship kind="outlet" name="priceView" candidateClass="CSPriceView"/>
@@ -635,6 +673,9 @@
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PBWebViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PBWebViewController.h"/>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>

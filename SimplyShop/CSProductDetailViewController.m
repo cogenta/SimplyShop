@@ -12,11 +12,11 @@
 #import "CSTitleBarView.h"
 #import "CSProductStats.h"
 #import "CSPriceContext.h"
+#import <PBWebViewController/PBWebViewController.h>
 #import <CSApi/CSAPI.h>
 
 @interface CSProductDetailViewController () <CSProductSidebarViewDelegate>
 
-@property (nonatomic, weak) UIViewController *mainViewController;
 @property (nonatomic, strong) UITapGestureRecognizer *recognizer;
 @end
 
@@ -64,8 +64,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"embedMainViewController"]) {
-        self.mainViewController = segue.destinationViewController;
+    if ([segue.identifier isEqualToString:@"showPurchasePage"]) {
+        UINavigationController *nav = segue.destinationViewController;
+        PBWebViewController *vc = (id) nav.topViewController;
+        vc.URL = [sender purchaseURL];
     }
 }
 
@@ -137,7 +139,12 @@
 - (void)sidebarView:(CSProductSidebarView *)view
      didSelectPrice:(id<CSPrice>)price
 {
-    [[UIApplication sharedApplication] openURL:price.purchaseURL];
+    [self performSegueWithIdentifier:@"showPurchasePage" sender:price];
+}
+
+- (IBAction)doneShowPurchasePage:(UIStoryboardSegue *)segue
+{
+    // Do nothing
 }
 
 @end
