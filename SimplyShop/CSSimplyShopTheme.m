@@ -23,6 +23,7 @@
 #import "CSProductSidebarView.h"
 #import "CSRetailerLogoView.h"
 #import "CSPriceView.h"
+#import "CSStockView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -234,6 +235,22 @@
     priceView.priceLabelColor = [UIColor colorWithHexString:@"#606060"];
     priceView.deliveryLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:8.0];
     priceView.deliveryLabelColor = [UIColor colorWithHexString:@"#999999"];
+    
+    CSStockView *stockView = [CSStockView appearance];
+    stockView.inStockColor = [UIColor colorWithHexString:@"#717880"];
+    stockView.inStockImage = [[UIImage imageNamed:@"InStockBg"]
+                              resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+    
+    stockView.noStockColor = [UIColor colorWithHexString:@"#FFFFFF"];
+    stockView.noStockImage = [[UIImage imageNamed:@"NoStockBg"]
+                              resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+    
+    stockView.unknownStockColor = [UIColor colorWithHexString:@"#717880"];
+    stockView.unknownStockImage = [[UIImage imageNamed:@"InStockBg"]
+                                   resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
+    
+    UILabel *stockLabel = [UILabel appearanceWhenContainedIn:[CSStockView class], nil];
+    stockLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:7.5];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button

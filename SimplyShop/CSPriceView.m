@@ -7,6 +7,7 @@
 //
 
 #import "CSPriceView.h"
+#import "CSStockView.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSPriceView ()
@@ -63,6 +64,8 @@
                             self.price.price];
     
     self.deliveryLabel.text = [self deliveryText];
+    self.stockView.price = self.price;
+    
     [self setNeedsLayout];
     [self layoutIfNeeded];
 }

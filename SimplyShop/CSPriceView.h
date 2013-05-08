@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSPrice;
+@class CSStockView;
 
 @interface CSPriceView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deliveryLabel;
+@property (weak, nonatomic) IBOutlet CSStockView *stockView;
 
 @property (strong, nonatomic) UIFont *priceLabelFont UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *priceLabelColor UI_APPEARANCE_SELECTOR;
