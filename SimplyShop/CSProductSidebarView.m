@@ -93,8 +93,11 @@
     if ( ! self.price) {
         self.logoView.retailer = nil;
         self.priceView.price = nil;
+        self.buyNowButton.hidden = YES;
         return;
     }
+    
+    self.buyNowButton.hidden = NO;
     
     self.priceView.price = self.price;
     

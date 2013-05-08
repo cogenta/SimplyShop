@@ -24,6 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet CSRetailerLogoView *logoView;
 @property (weak, nonatomic) IBOutlet CSPriceView *priceView;
+@property (weak, nonatomic) IBOutlet UIButton *buyNowButton;
 @property (weak, nonatomic) IBOutlet id<CSProductSidebarViewDelegate> delegate;
 
 @property (strong, nonatomic) UIImage *backgroundImage UI_APPEARANCE_SELECTOR;
