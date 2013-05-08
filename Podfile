@@ -1,5 +1,5 @@
 platform :ios, '6.0'
-pod 'CSApi', :local => '../CSApi/'
+pod 'CSApi', :path => '../CSApi/'
 pod 'MBCategory'
 pod 'SDWebImage'
 
