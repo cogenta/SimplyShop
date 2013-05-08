@@ -247,6 +247,13 @@
     
     UILabel *stockLabel = [UILabel appearanceWhenContainedIn:[CSStockView class], nil];
     stockLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:7.5];
+    
+    UIButton *buyNowButton = [UIButton appearanceWhenContainedIn:[CSProductSidebarView class], nil];
+    UILabel *buyNowButtonLabel = [UILabel appearanceWhenContainedIn:[UIButton class], [CSProductSidebarView class], nil];
+    buyNowButtonLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    [buyNowButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+    UIImage *buyNowBg = [[UIImage imageNamed:@"ButtonBuyNow"] resizableImageWithCapInsets:UIEdgeInsetsMake(19.0, 6.0, 18.0, 6.0)];
+    [buyNowButton setBackgroundImage:buyNowBg forState:UIControlStateNormal];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button

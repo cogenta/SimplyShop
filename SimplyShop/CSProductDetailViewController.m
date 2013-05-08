@@ -14,7 +14,7 @@
 #import "CSPriceContext.h"
 #import <CSApi/CSAPI.h>
 
-@interface CSProductDetailViewController ()
+@interface CSProductDetailViewController () <CSProductSidebarViewDelegate>
 
 @property (nonatomic, weak) UIViewController *mainViewController;
 @property (nonatomic, strong) UITapGestureRecognizer *recognizer;
@@ -132,6 +132,12 @@
     
     self.sidebarView.price = nil;
     [self updateSizing];
+}
+
+- (void)sidebarView:(CSProductSidebarView *)view
+     didSelectPrice:(id<CSPrice>)price
+{
+    [[UIApplication sharedApplication] openURL:price.purchaseURL];
 }
 
 @end

@@ -109,4 +109,8 @@
     }];
 }
 
+- (IBAction)didTapBuyNow:(id)sender {
+    [self.delegate sidebarView:self didSelectPrice:self.price];
+}
+
 @end
