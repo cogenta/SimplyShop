@@ -97,7 +97,7 @@
     
     __block NSUInteger pricesLeft = count;
     
-    NSMutableArray *results = [NSMutableArray arrayWithCapacity:count];
+    NSMutableArray *results = [[NSMutableArray alloc] initWithCapacity:count];
     
     for (NSUInteger i = 0; i < count; ++i) {
         [prices getPriceAtIndex:i callback:^(id<CSPrice> result,
@@ -128,7 +128,7 @@
     
     __block NSUInteger likesLeft = count;
     
-    NSMutableArray *results = [NSMutableArray arrayWithCapacity:count];
+    NSMutableArray *results = [[NSMutableArray alloc] initWithCapacity:count];
     
     for (NSUInteger i = 0; i < count; ++i) {
         [likes getLikeAtIndex:i callback:^(id<CSLike> result,
