@@ -64,6 +64,7 @@
         self.label.text = @"IN STOCK";
         self.backgroundImage = self.inStockImage;
         self.label.textColor = self.inStockColor;
+        self.hidden = NO;
         return;
     }
     
@@ -71,12 +72,11 @@
         self.label.text = @"NO STOCK";
         self.backgroundImage = self.noStockImage;
         self.label.textColor = self.noStockColor;
+        self.hidden = NO;
         return;
     }
     
-    self.label.text = @"UNKNOWN STOCK";
-    self.backgroundImage = self.unknownStockImage;
-    self.label.textColor = self.unknownStockColor;
+    self.hidden = YES;
 }
 
 - (void)updateContent

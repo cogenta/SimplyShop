@@ -245,10 +245,6 @@
     stockView.noStockImage = [[UIImage imageNamed:@"NoStockBg"]
                               resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
     
-    stockView.unknownStockColor = [UIColor colorWithHexString:@"#717880"];
-    stockView.unknownStockImage = [[UIImage imageNamed:@"InStockBg"]
-                                   resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 2.0, 2.0, 2.0)];
-    
     UILabel *stockLabel = [UILabel appearanceWhenContainedIn:[CSStockView class], nil];
     stockLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:7.5];
 }

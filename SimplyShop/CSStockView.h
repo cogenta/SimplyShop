@@ -18,8 +18,6 @@
 @property (strong, nonatomic) UIColor *inStockColor UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIImage *noStockImage UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *noStockColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIImage *unknownStockImage UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *unknownStockColor UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic) id<CSPrice> price;
 
