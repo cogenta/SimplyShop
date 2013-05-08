@@ -56,12 +56,45 @@
     self.subview.frame = self.bounds;
 }
 
+- (NSString *)stringForCurrency:(NSNumber *)value
+                         symbol:(NSString *)symbol
+                           code:(NSString *)code
+{
+    if ( ! value) {
+        return nil;
+    }
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setCurrencySymbol:symbol];
+    [formatter setCurrencyCode:code];
+    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [formatter setLocale:[NSLocale autoupdatingCurrentLocale]];
+    
+    NSNumber *roundedValue = [NSNumber numberWithInteger:[value integerValue]];
+    BOOL isIntegerValue = [value isEqualToNumber:roundedValue];
+    
+    if (isIntegerValue) {
+        [formatter setMaximumFractionDigits:0];
+    }
+    
+    return [formatter stringFromNumber:value];
+}
+
+- (NSString *)formattedPrice
+{
+    if ( ! self.price.price) {
+        return nil;
+    }
+    
+    return [self stringForCurrency:self.price.price
+                            symbol:self.price.currencySymbol
+                              code:self.price.currencyCode];
+}
+
 - (void)updateContent
 {
     self.hidden = self.price == nil;
-    self.priceLabel.text = [NSString stringWithFormat:@"%@%@",
-                            self.price.currencySymbol,
-                            self.price.price];
+    self.priceLabel.text = [self formattedPrice];
     
     self.deliveryLabel.text = [self deliveryText];
     self.stockView.price = self.price;
@@ -87,8 +120,13 @@
         return @"incl. delivery";
     }
     
-    return [NSString stringWithFormat:@"+ %@%@ delivery",
-            self.price.currencySymbol, deliveryPrice];
+    NSString *symbol = self.price.currencySymbol;
+    NSString *code = self.price.currencyCode;
+    NSString *formattedDelvery = [self stringForCurrency:deliveryPrice
+                                                  symbol:symbol
+                                                    code:code];
+    
+    return [NSString stringWithFormat:@"+ %@ delivery", formattedDelvery];
 }
 
 - (UIFont *)priceLabelFont
