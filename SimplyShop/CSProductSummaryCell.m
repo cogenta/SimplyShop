@@ -12,6 +12,8 @@
 #import "CSTheme.h"
 #import "CSCTAButton.h"
 #import "CSProductWrapper.h"
+#import "CSPriceContext.h"
+#import "NSNumber+CSStringForCurrency.h"
 
 @interface CSProductSummaryCell ()
 
@@ -49,10 +51,15 @@
     return self;
 }
 
+- (NSString *)nibName
+{
+    return @"CSProductSummaryCell";
+}
+
 - (void)initialize
 {
     self.subview = [[[NSBundle mainBundle]
-                       loadNibNamed:@"CSProductSummaryCell"
+                       loadNibNamed:[self nibName]
                        owner:self
                        options:nil]
                       objectAtIndex:0];
@@ -73,6 +80,8 @@
     self.productNameLabel.text = @"";
     
     self.productDescriptionLabel.text = @"";
+    
+    self.priceLabel.text = @"";
     
     self.address = nil;
     self.wrapper = nil;
@@ -113,8 +122,8 @@
     [self updateContent];
 }
 
-- (void)setProductSummary:(id<CSProductSummary>)productSummary
-                  address:(NSObject *)address
+- (void)setWrapper:(CSProductWrapper *)wrapper
+           address:(NSObject *)address
 {
     if (self.wrapper) {
         // A product is already set.
@@ -132,9 +141,10 @@
     }
     
     self.error = nil;
-    self.wrapper = [CSProductWrapper wrapperForSummary:productSummary];
+    self.wrapper = wrapper;
     [self updateContent];
 }
+
 
 - (void)setError:(NSError *)error address:(NSObject *)address
 {
@@ -170,6 +180,7 @@
 {
     self.productNameLabel.text = [self transformedName:@"Loading"];
     self.productDescriptionLabel.text = @"...";
+    self.priceLabel.text = @"";
     self.productImageView.hidden = YES;
     self.retryButton.hidden = YES;
 }
@@ -178,17 +189,45 @@
 {
     self.productNameLabel.text = [self transformedName:@"Error"];
     self.productDescriptionLabel.text = @"...";
+    self.priceLabel.text = @"";
     self.productImageView.hidden = YES;
     self.retryButton.hidden = NO;
 }
 
-- (void)showProduct
+- (void)loadPrice
 {
-    self.retryButton.hidden = YES;
-    self.productNameLabel.text = [self transformedName:self.wrapper.name];
-    if (self.wrapper.description_ != (id) [NSNull null]) {
-        self.productDescriptionLabel.text = self.wrapper.description_;
-    }
+    id priceAddress = self.address;
+
+    [self.wrapper getPrices:^(id<CSPriceListPage> firstPage, NSError *error) {
+        if (priceAddress != self.address) {
+            return;
+        }
+        
+        if (error) {
+            // TODO: better error handling
+            self.priceLabel.text = nil;
+            return;
+        }
+        
+        [self.priceContext getBestPrice:firstPage.priceList
+                               callback:^(id<CSPrice> bestPrice)
+         {
+             if (priceAddress != self.address) {
+                 return;
+             }
+             
+             NSNumber *value = bestPrice.effectivePrice;
+             NSString *symbol = bestPrice.currencySymbol;
+             NSString *code = bestPrice.currencyCode;
+             self.priceLabel.text = [value stringForCurrencySymbol:symbol
+                                                              code:code];
+         }];
+    }];
+}
+
+- (void)loadPicture
+{
+    id pictureAddress = self.address;
     
     [self.wrapper getPictures:^(id<CSPictureListPage> firstPage,
                                 NSError *error)
@@ -202,6 +241,10 @@
                                          callback:^(id<CSPicture> picture,
                                                     NSError *error)
           {
+              if (pictureAddress != self.address) {
+                  return;
+              }
+              
               if (error) {
                   /// Ignore picture error.
                   return;
@@ -211,9 +254,15 @@
               
               __block id<CSImage> bestImage = nil;
               for (NSInteger i = 0 ; i < images.count; ++i) {
+                  id imageAddress = self.address;
+                  
                   [images getImageAtIndex:i
                                  callback:^(id<CSImage> image, NSError *error)
                    {
+                       if (imageAddress != self.address) {
+                           return;
+                       }
+                       
                        if (error) {
                            // Ignore image error.
                            return;
@@ -243,6 +292,24 @@
          
      }];
 }
+
+- (void)showProduct
+{
+    self.retryButton.hidden = YES;
+    self.productNameLabel.text = [self transformedName:self.wrapper.name];
+    if (self.wrapper.description_ != (id) [NSNull null]) {
+        self.productDescriptionLabel.text = self.wrapper.description_;
+    }
+    
+    if (self.priceLabel) {
+        [self loadPrice];
+    }
+    
+    if (self.productImageView) {
+        [self loadPicture];
+    }
+}
+
 
 - (void)updateContent
 {

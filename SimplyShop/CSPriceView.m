@@ -9,6 +9,7 @@
 #import "CSPriceView.h"
 #import "CSStockView.h"
 #import <CSApi/CSAPI.h>
+#import "NSNumber+CSStringForCurrency.h"
 
 @interface CSPriceView ()
 
@@ -60,24 +61,7 @@
                          symbol:(NSString *)symbol
                            code:(NSString *)code
 {
-    if ( ! value) {
-        return nil;
-    }
-    
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setCurrencySymbol:symbol];
-    [formatter setCurrencyCode:code];
-    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    [formatter setLocale:[NSLocale autoupdatingCurrentLocale]];
-    
-    NSNumber *roundedValue = [NSNumber numberWithInteger:[value integerValue]];
-    BOOL isIntegerValue = [value isEqualToNumber:roundedValue];
-    
-    if (isIntegerValue) {
-        [formatter setMaximumFractionDigits:0];
-    }
-    
-    return [formatter stringFromNumber:value];
+    return [value stringForCurrencySymbol:symbol code:code];
 }
 
 - (NSString *)formattedPrice

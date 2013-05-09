@@ -11,12 +11,128 @@
 #import "CSProductSummaryCell.h"
 #import "CSProductDetailViewController.h"
 #import "CSPriceContext.h"
+#import "CSProductWrapper.h"
+
+@protocol CSProductListWrapper <NSObject>
+
+@property (readonly) NSUInteger count;
+
+- (void)getProductWrapperAtIndex:(NSUInteger)index
+                        callback:(void (^)(CSProductWrapper *result,
+                                           NSError *error))callback;
+- (void)getProductAtIndex:(NSUInteger)index
+                 callback:(void (^)(id<CSProduct>, NSError *))callback;
+@end
+
+@interface CSProductListWrapper : NSObject <CSProductListWrapper>
+
+@property id<CSProductList> products;
+
++ (instancetype) wrapperWithProducts:(id<CSProductList>)products;
+
+@end
+
+@implementation CSProductListWrapper
+
++ (instancetype)wrapperWithProducts:(id<CSProductList>)products
+{
+    CSProductListWrapper *result = [[CSProductListWrapper alloc] init];
+    result.products = products;
+    return result;
+}
+
+- (NSUInteger)count
+{
+    return [self.products count];
+}
+
+- (void)getProductWrapperAtIndex:(NSUInteger)index
+                        callback:(void (^)(CSProductWrapper *, NSError *))callback
+{
+    [self.products getProductAtIndex:index
+                            callback:^(id<CSProduct> result, NSError *error)
+    {
+        if (error) {
+            callback(nil, error);
+            return;
+        }
+        
+        callback([CSProductWrapper wrapperForProduct:result], nil);
+    }];
+}
+
+- (void)getProductAtIndex:(NSUInteger)index
+                 callback:(void (^)(id<CSProduct>, NSError *))callback
+{
+    [self.products getProductAtIndex:index callback:callback];
+}
+
+@end
+
+@interface CSProductSummaryListWrapper : NSObject <CSProductListWrapper>
+
+@property id<CSProductSummaryList> products;
+
++ (instancetype) wrapperWithProducts:(id<CSProductSummaryList>)products;
+
+@end
+
+@implementation CSProductSummaryListWrapper
+
++ (instancetype)wrapperWithProducts:(id<CSProductSummaryList>)products
+{
+    CSProductSummaryListWrapper *result = [[CSProductSummaryListWrapper alloc] init];
+    result.products = products;
+    return result;
+}
+
+- (NSUInteger)count
+{
+    return [self.products count];
+}
+
+- (void)getProductWrapperAtIndex:(NSUInteger)index
+                        callback:(void (^)(CSProductWrapper *, NSError *))callback
+{
+    [self.products getProductSummaryAtIndex:index
+                                   callback:^(id<CSProductSummary> result, NSError *error)
+     {
+         if (error) {
+             callback(nil, error);
+             return;
+         }
+         
+         callback([CSProductWrapper wrapperForSummary:result], nil);
+     }];
+}
+
+- (void)getProductAtIndex:(NSUInteger)index
+                 callback:(void (^)(id<CSProduct>, NSError *))callback
+{
+    [self.products getProductSummaryAtIndex:index
+                                   callback:^(id<CSProductSummary> result,
+                                              NSError *error)
+     {
+         if (error) {
+             callback(nil, error);
+             return;
+         }
+         
+         [result getProduct:callback];
+     }];
+}
+
+@end
 
 @interface CSProductGridViewController ()
+
+@property (strong, nonatomic) id<CSProductListWrapper> productListWrapper;
 
 @end
 
 @implementation CSProductGridViewController
+
+@synthesize productListWrapper;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,14 +163,14 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    return self.productSummaries.count;
+    return self.productListWrapper.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CSProductSummaryCell *cell =
-    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSProductSummaryCell"
+    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSProductSummaryPriceCell"
                                               forIndexPath:indexPath];
     
     
@@ -63,28 +179,45 @@
     return cell;
 }
 
-- (void)productSummaryCell:(CSProductSummaryCell *)cell needsReloadWithAddress:(NSObject *)address
+- (void)productSummaryCell:(CSProductSummaryCell *)cell
+    needsReloadWithAddress:(NSObject *)address
 {
+    cell.priceContext = self.priceContext;
     [cell setLoadingAddress:address];
-    [self.productSummaries getProductSummaryAtIndex:((NSIndexPath *)address).row
-                                           callback:^(id<CSProductSummary> result,
-                                                      NSError *error)
+    [self.productListWrapper getProductWrapperAtIndex:((NSIndexPath *)address).row
+                                             callback:^(CSProductWrapper *result,
+                                                        NSError *error)
      {
          if (error) {
              [cell setError:error address:address];
              return;
          }
          
-         [cell setProductSummary:result address:address];
+         [cell setWrapper:result address:address];
      }];
 }
 
-- (void)setProductSummaries:(id<CSProductSummaryList>)productSummaries
+- (id<CSProductListWrapper>)productListWrapper
 {
-    _productSummaries = productSummaries;
+    return productListWrapper;
+}
+
+- (void)setProductListWrapper:(id<CSProductListWrapper>)wrapper
+{
+    productListWrapper = wrapper;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.collectionView reloadData];
     });
+}
+
+- (void)setProductSummaries:(id<CSProductSummaryList>)products
+{
+    [self setProductListWrapper:[CSProductSummaryListWrapper wrapperWithProducts:products]];
+}
+
+- (void)setProducts:(id<CSProductList>)products
+{
+    [self setProductListWrapper:[CSProductListWrapper wrapperWithProducts:products]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -117,27 +250,18 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         vc.priceContext = self.priceContext;
         
         NSDictionary *address = sender;
-        id<CSProductSummaryList> list = self.productSummaries;
         NSInteger index = [address[@"index"] integerValue];
-        [list
-         getProductSummaryAtIndex:index
-         callback:^(id<CSProductSummary> result, NSError *error)
-         {
-             if (error) {
-                 [self setErrorState];
-                 [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
-                 return;
-             }
-             vc.productSummary = result;
-             [result getProduct:^(id<CSProduct> product, NSError *error) {
-                 if (error) {
-                     [self setErrorState];
-                     [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
-                     return;
-                 }
-                 vc.product = product;
-             }];
-         }];
+        [self.productListWrapper getProductAtIndex:index
+                                          callback:^(id<CSProduct> product,
+                                                     NSError *error)
+        {
+            if (error) {
+                [self setErrorState];
+                [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
+                return;
+            }
+            vc.product = product;
+        }];
         
         return;
     }

@@ -8,6 +8,7 @@
 
 #import "CSProductSummariesCell.h"
 #import "CSProductSummaryCell.h"
+#import "CSProductWrapper.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSProductSummariesCell () <CSProductSummaryCellDelegate>
@@ -114,7 +115,8 @@
              return;
          }
          
-         [cell setProductSummary:result address:address];
+         [cell setWrapper:[CSProductWrapper wrapperForSummary:result]
+                  address:address];
      }];
 }
 

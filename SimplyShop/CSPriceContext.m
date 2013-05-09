@@ -9,6 +9,18 @@
 #import "CSPriceContext.h"
 #import <NSArray+Functional/NSArray+Functional.h>
 
+dispatch_queue_t
+CSPriceContext_best_price_queue() {
+    static dispatch_queue_t q = NULL;
+    if (q) {
+        return q;
+    }
+    
+    q = dispatch_queue_create("com.cogenta.CSPriceContext.best_price_queue",
+                              NULL);
+    return q;
+}
+
 @interface CSPriceContext ()
 
 - (void)allPrices:(id<CSPriceList>)prices
@@ -32,9 +44,7 @@
 - (void)getBestPrice:(id<CSPriceList>)prices
             callback:(void (^)(id<CSPrice>))callback
 {
-    NSLog(@"Best price: choosing from %@ for %@", prices, self);
     if (prices.count <= 0) {
-        NSLog(@"Best price: choosing nil because there are no prices");
         callback(nil);
         return;
     }
@@ -45,44 +55,39 @@
         }];
         NSSet *likedURLs = [NSSet setWithArray:likedURLsArray];
         [self allPrices:prices callback:^(NSArray *priceArray) {
-            id<CSPrice> bestPrice = nil;
-            BOOL bestPriceLiked = NO;
-            for (id<CSPrice> price in priceArray) {
-                NSLog(@"Best price: evaluating %@ against current best %@ (liked = %@)",
-                      price, bestPrice, @(bestPriceLiked));
-                BOOL liked = [likedURLs containsObject:price.retailerURL];
-                if ( ! bestPrice) {
-                    NSLog(@"Best price: new best is %@ (first price seen)", price);
-                    bestPrice = price;
-                    bestPriceLiked = liked;
-                    continue;
+            dispatch_async(CSPriceContext_best_price_queue(), ^{
+                id<CSPrice> bestPrice = nil;
+                BOOL bestPriceLiked = NO;
+                for (id<CSPrice> price in priceArray) {
+                    BOOL liked = [likedURLs containsObject:price.retailerURL];
+                    if ( ! bestPrice) {
+                        bestPrice = price;
+                        bestPriceLiked = liked;
+                        continue;
+                    }
+                    
+                    if (liked && ! bestPriceLiked) {
+                        bestPrice = price;
+                        bestPriceLiked = liked;
+                        continue;
+                    }
+                    
+                    if (bestPriceLiked && ! liked) {
+                        continue;
+                    }
+                    
+                    NSComparisonResult comparison = [[bestPrice effectivePrice]
+                                                     compare:[price effectivePrice]];
+                    if (comparison == NSOrderedDescending) {
+                        bestPrice = price;
+                        continue;
+                    }
                 }
                 
-                if (liked && ! bestPriceLiked) {
-                    NSLog(@"Best price: new best is %@ (first liked seen)", price);
-                    bestPrice = price;
-                    bestPriceLiked = liked;
-                    continue;
-                }
-                
-                if (bestPriceLiked && ! liked) {
-                    NSLog(@"Best price: rejecting %@ (disliked and current liked)", price);
-                    continue;
-                }
-                
-                NSComparisonResult comparison = [[bestPrice effectivePrice]
-                                                 compare:[price effectivePrice]];
-                if (comparison == NSOrderedDescending) {
-                    NSLog(@"Best price: new best is %@ (better effective price)", price);
-                    bestPrice = price;
-                    continue;
-                }
-                
-                NSLog(@"Best price: rejecting %@ (not better effective price)", price);
-            }
-            
-            NSLog(@"Best price: chose %@", bestPrice);
-            callback(bestPrice);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    callback(bestPrice);
+                });
+            });
         }];
     }];
 }
@@ -100,20 +105,22 @@
     NSMutableArray *results = [[NSMutableArray alloc] initWithCapacity:count];
     
     for (NSUInteger i = 0; i < count; ++i) {
-        [prices getPriceAtIndex:i callback:^(id<CSPrice> result,
-                                             NSError *error) {
-            if (error) {
-                [results setObject:error atIndexedSubscript:i];
-            } else {
-                [results setObject:result atIndexedSubscript:i];
-            }
-            
-            pricesLeft--;
-            
-            if ( ! pricesLeft) {
-                callback([NSArray arrayWithArray:results]);
-            }
-        }];
+        dispatch_async(CSPriceContext_best_price_queue(), ^{
+            [prices getPriceAtIndex:i callback:^(id<CSPrice> result,
+                                                 NSError *error) {
+                if (error) {
+                    [results setObject:error atIndexedSubscript:i];
+                } else {
+                    [results setObject:result atIndexedSubscript:i];
+                }
+                
+                pricesLeft--;
+                
+                if ( ! pricesLeft) {
+                    callback([NSArray arrayWithArray:results]);
+                }
+            }];
+        });
     }
 }
 

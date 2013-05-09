@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSProductSummaryList;
+@protocol CSProductList;
 @class CSPriceContext;
 
 @interface CSProductGridViewController : UIViewController
@@ -16,7 +17,9 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (strong, nonatomic) id<CSProductSummaryList> productSummaries;
+- (void)setProductSummaries:(id<CSProductSummaryList>)products;
+- (void)setProducts:(id<CSProductList>)products;
+
 @property (strong, nonatomic) CSPriceContext *priceContext;
 
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue;
