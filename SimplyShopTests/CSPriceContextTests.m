@@ -11,13 +11,7 @@
 #import <OCMock/OCMock.h>
 #import <CSApi/CSAPI.h>
 #import <NSArray+Functional/NSArray+Functional.h>
-
-#define CALL_AND_WAIT(blk) \
-{ \
-    if ([self timeoutInterval:(blk)] > 0.0) { \
-        STFail(@"timed out"); \
-    } \
-}
+#import "SenTestCase+CSAsyncTestCase.h"
 
 @interface FakeList : NSObject <CSPriceList, CSLikeList>
 
@@ -132,51 +126,9 @@
 
 @interface CSPriceContextTests : SenTestCase
 
-- (NSTimeInterval)timeoutInterval:(void (^)(void (^done)()))blk;
-- (NSTimeInterval)waitForSemaphore:(dispatch_semaphore_t)semaphore;
-
-
 @end
 
 @implementation CSPriceContextTests
-
-- (NSTimeInterval)waitForSemaphore:(dispatch_semaphore_t)semaphore
-{
-    NSDate *start = [NSDate date];
-    long timedout;
-    int maxTries = 16;
-    double totalWait = 3.0;
-    double delayInSeconds = totalWait / maxTries;
-    dispatch_time_t wait_time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    for (int tries = 0; tries < maxTries; tries++) {
-        timedout = dispatch_semaphore_wait(semaphore, wait_time);
-        if (! timedout) {
-            break;
-        }
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:delayInSeconds]];
-    }
-    
-    NSDate *end = [NSDate date];
-    if (timedout != 0) {
-        return [end timeIntervalSinceDate:start];
-    } else {
-        return 0;
-    }
-}
-
-- (NSTimeInterval)timeoutInterval:(void (^)(void (^done)()))blk
-{
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    void (^done)() = ^{
-        dispatch_semaphore_signal(semaphore);
-    };
-    
-    blk(done);
-    
-    return [self waitForSemaphore:semaphore];
-}
 
 - (id<CSLikeList>)noLikes
 {
