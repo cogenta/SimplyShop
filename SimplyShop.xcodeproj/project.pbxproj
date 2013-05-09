@@ -16,6 +16,7 @@
 		BE08AFB417396FF7007184E0 /* InStockBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE08AFB217396FF7007184E0 /* InStockBg@2x.png */; };
 		BE08AFB517396FF7007184E0 /* NoStockBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE08AFB317396FF7007184E0 /* NoStockBg@2x.png */; };
 		BE34F3CE173A96C600871FC1 /* ButtonBuyNow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE34F3CD173A96C600871FC1 /* ButtonBuyNow@2x.png */; };
+		BE34F3D4173AB63100871FC1 /* CSProductGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE34F3D3173AB63100871FC1 /* CSProductGridViewController.m */; };
 		BE3D4DD1170331AA00644AD6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD0170331AA00644AD6 /* UIKit.framework */; };
 		BE3D4DD3170331AA00644AD6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD2170331AA00644AD6 /* Foundation.framework */; };
 		BE3D4DD5170331AA00644AD6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD4170331AA00644AD6 /* CoreGraphics.framework */; };
@@ -109,6 +110,8 @@
 		BE08AFB217396FF7007184E0 /* InStockBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InStockBg@2x.png"; sourceTree = "<group>"; };
 		BE08AFB317396FF7007184E0 /* NoStockBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NoStockBg@2x.png"; sourceTree = "<group>"; };
 		BE34F3CD173A96C600871FC1 /* ButtonBuyNow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBuyNow@2x.png"; sourceTree = "<group>"; };
+		BE34F3D2173AB63100871FC1 /* CSProductGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductGridViewController.h; sourceTree = "<group>"; };
+		BE34F3D3173AB63100871FC1 /* CSProductGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductGridViewController.m; sourceTree = "<group>"; };
 		BE3D4DCD170331AA00644AD6 /* Simply Shop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simply Shop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3D4DD0170331AA00644AD6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BE3D4DD2170331AA00644AD6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -420,6 +423,8 @@
 				BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */,
 				BE73677B1729614000B4691C /* CSProductDetailViewController.h */,
 				BE73677C1729614000B4691C /* CSProductDetailViewController.m */,
+				BE34F3D2173AB63100871FC1 /* CSProductGridViewController.h */,
+				BE34F3D3173AB63100871FC1 /* CSProductGridViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -659,6 +664,7 @@
 				BE6E2F531733FDAF00DCE47E /* CSPriceContext.m in Sources */,
 				BE08AFAA17394584007184E0 /* CSPriceView.m in Sources */,
 				BE08AFAF17396631007184E0 /* CSStockView.m in Sources */,
+				BE34F3D4173AB63100871FC1 /* CSProductGridViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

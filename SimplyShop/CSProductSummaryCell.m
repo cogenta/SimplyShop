@@ -19,6 +19,7 @@
 @property (strong, nonatomic) id<CSProductSummary> productSummary;
 @property (strong, nonatomic) NSError *error;
 @property (assign, nonatomic) SEL nameTransform;
+@property (strong, nonatomic) UIView *subview;
 
 - (void)updateContent;
 - (void)initialize;
@@ -49,11 +50,13 @@
 
 - (void)initialize
 {
-    [self addSubview:[[[NSBundle mainBundle]
+    self.subview = [[[NSBundle mainBundle]
                        loadNibNamed:@"CSProductSummaryCell"
                        owner:self
                        options:nil]
-                      objectAtIndex:0]];
+                      objectAtIndex:0];
+    self.subview.frame = self.bounds;
+    [self addSubview:self.subview];
     
     self.nameTransform = @selector(self);
 }
@@ -255,6 +258,9 @@
     [self showLoadingState];
 }
 
-
+- (void)layoutSubviews
+{
+    self.subview.frame = self.bounds;
+}
 
 @end

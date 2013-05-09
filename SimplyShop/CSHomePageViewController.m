@@ -12,6 +12,7 @@
 #import "CSProductSummariesCell.h"
 #import "CSProductDetailViewController.h"
 #import "CSPriceContext.h"
+#import "CSProductGridViewController.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSHomePageViewController () <
@@ -212,6 +213,14 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             }];
         }];
 
+        return;
+    }
+    
+    if ([segue.identifier isEqualToString:@"showTopProductsGrid"]) {
+        CSProductGridViewController *vc = (id) segue.destinationViewController;
+        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
+        vc.productSummaries = self.topProductsCell.productSummaries;
+        vc.title = @"Top Products";
         return;
     }
 }
