@@ -11,12 +11,13 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "CSTheme.h"
 #import "CSCTAButton.h"
+#import "CSProductWrapper.h"
 
 @interface CSProductSummaryCell ()
 
 @property (strong, nonatomic) UIImageView *backgroundView;
 @property (strong, nonatomic) NSObject *address;
-@property (strong, nonatomic) id<CSProductSummary> productSummary;
+@property (strong, nonatomic) CSProductWrapper *wrapper;
 @property (strong, nonatomic) NSError *error;
 @property (assign, nonatomic) SEL nameTransform;
 @property (strong, nonatomic) UIView *subview;
@@ -74,7 +75,7 @@
     self.productDescriptionLabel.text = @"";
     
     self.address = nil;
-    self.productSummary = nil;
+    self.wrapper = nil;
 }
 
 - (void)setTheme:(id<CSTheme>)newTheme
@@ -102,11 +103,11 @@
 
 - (void)setLoadingAddress:(NSObject *)address
 {
-    if ([address isEqual:self.address] && self.productSummary) {
+    if ([address isEqual:self.address] && self.wrapper) {
         return;
     }
     
-    self.productSummary = nil;
+    self.wrapper = nil;
     self.error = nil;
     self.address = address;
     [self updateContent];
@@ -115,8 +116,8 @@
 - (void)setProductSummary:(id<CSProductSummary>)productSummary
                   address:(NSObject *)address
 {
-    if (self.productSummary) {
-        // A product summary is already set.
+    if (self.wrapper) {
+        // A product is already set.
         return;
     }
     
@@ -131,14 +132,14 @@
     }
     
     self.error = nil;
-    self.productSummary = productSummary;
+    self.wrapper = [CSProductWrapper wrapperForSummary:productSummary];
     [self updateContent];
 }
 
 - (void)setError:(NSError *)error address:(NSObject *)address
 {
-    if (self.productSummary) {
-        // A product summary is already set.
+    if (self.wrapper) {
+        // A product is already set.
         return;
     }
     
@@ -153,7 +154,7 @@
     }
     
     self.error = error;
-    self.productSummary = nil;
+    self.wrapper = nil;
     [self updateContent];
 }
 
@@ -181,16 +182,16 @@
     self.retryButton.hidden = NO;
 }
 
-- (void)showProductSummary
+- (void)showProduct
 {
     self.retryButton.hidden = YES;
-    self.productNameLabel.text = [self transformedName:self.productSummary.name];
-    if (self.productSummary.description_ != (id) [NSNull null]) {
-        self.productDescriptionLabel.text = self.productSummary.description_;
+    self.productNameLabel.text = [self transformedName:self.wrapper.name];
+    if (self.wrapper.description_ != (id) [NSNull null]) {
+        self.productDescriptionLabel.text = self.wrapper.description_;
     }
     
-    [self.productSummary getPictures:^(id<CSPictureListPage> firstPage,
-                                       NSError *error)
+    [self.wrapper getPictures:^(id<CSPictureListPage> firstPage,
+                                NSError *error)
      {
          if (firstPage.count == 0) {
              self.productImageView.hidden = YES;
@@ -245,8 +246,8 @@
 
 - (void)updateContent
 {
-    if (self.productSummary) {
-        [self showProductSummary];
+    if (self.wrapper) {
+        [self showProduct];
         return;
     }
     
