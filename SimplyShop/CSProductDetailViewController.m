@@ -98,7 +98,7 @@
 - (void)setProduct:(id<CSProduct>)product
 {
     self.titleBarView.title = [product.name uppercaseString];
-    self.productDetailsView.description = product.description;
+    self.productDetailsView.description_ = product.description_;
     CSProductStats *stats = [[CSProductStats alloc] init];
     stats.product = product;
     self.productDetailsView.stats = stats;
@@ -130,7 +130,7 @@
 - (void)setProductSummary:(id<CSProductSummary>)productSummary
 {
     self.titleBarView.title = [productSummary.name uppercaseString];
-    self.productDetailsView.description = productSummary.description;
+    self.productDetailsView.description_ = productSummary.description_;
     
     self.sidebarView.price = nil;
     [self updateSizing];

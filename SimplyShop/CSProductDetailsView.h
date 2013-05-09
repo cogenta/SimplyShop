@@ -27,7 +27,7 @@
 
 @property (weak, nonatomic) IBOutlet CSTabFooterView *tabFooterView;
 
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *description_;
 @property (nonatomic, strong) CSProductStats *stats;
 @property (nonatomic, strong) id<CSPictureList> pictures;
 

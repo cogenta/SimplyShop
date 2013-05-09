@@ -185,8 +185,8 @@
 {
     self.retryButton.hidden = YES;
     self.productNameLabel.text = [self transformedName:self.productSummary.name];
-    if (self.productSummary.description != (id) [NSNull null]) {
-        self.productDescriptionLabel.text = self.productSummary.description;
+    if (self.productSummary.description_ != (id) [NSNull null]) {
+        self.productDescriptionLabel.text = self.productSummary.description_;
     }
     
     [self.productSummary getPictures:^(id<CSPictureListPage> firstPage,

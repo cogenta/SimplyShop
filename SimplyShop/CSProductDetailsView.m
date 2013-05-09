@@ -55,9 +55,9 @@
     [self selectView:self.descriptionLabel];
 }
 
-- (void)setDescription:(NSString *)description
+- (void)setDescription_:(NSString *)description
 {
-    _description = [description copy];
+    _description_ = [description copy];
     if (description == (id) [NSNull null]) {
         description = @"No Description";
     }
