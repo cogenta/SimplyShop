@@ -219,8 +219,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     if ([segue.identifier isEqualToString:@"showTopProductsGrid"]) {
         CSProductGridViewController *vc = (id) segue.destinationViewController;
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
-        vc.productSummaries = self.topProductsCell.productSummaries;
         vc.title = @"Top Products";
+        [self ensureFavoriteRetailersGroup:^(id<CSGroup> group, NSError *error) {
+            [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
+                [vc setProducts:firstPage.productList];
+            }];
+        }];
         return;
     }
 }
