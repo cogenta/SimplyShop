@@ -59,7 +59,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <outlet property="delegate" destination="hv6-34-2sh" id="oeO-Sc-oPl"/>
+                                            <outlet property="delegate" destination="Tla-Ne-hRZ" id="LJ3-vM-e5J"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

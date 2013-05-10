@@ -124,7 +124,7 @@
 
 @end
 
-@interface CSProductGridViewController ()
+@interface CSProductGridViewController () <CSProductSummaryCellDelegate>
 
 @property (strong, nonatomic) id<CSProductListWrapper> productListWrapper;
 
