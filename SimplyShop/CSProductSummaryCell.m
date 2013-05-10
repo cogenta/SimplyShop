@@ -7,6 +7,7 @@
 //
 
 #import "CSProductSummaryCell.h"
+#import <QuartzCore/QuartzCore.h>
 #import <CSApi/CSAPI.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "CSTheme.h"
@@ -63,6 +64,9 @@
                        owner:self
                        options:nil]
                       objectAtIndex:0];
+    self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    self.layer.shouldRasterize = YES;
+
     self.subview.frame = self.bounds;
     [self addSubview:self.subview];
     
