@@ -19,7 +19,6 @@
 @interface CSProductSummaryCell ()
 
 @property (strong, nonatomic) UIImageView *backgroundView;
-@property (strong, nonatomic) NSObject *address;
 @property (strong, nonatomic) CSProductWrapper *wrapper;
 @property (strong, nonatomic) NSError *error;
 @property (assign, nonatomic) SEL nameTransform;

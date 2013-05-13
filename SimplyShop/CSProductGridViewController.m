@@ -173,8 +173,9 @@
     [collectionView dequeueReusableCellWithReuseIdentifier:@"CSProductSummaryPriceCell"
                                               forIndexPath:indexPath];
     
-    
-    [self productSummaryCell:cell needsReloadWithAddress:indexPath];
+    if (cell.address != indexPath) {
+        [self productSummaryCell:cell needsReloadWithAddress:indexPath];
+    }
     
     return cell;
 }

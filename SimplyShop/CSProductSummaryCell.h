@@ -33,6 +33,7 @@
 
 @property (weak, nonatomic) IBOutlet id<CSProductSummaryCellDelegate> delegate;
 
+@property (strong, nonatomic) NSObject *address;
 @property (strong, nonatomic) CSPriceContext *priceContext;
 
 - (IBAction)didTapRetryButton:(id)sender;
