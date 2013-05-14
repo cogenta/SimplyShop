@@ -258,7 +258,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self saveRetailerSelection:modal.selectedRetailerURLs];
 }
 
-
 - (void)ensureFavoriteRetailersGroup:(void (^)(id<CSGroup> group, NSError *error))callback
 {
     [self.user getGroupsWithReference:@"favoriteRetailers"
@@ -282,7 +281,9 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
      }];
 }
 
-- (void)ensureFavoriteRetailersLikeList:(void (^)(id<CSLikeList> likeList, id<CSGroup> group, NSError *error))callback
+- (void)ensureFavoriteRetailersLikeList:(void (^)(id<CSLikeList> likeList,
+                                                  id<CSGroup> group,
+                                                  NSError *error))callback
 {
     [self ensureFavoriteRetailersGroup:^(id<CSGroup> group, NSError *error) {
         if (error) {
@@ -314,7 +315,9 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     NSMutableSet *urlsToAdd = [NSMutableSet setWithSet:selectedURLs];
     NSMutableArray *likesToDelete = [NSMutableArray array];
 
-    [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList, id<CSGroup> group, NSError *error)
+    [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList,
+                                            id<CSGroup> group,
+                                            NSError *error)
     {
         if (error) {
             [self setErrorState];
@@ -323,7 +326,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         
         __block NSInteger likesToCheck = likeList.count;
         void (^applyChanges)() = ^{
-            __block NSInteger changesToApply = [likesToDelete count] + [urlsToAdd count];
+            __block NSInteger changesToApply = ([likesToDelete count] +
+                                                [urlsToAdd count]);
             if (changesToApply == 0) {
                 self.favoriteStoresCell.selectedRetailerURLs = [selectedURLs allObjects];
                 [self loadRetailers];
@@ -366,7 +370,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         }
         
         for (NSInteger i = 0 ; i < likeList.count; ++i) {
-            [likeList getLikeAtIndex:i callback:^(id<CSLike> like, NSError *error) {
+            [likeList getLikeAtIndex:i callback:^(id<CSLike> like,
+                                                  NSError *error) {
                 if (error) {
                     [self setErrorState];
                     return;
@@ -412,7 +417,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue
 {
-    [segue.destinationViewController dismissViewControllerAnimated:YES completion:NULL];
+    [segue.destinationViewController dismissViewControllerAnimated:YES
+                                                        completion:NULL];
 }
 
 - (IBAction)doneShowProductsGrid:(UIStoryboardSegue *)segue
