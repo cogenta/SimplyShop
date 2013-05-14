@@ -87,6 +87,7 @@
 		BEC1E2BF173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEC1E2BE173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib */; };
 		BEC1E2C5173BFE9C00D12EF2 /* CSProductSummaryPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2C4173BFE9C00D12EF2 /* CSProductSummaryPriceCell.m */; };
 		BEC1E2C9173C048600D12EF2 /* NSNumber+CSStringForCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2C8173C048600D12EF2 /* NSNumber+CSStringForCurrency.m */; };
+		BEC1E2E717427F7000D12EF2 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEC1E2E617427F7000D12EF2 /* Settings.bundle */; };
 		BEDC02D6171312BC0023059E /* CSProductSummaryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02D5171312BC0023059E /* CSProductSummaryCell.xib */; };
 		BEDC02D9171317A90023059E /* CSProductSummariesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDC02D8171317A90023059E /* CSProductSummariesCell.m */; };
 		BEDC02DB17144DB20023059E /* CSRetailerSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */; };
@@ -219,6 +220,7 @@
 		BEC1E2C4173BFE9C00D12EF2 /* CSProductSummaryPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductSummaryPriceCell.m; sourceTree = "<group>"; };
 		BEC1E2C7173C048600D12EF2 /* NSNumber+CSStringForCurrency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+CSStringForCurrency.h"; sourceTree = "<group>"; };
 		BEC1E2C8173C048600D12EF2 /* NSNumber+CSStringForCurrency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+CSStringForCurrency.m"; sourceTree = "<group>"; };
+		BEC1E2E617427F7000D12EF2 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BED98BC91716D361007E8A9C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BEDC02D5171312BC0023059E /* CSProductSummaryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductSummaryCell.xib; sourceTree = "<group>"; };
 		BEDC02D7171317A80023059E /* CSProductSummariesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductSummariesCell.h; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				BE3D4DE2170331AA00644AD6 /* Default.png */,
 				BE3D4DE4170331AA00644AD6 /* Default@2x.png */,
 				BE3D4DE6170331AA00644AD6 /* Default-568h@2x.png */,
+				BEC1E2E617427F7000D12EF2 /* Settings.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -610,6 +613,7 @@
 				BE08AFB517396FF7007184E0 /* NoStockBg@2x.png in Resources */,
 				BE34F3CE173A96C600871FC1 /* ButtonBuyNow@2x.png in Resources */,
 				BEC1E2BF173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib in Resources */,
+				BEC1E2E717427F7000D12EF2 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,3 +3,4 @@ Pods
 **/*.xcworkspace/
 **/xcuserdata/
 *.xcworkspace/
+SimplyShop/Settings.bundle/Acknowledgements.plist
