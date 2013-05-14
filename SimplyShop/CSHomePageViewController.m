@@ -250,14 +250,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
 }
 
-
-- (IBAction)didTapChooseRetailersButton:(id)sender {
-    [self performSegueWithIdentifier:@"changeRetailerSelection" sender:nil];
-}
-
-- (IBAction)didTapSeeAllTopProductsButton:(id)sender {
-}
-
 - (void)doneInitialRetailerSelection:(UIStoryboardSegue *)segue
 {
     CSRetailerSelectionViewController *modal = segue.sourceViewController;

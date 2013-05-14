@@ -20,8 +20,6 @@
 @property (weak, nonatomic) IBOutlet CSProductSummariesCell *topProductsCell;
 @property (weak, nonatomic) IBOutlet CSFavoriteStoresCell *favoriteStoresCell;
 
-- (IBAction)didTapChooseRetailersButton:(id)sender;
-- (IBAction)didTapSeeAllTopProductsButton:(id)sender;
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue;
