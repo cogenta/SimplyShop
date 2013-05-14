@@ -173,79 +173,100 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self loadEverything];
 }
 
+- (void)prepareForShowRetailerSelectionForSegue:(UIStoryboardSegue *)segue
+                                         sender:(id)sender
+{
+    UINavigationController *nav = segue.destinationViewController;
+    CSRetailerSelectionViewController *vc = (id) nav.topViewController;
+    vc.api = self.api;
+    NSArray *selectedURLs = self.favoriteStoresCell.selectedRetailerURLs;
+    vc.selectedRetailerURLs = [NSMutableSet setWithArray:selectedURLs];
+}
+
+- (void)prepareForShowProductSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    CSProductDetailViewController *vc = (id) segue.destinationViewController;
+    vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
+    
+    NSDictionary *address = sender;
+    CSProductSummariesCell *cell = address[@"cell"];
+    id<CSProductSummaryList> list = cell.productSummaries;
+    NSInteger index = [address[@"index"] integerValue];
+    [list
+     getProductSummaryAtIndex:index
+     callback:^(id<CSProductSummary> result, NSError *error)
+     {
+         if (error) {
+             [self setErrorState];
+             [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
+             return;
+         }
+         vc.productSummary = result;
+         [result getProduct:^(id<CSProduct> product, NSError *error) {
+             if (error) {
+                 [self setErrorState];
+                 [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
+                 return;
+             }
+             vc.product = product;
+         }];
+     }];
+}
+
+- (void)prepareForShowTopProductsGridSegue:(UIStoryboardSegue *)segue
+                                    sender:(id)sender
+{
+    CSProductGridViewController *vc = (id) segue.destinationViewController;
+    vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
+    vc.title = @"Top Products";
+    [self ensureFavoriteRetailersGroup:^(id<CSGroup> group, NSError *error) {
+        [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
+            [vc setProducts:firstPage.productList];
+        }];
+    }];
+}
+
+- (void)prepareForShowRetailerProductsGridSegue:(UIStoryboardSegue *)segue
+                                         sender:(id)sender
+{
+    NSDictionary *address = sender;
+    id<CSRetailer> retailer = address[@"retailer"];
+    
+    CSProductGridViewController *vc = (id) segue.destinationViewController;
+    vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
+                                                      retailer:retailer];
+    vc.title = retailer.name;
+    
+    [retailer getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
+        if (error) {
+            // TODO: handle error
+            return;
+        }
+        
+        vc.products = firstPage.productList;
+    }];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showRetailerSelection"] ||
         [segue.identifier isEqualToString:@"changeRetailerSelection"]) {
-        UINavigationController *nav = segue.destinationViewController;
-        CSRetailerSelectionViewController *vc = (id) nav.topViewController;
-        vc.api = self.api;
-        vc.selectedRetailerURLs = [NSMutableSet setWithArray:self.favoriteStoresCell.selectedRetailerURLs];
-        
+        [self prepareForShowRetailerSelectionForSegue:segue sender:sender];
         return;
     }
     
     if ([segue.identifier isEqualToString:@"showProduct"]) {
-        CSProductDetailViewController *vc = (id) segue.destinationViewController;
-        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
-        
-        NSDictionary *address = sender;
-        CSProductSummariesCell *cell = address[@"cell"];
-        id<CSProductSummaryList> list = cell.productSummaries;
-        NSInteger index = [address[@"index"] integerValue];
-        [list
-         getProductSummaryAtIndex:index
-         callback:^(id<CSProductSummary> result, NSError *error)
-        {
-            if (error) {
-                [self setErrorState];
-                [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
-                return;
-            }
-            vc.productSummary = result;
-            [result getProduct:^(id<CSProduct> product, NSError *error) {
-                if (error) {
-                    [self setErrorState];
-                    [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
-                    return;
-                }
-                vc.product = product;
-            }];
-        }];
-
+        [self prepareForShowProductSegue:segue sender:sender];
         return;
     }
     
     if ([segue.identifier isEqualToString:@"showTopProductsGrid"]) {
-        CSProductGridViewController *vc = (id) segue.destinationViewController;
-        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
-        vc.title = @"Top Products";
-        [self ensureFavoriteRetailersGroup:^(id<CSGroup> group, NSError *error) {
-            [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
-                [vc setProducts:firstPage.productList];
-            }];
-        }];
+        [self prepareForShowTopProductsGridSegue:segue sender:sender];
         return;
     }
     
     if ([segue.identifier isEqualToString:@"showRetailerProductsGrid"]) {
-        NSDictionary *address = sender;
-        id<CSRetailer> retailer = address[@"retailer"];
-
-        CSProductGridViewController *vc = (id) segue.destinationViewController;
-        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
-                                                          retailer:retailer];
-        vc.title = retailer.name;
-        
-        [retailer getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
-            if (error) {
-                // TODO: handle error
-                return;
-            }
-            
-            vc.products = firstPage.productList;
-        }];
-
+        [self prepareForShowRetailerProductsGridSegue:segue sender:sender];
         return;
     }
 }
