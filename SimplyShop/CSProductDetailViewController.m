@@ -14,6 +14,8 @@
 #import "CSPriceContext.h"
 #import <PBWebViewController/PBWebViewController.h>
 #import <CSApi/CSAPI.h>
+#import <TUSafariActivity/TUSafariActivity.h>
+#import <ARChromeActivity/ARChromeActivity.h>
 
 @interface CSProductDetailViewController () <CSProductSidebarViewDelegate>
 
@@ -68,6 +70,13 @@
         UINavigationController *nav = segue.destinationViewController;
         PBWebViewController *vc = (id) nav.topViewController;
         vc.URL = [sender purchaseURL];
+        
+        TUSafariActivity *safari = [[TUSafariActivity alloc] init];
+        
+        ARChromeActivity *chrome = [[ARChromeActivity alloc] init];
+        chrome.activityTitle = @"Open in Chrome";
+        
+        vc.applicationActivities = @[safari, chrome];
     }
 }
 
