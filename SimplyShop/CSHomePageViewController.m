@@ -227,6 +227,27 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         }];
         return;
     }
+    
+    if ([segue.identifier isEqualToString:@"showRetailerProductsGrid"]) {
+        NSDictionary *address = sender;
+        id<CSRetailer> retailer = address[@"retailer"];
+
+        CSProductGridViewController *vc = (id) segue.destinationViewController;
+        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
+                                                          retailer:retailer];
+        vc.title = retailer.name;
+        
+        [retailer getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
+            if (error) {
+                // TODO: handle error
+                return;
+            }
+            
+            vc.products = firstPage.productList;
+        }];
+
+        return;
+    }
 }
 
 
@@ -386,9 +407,25 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self performSegueWithIdentifier:@"showProduct" sender:address];
 }
 
-- (void)doneShowProduct:(UIStoryboardSegue *)segue
+- (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
+                  didSelectRetailer:(id<CSRetailer>)retailer
+                     index:(NSUInteger)index
+{
+    NSDictionary *address = @{@"cell": cell,
+                              @"index": @(index),
+                              @"retailer": retailer};
+    [self performSegueWithIdentifier:@"showRetailerProductsGrid"
+                              sender:address];
+}
+
+- (IBAction)doneShowProduct:(UIStoryboardSegue *)segue
 {
     [segue.destinationViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (IBAction)doneShowProductsGrid:(UIStoryboardSegue *)segue
+{
+    // Do nothing
 }
 
 @end

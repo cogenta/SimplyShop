@@ -118,14 +118,28 @@
     return cell;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)collectionView:(UICollectionView *)collectionView
+shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NO;
+    NSURL *URL = [self.selectedRetailerURLs objectAtIndex:indexPath.row];
+    return URL && [self.retailers objectForKey:URL];
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NO;
+    [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    SEL sel = @selector(favoriteStoresCell:didSelectRetailer:index:);
+    if ( ! [self.delegate respondsToSelector:sel]) {
+        return;
+    }
+    
+    NSURL *URL = [self.selectedRetailerURLs objectAtIndex:indexPath.row];
+    id<CSRetailer> retailer = [self.retailers objectForKey:URL];
+
+    [self.delegate favoriteStoresCell:self
+                    didSelectRetailer:retailer
+                                index:indexPath.row];
 }
 
 @end

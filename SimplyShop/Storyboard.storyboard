@@ -81,11 +81,12 @@
                     <connections>
                         <outlet property="collectionView" destination="LGW-7A-6RE" id="P0x-s5-obT"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="Ch1-bg-3XV"/>
+                        <segue destination="aYb-e4-eYg" kind="unwind" identifier="doneShowProductsGrid" unwindAction="doneShowProductsGrid:" id="EDH-xx-5ve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sEg-xk-5d8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-318" y="-2094"/>
+            <point key="canvasLocation" x="-324" y="-2062"/>
         </scene>
         <!--Product Detail View Controller-->
         <scene sceneID="b1o-hg-sQX">
@@ -495,6 +496,7 @@
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="thN-oO-ZtE"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="ZYU-Pi-qDu"/>
+                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showRetailerProductsGrid" id="3NJ-DI-Ofs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -588,6 +590,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="GK6-0V-Dlg"/>
         <segue reference="Ch1-bg-3XV"/>
     </inferredMetricsTieBreakers>
 </document>

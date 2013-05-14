@@ -25,4 +25,6 @@
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue;
+- (IBAction)doneShowProductsGrid:(UIStoryboardSegue *)segue;
+
 @end

@@ -10,12 +10,17 @@
 
 @class CSAPI;
 @class CSFavoriteStoresCell;
+@protocol CSRetailer;
 
 @protocol CSFavoriteStoresCellDelegate <NSObject>
 
 - (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
    failedToLoadRetailerURL:(NSURL *)retailerURL
                      error:(NSError *)error;
+
+- (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
+         didSelectRetailer:(id<CSRetailer>)retailer
+                     index:(NSUInteger)index;
 
 @end
 
