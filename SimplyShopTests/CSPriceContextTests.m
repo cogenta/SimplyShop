@@ -339,7 +339,7 @@
     STAssertEqualObjects(bestPrice, expectedPrice, nil);
 }
 
-- (void)testChoosesLikeWithLowestEffecticePrice
+- (void)testChoosesLikeWithLowestEffectivePrice
 {
     id likeList = [self someLikes];
     CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
