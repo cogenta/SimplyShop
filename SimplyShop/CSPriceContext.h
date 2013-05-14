@@ -13,10 +13,13 @@
 @interface CSPriceContext : NSObject
 
 - (id)initWithLikeList:(id<CSLikeList>)likeList;
+- (id)initWithLikeList:(id<CSLikeList>)likeList
+              retailer:(id<CSRetailer>)retailer;
 
 - (void)getBestPrice:(id<CSPriceList>)prices
             callback:(void (^)(id<CSPrice>))callback;
 
 @property (readonly) id<CSLikeList> likeList;
+@property (readonly) id<CSRetailer> retailer;
 
 @end

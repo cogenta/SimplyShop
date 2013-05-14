@@ -34,9 +34,15 @@ CSPriceContext_best_price_queue() {
 
 - (id)initWithLikeList:(id<CSLikeList>)likeList
 {
+    return [self initWithLikeList:likeList retailer:nil];
+}
+
+- (id)initWithLikeList:(id<CSLikeList>)likeList retailer:(id<CSRetailer>)retailer
+{
     self = [super init];
     if (self) {
         _likeList = likeList;
+        _retailer = retailer;
     }
     return self;
 }
@@ -59,6 +65,12 @@ CSPriceContext_best_price_queue() {
                 id<CSPrice> bestPrice = nil;
                 BOOL bestPriceLiked = NO;
                 for (id<CSPrice> price in priceArray) {
+                    if ([self.retailer.URL isEqual:price.retailerURL]) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            callback(price);
+                        });
+                        return;
+                    }
                     BOOL liked = [likedURLs containsObject:price.retailerURL];
                     if ( ! bestPrice) {
                         bestPrice = price;

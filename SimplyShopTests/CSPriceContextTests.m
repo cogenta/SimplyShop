@@ -155,6 +155,11 @@
     return [NSURL URLWithString:@"http://localhost/retailers/2-disliked"];
 }
 
+- (NSURL *)dislikedRetailer6
+{
+    return [NSURL URLWithString:@"http://localhost/retailers/6-disliked"];
+}
+
 - (NSURL *)likedRetailer3
 {
     return [NSURL URLWithString:@"http://localhost/retailers/3-liked"];
@@ -204,12 +209,32 @@
     id<CSLikeList> likeList = [self noLikes];
     CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
     STAssertEquals(context.likeList, likeList, nil);
+    STAssertNil(context.retailer, @"%@", context.retailer);
+}
+
+- (id<CSRetailer>)retailerWithURL:(NSURL *)url
+{
+    id result = [OCMockObject mockForProtocol:@protocol(CSRetailer)];
+    [[[result stub] andReturn:url] URL];
+    return result;
+}
+
+- (void)testRemembersLikeListAndRetailer
+{
+    id<CSLikeList> likeList = [self noLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self likedRetailer3]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    STAssertEquals(context.likeList, likeList, nil);
+    STAssertEqualObjects(context.retailer, retailer, nil);
 }
 
 - (void)testChoosesNilWhenNilPrices
 {
     id likeList = [self noLikes];
-    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
+    id<CSRetailer> retailer = [self retailerWithURL:[self likedRetailer3]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
     
     __block id bestPrice = @"NOT CALLED";
     
@@ -225,7 +250,9 @@
 - (void)testChoosesNilWhenNoPrices
 {
     id likeList = [self noLikes];
-    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
+    id<CSRetailer> retailer = [self retailerWithURL:[self likedRetailer3]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
 
     __block id bestPrice = @"NOT CALLED";
     
@@ -239,7 +266,7 @@
     STAssertNil(bestPrice, @"%@", bestPrice);
 }
 
-- (void)testChoosesLowestEffectivePriceWhenNoLikes
+- (void)testChoosesLowestEffectivePriceWhenNoRetailerAndNoLikes
 {
     id likeList = [self noLikes];
     CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
@@ -264,7 +291,63 @@
     STAssertEqualObjects(bestPrice, expectedPrice, nil);
 }
 
-- (void)testChoosesLowestEffectivePriceWhenNilLikes
+- (void)testChoosesLowestEffectivePriceWhenNoPriceForRetailerAndNoLikes
+{
+    id likeList = [self noLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer6]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self lowestEffectivePrice:[self dislikedRetailer1]];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 [self highestPrice:[self dislikedRetailer0]],
+                 expectedPrice,
+                 [self lowestStickerPrice:[self dislikedRetailer2]]
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+- (void)testChoosesRetailerPriceWhenRetailerButNoLikes
+{
+    id likeList = [self noLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer0]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self highestPrice:retailer.URL];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 expectedPrice,
+                 [self lowestEffectivePrice:[self dislikedRetailer1]],
+                 [self lowestStickerPrice:[self dislikedRetailer2]]
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+// TODO: test for multiple prices for selected retailer
+
+- (void)testChoosesLowestEffectivePriceWhenNoRetailerAndNilLikes
 {
     id likeList = nil;
     CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
@@ -289,7 +372,61 @@
     STAssertEqualObjects(bestPrice, expectedPrice, nil);
 }
 
-- (void)testChoosesLowestEffectivePriceWhenAllPricesDisliked
+- (void)testChoosesLowestEffectivePriceWhenNoPricesForRetailerAndNilLikes
+{
+    id likeList = nil;
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer6]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self lowestEffectivePrice:[self dislikedRetailer1]];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 [self highestPrice:[self dislikedRetailer0]],
+                 expectedPrice,
+                 [self lowestStickerPrice:[self dislikedRetailer2]]
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+- (void)testChoosesRetailerPriceWhenRetailerButNilLikes
+{
+    id likeList = nil;
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer0]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self highestPrice:retailer.URL];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 expectedPrice,
+                 [self lowestEffectivePrice:[self dislikedRetailer1]],
+                 [self lowestStickerPrice:[self dislikedRetailer2]]
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+- (void)testChoosesLowestEffectivePriceWhenNoRetailerAndAllPricesDisliked
 {
     id likeList = [self someLikes];
     CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
@@ -314,7 +451,61 @@
     STAssertEqualObjects(bestPrice, expectedPrice, nil);
 }
 
-- (void)testChoosesOnlyLikeEvenWhenNotLowestEffectivePrice
+- (void)testChoosesLowestEffectivePriceWhenNoPriceForRetailerAndAllPricesDisliked
+{
+    id likeList = [self someLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer6]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self lowestEffectivePrice:[self dislikedRetailer1]];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 [self highestPrice:[self dislikedRetailer0]],
+                 expectedPrice,
+                 [self lowestStickerPrice:[self dislikedRetailer2]]
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+- (void)testChoosesRetailerPriceWhenRetailerAndAllPricesDisliked
+{
+    id likeList = [self someLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer0]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self highestPrice:retailer.URL];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 expectedPrice,
+                 [self lowestEffectivePrice:[self dislikedRetailer1]],
+                 [self lowestStickerPrice:[self dislikedRetailer2]]
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+- (void)testChoosesOnlyLikeWhenNoRetailerEvenWhenNotLowestEffectivePrice
 {
     id likeList = [self someLikes];
     CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
@@ -339,7 +530,34 @@
     STAssertEqualObjects(bestPrice, expectedPrice, nil);
 }
 
-- (void)testChoosesLikeWithLowestEffectivePrice
+- (void)testChoosesOnlyLikeWhenNoPriceForRetailerEvenWhenNotLowestEffectivePrice
+{
+    id likeList = [self someLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer6]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self highestPrice:[self likedRetailer3]];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 expectedPrice,
+                 [self lowestEffectivePrice:[self dislikedRetailer1]],
+                 [self lowestStickerPrice:[self dislikedRetailer2]]
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+- (void)testChoosesLikeWithLowestEffectivePriceWhenNoRetailer
 {
     id likeList = [self someLikes];
     CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList];
@@ -364,5 +582,59 @@
     STAssertEqualObjects(bestPrice, expectedPrice, nil);
 }
 
+- (void)testChoosesLikeWithLowestEffectivePriceWhenNoPriceForRetailer
+{
+    id likeList = [self someLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer6]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self lowestStickerPrice:[self likedRetailer3]];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 [self highestPrice:[self likedRetailer4]],
+                 expectedPrice,
+                 [self lowestEffectivePrice:[self dislikedRetailer0]]
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+- (void)testChoosesRetailerWhenLastPrice
+{
+    id likeList = [self someLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer1]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    
+    id expectedPrice = [self highestPrice:retailer.URL];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 [self highestPrice:[self likedRetailer4]],
+                 [self lowestStickerPrice:[self likedRetailer3]],
+                 [self lowestEffectivePrice:[self dislikedRetailer0]],
+                 expectedPrice
+                 ]];
+    
+    __block id bestPrice = @"NOT CALLED";
+    
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getBestPrice:prices callback:^(id<CSPrice> result) {
+            bestPrice = result;
+            done();
+        }];
+    });
+    
+    STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
 
 @end
