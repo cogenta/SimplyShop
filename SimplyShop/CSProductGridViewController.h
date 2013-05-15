@@ -19,6 +19,8 @@
 
 - (void)setProductSummaries:(id<CSProductSummaryList>)products;
 - (void)setProducts:(id<CSProductList>)products;
+- (void)setErrorState;
+- (void)setLoadingState;
 
 @property (strong, nonatomic) CSPriceContext *priceContext;
 

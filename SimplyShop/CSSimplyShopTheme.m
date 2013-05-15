@@ -24,6 +24,7 @@
 #import "CSRetailerLogoView.h"
 #import "CSPriceView.h"
 #import "CSStockView.h"
+#import "CSEmptyProductGridView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -36,8 +37,8 @@
 
 - (NSDictionary *)navigationBarTitleTextAttributes
 {
-    return @{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0],
-             UITextAttributeTextColor:[UIColor colorWithHexString:@"#606060"]};
+    return @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0],
+             NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#606060"]};
 }
 
 - (UIImage *)titleBarBackgroundImage
@@ -254,6 +255,24 @@
     [buyNowButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     UIImage *buyNowBg = [[UIImage imageNamed:@"ButtonBuyNow"] resizableImageWithCapInsets:UIEdgeInsetsMake(19.0, 6.0, 18.0, 6.0)];
     [buyNowButton setBackgroundImage:buyNowBg forState:UIControlStateNormal];
+    
+    CSEmptyProductGridView *empty = [CSEmptyProductGridView appearance];
+    NSShadow *emptyShadow = [[NSShadow alloc] init];
+    emptyShadow.shadowColor = [UIColor whiteColor];
+    emptyShadow.shadowBlurRadius = 1.0;
+    emptyShadow.shadowOffset = CGSizeMake(0.0, 1.0);
+    empty.headerTextAttributes = @{NSFontAttributeName:
+                                       [UIFont fontWithName:@"HelveticaNeue-Bold"
+                                                       size:20.0],
+                                   NSForegroundColorAttributeName:
+                                       [UIColor colorWithHexString:@"#606060"],
+                                   NSShadowAttributeName: emptyShadow};
+    empty.detailTextAttributes = @{NSFontAttributeName:
+                                       [UIFont fontWithName:@"HelveticaNeue"
+                                                       size:16.0],
+                                   NSForegroundColorAttributeName:
+                                       [UIColor colorWithHexString:@"#606060"],
+                                   NSShadowAttributeName: emptyShadow};
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button

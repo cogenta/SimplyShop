@@ -219,8 +219,19 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     CSProductGridViewController *vc = (id) segue.destinationViewController;
     vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
     vc.title = @"Top Products";
+    [vc setLoadingState];
     [self ensureFavoriteRetailersGroup:^(id<CSGroup> group, NSError *error) {
+        if (error) {
+            [vc setErrorState];
+            return;
+        }
+        
         [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
+            if (error) {
+                [vc setErrorState];
+                return;
+            }
+            
             [vc setProducts:firstPage.productList];
         }];
     }];
@@ -236,10 +247,11 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
                                                       retailer:retailer];
     vc.title = retailer.name;
-    
+    [vc setLoadingState];
+
     [retailer getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
         if (error) {
-            // TODO: handle error
+            [vc setErrorState];
             return;
         }
         

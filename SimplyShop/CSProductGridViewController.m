@@ -12,6 +12,7 @@
 #import "CSProductDetailViewController.h"
 #import "CSPriceContext.h"
 #import "CSProductWrapper.h"
+#import "CSEmptyProductGridView.h"
 
 @protocol CSProductListWrapper <NSObject>
 
@@ -128,6 +129,21 @@
 
 @property (strong, nonatomic) id<CSProductListWrapper> productListWrapper;
 
+@property (strong, nonatomic) CSEmptyProductGridView *emptyView;
+@property (strong, nonatomic) CSEmptyProductGridView *errorView;
+@property (strong, nonatomic) CSEmptyProductGridView *loadingView;
+
+- (void)hideAllEmptyViews;
+
+- (void)showEmptyView;
+- (void)hideEmptyView;
+
+- (void)showErrorView;
+- (void)hideErrorView;
+
+- (void)showLoadingView;
+- (void)hideLoadingView;
+
 @end
 
 @implementation CSProductGridViewController
@@ -207,6 +223,11 @@
 {
     productListWrapper = wrapper;
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (productListWrapper.count) {
+            [self hideAllEmptyViews];
+        } else {
+            [self showEmptyView];
+        }
         [self.collectionView reloadData];
     });
 }
@@ -228,7 +249,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     [self performSegueWithIdentifier:@"showProduct" sender:address];
 }
 
-- (void)setErrorState
+- (void)showErrorAlert
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Failed to communicate with the server."
@@ -238,11 +259,16 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     [alert show];
 }
 
-- (void)alertView:(UIAlertView *)alertView
-didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)setErrorState
 {
-    [self.collectionView reloadData];
+    [self showErrorView];
 }
+
+- (void)setLoadingState
+{
+    [self showLoadingView];
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -257,7 +283,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                                                      NSError *error)
         {
             if (error) {
-                [self setErrorState];
+                [self showErrorAlert];
                 [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
                 return;
             }
@@ -271,6 +297,80 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 - (void)doneShowProduct:(UIStoryboardSegue *)segue
 {
     [segue.destinationViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (NSString *)detailForEmptyView
+{
+    if (self.priceContext.retailer) {
+        return [NSString stringWithFormat:@"We found no products for %@.",
+                self.priceContext.retailer.name];
+    }
+    
+    return @"No products were found for your search.";
+}
+
+- (void)showEmptyView
+{
+    [self hideAllEmptyViews];
+    
+    self.emptyView = [[CSEmptyProductGridView alloc]
+                      initWithFrame:self.view.bounds];
+    
+    self.emptyView.frame = self.view.bounds;
+    self.emptyView.detailText = [self detailForEmptyView];
+    [self.view addSubview:self.emptyView];
+}
+
+- (void)hideEmptyView
+{
+    [self.emptyView removeFromSuperview];
+    self.emptyView = nil;
+}
+
+- (void)showErrorView
+{
+    [self hideAllEmptyViews];
+    
+    self.errorView = [[CSEmptyProductGridView alloc]
+                      initWithFrame:self.view.bounds];
+    
+    self.errorView.frame = self.view.bounds;
+    self.errorView.headerText = @"Error";
+    self.errorView.detailText = @"Failed to communicate with server";
+    [self.view addSubview:self.errorView];
+}
+
+- (void)hideErrorView
+{
+    [self.errorView removeFromSuperview];
+    self.errorView = nil;
+}
+
+- (void)showLoadingView
+{
+    [self hideAllEmptyViews];
+    
+    self.loadingView = [[CSEmptyProductGridView alloc]
+                        initWithFrame:self.view.bounds];
+    
+    self.loadingView.frame = self.view.bounds;
+    self.loadingView.headerText = @"Loading";
+    self.loadingView.detailText = nil;
+    self.loadingView.active = YES;
+    [self.view addSubview:self.loadingView];
+}
+
+- (void)hideLoadingView
+{
+    [self.loadingView removeFromSuperview];
+    self.loadingView = nil;
+}
+
+- (void)hideAllEmptyViews
+{
+    [self hideEmptyView];
+    [self hideErrorView];
+    [self hideLoadingView];
 }
 
 @end
