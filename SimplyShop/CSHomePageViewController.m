@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSObject<CSUser> *user;
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
 @property (strong, nonatomic) NSObject<CSLikeList> *likeList;
+@property (strong, nonatomic) NSObject<CSGroup> *group;
 
 - (void)loadRetailers;
 - (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group;
@@ -81,12 +82,16 @@
 
 - (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group
 {
+    self.group = group;
     [group getProductSummaries:^(id<CSProductSummaryListPage> firstPage,
                                  NSError *error) {
         if (error) {
             [self setErrorState];
+            self.seeAllButton.enabled = NO;
             return;
         }
+        
+        self.seeAllButton.enabled = YES;
         
         self.topProductSummaries = firstPage.productSummaryList;
         self.topProductsCell.productSummaries = firstPage.productSummaryList;
@@ -216,47 +221,22 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 - (void)prepareForShowTopProductsGridSegue:(UIStoryboardSegue *)segue
                                     sender:(id)sender
 {
+    NSAssert(self.likeList, nil);
+    NSAssert(self.group, nil);
     CSProductGridViewController *vc = (id) segue.destinationViewController;
-    vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
-    vc.title = @"Top Products";
-    [vc setLoadingState];
-    [self ensureFavoriteRetailersGroup:^(id<CSGroup> group, NSError *error) {
-        if (error) {
-            [vc setErrorState];
-            return;
-        }
-        
-        [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
-            if (error) {
-                [vc setErrorState];
-                return;
-            }
-            
-            [vc setProducts:firstPage.productList];
-        }];
-    }];
+    [vc setGroup:self.group likes:self.likeList];
 }
 
 - (void)prepareForShowRetailerProductsGridSegue:(UIStoryboardSegue *)segue
                                          sender:(id)sender
 {
+    NSAssert(self.likeList, nil);
+    
     NSDictionary *address = sender;
     id<CSRetailer> retailer = address[@"retailer"];
     
     CSProductGridViewController *vc = (id) segue.destinationViewController;
-    vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
-                                                      retailer:retailer];
-    vc.title = retailer.name;
-    [vc setLoadingState];
-
-    [retailer getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
-        if (error) {
-            [vc setErrorState];
-            return;
-        }
-        
-        vc.products = firstPage.productList;
-    }];
+    [vc setRetailer:retailer likes:self.likeList];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

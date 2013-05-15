@@ -491,6 +491,7 @@
                     <navigationItem key="navigationItem" title="Dashboard" id="NXv-dU-jYd"/>
                     <connections>
                         <outlet property="favoriteStoresCell" destination="EYf-RC-NBp" id="i9P-OY-g61"/>
+                        <outlet property="seeAllButton" destination="Ppl-Fk-biT" id="rzf-8O-ek1"/>
                         <outlet property="topProductsCell" destination="hv6-34-2sh" id="25P-Sf-vpu"/>
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="ZYU-Pi-qDu"/>
@@ -588,7 +589,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="ZYU-Pi-qDu"/>
         <segue reference="GK6-0V-Dlg"/>
-        <segue reference="Ch1-bg-3XV"/>
     </inferredMetricsTieBreakers>
 </document>

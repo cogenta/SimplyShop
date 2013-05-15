@@ -242,6 +242,38 @@
     [self setProductListWrapper:[CSProductListWrapper wrapperWithProducts:products]];
 }
 
+- (void)setRetailer:(id<CSRetailer>)retailer likes:(id<CSLikeList>)likes
+{
+    self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes
+                                                        retailer:retailer];
+    self.title = retailer.name;
+    [self setLoadingState];
+    
+    [retailer getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        self.products = firstPage.productList;
+    }];
+}
+
+- (void)setGroup:(id<CSGroup>)group likes:(id<CSLikeList>)likes
+{
+    self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes];
+    self.title = @"Top Products";
+    [self setLoadingState];
+    [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        [self setProducts:firstPage.productList];
+    }];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {

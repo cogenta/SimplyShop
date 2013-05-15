@@ -10,6 +10,10 @@
 
 @protocol CSProductSummaryList;
 @protocol CSProductList;
+@protocol CSRetailer;
+@protocol CSLikeList;
+@protocol CSGroup;
+
 @class CSPriceContext;
 
 @interface CSProductGridViewController : UIViewController
@@ -17,6 +21,8 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+- (void)setRetailer:(id<CSRetailer>)retailer likes:(id<CSLikeList>)likes;
+- (void)setGroup:(id<CSGroup>)group likes:(id<CSLikeList>)likes;
 - (void)setProductSummaries:(id<CSProductSummaryList>)products;
 - (void)setProducts:(id<CSProductList>)products;
 - (void)setErrorState;
