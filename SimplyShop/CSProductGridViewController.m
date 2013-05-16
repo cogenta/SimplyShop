@@ -405,4 +405,19 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     [self hideLoadingView];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [UIView animateWithDuration:0.0 animations:^{
+        CGPoint center = CGPointMake(CGRectGetMidX(self.view.bounds),
+                                     CGRectGetMidY(self.view.bounds));
+        self.loadingView.center = center;
+        self.errorView.center = center;
+        self.emptyView.center = center;
+    } completion:^(BOOL finished) {
+        self.loadingView.frame = self.view.bounds;
+        self.errorView.frame = self.view.bounds;
+        self.emptyView.frame = self.view.bounds;
+    }];
+}
+
 @end
