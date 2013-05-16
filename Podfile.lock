@@ -1,0 +1,61 @@
+PODS:
+  - AFNetworking (1.2.1)
+  - ARChromeActivity (1.0.0)
+  - Base64 (1.0.1)
+  - CSApi (0.0.1):
+    - AFNetworking
+    - Base64
+    - HyperBek
+    - ISO8601DateFormatter
+    - NSArray+Functional
+    - SBJson
+  - CSURITemplate (0.1.1)
+  - HyperBek (0.3.0):
+    - CSURITemplate (~> 0.1.1)
+  - ISO8601DateFormatter (0.6)
+  - MBCategory (0.0.1)
+  - NSArray+Functional (1.0.0)
+  - OCMock (2.1.1)
+  - PBWebViewController (0.0.1)
+  - SBJson (3.2)
+  - SDWebImage (3.2):
+    - SDWebImage/MapKit
+  - SDWebImage/MapKit (3.2)
+  - TUSafariActivity (1.0.0)
+
+DEPENDENCIES:
+  - ARChromeActivity (from `git://github.com/wharris/ARChromeActivity.git`, branch `set-activity-title`)
+  - CSApi (from `../CSApi/`)
+  - MBCategory
+  - OCMock
+  - PBWebViewController (from `git://github.com/wharris/PBWebViewController.git`, branch `dismiss-popover`)
+  - SDWebImage
+  - TUSafariActivity
+
+EXTERNAL SOURCES:
+  ARChromeActivity:
+    :branch: set-activity-title
+    :git: git://github.com/wharris/ARChromeActivity.git
+  CSApi:
+    :path: ../CSApi/
+  PBWebViewController:
+    :branch: dismiss-popover
+    :git: git://github.com/wharris/PBWebViewController.git
+
+SPEC CHECKSUMS:
+  AFNetworking: d1ba5908b233189e424e101721acef7905b58efb
+  ARChromeActivity: bc451ea1d8f1ab142ea2b3aed1e4dc0afcb53cc5
+  Base64: eaac9f2088ba659c5db1db960576eb0f2969ebaf
+  CSApi: 06c7bbb0725b71641b23181891e7dbb0a37fdcdc
+  CSURITemplate: d3ec6da88799010195522e0c20e049a18da6a6aa
+  HyperBek: ff15839ea583f4eaf6479e852f4b5d3e1d156c9a
+  ISO8601DateFormatter: dc05a2481edf49668d85d3ff8c466c32eb544780
+  MBCategory: f16e6b71dce3e8733a5c7ae28d022a7b783f0f5d
+  NSArray+Functional: 2fb24f1533c1380a595ed1da347bd4ec705f5495
+  OCMock: 79212e5e328378af5cfd6edb5feacfd6c49cd8a3
+  PBWebViewController: 5a45bdee21a4107c6177e719cf1a62bba14fe40c
+  SBJson: e60b4dc22448c2ae1e754b523a4ab53408e85c8d
+  SDWebImage: 4e2b2287a54c052cb0d717bcdf37387b9c4751ae
+  TUSafariActivity: bd9da588f5f9136ba445d89f8f86b6dccf4d46ba
+
+COCOAPODS: 0.19.1
