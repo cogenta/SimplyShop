@@ -197,25 +197,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     CSProductSummariesCell *cell = address[@"cell"];
     id<CSProductSummaryList> list = cell.productSummaries;
     NSInteger index = [address[@"index"] integerValue];
-    [list
-     getProductSummaryAtIndex:index
-     callback:^(id<CSProductSummary> result, NSError *error)
-     {
-         if (error) {
-             [self setErrorState];
-             [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
-             return;
-         }
-         vc.productSummary = result;
-         [result getProduct:^(id<CSProduct> product, NSError *error) {
-             if (error) {
-                 [self setErrorState];
-                 [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
-                 return;
-             }
-             vc.product = product;
-         }];
-     }];
+    [vc setProductSummaryList:list index:index];
 }
 
 - (void)prepareForShowTopProductsGridSegue:(UIStoryboardSegue *)segue

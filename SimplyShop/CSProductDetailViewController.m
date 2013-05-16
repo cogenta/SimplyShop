@@ -12,6 +12,7 @@
 #import "CSTitleBarView.h"
 #import "CSProductStats.h"
 #import "CSPriceContext.h"
+#import "CSProductWrapper.h"
 #import <PBWebViewController/PBWebViewController.h>
 #import <CSApi/CSAPI.h>
 #import <TUSafariActivity/TUSafariActivity.h>
@@ -143,6 +144,57 @@
     
     self.sidebarView.price = nil;
     [self updateSizing];
+}
+
+- (void)setProductListWrapper:(id<CSProductListWrapper>)list
+                        index:(NSUInteger)index
+{
+    [list getProductAtIndex:index
+                   callback:^(id<CSProduct> product, NSError *error)
+     {
+         if (error) {
+             [self setErrorState];
+             return;
+         }
+         self.product = product;
+     }];
+}
+
+- (void)setProductSummaryList:(id<CSProductSummaryList>)list index:(NSInteger)index
+{
+    [list
+     getProductSummaryAtIndex:index
+     callback:^(id<CSProductSummary> result, NSError *error)
+     {
+         if (error) {
+             [self setErrorState];
+             return;
+         }
+         self.productSummary = result;
+         [result getProduct:^(id<CSProduct> product, NSError *error) {
+             if (error) {
+                 [self setErrorState];
+                 return;
+             }
+             self.product = product;
+         }];
+     }];
+}
+
+- (void)setErrorState
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:@"Failed to communicate with the server."
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView
+didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)sidebarView:(CSProductSidebarView *)view

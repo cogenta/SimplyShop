@@ -10,6 +10,8 @@
 
 @protocol CSProduct;
 @protocol CSProductSummary;
+@protocol CSProductListWrapper;
+@protocol CSProductSummaryList;
 @class CSTitleBarView;
 @class CSProductDetailsView;
 @class CSProductSidebarView;
@@ -24,6 +26,13 @@
 @property (nonatomic, strong) id<CSProductSummary> productSummary;
 @property (nonatomic, strong) id<CSProduct> product;
 @property (nonatomic, strong) CSPriceContext *priceContext;
+
+- (void)setProductListWrapper:(id<CSProductListWrapper>)list
+                        index:(NSUInteger)index;
+- (void)setProductSummaryList:(id<CSProductSummaryList>)list
+                        index:(NSInteger)index;
+
+- (void)setErrorState;
 
 - (IBAction)doneShowPurchasePage:(UIStoryboardSegue *)segue;
 

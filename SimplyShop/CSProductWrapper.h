@@ -25,3 +25,14 @@
 + (instancetype) wrapperForProduct:(id<CSProduct>)product;
 
 @end
+
+@protocol CSProductListWrapper <NSObject>
+
+@property (readonly) NSUInteger count;
+
+- (void)getProductWrapperAtIndex:(NSUInteger)index
+                        callback:(void (^)(CSProductWrapper *result,
+                                           NSError *error))callback;
+- (void)getProductAtIndex:(NSUInteger)index
+                 callback:(void (^)(id<CSProduct>, NSError *))callback;
+@end

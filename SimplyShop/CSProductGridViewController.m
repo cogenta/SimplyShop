@@ -14,17 +14,6 @@
 #import "CSProductWrapper.h"
 #import "CSEmptyProductGridView.h"
 
-@protocol CSProductListWrapper <NSObject>
-
-@property (readonly) NSUInteger count;
-
-- (void)getProductWrapperAtIndex:(NSUInteger)index
-                        callback:(void (^)(CSProductWrapper *result,
-                                           NSError *error))callback;
-- (void)getProductAtIndex:(NSUInteger)index
-                 callback:(void (^)(id<CSProduct>, NSError *))callback;
-@end
-
 @interface CSProductListWrapper : NSObject <CSProductListWrapper>
 
 @property id<CSProductList> products;
@@ -301,7 +290,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     [self showLoadingView];
 }
 
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showProduct"]) {
@@ -310,17 +298,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         
         NSDictionary *address = sender;
         NSInteger index = [address[@"index"] integerValue];
-        [self.productListWrapper getProductAtIndex:index
-                                          callback:^(id<CSProduct> product,
-                                                     NSError *error)
-        {
-            if (error) {
-                [self showErrorAlert];
-                [vc performSegueWithIdentifier:@"doneShowProduct" sender:self];
-                return;
-            }
-            vc.product = product;
-        }];
+        [vc setProductListWrapper:self.productListWrapper index:index];
         
         return;
     }
