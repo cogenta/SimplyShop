@@ -45,8 +45,6 @@
 		BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */; };
 		BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */; };
 		BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */; };
-		BE6BF3FF1725426E004B6D85 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6BF3FE1725426E004B6D85 /* Icon.png */; };
-		BE6BF4011725428C004B6D85 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6BF4001725428C004B6D85 /* Icon@2x.png */; };
 		BE6E2F1F17313FF100DCE47E /* CSProductGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6E2F1E17313FF100DCE47E /* CSProductGalleryView.m */; };
 		BE6E2F21173151F500DCE47E /* CSProductGalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F20173151F500DCE47E /* CSProductGalleryView.xib */; };
 		BE6E2F241731542700DCE47E /* GalleryBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F221731542700DCE47E /* GalleryBg@2x.png */; };
@@ -94,6 +92,14 @@
 		BEDC02D9171317A90023059E /* CSProductSummariesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDC02D8171317A90023059E /* CSProductSummariesCell.m */; };
 		BEDC02DB17144DB20023059E /* CSRetailerSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */; };
 		BEDC02E0171455510023059E /* CSProductSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDC02DF171455510023059E /* CSProductSummaryCell.m */; };
+		BEF2CF82174A37DD00EDEDA3 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7A174A37DD00EDEDA3 /* Icon-72.png */; };
+		BEF2CF83174A37DD00EDEDA3 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7B174A37DD00EDEDA3 /* Icon-72@2x.png */; };
+		BEF2CF84174A37DD00EDEDA3 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7C174A37DD00EDEDA3 /* Icon-Small-50.png */; };
+		BEF2CF85174A37DD00EDEDA3 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7D174A37DD00EDEDA3 /* Icon-Small-50@2x.png */; };
+		BEF2CF86174A37DD00EDEDA3 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7E174A37DD00EDEDA3 /* Icon-Small.png */; };
+		BEF2CF87174A37DD00EDEDA3 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7F174A37DD00EDEDA3 /* Icon-Small@2x.png */; };
+		BEF2CF88174A37DD00EDEDA3 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF80174A37DD00EDEDA3 /* iTunesArtwork */; };
+		BEF2CF89174A37DD00EDEDA3 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF81174A37DD00EDEDA3 /* iTunesArtwork@2x */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,8 +168,6 @@
 		BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAppearanceButton.m; sourceTree = "<group>"; };
 		BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFavoriteStoresCell.h; sourceTree = "<group>"; };
 		BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFavoriteStoresCell.m; sourceTree = "<group>"; };
-		BE6BF3FE1725426E004B6D85 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
-		BE6BF4001725428C004B6D85 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		BE6E2F1D17313FF100DCE47E /* CSProductGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductGalleryView.h; sourceTree = "<group>"; };
 		BE6E2F1E17313FF100DCE47E /* CSProductGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductGalleryView.m; sourceTree = "<group>"; };
 		BE6E2F20173151F500DCE47E /* CSProductGalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductGalleryView.xib; sourceTree = "<group>"; };
@@ -233,6 +237,14 @@
 		BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRetailerSelectionCell.xib; sourceTree = "<group>"; };
 		BEDC02DE171455510023059E /* CSProductSummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductSummaryCell.h; sourceTree = "<group>"; };
 		BEDC02DF171455510023059E /* CSProductSummaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductSummaryCell.m; sourceTree = "<group>"; };
+		BEF2CF7A174A37DD00EDEDA3 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		BEF2CF7B174A37DD00EDEDA3 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
+		BEF2CF7C174A37DD00EDEDA3 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		BEF2CF7D174A37DD00EDEDA3 /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
+		BEF2CF7E174A37DD00EDEDA3 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		BEF2CF7F174A37DD00EDEDA3 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		BEF2CF80174A37DD00EDEDA3 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		BEF2CF81174A37DD00EDEDA3 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -321,8 +333,7 @@
 		BE3D4DD7170331AA00644AD6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BE6BF4001725428C004B6D85 /* Icon@2x.png */,
-				BE6BF3FE1725426E004B6D85 /* Icon.png */,
+				BEF2CF79174A37C800EDEDA3 /* Icons */,
 				BE3D4E161703719200644AD6 /* Podfile */,
 				C59BE071388B42FB9540159A /* Pods.xcconfig */,
 				BE3D4DD8170331AA00644AD6 /* SimplyShop-Info.plist */,
@@ -509,6 +520,21 @@
 			name = "Dashboard Cells";
 			sourceTree = "<group>";
 		};
+		BEF2CF79174A37C800EDEDA3 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				BEF2CF7A174A37DD00EDEDA3 /* Icon-72.png */,
+				BEF2CF7B174A37DD00EDEDA3 /* Icon-72@2x.png */,
+				BEF2CF7C174A37DD00EDEDA3 /* Icon-Small-50.png */,
+				BEF2CF7D174A37DD00EDEDA3 /* Icon-Small-50@2x.png */,
+				BEF2CF7E174A37DD00EDEDA3 /* Icon-Small.png */,
+				BEF2CF7F174A37DD00EDEDA3 /* Icon-Small@2x.png */,
+				BEF2CF80174A37DD00EDEDA3 /* iTunesArtwork */,
+				BEF2CF81174A37DD00EDEDA3 /* iTunesArtwork@2x */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -597,8 +623,6 @@
 				BE3D4E251704A30300644AD6 /* TileBackgroundSelected@2x.png in Resources */,
 				BEDC02D6171312BC0023059E /* CSProductSummaryCell.xib in Resources */,
 				BEDC02DB17144DB20023059E /* CSRetailerSelectionCell.xib in Resources */,
-				BE6BF3FF1725426E004B6D85 /* Icon.png in Resources */,
-				BE6BF4011725428C004B6D85 /* Icon@2x.png in Resources */,
 				BE736792172E7E6100B4691C /* CSTabArrowView.xib in Resources */,
 				BE736795172E867700B4691C /* TabArrow@2x.png in Resources */,
 				BE736796172E867700B4691C /* TabUnderline@2x.png in Resources */,
@@ -623,6 +647,14 @@
 				BEC1E2BF173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib in Resources */,
 				BEC1E2E717427F7000D12EF2 /* Settings.bundle in Resources */,
 				BEC1E2EC17438C0100D12EF2 /* CSEmptyProductGridView.xib in Resources */,
+				BEF2CF82174A37DD00EDEDA3 /* Icon-72.png in Resources */,
+				BEF2CF83174A37DD00EDEDA3 /* Icon-72@2x.png in Resources */,
+				BEF2CF84174A37DD00EDEDA3 /* Icon-Small-50.png in Resources */,
+				BEF2CF85174A37DD00EDEDA3 /* Icon-Small-50@2x.png in Resources */,
+				BEF2CF86174A37DD00EDEDA3 /* Icon-Small.png in Resources */,
+				BEF2CF87174A37DD00EDEDA3 /* Icon-Small@2x.png in Resources */,
+				BEF2CF88174A37DD00EDEDA3 /* iTunesArtwork in Resources */,
+				BEF2CF89174A37DD00EDEDA3 /* iTunesArtwork@2x in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
