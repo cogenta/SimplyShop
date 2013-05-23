@@ -12,6 +12,7 @@
 #import "CSRetailerSelectionCell.h"
 #import "CSProductSummariesCell.h"
 #import "CSProductSummaryCell.h"
+#import "CSCategoryCell.h"
 #import "CSCTAButton.h"
 #import "CSAppearanceButton.h"
 #import "CSTabArrowView.h"
@@ -175,6 +176,9 @@
     
     CSProductSummaryCell *productSummaryCell = [CSProductSummaryCell appearance];
     [productSummaryCell setTheme:self];
+    
+    CSCategoryCell *categoryCell = [CSCategoryCell appearance];
+    [categoryCell setTheme:self];
     
     CSCTAButton *ctaButton = [CSCTAButton appearance];
     [self themeCTAButton:ctaButton];

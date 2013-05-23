@@ -45,6 +45,9 @@
 		BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */; };
 		BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */; };
 		BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */; };
+		BE558EB4174E586D009FA3DA /* CSCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE558EB3174E586D009FA3DA /* CSCategoryCell.m */; };
+		BE558EB6174E5ABC009FA3DA /* CSCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE558EB5174E5ABC009FA3DA /* CSCategoryCell.xib */; };
+		BE558EB9174E5D5C009FA3DA /* CSCategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE558EB8174E5D5C009FA3DA /* CSCategoriesCell.m */; };
 		BE6E2F1F17313FF100DCE47E /* CSProductGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6E2F1E17313FF100DCE47E /* CSProductGalleryView.m */; };
 		BE6E2F21173151F500DCE47E /* CSProductGalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F20173151F500DCE47E /* CSProductGalleryView.xib */; };
 		BE6E2F241731542700DCE47E /* GalleryBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE6E2F221731542700DCE47E /* GalleryBg@2x.png */; };
@@ -168,6 +171,11 @@
 		BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAppearanceButton.m; sourceTree = "<group>"; };
 		BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFavoriteStoresCell.h; sourceTree = "<group>"; };
 		BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFavoriteStoresCell.m; sourceTree = "<group>"; };
+		BE558EB2174E586C009FA3DA /* CSCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCategoryCell.h; sourceTree = "<group>"; };
+		BE558EB3174E586D009FA3DA /* CSCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCategoryCell.m; sourceTree = "<group>"; };
+		BE558EB5174E5ABC009FA3DA /* CSCategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSCategoryCell.xib; sourceTree = "<group>"; };
+		BE558EB7174E5D5C009FA3DA /* CSCategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCategoriesCell.h; sourceTree = "<group>"; };
+		BE558EB8174E5D5C009FA3DA /* CSCategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCategoriesCell.m; sourceTree = "<group>"; };
 		BE6E2F1D17313FF100DCE47E /* CSProductGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductGalleryView.h; sourceTree = "<group>"; };
 		BE6E2F1E17313FF100DCE47E /* CSProductGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductGalleryView.m; sourceTree = "<group>"; };
 		BE6E2F20173151F500DCE47E /* CSProductGalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductGalleryView.xib; sourceTree = "<group>"; };
@@ -505,6 +513,9 @@
 				BEC1E2C3173BFE9C00D12EF2 /* CSProductSummaryPriceCell.h */,
 				BEC1E2C4173BFE9C00D12EF2 /* CSProductSummaryPriceCell.m */,
 				BEC1E2BE173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib */,
+				BE558EB2174E586C009FA3DA /* CSCategoryCell.h */,
+				BE558EB3174E586D009FA3DA /* CSCategoryCell.m */,
+				BE558EB5174E5ABC009FA3DA /* CSCategoryCell.xib */,
 			);
 			name = "Collection Cells";
 			sourceTree = "<group>";
@@ -516,6 +527,8 @@
 				BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */,
 				BEDC02D7171317A80023059E /* CSProductSummariesCell.h */,
 				BEDC02D8171317A90023059E /* CSProductSummariesCell.m */,
+				BE558EB7174E5D5C009FA3DA /* CSCategoriesCell.h */,
+				BE558EB8174E5D5C009FA3DA /* CSCategoriesCell.m */,
 			);
 			name = "Dashboard Cells";
 			sourceTree = "<group>";
@@ -655,6 +668,7 @@
 				BEF2CF87174A37DD00EDEDA3 /* Icon-Small@2x.png in Resources */,
 				BEF2CF88174A37DD00EDEDA3 /* iTunesArtwork in Resources */,
 				BEF2CF89174A37DD00EDEDA3 /* iTunesArtwork@2x in Resources */,
+				BE558EB6174E5ABC009FA3DA /* CSCategoryCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +763,8 @@
 				BEC1E2C5173BFE9C00D12EF2 /* CSProductSummaryPriceCell.m in Sources */,
 				BEC1E2C9173C048600D12EF2 /* NSNumber+CSStringForCurrency.m in Sources */,
 				BEC1E2EA17438BC600D12EF2 /* CSEmptyProductGridView.m in Sources */,
+				BE558EB4174E586D009FA3DA /* CSCategoryCell.m in Sources */,
+				BE558EB9174E5D5C009FA3DA /* CSCategoriesCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

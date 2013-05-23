@@ -10,6 +10,7 @@
 #import "CSRetailerSelectionViewController.h"
 #import "CSFavoriteStoresCell.h"
 #import "CSProductSummariesCell.h"
+#import "CSCategoriesCell.h"
 #import "CSProductDetailViewController.h"
 #import "CSPriceContext.h"
 #import "CSProductGridViewController.h"
@@ -27,7 +28,7 @@
 @property (strong, nonatomic) NSObject<CSGroup> *group;
 
 - (void)loadRetailers;
-- (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group;
+- (void)loadCellsFromGroup:(NSObject<CSGroup> *)group;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
 
 - (void)loadEverything;
@@ -80,7 +81,7 @@
     }];
 }
 
-- (void)loadTopProductSummariesFromGroup:(NSObject<CSGroup> *)group
+- (void)loadCellsFromGroup:(NSObject<CSGroup> *)group
 {
     self.group = group;
     [group getProductSummaries:^(id<CSProductSummaryListPage> firstPage,
@@ -96,6 +97,15 @@
         self.topProductSummaries = firstPage.productSummaryList;
         self.topProductsCell.productSummaries = firstPage.productSummaryList;
     }];
+    
+    [group getCategories:^(id<CSCategoryListPage> firstPage, NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        self.categoriesCell.categories = firstPage.categoryList;
+    }];
 }
 
 - (void)loadRetailers
@@ -109,7 +119,7 @@
         
         self.likeList = likeList;
         
-        [self loadTopProductSummariesFromGroup:group];
+        [self loadCellsFromGroup:group];
         
         __block NSInteger urlsToGet = likeList.count;
         if (urlsToGet == 0) {
