@@ -18,5 +18,5 @@ end
 
 target :test, :exclusive => true do
     link_with 'SimplyShopTests'
-    pod 'OCMock'
+    pod 'OCMock', :head
 end

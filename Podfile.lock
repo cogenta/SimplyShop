@@ -15,7 +15,7 @@ PODS:
   - ISO8601DateFormatter (0.6)
   - MBCategory (0.0.1)
   - NSArray+Functional (1.0.0)
-  - OCMock (2.1.1)
+  - OCMock (HEAD based on 2.1.1)
   - PBWebViewController (0.0.1)
   - SBJson (3.2)
   - SDWebImage (3.2):
@@ -27,7 +27,7 @@ DEPENDENCIES:
   - ARChromeActivity (from `git://github.com/wharris/ARChromeActivity.git`, branch `set-activity-title`)
   - CSApi (from `../CSApi/`)
   - MBCategory
-  - OCMock
+  - OCMock (HEAD)
   - PBWebViewController (from `git://github.com/wharris/PBWebViewController.git`, branch `dismiss-popover`)
   - SDWebImage
   - TUSafariActivity
@@ -43,7 +43,7 @@ EXTERNAL SOURCES:
     :git: git://github.com/wharris/PBWebViewController.git
 
 SPEC CHECKSUMS:
-  AFNetworking: d1ba5908b233189e424e101721acef7905b58efb
+  AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
   ARChromeActivity: bc451ea1d8f1ab142ea2b3aed1e4dc0afcb53cc5
   Base64: eaac9f2088ba659c5db1db960576eb0f2969ebaf
   CSApi: 06c7bbb0725b71641b23181891e7dbb0a37fdcdc
