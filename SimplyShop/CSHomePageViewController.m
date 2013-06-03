@@ -19,7 +19,8 @@
 @interface CSHomePageViewController () <
     UIAlertViewDelegate,
     CSFavoriteStoresCellDelegate,
-    CSProductSummariesCellDelegate
+    CSProductSummariesCellDelegate,
+    CSCategoriesCellDelegate
 >
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
@@ -231,6 +232,18 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [vc setRetailer:retailer likes:self.likeList];
 }
 
+- (void)prepareForShowCategoryProductsGridSegue:(UIStoryboardSegue *)segue
+                                         sender:(id)sender
+{
+    NSAssert(self.likeList, nil);
+    
+    NSDictionary *address = sender;
+    id<CSCategory> category = address[@"category"];
+    
+    CSProductGridViewController *vc = (id) segue.destinationViewController;
+    [vc setCategory:category likes:self.likeList];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showRetailerSelection"] ||
@@ -251,6 +264,11 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     if ([segue.identifier isEqualToString:@"showRetailerProductsGrid"]) {
         [self prepareForShowRetailerProductsGridSegue:segue sender:sender];
+        return;
+    }
+    
+    if ([segue.identifier isEqualToString:@"showCategoryProductsGrid"]) {
+        [self prepareForShowCategoryProductsGridSegue:segue sender:sender];
         return;
     }
 }
@@ -410,7 +428,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 }
 
 - (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
-                  didSelectRetailer:(id<CSRetailer>)retailer
+         didSelectRetailer:(id<CSRetailer>)retailer
                      index:(NSUInteger)index
 {
     NSDictionary *address = @{@"cell": cell,
@@ -418,6 +436,18 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                               @"retailer": retailer};
     [self performSegueWithIdentifier:@"showRetailerProductsGrid"
                               sender:address];
+}
+
+- (void)categoriesCell:(CSCategoriesCell *)cell didSelectItemAtIndex:(NSUInteger)index
+{
+    [cell.categories getCategoryAtIndex:index callback:^(id<CSCategory> cat,
+                                                         NSError *error) {
+        NSDictionary *address = @{@"cell": cell,
+                                  @"index": @(index),
+                                  @"category": cat};
+        [self performSegueWithIdentifier:@"showCategoryProductsGrid"
+                                  sender:address];
+    }];
 }
 
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue

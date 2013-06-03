@@ -9,12 +9,24 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSCategoryList;
+@protocol CSCategoriesCellDelegate;
 
 @interface CSCategoriesCell : UITableViewCell
 <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet id<CSCategoriesCellDelegate> delegate;
 
 @property (nonatomic, retain) NSObject<CSCategoryList> *categories;
 
 @end
+
+@protocol CSCategoriesCellDelegate <NSObject>
+
+@optional
+
+- (void)categoriesCell:(CSCategoriesCell *)cell
+  didSelectItemAtIndex:(NSUInteger)index;
+
+@end
+

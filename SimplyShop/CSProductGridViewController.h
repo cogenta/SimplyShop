@@ -13,6 +13,7 @@
 @protocol CSRetailer;
 @protocol CSLikeList;
 @protocol CSGroup;
+@protocol CSCategory;
 
 @class CSPriceContext;
 
@@ -23,6 +24,7 @@
 
 - (void)setRetailer:(id<CSRetailer>)retailer likes:(id<CSLikeList>)likes;
 - (void)setGroup:(id<CSGroup>)group likes:(id<CSLikeList>)likes;
+- (void)setCategory:(id<CSCategory>)category likes:(id<CSLikeList>)likes;
 - (void)setProductSummaries:(id<CSProductSummaryList>)products;
 - (void)setProducts:(id<CSProductList>)products;
 - (void)setErrorState;

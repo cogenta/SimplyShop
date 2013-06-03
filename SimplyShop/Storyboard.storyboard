@@ -455,6 +455,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="collectionView" destination="hJk-Db-guB" id="HUa-mB-kkg"/>
+                                            <outlet property="delegate" destination="xEY-py-EMq" id="t5K-BF-nFp"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="212" id="EYf-RC-NBp" customClass="CSFavoriteStoresCell">
@@ -551,6 +552,7 @@
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="ZYU-Pi-qDu"/>
                         <segue destination="Tla-Ne-hRZ" kind="push" identifier="showRetailerProductsGrid" id="3NJ-DI-Ofs"/>
+                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showCategoryProductsGrid" id="dtc-w4-Gxe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -649,6 +651,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCategoriesCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="delegate"/>
             </relationships>
         </class>
         <class className="CSCategoryCell" superclassName="UICollectionViewCell">
@@ -832,6 +835,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ZYU-Pi-qDu"/>
-        <segue reference="GK6-0V-Dlg"/>
+        <segue reference="dtc-w4-Gxe"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -108,5 +108,15 @@ needsReloadWithAddress:(NSObject *)address;
      }];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SEL sel = @selector(categoriesCell:didSelectItemAtIndex:);
+    if ( ! [self.delegate respondsToSelector:sel]) {
+        return;
+    }
+    
+    [self.delegate categoriesCell:self didSelectItemAtIndex:indexPath.row];
+}
 
 @end

@@ -263,6 +263,22 @@
     }];
 }
 
+
+- (void)setCategory:(id<CSCategory>)category likes:(id<CSLikeList>)likes
+{
+    self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes];
+    self.title = category.name;
+    [self setLoadingState];
+    [category getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        [self setProducts:firstPage.productList];
+    }];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
