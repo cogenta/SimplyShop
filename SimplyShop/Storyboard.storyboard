@@ -329,79 +329,11 @@
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="381"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Top Products" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Wz-X8-VJw">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="146" id="fPj-8V-BUF"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppl-Fk-biT" userLabel="See All Top Products" customClass="CSAppearanceButton">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="XmY-FR-khC"/>
-                                                        <constraint firstAttribute="width" priority="1" constant="73" type="user" id="uXb-a5-OIX"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
-                                                    <state key="normal" title="See All >">
-                                                        <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="didTapSeeAllButton:" destination="hv6-34-2sh" eventType="touchUpInside" id="82k-ay-WFp"/>
-                                                    </connections>
-                                                </button>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZK2-r3-fXt">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="300" id="f2w-x0-BLi"/>
-                                                    </constraints>
-                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lOQ-WL-z6j">
-                                                        <size key="itemSize" width="300" height="300"/>
-                                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                        <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                                    </collectionViewFlowLayout>
-                                                    <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CSProductSummaryCell" id="HEh-3G-tUq" customClass="CSProductSummaryCell">
-                                                            <rect key="frame" x="20" y="0.0" width="300" height="300"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                                <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            </view>
-                                                            <connections>
-                                                                <outlet property="delegate" destination="hv6-34-2sh" id="Bgs-Ux-o7O"/>
-                                                            </connections>
-                                                        </collectionViewCell>
-                                                    </cells>
-                                                    <connections>
-                                                        <outlet property="dataSource" destination="hv6-34-2sh" id="aie-0f-nel"/>
-                                                        <outlet property="delegate" destination="hv6-34-2sh" id="Hmx-PP-ZDT"/>
-                                                    </connections>
-                                                </collectionView>
-                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="ZK2-r3-fXt" firstAttribute="trailing" secondItem="hv6-34-2sh" secondAttribute="trailing" type="default" id="4yl-Jg-G4R"/>
-                                            <constraint firstItem="ZK2-r3-fXt" firstAttribute="leading" secondItem="hv6-34-2sh" secondAttribute="leading" type="default" id="PL7-lF-PPp"/>
-                                            <constraint firstItem="6Wz-X8-VJw" firstAttribute="top" secondItem="hv6-34-2sh" secondAttribute="top" constant="34" id="iif-ON-pET"/>
-                                            <constraint firstItem="ZK2-r3-fXt" firstAttribute="top" secondItem="hv6-34-2sh" secondAttribute="top" constant="81" id="kTh-kP-40E"/>
-                                            <constraint firstAttribute="trailing" secondItem="Ppl-Fk-biT" secondAttribute="trailing" constant="20" type="default" id="off-C5-mXc"/>
-                                            <constraint firstItem="6Wz-X8-VJw" firstAttribute="leading" secondItem="hv6-34-2sh" secondAttribute="leading" constant="20" type="default" id="tSS-ci-wEB"/>
-                                            <constraint firstItem="Ppl-Fk-biT" firstAttribute="baseline" secondItem="6Wz-X8-VJw" secondAttribute="baseline" type="default" id="yFk-wG-rCn"/>
-                                        </constraints>
                                         <connections>
-                                            <outlet property="collectionView" destination="ZK2-r3-fXt" id="xtz-Fp-mg0"/>
                                             <outlet property="delegate" destination="xEY-py-EMq" id="L6t-Z2-LTq"/>
-                                            <outlet property="seeAllButton" destination="Ppl-Fk-biT" id="i9c-cZ-f6P"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSCategoriesCell" rowHeight="202" id="eMv-Rg-kAZ" customClass="CSCategoriesCell">

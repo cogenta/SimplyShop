@@ -45,6 +45,15 @@
 
 - (void)initialize
 {
+    [self addSubview:[[[NSBundle mainBundle]
+                       loadNibNamed:@"CSProductSummariesCell"
+                       owner:self
+                       options:nil]
+                      objectAtIndex:0]];
+    
+    [self.collectionView registerClass:[CSProductSummaryCell class]
+            forCellWithReuseIdentifier:@"CSProductSummaryCell"];
+    
     [self addObserver:self
            forKeyPath:@"productSummaries"
               options:NSKeyValueObservingOptionNew
