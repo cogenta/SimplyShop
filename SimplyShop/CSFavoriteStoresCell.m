@@ -53,6 +53,14 @@
 
 - (void)initialize
 {
+    [self addSubview:[[[NSBundle mainBundle]
+                       loadNibNamed:@"CSFavoriteStoresCell"
+                       owner:self
+                       options:nil]
+                      objectAtIndex:0]];
+    
+    [self.collectionView registerClass:[CSRetailerSelectionCell class] forCellWithReuseIdentifier:@"CSRetailerSelectionCell"];
+    
     self.retailers = [NSMutableDictionary dictionary];
     [self addObserver:self
            forKeyPath:@"selectedRetailerURLs"

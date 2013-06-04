@@ -465,74 +465,10 @@
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="211"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Favorite Stores" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLr-Vs-uCp">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="v8g-Wx-Gbp"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVq-q7-aoI" userLabel="Choose Stores Button" customClass="CSAppearanceButton">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" priority="1" constant="73" type="user" id="gZi-6P-Zbe"/>
-                                                        <constraint firstAttribute="height" constant="18" id="m1K-n3-ZBX"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
-                                                    <state key="normal" title="Choose Stores">
-                                                        <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="didTapChooseStores:" destination="EYf-RC-NBp" eventType="touchUpInside" id="g5o-oz-shT"/>
-                                                    </connections>
-                                                </button>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ClB-SG-9Zd">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="130" id="90o-or-aL1"/>
-                                                    </constraints>
-                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OSY-Px-Fy0">
-                                                        <size key="itemSize" width="130" height="130"/>
-                                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                        <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                                    </collectionViewFlowLayout>
-                                                    <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CSRetailerSelectionCell" id="KGq-LA-3uE" customClass="CSRetailerSelectionCell">
-                                                            <rect key="frame" x="20" y="0.0" width="130" height="130"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            </view>
-                                                        </collectionViewCell>
-                                                    </cells>
-                                                    <connections>
-                                                        <outlet property="dataSource" destination="EYf-RC-NBp" id="y4m-Cf-biM"/>
-                                                        <outlet property="delegate" destination="EYf-RC-NBp" id="9rs-I6-CGr"/>
-                                                    </connections>
-                                                </collectionView>
-                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="MLr-Vs-uCp" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" constant="20" type="default" id="AH7-Qh-scN"/>
-                                            <constraint firstItem="ClB-SG-9Zd" firstAttribute="leading" secondItem="EYf-RC-NBp" secondAttribute="leading" type="default" id="C1W-Yb-aiV"/>
-                                            <constraint firstItem="MLr-Vs-uCp" firstAttribute="top" secondItem="EYf-RC-NBp" secondAttribute="top" constant="41" id="UB3-ir-vvI"/>
-                                            <constraint firstAttribute="trailing" secondItem="YVq-q7-aoI" secondAttribute="trailing" constant="10" id="cfY-3b-86n"/>
-                                            <constraint firstItem="ClB-SG-9Zd" firstAttribute="trailing" secondItem="EYf-RC-NBp" secondAttribute="trailing" type="default" id="fI3-3I-45Y"/>
-                                            <constraint firstItem="ClB-SG-9Zd" firstAttribute="top" secondItem="EYf-RC-NBp" secondAttribute="top" constant="81" id="pFZ-4m-7dy"/>
-                                            <constraint firstItem="MLr-Vs-uCp" firstAttribute="baseline" secondItem="YVq-q7-aoI" secondAttribute="baseline" type="default" id="qX1-VL-LA9"/>
-                                        </constraints>
                                         <connections>
-                                            <outlet property="collectionView" destination="ClB-SG-9Zd" id="hfa-MO-dVf"/>
                                             <outlet property="delegate" destination="xEY-py-EMq" id="pzT-U3-NKm"/>
                                         </connections>
                                     </tableViewCell>
@@ -679,7 +615,6 @@
                 <relationship kind="action" name="doneShowProductsGrid:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="outlet" name="categoriesCell" candidateClass="CSCategoriesCell"/>
                 <relationship kind="outlet" name="favoriteStoresCell" candidateClass="CSFavoriteStoresCell"/>
-                <relationship kind="outlet" name="seeAllButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="topProductsCell" candidateClass="CSProductSummariesCell"/>
             </relationships>
         </class>
