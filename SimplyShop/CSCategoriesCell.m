@@ -46,6 +46,15 @@ needsReloadWithAddress:(NSObject *)address;
 
 - (void)initialize
 {
+    [self addSubview:[[[NSBundle mainBundle]
+                       loadNibNamed:@"CSCategoriesCell"
+                       owner:self
+                       options:nil]
+                      objectAtIndex:0]];
+    
+    [self.collectionView registerClass:[CSCategoryCell class]
+            forCellWithReuseIdentifier:@"CSCategoryCell"];
+    
     [self addObserver:self
            forKeyPath:@"categories"
               options:NSKeyValueObservingOptionNew
