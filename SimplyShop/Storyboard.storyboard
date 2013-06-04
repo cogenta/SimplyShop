@@ -353,7 +353,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showTopProductsGrid" id="GK6-0V-Dlg"/>
+                                                        <action selector="didTapSeeAllButton:" destination="hv6-34-2sh" eventType="touchUpInside" id="82k-ay-WFp"/>
                                                     </connections>
                                                 </button>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZK2-r3-fXt">
@@ -401,6 +401,7 @@
                                         <connections>
                                             <outlet property="collectionView" destination="ZK2-r3-fXt" id="xtz-Fp-mg0"/>
                                             <outlet property="delegate" destination="xEY-py-EMq" id="L6t-Z2-LTq"/>
+                                            <outlet property="seeAllButton" destination="Ppl-Fk-biT" id="i9c-cZ-f6P"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSCategoriesCell" rowHeight="202" id="eMv-Rg-kAZ" customClass="CSCategoriesCell">
@@ -488,7 +489,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="gUl-YE-Fou"/>
+                                                        <action selector="didTapChooseStores:" destination="EYf-RC-NBp" eventType="touchUpInside" id="g5o-oz-shT"/>
                                                     </connections>
                                                 </button>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ClB-SG-9Zd">
@@ -547,12 +548,13 @@
                     <connections>
                         <outlet property="categoriesCell" destination="eMv-Rg-kAZ" id="jVG-SG-GGD"/>
                         <outlet property="favoriteStoresCell" destination="EYf-RC-NBp" id="i9P-OY-g61"/>
-                        <outlet property="seeAllButton" destination="Ppl-Fk-biT" id="rzf-8O-ek1"/>
                         <outlet property="topProductsCell" destination="hv6-34-2sh" id="25P-Sf-vpu"/>
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="ZYU-Pi-qDu"/>
                         <segue destination="Tla-Ne-hRZ" kind="push" identifier="showRetailerProductsGrid" id="3NJ-DI-Ofs"/>
                         <segue destination="Tla-Ne-hRZ" kind="push" identifier="showCategoryProductsGrid" id="dtc-w4-Gxe"/>
+                        <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="wFQ-9t-ZRk"/>
+                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showTopProductsGrid" id="eVM-5M-7tg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -663,6 +665,7 @@
         <class className="CSFavoriteStoresCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSFavoriteStoresCell.h"/>
             <relationships>
+                <relationship kind="action" name="didTapChooseStores:"/>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
                 <relationship kind="outlet" name="delegate"/>
             </relationships>
@@ -737,8 +740,10 @@
         <class className="CSProductSummariesCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummariesCell.h"/>
             <relationships>
+                <relationship kind="action" name="didTapSeeAllButton:"/>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
                 <relationship kind="outlet" name="delegate"/>
+                <relationship kind="outlet" name="seeAllButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="CSProductSummaryCell" superclassName="UICollectionViewCell">
@@ -834,7 +839,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="eVM-5M-7tg"/>
         <segue reference="ZYU-Pi-qDu"/>
-        <segue reference="dtc-w4-Gxe"/>
     </inferredMetricsTieBreakers>
 </document>

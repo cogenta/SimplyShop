@@ -22,6 +22,8 @@
          didSelectRetailer:(id<CSRetailer>)retailer
                      index:(NSUInteger)index;
 
+- (void)favoriteStoresCellDidTapChooseButton:(CSFavoriteStoresCell *)cell;
+
 @end
 
 @interface CSFavoriteStoresCell : UITableViewCell
@@ -32,5 +34,7 @@
 
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) NSArray *selectedRetailerURLs;
+
+- (IBAction)didTapChooseStores:(id)sender;
 
 @end

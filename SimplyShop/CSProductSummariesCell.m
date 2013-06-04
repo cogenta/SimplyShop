@@ -62,6 +62,7 @@
                        context:(void *)context
 {
     if ([keyPath isEqualToString:@"productSummaries"]) {
+        self.seeAllButton.enabled = [object productSummaries] != nil;
         [self.collectionView reloadData];
         return;
     }
@@ -118,6 +119,16 @@
          [cell setWrapper:[CSProductWrapper wrapperForSummary:result]
                   address:address];
      }];
+}
+
+- (void)didTapSeeAllButton:(id)sender
+{
+    SEL sel = @selector(productSummariesCellDidTapSeeAllButton:);
+    if ( ! [self.delegate respondsToSelector:sel]) {
+        return;
+    }
+    
+    [self.delegate productSummariesCellDidTapSeeAllButton:self];
 }
 
 @end

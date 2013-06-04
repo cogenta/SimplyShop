@@ -89,11 +89,8 @@
                                  NSError *error) {
         if (error) {
             [self setErrorState];
-            self.seeAllButton.enabled = NO;
             return;
         }
-        
-        self.seeAllButton.enabled = YES;
         
         self.topProductSummaries = firstPage.productSummaryList;
         self.topProductsCell.productSummaries = firstPage.productSummaryList;
@@ -427,6 +424,11 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self performSegueWithIdentifier:@"showProduct" sender:address];
 }
 
+- (void)productSummariesCellDidTapSeeAllButton:(CSProductSummariesCell *)cell
+{
+    [self performSegueWithIdentifier:@"showTopProductsGrid" sender:cell];
+}
+
 - (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
          didSelectRetailer:(id<CSRetailer>)retailer
                      index:(NSUInteger)index
@@ -436,6 +438,11 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                               @"retailer": retailer};
     [self performSegueWithIdentifier:@"showRetailerProductsGrid"
                               sender:address];
+}
+
+- (void)favoriteStoresCellDidTapChooseButton:(CSFavoriteStoresCell *)cell
+{
+    [self performSegueWithIdentifier:@"changeRetailerSelection" sender:cell];
 }
 
 - (void)categoriesCell:(CSCategoriesCell *)cell didSelectItemAtIndex:(NSUInteger)index

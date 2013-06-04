@@ -142,4 +142,8 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
                                 index:indexPath.row];
 }
 
+- (IBAction)didTapChooseStores:(id)sender {
+    [self.delegate favoriteStoresCellDidTapChooseButton:self];
+}
+
 @end

@@ -17,7 +17,10 @@
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *productSummaries;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *seeAllButton;
 @property (weak, nonatomic) IBOutlet id<CSProductSummariesCellDelegate> delegate;
+
+- (IBAction)didTapSeeAllButton:(id)sender;
 
 @end
 
@@ -27,6 +30,7 @@
 
 - (void)productSummariesCell:(CSProductSummariesCell *)cell
         didSelectItemAtIndex:(NSUInteger)index;
+- (void)productSummariesCellDidTapSeeAllButton:(CSProductSummariesCell *)cell;
 
 @end
 
