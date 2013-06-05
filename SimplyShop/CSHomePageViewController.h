@@ -18,10 +18,6 @@
 
 @property (strong, nonatomic) CSAPI *api;
 
-@property (weak, nonatomic) IBOutlet CSProductSummariesCell *topProductsCell;
-@property (weak, nonatomic) IBOutlet CSFavoriteStoresCell *favoriteStoresCell;
-@property (weak, nonatomic) IBOutlet CSCategoriesCell *categoriesCell;
-
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue;

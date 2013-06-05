@@ -53,11 +53,13 @@
 
 - (void)initialize
 {
-    [self addSubview:[[[NSBundle mainBundle]
-                       loadNibNamed:@"CSFavoriteStoresCell"
-                       owner:self
-                       options:nil]
-                      objectAtIndex:0]];
+    UIView *subview = [[[NSBundle mainBundle]
+                        loadNibNamed:@"CSFavoriteStoresCell"
+                        owner:self
+                        options:nil]
+                       objectAtIndex:0];
+    self.frame = subview.frame;
+    [self addSubview:subview];
     
     [self.collectionView registerClass:[CSRetailerSelectionCell class]
             forCellWithReuseIdentifier:@"CSRetailerSelectionCell"];

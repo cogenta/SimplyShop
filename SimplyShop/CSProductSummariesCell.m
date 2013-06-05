@@ -19,6 +19,14 @@
 
 @implementation CSProductSummariesCell
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+    }
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -45,12 +53,14 @@
 
 - (void)initialize
 {
-    [self addSubview:[[[NSBundle mainBundle]
-                       loadNibNamed:@"CSProductSummariesCell"
-                       owner:self
-                       options:nil]
-                      objectAtIndex:0]];
-    
+    UIView *subview = [[[NSBundle mainBundle]
+                        loadNibNamed:@"CSProductSummariesCell"
+                        owner:self
+                        options:nil]
+                       objectAtIndex:0];
+    self.frame = subview.frame;
+    [self addSubview:subview];
+
     [self.collectionView registerClass:[CSProductSummaryCell class]
             forCellWithReuseIdentifier:@"CSProductSummaryCell"];
     

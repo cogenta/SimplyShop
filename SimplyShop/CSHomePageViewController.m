@@ -16,12 +16,53 @@
 #import "CSProductGridViewController.h"
 #import <CSApi/CSAPI.h>
 
+@protocol CSHomePageRow <NSObject>
+- (UITableViewCell *)cellForTableView:(UITableView *)tableView;
+- (CGFloat)height;
+@end
+
+@interface CSHomePageRow : NSObject <CSHomePageRow>
+
+@property (strong, nonatomic) UITableViewCell *cell;
+
+- (id)initWithCell:(UITableViewCell *)cell;
+
+@end
+
+@implementation CSHomePageRow
+
+- (id)initWithCell:(UITableViewCell *)cell
+{
+    self = [super init];
+    if (self) {
+        self.cell = cell;
+    }
+    return self;
+}
+
+- (UITableViewCell *)cellForTableView:(UITableView *)tableView
+{
+    return self.cell;
+}
+
+- (CGFloat)height
+{
+    return self.cell.bounds.size.height;
+}
+
+@end
+
 @interface CSHomePageViewController () <
     UIAlertViewDelegate,
     CSFavoriteStoresCellDelegate,
     CSProductSummariesCellDelegate,
     CSCategoriesCellDelegate
 >
+
+@property (strong, nonatomic) CSProductSummariesCell *topProductsCell;
+@property (strong, nonatomic) CSFavoriteStoresCell *favoriteStoresCell;
+@property (strong, nonatomic) CSCategoriesCell *categoriesCell;
+@property (strong, nonatomic) NSArray *rows;
 
 @property (strong, nonatomic) NSObject<CSUser> *user;
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
@@ -51,7 +92,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.topProductsCell = [[CSProductSummariesCell alloc]
+                            initWithStyle:UITableViewCellStyleDefault
+                            reuseIdentifier:nil];
+    self.topProductsCell.delegate = self;
+    
+    self.favoriteStoresCell = [[CSFavoriteStoresCell alloc]
+                               initWithStyle:UITableViewCellStyleDefault
+                               reuseIdentifier:nil];
+    self.favoriteStoresCell.delegate = self;
+    
+    self.categoriesCell = [[CSCategoriesCell alloc]
+                           initWithStyle:UITableViewCellStyleDefault
+                           reuseIdentifier:nil];
+    self.categoriesCell.delegate = self;
+    
     self.favoriteStoresCell.api = self.api;
+    
+    self.rows = @[[[CSHomePageRow alloc] initWithCell:self.topProductsCell],
+                  [[CSHomePageRow alloc] initWithCell:self.categoriesCell],
+                  [[CSHomePageRow alloc] initWithCell:self.favoriteStoresCell]];
     
     [self loadEverything];
 }
@@ -466,6 +527,35 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 - (IBAction)doneShowProductsGrid:(UIStoryboardSegue *)segue
 {
     // Do nothing
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+    return [self.rows count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [(id<CSHomePageRow>) self.rows[indexPath.row]
+            cellForTableView:tableView];
+}
+
+#pragma make - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id<CSHomePageRow> row = self.rows[indexPath.row];
+    return [row height];
 }
 
 @end

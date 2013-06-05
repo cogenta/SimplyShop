@@ -317,54 +317,10 @@
         <scene sceneID="Gix-Es-flg">
             <objects>
                 <tableViewController id="xEY-py-EMq" customClass="CSHomePageViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" id="w42-11-Xqh">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" id="w42-11-Xqh">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <sections>
-                            <tableViewSection id="WAN-Ok-Bfq">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSProductSummaryView_TopProducts" rowHeight="382" id="hv6-34-2sh" customClass="CSProductSummariesCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="768" height="382"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="381"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="xEY-py-EMq" id="L6t-Z2-LTq"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSCategoriesCell" rowHeight="202" id="eMv-Rg-kAZ" customClass="CSCategoriesCell">
-                                        <rect key="frame" x="0.0" y="382" width="768" height="202"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="201"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="xEY-py-EMq" id="t5K-BF-nFp"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CSFavoriteStoresCell" rowHeight="212" id="EYf-RC-NBp" customClass="CSFavoriteStoresCell">
-                                        <rect key="frame" x="0.0" y="584" width="768" height="212"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="211"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="xEY-py-EMq" id="pzT-U3-NKm"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="xEY-py-EMq" id="Ebf-X0-B0B"/>
                             <outlet property="delegate" destination="xEY-py-EMq" id="Xxh-As-scL"/>
@@ -372,9 +328,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Dashboard" id="NXv-dU-jYd"/>
                     <connections>
-                        <outlet property="categoriesCell" destination="eMv-Rg-kAZ" id="jVG-SG-GGD"/>
-                        <outlet property="favoriteStoresCell" destination="EYf-RC-NBp" id="i9P-OY-g61"/>
-                        <outlet property="topProductsCell" destination="hv6-34-2sh" id="25P-Sf-vpu"/>
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="ZYU-Pi-qDu"/>
                         <segue destination="Tla-Ne-hRZ" kind="push" identifier="showRetailerProductsGrid" id="3NJ-DI-Ofs"/>
