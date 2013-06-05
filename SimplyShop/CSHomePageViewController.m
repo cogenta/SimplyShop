@@ -510,6 +510,11 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [cell.categories getCategoryAtIndex:index callback:^(id<CSCategory> cat,
                                                          NSError *error) {
+        if (error) {
+            NSLog(@"Error getting category: %@", error);
+            return;
+        }
+        
         NSDictionary *address = @{@"cell": cell,
                                   @"index": @(index),
                                   @"category": cat};
