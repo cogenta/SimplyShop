@@ -6,15 +6,13 @@
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CSDashboardRowCell.h"
 
 @protocol CSCategoryList;
 @protocol CSCategoriesCellDelegate;
 
-@interface CSCategoriesCell : UITableViewCell
-<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface CSCategoriesCell : CSDashboardRowCell
 
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet id<CSCategoriesCellDelegate> delegate;
 
 @property (nonatomic, retain) NSObject<CSCategoryList> *categories;

@@ -19,14 +19,6 @@
 
 @implementation CSProductSummariesCell
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-    }
-    return self;
-}
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -111,18 +103,6 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
-    didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    SEL sel = @selector(productSummariesCell:didSelectItemAtIndex:);
-    if ( ! [self.delegate respondsToSelector:sel]) {
-        return;
-    }
-    
-    [self.delegate productSummariesCell:self
-                   didSelectItemAtIndex:indexPath.row];
-}
-
 - (void)productSummaryCell:(CSProductSummaryCell *)cell needsReloadWithAddress:(NSObject *)address
 {
     [cell setLoadingAddress:address];
@@ -138,6 +118,18 @@
          [cell setWrapper:[CSProductWrapper wrapperForSummary:result]
                   address:address];
      }];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SEL sel = @selector(productSummariesCell:didSelectItemAtIndex:);
+    if ( ! [self.delegate respondsToSelector:sel]) {
+        return;
+    }
+    
+    [self.delegate productSummariesCell:self
+                   didSelectItemAtIndex:indexPath.row];
 }
 
 - (void)didTapSeeAllButton:(id)sender

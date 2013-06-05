@@ -7,18 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CSAddressCell.h"
 
 @protocol CSCategory;
 @protocol CSTheme;
 
-@interface CSCategoryCell : UICollectionViewCell
+@interface CSCategoryCell : UICollectionViewCell <CSAddressCell>
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
 @property (nonatomic, strong) id<CSTheme> theme UI_APPEARANCE_SELECTOR;
-
-
-- (void)setLoadingAddress:(NSObject *)address;
-- (void)setCategory:(NSObject<CSCategory> *)category
-            address:(NSObject *)address;
 
 @end

@@ -48,6 +48,7 @@
 		BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */; };
 		BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */; };
 		BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */; };
+		BE3DCFAF175F94FC002F568C /* CSDashboardRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3DCFAE175F94FC002F568C /* CSDashboardRowCell.m */; };
 		BE558EB4174E586D009FA3DA /* CSCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE558EB3174E586D009FA3DA /* CSCategoryCell.m */; };
 		BE558EB6174E5ABC009FA3DA /* CSCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE558EB5174E5ABC009FA3DA /* CSCategoryCell.xib */; };
 		BE558EB9174E5D5C009FA3DA /* CSCategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE558EB8174E5D5C009FA3DA /* CSCategoriesCell.m */; };
@@ -177,6 +178,9 @@
 		BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAppearanceButton.m; sourceTree = "<group>"; };
 		BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFavoriteStoresCell.h; sourceTree = "<group>"; };
 		BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFavoriteStoresCell.m; sourceTree = "<group>"; };
+		BE3DCFAD175F94FC002F568C /* CSDashboardRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDashboardRowCell.h; sourceTree = "<group>"; };
+		BE3DCFAE175F94FC002F568C /* CSDashboardRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDashboardRowCell.m; sourceTree = "<group>"; };
+		BE3DCFB0175F96EA002F568C /* CSAddressCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSAddressCell.h; sourceTree = "<group>"; };
 		BE558EB2174E586C009FA3DA /* CSCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCategoryCell.h; sourceTree = "<group>"; };
 		BE558EB3174E586D009FA3DA /* CSCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCategoryCell.m; sourceTree = "<group>"; };
 		BE558EB5174E5ABC009FA3DA /* CSCategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSCategoryCell.xib; sourceTree = "<group>"; };
@@ -510,6 +514,7 @@
 		BEDC02DC171454CB0023059E /* Collection Cells */ = {
 			isa = PBXGroup;
 			children = (
+				BE3DCFB0175F96EA002F568C /* CSAddressCell.h */,
 				BE3D4E1A1704632900644AD6 /* CSRetailerSelectionCell.h */,
 				BE3D4E1B1704632900644AD6 /* CSRetailerSelectionCell.m */,
 				BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */,
@@ -538,6 +543,8 @@
 				BE558EB7174E5D5C009FA3DA /* CSCategoriesCell.h */,
 				BE558EB8174E5D5C009FA3DA /* CSCategoriesCell.m */,
 				BE56D09F175E46D900B19F3F /* CSCategoriesCell.xib */,
+				BE3DCFAD175F94FC002F568C /* CSDashboardRowCell.h */,
+				BE3DCFAE175F94FC002F568C /* CSDashboardRowCell.m */,
 			);
 			name = "Dashboard Cells";
 			sourceTree = "<group>";
@@ -777,6 +784,7 @@
 				BEC1E2EA17438BC600D12EF2 /* CSEmptyProductGridView.m in Sources */,
 				BE558EB4174E586D009FA3DA /* CSCategoryCell.m in Sources */,
 				BE558EB9174E5D5C009FA3DA /* CSCategoriesCell.m in Sources */,
+				BE3DCFAF175F94FC002F568C /* CSDashboardRowCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

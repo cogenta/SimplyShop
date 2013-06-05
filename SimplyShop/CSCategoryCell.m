@@ -83,8 +83,7 @@
     [self updateContent];
 }
 
-- (void)setCategory:(NSObject<CSCategory> *)category
-            address:(NSObject *)address
+- (void)setModel:(id)model address:(NSObject *)address
 {
     if (address != self.address) {
         // We ignore the category data because the cell has been reused for a
@@ -92,8 +91,13 @@
         return;
     }
     
-    self.category = category;
+    self.category = model;
     [self updateContent];
+}
+
+- (void)setError:(NSError *)error address:(NSObject *)address
+{
+    // TODO: show error
 }
 
 - (void)updateContent
