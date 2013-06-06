@@ -10,8 +10,8 @@
 
 @protocol CSAddressCell <NSObject>
 
-- (void)setLoadingAddress:(NSObject *)address;
-- (void)setModel:(id)model address:(NSObject *)address;
-- (void)setError:(NSError *)error address:(NSObject *)address;
+- (void)setLoadingAddress:(id)address;
+- (void)setModel:(id)model address:(id)address;
+- (void)setError:(NSError *)error address:(id)address;
 
 @end

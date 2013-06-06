@@ -15,10 +15,8 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 - (void)initialize;
-- (void)collectionView:(UICollectionView *)collectionView
-         reloadRowCell:(id<CSAddressCell>)cell
-           withAddress:(NSObject *)address
-                  done:(void (^)(id result, NSError *error))done;
+- (void)fetchModelWithAddress:(id)address
+                         done:(void (^)(id model, NSError *error))done;
 - (void)collectionView:(UICollectionView *)collectionView
                rowCell:(id<CSAddressCell>)cell
 needsReloadWithAddress:(NSObject *)address;
@@ -26,6 +24,7 @@ needsReloadWithAddress:(NSObject *)address;
 collectionView:(UICollectionView *)collectionView
 rowCellForItemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)registerClasses;
+- (id)addressForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)reloadData;
 

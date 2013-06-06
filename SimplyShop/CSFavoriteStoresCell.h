@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CSDashboardRowCell.h"
 
 @class CSAPI;
 @class CSFavoriteStoresCell;
@@ -26,10 +26,8 @@
 
 @end
 
-@interface CSFavoriteStoresCell : UITableViewCell
-<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface CSFavoriteStoresCell : CSDashboardRowCell
 
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet id<CSFavoriteStoresCellDelegate> delegate;
 
 @property (strong, nonatomic) CSAPI *api;

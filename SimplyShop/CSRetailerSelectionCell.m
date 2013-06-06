@@ -147,4 +147,14 @@
     }
 }
 
+- (void)setModel:(id)model address:(id)address
+{
+    [self setRetailer:model address:address];
+}
+
+- (void)setError:(NSError *)error address:(id)address
+{
+    // Do nothing
+}
+
 @end

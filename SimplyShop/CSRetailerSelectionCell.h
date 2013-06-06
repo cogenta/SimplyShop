@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CSAddressCell.h"
 
 @protocol CSTheme;
 @protocol CSRetailer;
 
-@interface CSRetailerSelectionCell : UICollectionViewCell
+@interface CSRetailerSelectionCell : UICollectionViewCell <CSAddressCell>
 
 @property (weak, nonatomic) IBOutlet UILabel *retailerNameLabel;
 @property (nonatomic, strong) id<CSTheme> theme UI_APPEARANCE_SELECTOR;
@@ -19,7 +20,6 @@
 
 @property (readonly) BOOL isReady;
 
-- (void)setLoadingAddress:(NSObject *)address;
 - (void)setRetailer:(NSObject<CSRetailer> *)retailer
             address:(NSObject *)address;
 

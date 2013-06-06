@@ -13,63 +13,20 @@
 @interface CSFavoriteStoresCell ()
 
 @property (strong, nonatomic) NSMutableDictionary *retailers;
-- (void)initialize;
 
 @end
 
 @implementation CSFavoriteStoresCell
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
-- (void)awakeFromNib
-{
-    [self initialize];
-}
-
-- (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
 - (void)initialize
 {
-    UIView *subview = [[[NSBundle mainBundle]
-                        loadNibNamed:@"CSFavoriteStoresCell"
-                        owner:self
-                        options:nil]
-                       objectAtIndex:0];
-    self.frame = subview.frame;
-    [self addSubview:subview];
-    
-    [self.collectionView registerClass:[CSRetailerSelectionCell class]
-            forCellWithReuseIdentifier:@"CSRetailerSelectionCell"];
+    [super initialize];
     
     self.retailers = [NSMutableDictionary dictionary];
     [self addObserver:self
            forKeyPath:@"selectedRetailerURLs"
               options:NSKeyValueObservingOptionNew
               context:NULL];
-    self.collectionView.alwaysBounceHorizontal = YES;
 }
 
 - (void)dealloc
@@ -83,9 +40,24 @@
                        context:(void *)context
 {
     if ([keyPath isEqualToString:@"selectedRetailerURLs"]) {
-        [self.collectionView reloadData];
+        [self reloadData];
         return;
     }
+}
+
+- (NSString *)cellNibName
+{
+    return @"CSFavoriteStoresCell";
+}
+
+- (Class)itemCellClass
+{
+    return [CSRetailerSelectionCell class];
+}
+
+- (NSInteger)modelCount
+{
+    return [self.selectedRetailerURLs count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -93,40 +65,36 @@
     return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (id)addressForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.selectedRetailerURLs count];
+    NSURL *retailerURL = [self.selectedRetailerURLs objectAtIndex:indexPath.row];
+    return retailerURL;
 }
 
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)fetchModelWithAddress:(id)address
+                         done:(void (^)(id, NSError *))done
 {
-    CSRetailerSelectionCell *cell =
-    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSRetailerSelectionCell"
-                                              forIndexPath:indexPath];
-    
-    NSURL *retailerURL = [self.selectedRetailerURLs objectAtIndex:indexPath.row];
-    
+    NSURL *retailerURL = address;
     id<CSRetailer> retailer = [self.retailers objectForKey:retailerURL];
-    [cell setLoadingAddress:retailerURL];
     if (retailer) {
-        [cell setRetailer:retailer address:retailerURL];
-    } else {
-        [self.api getRetailer:retailerURL
-                     callback:^(id<CSRetailer> retailer, NSError *error)
-         {
-             if (error) {
-                 [self.delegate favoriteStoresCell:self
-                           failedToLoadRetailerURL:retailerURL
-                                             error:error];
-                 return;
-             }
-             
-             [self.retailers setObject:retailer forKey:retailerURL];
-             [cell setRetailer:retailer address:retailerURL];
-         }];
+        done(retailer, nil);
+        return;
     }
-    return cell;
+    
+    [self.api getRetailer:retailerURL
+                 callback:^(id<CSRetailer> retailer, NSError *error)
+     {
+         if (error) {
+             done(nil, error);
+             [self.delegate favoriteStoresCell:self
+                       failedToLoadRetailerURL:retailerURL
+                                         error:error];
+             return;
+         }
+         
+         [self.retailers setObject:retailer forKey:retailerURL];
+         done(retailer, nil);
+     }];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView

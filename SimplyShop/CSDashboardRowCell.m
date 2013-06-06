@@ -64,6 +64,11 @@
     return [self modelCount];
 }
 
+- (id)addressForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -73,7 +78,7 @@
     
     [self  collectionView:collectionView
                   rowCell:cell
-   needsReloadWithAddress:indexPath];
+   needsReloadWithAddress:[self addressForItemAtIndexPath:indexPath]];
     
     return cell;
 }
@@ -90,8 +95,7 @@
 needsReloadWithAddress:(NSObject *)address
 {
     [cell setLoadingAddress:address];
-    [self collectionView:collectionView
-           reloadRowCell:cell withAddress:address done:^(id result, NSError *error) {
+    [self fetchModelWithAddress:address done:^(id result, NSError *error) {
         if (error) {
             [cell setError:error address:address];
             return;
@@ -101,11 +105,8 @@ needsReloadWithAddress:(NSObject *)address
     }];
 }
 
-
-- (void)collectionView:(UICollectionView *)collectionView
-         reloadRowCell:(UICollectionViewCell<CSAddressCell> *)cell
-          withAddress:(NSObject *)address
-                 done:(void (^)(id model, NSError *error))done
+- (void)fetchModelWithAddress:(id)address
+                         done:(void (^)(id model, NSError *error))done
 {
     [self fetchModelAtIndex:((NSIndexPath *)address).row done:done];
 }
