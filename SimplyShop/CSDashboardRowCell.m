@@ -37,6 +37,20 @@
 
 - (void)initialize
 {
+    UIView *subview = [[[NSBundle mainBundle]
+                        loadNibNamed:[self cellNibName]
+                        owner:self
+                        options:nil]
+                       objectAtIndex:0];
+    self.frame = subview.frame;
+    [self addSubview:subview];
+    [self registerClasses];
+}
+
+- (void)registerClasses
+{
+    [self.collectionView registerClass:[self itemCellClass]
+            forCellWithReuseIdentifier:@"CSDashboardRowItemCell"];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -54,24 +68,30 @@
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell<CSAddressCell> *cell =
-    [self collectionView:collectionView rowCellForItemAtIndexPath:indexPath];
+    [self collectionView:collectionView
+        rowCellForItemAtIndexPath:indexPath];
     
-    [self rowCell:cell needsReloadWithAddress:indexPath];
+    [self  collectionView:collectionView
+                  rowCell:cell
+   needsReloadWithAddress:indexPath];
     
     return cell;
 }
 
-- (UICollectionViewCell<CSAddressCell> *)
-collectionView:(UICollectionView *)collectionView
-rowCellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell<CSAddressCell> *)collectionView:(UICollectionView *)collectionView
+               rowCellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    return [collectionView dequeueReusableCellWithReuseIdentifier:@"CSDashboardRowItemCell"
+                                                     forIndexPath:indexPath];
 }
 
-- (void)rowCell:(id<CSAddressCell>)cell needsReloadWithAddress:(NSObject *)address
+- (void)collectionView:(UICollectionView *)collectionView
+               rowCell:(UICollectionViewCell<CSAddressCell> *)cell
+needsReloadWithAddress:(NSObject *)address
 {
     [cell setLoadingAddress:address];
-    [self reloadRowCell:cell withAddress:address done:^(id result, NSError *error) {
+    [self collectionView:collectionView
+           reloadRowCell:cell withAddress:address done:^(id result, NSError *error) {
         if (error) {
             [cell setError:error address:address];
             return;
@@ -81,14 +101,39 @@ rowCellForItemAtIndexPath:(NSIndexPath *)indexPath
     }];
 }
 
+
+- (void)collectionView:(UICollectionView *)collectionView
+         reloadRowCell:(UICollectionViewCell<CSAddressCell> *)cell
+          withAddress:(NSObject *)address
+                 done:(void (^)(id model, NSError *error))done
+{
+    [self fetchModelAtIndex:((NSIndexPath *)address).row done:done];
+}
+
+- (void)reloadData
+{
+    [self.collectionView reloadData];
+}
+
+- (NSString *)cellNibName
+{
+    return @"CSCategoriesCell";
+}
+
+- (Class)itemCellClass
+{
+    return [UITableViewCell class];
+}
+
 - (NSInteger)modelCount
 {
     return 0;
 }
 
-- (void)reloadRowCell:(id<CSAddressCell>)cell withAddress:(NSObject *)address done:(void (^)(id model, NSError *error))done
+- (void)fetchModelAtIndex:(NSUInteger)index
+                 done:(void (^)(id model, NSError *error))done
 {
-    done(nil, [NSError errorWithDomain:@"not implemented" code:0 userInfo:nil]);
+    done(nil, nil);
 }
 
 @end

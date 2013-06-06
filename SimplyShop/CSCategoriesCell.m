@@ -15,18 +15,7 @@
 - (void)initialize
 {
     [super initialize];
-    
-    UIView *subview = [[[NSBundle mainBundle]
-                        loadNibNamed:@"CSCategoriesCell"
-                        owner:self
-                        options:nil]
-                       objectAtIndex:0];
-    self.frame = subview.frame;
-    [self addSubview:subview];
-    
-    [self.collectionView registerClass:[CSCategoryCell class]
-            forCellWithReuseIdentifier:@"CSCategoryCell"];
-    
+
     [self addObserver:self
            forKeyPath:@"categories"
               options:NSKeyValueObservingOptionNew
@@ -44,23 +33,26 @@
                        context:(void *)context
 {
     if ([keyPath isEqualToString:@"categories"]) {
-        [self.collectionView reloadData];
+        [self reloadData];
         return;
     }
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  rowCellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (NSString *)cellNibName
 {
-    return [collectionView dequeueReusableCellWithReuseIdentifier:@"CSCategoryCell"
-                                                     forIndexPath:indexPath];
-    
+    return @"CSCategoriesCell";
 }
 
-- (void)reloadRowCell:(id<CSAddressCell>)cell withAddress:(NSObject *)address done:(void (^)(id, NSError *))done
+- (Class)itemCellClass
 {
-    [self.categories getCategoryAtIndex:((NSIndexPath *)address).row
-                               callback:done];
+    return [CSCategoryCell class];
+}
+
+
+- (void)fetchModelAtIndex:(NSUInteger)index
+                     done:(void (^)(id, NSError *))done
+{
+    [self.categories getCategoryAtIndex:index callback:done];
 }
 
 - (NSInteger)modelCount
