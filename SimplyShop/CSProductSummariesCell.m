@@ -13,48 +13,13 @@
 
 @interface CSProductSummariesCell () <CSProductSummaryCellDelegate>
 
-- (void)initialize;
-
 @end
 
 @implementation CSProductSummariesCell
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
-- (void)awakeFromNib
-{
-    [self initialize];
-}
-
-- (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
 - (void)initialize
 {
-    UIView *subview = [[[NSBundle mainBundle]
-                        loadNibNamed:@"CSProductSummariesCell"
-                        owner:self
-                        options:nil]
-                       objectAtIndex:0];
-    self.frame = subview.frame;
-    [self addSubview:subview];
-
-    [self.collectionView registerClass:[CSProductSummaryCell class]
-            forCellWithReuseIdentifier:@"CSProductSummaryCell"];
+    [super initialize];
     
     [self addObserver:self
            forKeyPath:@"productSummaries"
@@ -79,45 +44,48 @@
     }
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+- (NSString *)cellNibName
 {
-    return 1;
+    return @"CSProductSummariesCell";
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section
+- (Class)itemCellClass
+{
+    return [CSProductSummaryCell class];
+}
+
+- (NSInteger)modelCount
 {
     return self.productSummaries.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)fetchModelWithAddress:(id)address done:(void (^)(id, NSError *))done
 {
-    CSProductSummaryCell *cell =
-    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSProductSummaryCell"
-                                              forIndexPath:indexPath];
-    
-    
-    [self productSummaryCell:cell needsReloadWithAddress:indexPath];
-    
-    return cell;
-}
-
-- (void)productSummaryCell:(CSProductSummaryCell *)cell needsReloadWithAddress:(NSObject *)address
-{
-    [cell setLoadingAddress:address];
     [self.productSummaries getProductSummaryAtIndex:((NSIndexPath *)address).row
                                            callback:^(id<CSProductSummary> result,
                                                       NSError *error)
      {
          if (error) {
-             [cell setError:error address:address];
+             done(nil, error);
              return;
          }
          
-         [cell setWrapper:[CSProductWrapper wrapperForSummary:result]
-                  address:address];
+         done([CSProductWrapper wrapperForSummary:result], nil);
      }];
+}
+
+- (UICollectionViewCell<CSAddressCell> *)collectionView:(UICollectionView *)collectionView
+                              rowCellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CSProductSummaryCell *cell = (id)[super collectionView:collectionView
+                                 rowCellForItemAtIndexPath:indexPath];
+    cell.delegate = self;
+    return cell;
+}
+
+- (void)productSummaryCell:(CSProductSummaryCell *)cell needsReloadWithAddress:(NSObject *)address
+{
+    [self rowCellNeedsReload:cell withAddress:address];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView

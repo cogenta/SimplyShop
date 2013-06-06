@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CSAddressCell.h"
 
 @protocol CSTheme;
 @protocol CSProductSummary;
@@ -21,7 +22,7 @@
     needsReloadWithAddress:(NSObject *)address;
 @end
 
-@interface CSProductSummaryCell : UICollectionViewCell
+@interface CSProductSummaryCell : UICollectionViewCell <CSAddressCell>
 
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;

@@ -9,6 +9,17 @@
 #import "CSDashboardRowCell.h"
 #import "CSAddressCell.h"
 
+void
+check_initialized(id cell) {
+}
+
+@interface CSDashboardRowCell ()
+
+@property (nonatomic) BOOL _initialized;
+- (void)_checkInitialized;
+
+@end
+
 @implementation CSDashboardRowCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -16,6 +27,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initialize];
+        [self _checkInitialized];
     }
     return self;
 }
@@ -23,6 +35,7 @@
 - (void)awakeFromNib
 {
     [self initialize];
+    [self _checkInitialized];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style
@@ -31,12 +44,20 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initialize];
+        [self _checkInitialized];
     }
     return self;
 }
 
+- (void)_checkInitialized
+{
+    NSAssert(self._initialized,
+             @"[CSDashboardRowCell initialize] must be called");
+}
+
 - (void)initialize
 {
+    self._initialized = YES;
     UIView *subview = [[[NSBundle mainBundle]
                         loadNibNamed:[self cellNibName]
                         owner:self
@@ -49,6 +70,10 @@
 
 - (void)registerClasses
 {
+    Class itemCellClass = [self itemCellClass];
+    NSAssert([itemCellClass conformsToProtocol:@protocol(CSAddressCell)],
+             @"Item cells must conform to CSAddressCell");
+             
     [self.collectionView registerClass:[self itemCellClass]
             forCellWithReuseIdentifier:@"CSDashboardRowItemCell"];
 }
@@ -76,9 +101,8 @@
     [self collectionView:collectionView
         rowCellForItemAtIndexPath:indexPath];
     
-    [self  collectionView:collectionView
-                  rowCell:cell
-   needsReloadWithAddress:[self addressForItemAtIndexPath:indexPath]];
+    [self rowCellNeedsReload:cell
+                 withAddress:[self addressForItemAtIndexPath:indexPath]];
     
     return cell;
 }
@@ -90,9 +114,8 @@
                                                      forIndexPath:indexPath];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
-               rowCell:(UICollectionViewCell<CSAddressCell> *)cell
-needsReloadWithAddress:(NSObject *)address
+- (void)rowCellNeedsReload:(UICollectionViewCell<CSAddressCell> *)cell
+               withAddress:(NSObject *)address;
 {
     [cell setLoadingAddress:address];
     [self fetchModelWithAddress:address done:^(id result, NSError *error) {

@@ -148,6 +148,10 @@
     [self updateContent];
 }
 
+- (void)setModel:(id)model address:(id)address
+{
+    [self setWrapper:model address:address];
+}
 
 - (void)setError:(NSError *)error address:(NSObject *)address
 {

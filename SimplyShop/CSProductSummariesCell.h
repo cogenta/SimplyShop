@@ -6,17 +6,15 @@
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CSDashboardRowCell.h"
 
 @protocol CSProductSummaryList;
 @protocol CSProductSummariesCellDelegate;
 
-@interface CSProductSummariesCell : UITableViewCell
-<UICollectionViewDelegate, UICollectionViewDataSource>
+@interface CSProductSummariesCell : CSDashboardRowCell
 
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *productSummaries;
 
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *seeAllButton;
 @property (weak, nonatomic) IBOutlet id<CSProductSummariesCellDelegate> delegate;
 

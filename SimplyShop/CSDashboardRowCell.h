@@ -17,9 +17,8 @@
 - (void)initialize;
 - (void)fetchModelWithAddress:(id)address
                          done:(void (^)(id model, NSError *error))done;
-- (void)collectionView:(UICollectionView *)collectionView
-               rowCell:(id<CSAddressCell>)cell
-needsReloadWithAddress:(NSObject *)address;
+- (void)rowCellNeedsReload:(id<CSAddressCell>)cell
+               withAddress:(NSObject *)address;
 - (UICollectionViewCell<CSAddressCell> *)
 collectionView:(UICollectionView *)collectionView
 rowCellForItemAtIndexPath:(NSIndexPath *)indexPath;
