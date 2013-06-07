@@ -14,51 +14,6 @@
 #import "CSProductWrapper.h"
 #import "CSEmptyProductGridView.h"
 
-@interface CSProductListWrapper : NSObject <CSProductListWrapper>
-
-@property id<CSProductList> products;
-
-+ (instancetype) wrapperWithProducts:(id<CSProductList>)products;
-
-@end
-
-@implementation CSProductListWrapper
-
-+ (instancetype)wrapperWithProducts:(id<CSProductList>)products
-{
-    CSProductListWrapper *result = [[CSProductListWrapper alloc] init];
-    result.products = products;
-    return result;
-}
-
-- (NSUInteger)count
-{
-    return [self.products count];
-}
-
-- (void)getProductWrapperAtIndex:(NSUInteger)index
-                        callback:(void (^)(CSProductWrapper *, NSError *))callback
-{
-    [self.products getProductAtIndex:index
-                            callback:^(id<CSProduct> result, NSError *error)
-    {
-        if (error) {
-            callback(nil, error);
-            return;
-        }
-        
-        callback([CSProductWrapper wrapperForProduct:result], nil);
-    }];
-}
-
-- (void)getProductAtIndex:(NSUInteger)index
-                 callback:(void (^)(id<CSProduct>, NSError *))callback
-{
-    [self.products getProductAtIndex:index callback:callback];
-}
-
-@end
-
 @interface CSProductSummaryListWrapper : NSObject <CSProductListWrapper>
 
 @property id<CSProductSummaryList> products;

@@ -6,14 +6,9 @@
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <CSApi/CSAPI.h>
 
-@protocol CSProductSummary;
-@protocol CSProduct;
-@protocol CSPictureListPage;
-@protocol CSPriceListPage;
-
-@interface CSProductWrapper : NSObject
+@interface CSProductWrapper : NSObject <CSProductSummary>
 
 @property (readonly) NSString *name;
 @property (readonly) NSString *description_;
@@ -26,13 +21,20 @@
 
 @end
 
-@protocol CSProductListWrapper <NSObject>
+@protocol CSProductListWrapper <CSProductList, CSProductSummaryList>
 
 @property (readonly) NSUInteger count;
 
 - (void)getProductWrapperAtIndex:(NSUInteger)index
                         callback:(void (^)(CSProductWrapper *result,
                                            NSError *error))callback;
-- (void)getProductAtIndex:(NSUInteger)index
-                 callback:(void (^)(id<CSProduct>, NSError *))callback;
+@end
+
+
+@interface CSProductListWrapper : NSObject <CSProductListWrapper>
+
+@property id<CSProductList> products;
+
++ (instancetype) wrapperWithProducts:(id<CSProductList>)products;
+
 @end

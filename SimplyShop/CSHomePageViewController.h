@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol CSUser;
 @class CSAPI;
-@class CSProductSummariesCell;
-@class CSFavoriteStoresCell;
-@class CSCategoriesCell;
+@protocol CSCategory;
 
 @interface CSHomePageViewController : UITableViewController
 
 @property (strong, nonatomic) CSAPI *api;
+@property (strong, nonatomic) id<CSCategory> category;
 
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;

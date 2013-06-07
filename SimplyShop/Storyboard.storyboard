@@ -316,7 +316,7 @@
         <!--Home Page View Controller - Dashboard-->
         <scene sceneID="Gix-Es-flg">
             <objects>
-                <tableViewController id="xEY-py-EMq" customClass="CSHomePageViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CSHomePageViewController" id="xEY-py-EMq" customClass="CSHomePageViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" id="w42-11-Xqh">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
