@@ -130,16 +130,30 @@
                                  initWithStyle:UITableViewCellStyleDefault
                                  reuseIdentifier:nil];
     self.categoryProductsCell.delegate = self;
+    CSHomePageRow *productsRow = [[CSHomePageRow alloc]
+                                  initWithCell:self.categoryProductsCell];
+
+    self.rows = @[productsRow];
     
-    self.categoriesCell = [[CSCategoriesCell alloc]
-                           initWithStyle:UITableViewCellStyleDefault
-                           reuseIdentifier:nil];
-    self.categoriesCell.delegate = self;
+    [self.category getImmediateSubcategories:^(id<CSCategoryListPage> result,
+                                               NSError *error)
+    {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        if (result.count) {
+            self.categoriesCell = [[CSCategoriesCell alloc]
+                                   initWithStyle:UITableViewCellStyleDefault
+                                   reuseIdentifier:nil];
+            self.categoriesCell.delegate = self;
+            self.rows = @[productsRow,
+                          [[CSHomePageRow alloc] initWithCell:self.categoriesCell]];
+        }
+    }];
     
-    self.rows = @[[[CSHomePageRow alloc] initWithCell:self.categoryProductsCell],
-                  [[CSHomePageRow alloc] initWithCell:self.categoriesCell]];
-    
-    [self loadRootDashboard];
+    [self loadCategoryDashboard];
 }
 
 - (void)viewDidLoad
