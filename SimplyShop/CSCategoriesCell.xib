@@ -70,7 +70,7 @@
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">1320</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{20, 42}, {147, 27}}</string>
+						<string key="NSFrame">{{20, 42}, {105, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="161891642"/>
@@ -79,7 +79,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Top Categories</string>
+						<string key="IBUIText">Categories</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAAA</bytes>
@@ -365,24 +365,40 @@
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">CSCategoriesCell</string>
-					<string key="superclassName">UITableViewCell</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="collectionView">UICollectionView</string>
-						<string key="delegate">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="collectionView">
-							<string key="name">collectionView</string>
-							<string key="candidateClassName">UICollectionView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="delegate">
+					<string key="superclassName">CSDashboardRowCell</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
 							<string key="name">delegate</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</dictionary>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/CSCategoriesCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">CSDashboardRowCell</string>
+					<string key="superclassName">UITableViewCell</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">collectionView</string>
+						<string key="NS.object.0">UICollectionView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">collectionView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">collectionView</string>
+							<string key="candidateClassName">UICollectionView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CSDashboardRowCell.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -399,6 +415,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/UICollectionViewFlowLayout.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UICollectionViewLayout</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/UICollectionViewLayout.h</string>
 					</object>
 				</object>
 			</array>
