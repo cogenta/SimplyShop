@@ -87,6 +87,8 @@
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
 		BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */; };
 		BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E1E1768725800081E33 /* CSRetailersCell.m */; };
+		BEB28E231768760600081E33 /* CSCategoryRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E221768760600081E33 /* CSCategoryRetailersCell.m */; };
+		BEB28E251768770500081E33 /* CSCategoryRetailersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEB28E241768770500081E33 /* CSCategoryRetailersCell.xib */; };
 		BEC1E2B7173BCFD400D12EF2 /* CSProductWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */; };
 		BEC1E2BA173BCFFE00D12EF2 /* CSProductWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2B9173BCFFE00D12EF2 /* CSProductWrapper.m */; };
 		BEC1E2BD173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2BC173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m */; };
@@ -237,6 +239,9 @@
 		BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRoundImageView.m; sourceTree = "<group>"; };
 		BEB28E1D1768725800081E33 /* CSRetailersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailersCell.h; sourceTree = "<group>"; };
 		BEB28E1E1768725800081E33 /* CSRetailersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailersCell.m; sourceTree = "<group>"; };
+		BEB28E211768760600081E33 /* CSCategoryRetailersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCategoryRetailersCell.h; sourceTree = "<group>"; };
+		BEB28E221768760600081E33 /* CSCategoryRetailersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCategoryRetailersCell.m; sourceTree = "<group>"; };
+		BEB28E241768770500081E33 /* CSCategoryRetailersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSCategoryRetailersCell.xib; sourceTree = "<group>"; };
 		BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductWrapperTests.m; sourceTree = "<group>"; };
 		BEC1E2B8173BCFFE00D12EF2 /* CSProductWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductWrapper.h; sourceTree = "<group>"; };
 		BEC1E2B9173BCFFE00D12EF2 /* CSProductWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductWrapper.m; sourceTree = "<group>"; };
@@ -513,6 +518,9 @@
 				BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */,
 				BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */,
 				BE56D09D175E41E200B19F3F /* CSFavoriteStoresCell.xib */,
+				BEB28E211768760600081E33 /* CSCategoryRetailersCell.h */,
+				BEB28E221768760600081E33 /* CSCategoryRetailersCell.m */,
+				BEB28E241768770500081E33 /* CSCategoryRetailersCell.xib */,
 			);
 			name = Retailers;
 			sourceTree = "<group>";
@@ -701,6 +709,7 @@
 				BE56D09E175E41E200B19F3F /* CSFavoriteStoresCell.xib in Resources */,
 				BE56D0A0175E46D900B19F3F /* CSCategoriesCell.xib in Resources */,
 				BE56D0A2175E492800B19F3F /* CSProductSummariesCell.xib in Resources */,
+				BEB28E251768770500081E33 /* CSCategoryRetailersCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -799,6 +808,7 @@
 				BE558EB9174E5D5C009FA3DA /* CSCategoriesCell.m in Sources */,
 				BE3DCFAF175F94FC002F568C /* CSDashboardRowCell.m in Sources */,
 				BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */,
+				BEB28E231768760600081E33 /* CSCategoryRetailersCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
