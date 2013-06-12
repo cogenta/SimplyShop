@@ -8,7 +8,6 @@
 
 #import "CSFavoriteStoresCell.h"
 #import "CSRetailerSelectionCell.h"
-#import <CSApi/CSAPI.h>
 
 @interface CSFavoriteStoresCell ()
 
@@ -45,56 +44,41 @@
     }
 }
 
-- (NSString *)cellNibName
-{
-    return @"CSFavoriteStoresCell";
-}
-
-- (Class)itemCellClass
-{
-    return [CSRetailerSelectionCell class];
-}
-
-- (NSInteger)modelCount
+- (NSInteger)retailerCount
 {
     return [self.selectedRetailerURLs count];
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+- (id)addressForRetailerAtIndex:(NSInteger)index
 {
-    return 1;
+    return self.selectedRetailerURLs[index];
 }
 
-- (id)addressForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSURL *retailerURL = [self.selectedRetailerURLs objectAtIndex:indexPath.row];
-    return retailerURL;
-}
-
-- (void)fetchModelWithAddress:(id)address
-                         done:(void (^)(id, NSError *))done
+- (void)getRetailerWithAddress:(id)address
+                      callback:(void (^)(id<CSRetailer>, NSError *))callback
 {
     NSURL *retailerURL = address;
     id<CSRetailer> retailer = [self.retailers objectForKey:retailerURL];
     if (retailer) {
-        done(retailer, nil);
+        callback(retailer, nil);
         return;
     }
     
     [self.api getRetailer:retailerURL
                  callback:^(id<CSRetailer> retailer, NSError *error)
-     {
-         if (error) {
-             done(nil, error);
-             [self.delegate favoriteStoresCell:self
-                       failedToLoadRetailerURL:retailerURL
-                                         error:error];
-             return;
-         }
-         
-         [self.retailers setObject:retailer forKey:retailerURL];
-         done(retailer, nil);
-     }];
+    {
+        if (error) {
+            callback(nil, error);
+            [self.delegate favoriteStoresCell:self
+                      failedToLoadRetailerURL:retailerURL
+                                        error:error];
+            return;
+        }
+        
+        [self.retailers setObject:retailer forKey:retailerURL];
+        callback(retailer, nil);
+    }];
+
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView

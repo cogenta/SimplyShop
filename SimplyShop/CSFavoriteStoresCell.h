@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#import "CSDashboardRowCell.h"
+#import "CSRetailersCell.h"
 
 @class CSAPI;
 @class CSFavoriteStoresCell;
@@ -26,7 +26,7 @@
 
 @end
 
-@interface CSFavoriteStoresCell : CSDashboardRowCell
+@interface CSFavoriteStoresCell : CSRetailersCell
 
 @property (weak, nonatomic) IBOutlet id<CSFavoriteStoresCellDelegate> delegate;
 
