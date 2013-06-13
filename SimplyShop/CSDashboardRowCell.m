@@ -74,7 +74,7 @@ check_initialized(id cell) {
     NSAssert([itemCellClass conformsToProtocol:@protocol(CSAddressCell)],
              @"Item cells must conform to CSAddressCell");
              
-    [self.collectionView registerClass:[self itemCellClass]
+    [self.collectionView registerClass:itemCellClass
             forCellWithReuseIdentifier:@"CSDashboardRowItemCell"];
 }
 
