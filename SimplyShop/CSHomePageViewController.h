@@ -10,11 +10,13 @@
 
 @class CSAPI;
 @protocol CSCategory;
+@protocol CSRetailer;
 
 @interface CSHomePageViewController : UITableViewController
 
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) id<CSCategory> category;
+@property (strong, nonatomic) id<CSRetailer> retailer;
 
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;

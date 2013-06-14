@@ -67,6 +67,7 @@
 
 @property (strong, nonatomic) CSProductSummariesCell *topProductsCell;
 @property (strong, nonatomic) CSProductSummariesCell *categoryProductsCell;
+@property (strong, nonatomic) CSProductSummariesCell *retailerProductsCell;
 @property (strong, nonatomic) CSFavoriteStoresCell *favoriteStoresCell;
 @property (strong, nonatomic) CSCategoryRetailersCell *categoryRetailersCell;
 @property (strong, nonatomic) CSCategoriesCell *categoriesCell;
@@ -78,6 +79,7 @@
 @property (strong, nonatomic) NSArray *selectedRetailerURLs;
 @property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
 @property (strong, nonatomic) NSObject<CSProductList> *categoryProducts;
+@property (strong, nonatomic) NSObject<CSProductList> *retailerProducts;
 @property (strong, nonatomic) NSObject<CSCategoryList> *categories;
 @property (strong, nonatomic) NSObject<CSRetailerList> *categoryRetailers;
 
@@ -146,7 +148,11 @@
     CSHomePageRow *retailersRow = [[CSHomePageRow alloc]
                                    initWithCell:self.categoryRetailersCell];
 
-    self.rows = @[productsRow, retailersRow];
+    if (self.retailer) {
+        self.rows = @[productsRow];
+    } else {
+        self.rows = @[productsRow, retailersRow];
+    }
     
     [self.category getImmediateSubcategories:^(id<CSCategoryListPage> result,
                                                NSError *error)
@@ -161,13 +167,57 @@
                                    initWithStyle:UITableViewCellStyleDefault
                                    reuseIdentifier:nil];
             self.categoriesCell.delegate = self;
-            self.rows = @[productsRow,
-                          [[CSHomePageRow alloc] initWithCell:self.categoriesCell],
-                          retailersRow];
+            CSHomePageRow *categoriesRow = [[CSHomePageRow alloc]
+                                            initWithCell:self.categoriesCell];
+            if (self.retailer) {
+                self.rows = @[productsRow,
+                              categoriesRow];
+            } else {
+                self.rows = @[productsRow,
+                              categoriesRow,
+                              retailersRow];
+            }
         }
     }];
     
     [self loadCategoryDashboard];
+}
+
+- (void)prepareRetailerDashboard
+{
+    self.retailerProductsCell = [[CSProductSummariesCell alloc]
+                                 initWithStyle:UITableViewCellStyleDefault
+                                 reuseIdentifier:nil];
+    self.retailerProductsCell.delegate = self;
+    
+    CSHomePageRow *productsRow = [[CSHomePageRow alloc]
+                                  initWithCell:self.retailerProductsCell];
+    
+    self.rows = @[productsRow];
+    
+    [self.retailer getCategories:^(id<CSCategoryListPage> result,
+                                               NSError *error)
+     {
+         if (error) {
+             [self setErrorState];
+             return;
+         }
+         
+         if (result.count) {
+             self.categoriesCell = [[CSCategoriesCell alloc]
+                                    initWithStyle:UITableViewCellStyleDefault
+                                    reuseIdentifier:nil];
+             self.categoriesCell.delegate = self;
+             self.categories = result.categoryList;
+             self.categoriesCell.categories = self.categories;
+             
+             CSHomePageRow *categoriesRow = [[CSHomePageRow alloc]
+                                             initWithCell:self.categoriesCell];
+             self.rows = @[productsRow, categoriesRow];
+         }
+     }];
+    
+    [self loadRetailerDashboard];
 }
 
 - (void)viewDidLoad
@@ -176,9 +226,41 @@
     
     if (self.category) {
         [self prepareCategoryDashboard];
-        self.navigationItem.title = self.category.name;
+        if (self.retailer) {
+            self.navigationItem.title = [NSString stringWithFormat:@"%@ from %@",
+                                         self.category.name, self.retailer.name];
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
+                                                     initWithTitle:self.category.name
+                                                     style:UIBarButtonItemStylePlain
+                                                     target:nil
+                                                     action:NULL];
+        } else {
+            self.navigationItem.title = self.category.name;
+        }
+    } else if (self.retailer) {
+        [self prepareRetailerDashboard];
+        self.navigationItem.title = self.retailer.name;
     } else {
         [self prepareRootDashboard];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self addObserver:self forKeyPath:@"rows" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self removeObserver:self forKeyPath:@"rows"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self && [keyPath isEqualToString:@"rows"]) {
+        [self.tableView reloadData];
     }
 }
 
@@ -214,6 +296,11 @@
 }
 
 - (void)loadCategoryDashboard
+{
+    [self loadModel];
+}
+
+- (void)loadRetailerDashboard
 {
     [self loadModel];
 }
@@ -281,6 +368,22 @@
     }];
 }
 
+- (void)loadCellsFromRetailer:(NSObject<CSRetailer> *)retailer
+{
+    [retailer getProducts:^(id<CSProductListPage> firstPage,
+                            NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        id<CSProductList> list = firstPage.productList;
+        self.retailerProducts = list;
+        self.retailerProductsCell.productSummaries = [CSProductListWrapper
+                                                      wrapperWithProducts:list];
+    }];
+}
+
 - (void)loadRetailers
 {
     [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList,
@@ -296,6 +399,8 @@
         
         if (self.category) {
             [self loadCellsFromCategory:self.category];
+        } else if (self.retailer) {
+            [self loadCellsFromRetailer:self.retailer];
         } else {
             [self loadCellsFromGroup:group];
             
@@ -368,6 +473,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (self.category) {
         [self loadCategoryDashboard];
+    } else if (self.retailer) {
+        [self loadRetailerDashboard];
     } else {
         [self loadRootDashboard];
     }
@@ -386,7 +493,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 - (void)prepareForShowProductSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     CSProductDetailViewController *vc = (id) segue.destinationViewController;
-    vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
+    if (self.retailer) {
+        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
+                                                          retailer:self.retailer];
+    } else {
+        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
+    }
     
     NSDictionary *address = sender;
     CSProductSummariesCell *cell = address[@"cell"];
@@ -399,10 +511,14 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                                     sender:(id)sender
 {
     NSAssert(self.likeList, nil);
-    NSAssert(self.group || self.category, nil);
+    NSAssert(self.group || self.category || self.retailer, nil);
     CSProductGridViewController *vc = (id) segue.destinationViewController;
     if (self.category) {
         [vc setCategory:self.category likes:self.likeList];
+    } else if (self.retailer) {
+        [vc setRetailer:self.retailer likes:self.likeList];
+        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
+                                                          retailer:self.retailer];
     } else {
         [vc setGroup:self.group likes:self.likeList];
     }
@@ -645,11 +761,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
          didSelectRetailer:(id<CSRetailer>)retailer
                      index:(NSUInteger)index
 {
-    NSDictionary *address = @{@"cell": cell,
-                              @"index": @(index),
-                              @"retailer": retailer};
-    [self performSegueWithIdentifier:@"showRetailerProductsGrid"
-                              sender:address];
+    CSHomePageViewController *vc = [self.storyboard
+                                    instantiateViewControllerWithIdentifier:
+                                    @"CSHomePageViewController"];
+    vc.api = self.api;
+    vc.retailer = retailer;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)favoriteStoresCellDidTapChooseButton:(CSFavoriteStoresCell *)cell
@@ -670,6 +787,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                                         instantiateViewControllerWithIdentifier:
                                         @"CSHomePageViewController"];
         vc.api = self.api;
+        vc.retailer = self.retailer;
         vc.category = cat;
         [self.navigationController pushViewController:vc animated:YES];
     }];
