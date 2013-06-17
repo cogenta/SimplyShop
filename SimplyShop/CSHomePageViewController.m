@@ -515,6 +515,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     CSProductGridViewController *vc = (id) segue.destinationViewController;
     if (self.category) {
         [vc setCategory:self.category likes:self.likeList];
+        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
+                                                          retailer:self.retailer];
     } else if (self.retailer) {
         [vc setRetailer:self.retailer likes:self.likeList];
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
