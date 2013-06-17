@@ -334,7 +334,6 @@
                         <segue destination="Tla-Ne-hRZ" kind="push" identifier="showCategoryProductsGrid" id="dtc-w4-Gxe"/>
                         <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="wFQ-9t-ZRk"/>
                         <segue destination="Tla-Ne-hRZ" kind="push" identifier="showTopProductsGrid" id="eVM-5M-7tg"/>
-                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showCategoryRetailerProductsGrid" id="ntl-fd-Sb8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -585,7 +584,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="3NJ-DI-Ofs"/>
         <segue reference="ZYU-Pi-qDu"/>
-        <segue reference="ntl-fd-Sb8"/>
     </inferredMetricsTieBreakers>
 </document>

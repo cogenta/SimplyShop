@@ -162,7 +162,7 @@
             return;
         }
         
-        if (result.count) {
+        if (result.count > 1) {
             self.categoriesCell = [[CSCategoriesCell alloc]
                                    initWithStyle:UITableViewCellStyleDefault
                                    reuseIdentifier:nil];
@@ -203,7 +203,7 @@
              return;
          }
          
-         if (result.count) {
+         if (result.count > 1) {
              self.categoriesCell = [[CSCategoriesCell alloc]
                                     initWithStyle:UITableViewCellStyleDefault
                                     reuseIdentifier:nil];
@@ -548,19 +548,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [vc setCategory:category likes:self.likeList];
 }
 
-- (void)prepareForShowCategoryRetailerProductsGridSegue:(UIStoryboardSegue *)segue
-                                                 sender:(id)sender
-{
-    NSDictionary *address = sender;
-    id<CSRetailerList> retailers = address[@"retailers"];
-    NSUInteger index = [address[@"index"] unsignedIntegerValue];
-    CSProductGridViewController *vc = (id) segue.destinationViewController;
-    [retailers getRetailerAtIndex:index callback:^(id<CSRetailer> retailer,
-                                                   NSError *error) {
-        [vc setRetailer:retailer likes:nil];
-    }];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showRetailerSelection"] ||
@@ -586,11 +573,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     if ([segue.identifier isEqualToString:@"showCategoryProductsGrid"]) {
         [self prepareForShowCategoryProductsGridSegue:segue sender:sender];
-        return;
-    }
-    
-    if ([segue.identifier isEqualToString:@"showCategoryRetailerProductsGrid"]) {
-        [self prepareForShowCategoryRetailerProductsGridSegue:segue sender:sender];
         return;
     }
 }
@@ -838,10 +820,24 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)categoryRetailersCell:(CSCategoryRetailersCell *)cell
      didSelectRetailerAtIndex:(NSInteger)index
 {
-    NSDictionary *address = @{@"retailers": cell.retailers,
-                              @"index": @(index)};
-    [self performSegueWithIdentifier:@"showCategoryRetailerProductsGrid"
-                              sender:address];
+    CSHomePageViewController *vc = [self.storyboard
+                                    instantiateViewControllerWithIdentifier:
+                                    @"CSHomePageViewController"];
+    vc.api = self.api;
+    
+    [cell.retailers getRetailerAtIndex:index
+                              callback:^(id<CSRetailer> retailer,
+                                         NSError *error)
+    {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        vc.retailer = retailer;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }];
 }
 
 @end
