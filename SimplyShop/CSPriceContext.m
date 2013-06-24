@@ -9,6 +9,23 @@
 #import "CSPriceContext.h"
 #import <NSArray+Functional/NSArray+Functional.h>
 
+@interface NSMutableArray (CSExpand)
+- (void)putObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
+@end
+
+@implementation NSMutableArray (CSExpand)
+
+- (void)putObject:(id)obj atIndexedSubscript:(NSUInteger)idx
+{
+    while ([self count] < idx) {
+        [self addObject:[NSNull null]];
+    }
+    
+    [self setObject:obj atIndexedSubscript:idx];
+}
+
+@end
+
 dispatch_queue_t
 CSPriceContext_best_price_queue() {
     static dispatch_queue_t q = NULL;
@@ -121,9 +138,9 @@ CSPriceContext_best_price_queue() {
             [prices getPriceAtIndex:i callback:^(id<CSPrice> result,
                                                  NSError *error) {
                 if (error) {
-                    [results setObject:error atIndexedSubscript:i];
+                    [results putObject:error atIndexedSubscript:i];
                 } else {
-                    [results setObject:result atIndexedSubscript:i];
+                    [results putObject:result atIndexedSubscript:i];
                 }
                 
                 pricesLeft--;
@@ -153,9 +170,9 @@ CSPriceContext_best_price_queue() {
         [likes getLikeAtIndex:i callback:^(id<CSLike> result,
                                            NSError *error) {
             if (error) {
-                [results setObject:error atIndexedSubscript:i];
+                [results putObject:error atIndexedSubscript:i];
             } else {
-                [results setObject:result atIndexedSubscript:i];
+                [results putObject:result atIndexedSubscript:i];
             }
             
             likesLeft--;
