@@ -26,6 +26,8 @@
 #import "CSPriceView.h"
 #import "CSStockView.h"
 #import "CSEmptyProductGridView.h"
+#import "CSSidebarFooterButton.h"
+#import "CSBuyNowButton.h"
 
 @implementation CSSimplyShopTheme
 
@@ -253,8 +255,8 @@
     UILabel *stockLabel = [UILabel appearanceWhenContainedIn:[CSStockView class], nil];
     stockLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:7.5];
     
-    UIButton *buyNowButton = [UIButton appearanceWhenContainedIn:[CSProductSidebarView class], nil];
-    UILabel *buyNowButtonLabel = [UILabel appearanceWhenContainedIn:[UIButton class], [CSProductSidebarView class], nil];
+    CSBuyNowButton *buyNowButton = [CSBuyNowButton appearance];
+    UILabel *buyNowButtonLabel = [UILabel appearanceWhenContainedIn:[CSBuyNowButton class], nil];
     buyNowButtonLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     [buyNowButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     UIImage *buyNowBg = [[UIImage imageNamed:@"ButtonBuyNow"] resizableImageWithCapInsets:UIEdgeInsetsMake(19.0, 6.0, 18.0, 6.0)];
@@ -277,6 +279,14 @@
                                    NSForegroundColorAttributeName:
                                        [UIColor colorWithHexString:@"#606060"],
                                    NSShadowAttributeName: emptyShadow};
+    
+    CSSidebarFooterButton *sidebarFooter = [CSSidebarFooterButton appearance];
+    [sidebarFooter setTitleFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0]];
+    [sidebarFooter setTitleColor:[UIColor colorWithHexString:@"#717880"]];
+    [sidebarFooter setTitleShadowColor:[UIColor colorWithHexString:@"#ffffff"]];
+    [sidebarFooter setTitleLabelShadowOffset:CGSizeMake(0.0, 1.0)];
+    UIImage *sidebarFooterBg = [[UIImage imageNamed:@"AllPricesBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 1.0, 34.0, 1.0)];
+    [sidebarFooter setBackgroundImage:sidebarFooterBg forState:UIControlStateNormal];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
