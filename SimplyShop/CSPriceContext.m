@@ -184,8 +184,9 @@ CSPriceContext_best_price_queue() {
     }
 }
 
-- (void)getFavoritePrices:(id<CSPriceList>)prices
-                 callback:(void (^)(NSArray *, NSError *))callback
+- (void)sortAndFilterPrices:(id<CSPriceList>)prices
+                      block:(BOOL(^)(id<CSPrice>price, NSSet *likedURLs))blk
+                   callback:(void (^)(NSArray *, NSError *))callback
 {
     [self allLikes:self.likeList callback:^(NSArray *likesArray) {
         NSArray *likedURLsArray = [likesArray mapUsingBlock:^id(id obj) {
@@ -194,46 +195,41 @@ CSPriceContext_best_price_queue() {
         NSSet *likedURLs = [NSSet setWithArray:likedURLsArray];
         [self allPrices:prices callback:^(NSArray *prices) {
             NSArray *filtered = [prices filterUsingBlock:^BOOL(id obj) {
-                if ( ! [obj respondsToSelector:@selector(retailerURL)]) {
+                if ( ! [obj conformsToProtocol:@protocol(CSPrice)]) {
                     return NO;
                 }
-                NSURL *retailerURL = [(id<CSPrice>)obj retailerURL];
-                return [likedURLs containsObject:retailerURL];
+                return blk(obj, likedURLs);
             }];
-            NSArray *sorted = [filtered sortedArrayUsingComparator:
-                               ^NSComparisonResult(id obj1, id obj2)
+            NSArray *sorted =
+            [filtered sortedArrayUsingComparator:^NSComparisonResult(id obj1,
+                                                                     id obj2)
             {
-                return [[obj1 effectivePrice] compare:[obj2 effectivePrice]];
+                return [[obj1 effectivePrice]
+                        compare:[obj2 effectivePrice]];
             }];
             callback(sorted, nil);
         }];
     }];
 }
 
+- (void)getFavoritePrices:(id<CSPriceList>)prices
+                 callback:(void (^)(NSArray *, NSError *))callback
+{
+    [self sortAndFilterPrices:prices
+                        block:^BOOL(id<CSPrice> price, NSSet *likedURLs)
+    {
+        return [likedURLs containsObject:price.retailerURL];
+    } callback:callback];
+}
+
 - (void)getOtherPrices:(id<CSPriceList>)prices
               callback:(void (^)(NSArray *, NSError *))callback
 {
-    [self allLikes:self.likeList callback:^(NSArray *likesArray) {
-        NSArray *likedURLsArray = [likesArray mapUsingBlock:^id(id obj) {
-            return [obj likedURL];
-        }];
-        NSSet *likedURLs = [NSSet setWithArray:likedURLsArray];
-        [self allPrices:prices callback:^(NSArray *prices) {
-            NSArray *filtered = [prices filterUsingBlock:^BOOL(id obj) {
-                if ( ! [obj respondsToSelector:@selector(retailerURL)]) {
-                    return NO;
-                }
-                NSURL *retailerURL = [(id<CSPrice>)obj retailerURL];
-                return ! [likedURLs containsObject:retailerURL];
-            }];
-            NSArray *sorted = [filtered sortedArrayUsingComparator:
-                               ^NSComparisonResult(id obj1, id obj2)
-                               {
-                                   return [[obj1 effectivePrice] compare:[obj2 effectivePrice]];
-                               }];
-            callback(sorted, nil);
-        }];
-    }];
+    [self sortAndFilterPrices:prices
+                        block:^BOOL(id<CSPrice> price, NSSet *likedURLs)
+     {
+         return ! [likedURLs containsObject:price.retailerURL];
+     } callback:callback];
 }
 
 @end

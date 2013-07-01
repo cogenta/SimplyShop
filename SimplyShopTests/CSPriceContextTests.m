@@ -79,12 +79,12 @@
 
 @end
 
-@interface FakePrice : NSObject
+@interface FakePrice : NSObject <CSPrice>
 
-@property (nonatomic) NSDecimalNumber *effectivePrice;
-@property (nonatomic) NSDecimalNumber *price;
-@property (nonatomic) NSDecimalNumber *deliveryPrice;
-@property (nonatomic) NSURL *retailerURL;
+@property NSDecimalNumber *effectivePrice;
+@property NSDecimalNumber *price;
+@property NSDecimalNumber *deliveryPrice;
+@property NSURL *retailerURL;
 
 + (id<CSPrice>)priceWithEffectivePrice:(NSString *)effectivePrice
                           stickerPrice:(NSString *)stickerPrice
@@ -93,6 +93,12 @@
 @end
 
 @implementation FakePrice
+
+@synthesize currencySymbol;
+
+@synthesize currencyCode;
+@synthesize stock;
+@synthesize purchaseURL;
 
 + (id<CSPrice>)priceWithEffectivePrice:(NSString *)effectivePrice
                           stickerPrice:(NSString *)stickerPrice
@@ -118,6 +124,20 @@
             && [self.price isEqual:other.price]
             && [self.deliveryPrice isEqual:other.deliveryPrice]
             && [self.retailerURL isEqual:other.retailerURL]);
+}
+
+- (void)getProduct:(void (^)(id<CSProduct>, NSError *))callback
+{
+    callback(nil, [NSError errorWithDomain:@"not implemented"
+                                      code:0
+                                  userInfo:nil]);
+}
+
+- (void)getRetailer:(void (^)(id<CSRetailer>, NSError *))callback
+{
+    callback(nil, [NSError errorWithDomain:@"not implemented"
+                                      code:0
+                                  userInfo:nil]);
 }
 
 - (NSString *)description
