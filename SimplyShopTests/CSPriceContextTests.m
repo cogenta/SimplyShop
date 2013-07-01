@@ -112,7 +112,12 @@
         return NO;
     }
     
-    return self == object;
+    FakePrice *other = (FakePrice *)object;
+    
+    return ([self.effectivePrice isEqual:other.effectivePrice]
+            && [self.price isEqual:other.price]
+            && [self.deliveryPrice isEqual:other.deliveryPrice]
+            && [self.retailerURL isEqual:other.retailerURL]);
 }
 
 - (NSString *)description
@@ -635,6 +640,75 @@
     });
     
     STAssertEqualObjects(bestPrice, expectedPrice, nil);
+}
+
+- (void)testFavoritePrices
+{
+    id likeList = [self someLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer1]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    id expectedFavoritePrices = @[[self lowestStickerPrice:[self likedRetailer3]],
+                                  [self highestPrice:[self likedRetailer4]]];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 [self highestPrice:[self dislikedRetailer2]],
+                 [self lowestEffectivePrice:[self dislikedRetailer0]],
+                 [self highestPrice:[self likedRetailer4]],
+                 [self lowestStickerPrice:[self likedRetailer3]],
+                 [self lowestEffectivePrice:[self dislikedRetailer1]]
+                 ]];
+    
+    __block NSArray *favoritePrices = @[@"NOT CALLED"];
+    __block NSError *error = nil;
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getFavoritePrices:prices
+                          callback:^(NSArray *result, NSError *anError)
+        {
+            favoritePrices = result;
+            error = anError;
+            done();
+        }];
+    });
+    
+    STAssertNil(error, @"%@", error);
+    STAssertEqualObjects(favoritePrices, expectedFavoritePrices, nil);
+}
+
+
+- (void)testOtherPrices
+{
+    id likeList = [self someLikes];
+    id<CSRetailer> retailer = [self retailerWithURL:[self dislikedRetailer1]];
+    CSPriceContext *context = [[CSPriceContext alloc] initWithLikeList:likeList
+                                                              retailer:retailer];
+    id expectedOtherPrices = @[[self lowestEffectivePrice:[self dislikedRetailer0]],
+                               [self lowestEffectivePrice:[self dislikedRetailer1]],
+                               [self highestPrice:[self dislikedRetailer2]]
+                               ];
+    id prices = [FakeList fakeListWithThings:
+                 @[
+                 [self highestPrice:[self dislikedRetailer2]],
+                 [self lowestEffectivePrice:[self dislikedRetailer0]],
+                 [self highestPrice:[self likedRetailer4]],
+                 [self lowestStickerPrice:[self likedRetailer3]],
+                 [self lowestEffectivePrice:[self dislikedRetailer1]]
+                 ]];
+    
+    __block NSArray *otherPrices = @[@"NOT CALLED"];
+    __block NSError *error = nil;
+    CALL_AND_WAIT(^(void (^done)()) {
+        [context getOtherPrices:prices
+                       callback:^(NSArray *result, NSError *anError)
+         {
+             otherPrices = result;
+             error = anError;
+             done();
+         }];
+    });
+    
+    STAssertNil(error, @"%@", error);
+    STAssertEqualObjects(otherPrices, expectedOtherPrices, nil);
 }
 
 @end

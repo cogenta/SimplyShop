@@ -19,6 +19,11 @@
 - (void)getBestPrice:(id<CSPriceList>)prices
             callback:(void (^)(id<CSPrice>))callback;
 
+- (void)getFavoritePrices:(id<CSPriceList>)prices
+                 callback:(void (^)(NSArray *, NSError *))callback;
+- (void)getOtherPrices:(id<CSPriceList>)prices
+              callback:(void (^)(NSArray *, NSError *))callback;
+
 @property (readonly) id<CSLikeList> likeList;
 @property (readonly) id<CSRetailer> retailer;
 
