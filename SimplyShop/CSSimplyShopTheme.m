@@ -28,6 +28,7 @@
 #import "CSEmptyProductGridView.h"
 #import "CSSidebarFooterButton.h"
 #import "CSBuyNowButton.h"
+#import "CSDashboardTableView.h"
 
 @implementation CSSimplyShopTheme
 
@@ -185,8 +186,8 @@
     CSCTAButton *ctaButton = [CSCTAButton appearance];
     [self themeCTAButton:ctaButton];
     
-    UITableView *tableView = [UITableView appearance];
-    [tableView setBackgroundColor:[self tableViewBackgroundColor]];
+    UITableView *dashboardTableView = [CSDashboardTableView appearance];
+    [dashboardTableView setBackgroundColor:[self tableViewBackgroundColor]];
     
     CSAppearanceButton *
     retailerEditButton = [CSAppearanceButton appearanceWhenContainedIn:

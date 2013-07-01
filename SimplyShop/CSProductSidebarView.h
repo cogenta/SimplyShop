@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSPrice;
+@protocol CSPriceList;
 @class  CSRetailerLogoView;
 @class CSPriceView;
 @class CSProductSidebarView;
+@class CSPriceContext;
 
 @protocol CSProductSidebarViewDelegate <NSObject>
 
@@ -26,10 +28,16 @@
 @property (weak, nonatomic) IBOutlet CSPriceView *priceView;
 @property (weak, nonatomic) IBOutlet UIButton *buyNowButton;
 @property (weak, nonatomic) IBOutlet UIButton *allPricesButton;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet id<CSProductSidebarViewDelegate> delegate;
 
 @property (strong, nonatomic) UIImage *backgroundImage UI_APPEARANCE_SELECTOR;
 
+@property (strong, nonatomic) id<CSPriceList> prices;
+@property (strong, nonatomic) CSPriceContext *priceContext;
 @property (strong, nonatomic) id<CSPrice> price;
+
+- (void)showSinglePriceAnimated:(BOOL)animated;
+- (void)showAllPricesAnimated:(BOOL)animated;
 
 @end

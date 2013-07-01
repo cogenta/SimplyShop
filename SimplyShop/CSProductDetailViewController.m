@@ -125,10 +125,12 @@
     [product getPrices:^(id<CSPriceListPage> firstPage, NSError *error) {
         if (error) {
             // TODO: better error handling
+            self.sidebarView.prices = nil;
             self.sidebarView.price = nil;
             return;
         }
         
+        self.sidebarView.prices = firstPage.priceList;
         [self.priceContext getBestPrice:firstPage.priceList
                                callback:^(id<CSPrice> bestPrice)
         {
