@@ -9,6 +9,7 @@
 #import "CSProductSidebarView.h"
 #import "CSRetailerLogoView.h"
 #import "CSPriceView.h"
+#import "CSPriceContext.h"
 #import <CSApi/CSAPI.h>
 #import <MBCategory/MBCategory.h>
 
@@ -19,8 +20,12 @@
 @property (strong, nonatomic) UIView *priceListView;
 @property (strong, nonatomic) UIImageView *backgroundView;
 
+@property (strong, nonatomic) NSArray *favoritePrices;
+@property (strong, nonatomic) NSArray *otherPrices;
+
 - (void)initialize;
 - (void)updateContent;
+- (void)updatePriceList;
 
 @end
 
@@ -129,7 +134,17 @@
 - (void)setPrices:(id<CSPriceList>)prices
 {
     _prices = prices;
-    [self.tableView reloadData];
+    if (self.prices && self.priceContext) {
+        [self updatePriceList];
+    }
+}
+
+- (void)setPriceContext:(CSPriceContext *)priceContext
+{
+    _priceContext = priceContext;
+    if (self.prices && self.priceContext) {
+        [self updatePriceList];
+    }
 }
 
 - (void)updateContent
@@ -154,6 +169,53 @@
         
         self.logoView.retailer = retailer;
     }];
+}
+
+- (void)updatePriceList
+{
+    if ( ! self.priceContext || ! self.prices) {
+        self.favoritePrices = nil;
+        self.otherPrices = nil;
+        return;
+    }
+    
+    [self.priceContext getFavoritePrices:self.prices
+                                callback:^(NSArray *prices, NSError *error)
+    {
+        if (error) {
+            // TODO: handle error
+            return;
+        }
+        
+        self.favoritePrices = prices;
+    }];
+    
+    [self.priceContext getOtherPrices:self.prices
+                             callback:^(NSArray *prices, NSError *error)
+     {
+         if (error) {
+             // TODO: handle error
+             return;
+         }
+         
+         self.otherPrices = prices;
+     }];
+}
+
+- (void)setFavoritePrices:(NSArray *)favoritePrices
+{
+    _favoritePrices = favoritePrices;
+    if (self.favoritePrices && self.otherPrices) {
+        [self.tableView reloadData];
+    }
+}
+
+- (void)setOtherPrices:(NSArray *)otherPrices
+{
+    _otherPrices = otherPrices;
+    if (self.favoritePrices && self.otherPrices) {
+        [self.tableView reloadData];
+    }
 }
 
 - (IBAction)didTapBuyNow:(id)sender
@@ -210,12 +272,50 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if (self.favoritePrices && self.otherPrices) {
+        return 2;
+    }
+    
+    return 0;
+}
+
+- (NSArray *)priceListForSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return self.favoritePrices;
+            
+        case 1:
+            return self.otherPrices;
+            
+        default:
+            return nil;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.prices.count;
+    return [[self priceListForSection:section] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"Favourites";
+            
+        case 1:
+            return @"Other stores";
+            
+        default:
+            return @"";
+    }
+}
+
+- (id<CSPrice>)priceForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *priceList = [self priceListForSection:indexPath.section];
+    return priceList[indexPath.row];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -234,23 +334,16 @@
     }
     cell.textLabel.backgroundColor = cell.backgroundView.backgroundColor;
     
-    [self.prices getPriceAtIndex:indexPath.row
-                        callback:^(id<CSPrice> result, NSError *error)
-    {
+    id<CSPrice> result = [self priceForRowAtIndexPath:indexPath];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", result.effectivePrice];
+    
+    [result getRetailer:^(id<CSRetailer> retailer, NSError *error) {
         if (error) {
-            cell.textLabel.text = @"Error";
+            // TODO: better error handling
             return;
         }
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", result.effectivePrice];
-        
-        [result getRetailer:^(id<CSRetailer> retailer, NSError *error) {
-            if (error) {
-                // TODO: better error handling
-                return;
-            }
-            cell.detailTextLabel.text = retailer.name;
-            cell.detailTextLabel.backgroundColor = cell.backgroundView.backgroundColor;
-        }];
+        cell.detailTextLabel.text = retailer.name;
+        cell.detailTextLabel.backgroundColor = cell.backgroundView.backgroundColor;
     }];
     
     return cell;
@@ -262,16 +355,8 @@
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.prices getPriceAtIndex:indexPath.row
-                        callback:^(id<CSPrice> result, NSError *error)
-     {
-         if (error) {
-             // TODO: better error handling
-             return;
-         }
-         self.price = result;
-         [self showSinglePriceAnimated:YES];
-     }];
+    self.price = [self priceForRowAtIndexPath:indexPath];
+     [self showSinglePriceAnimated:YES];
 }
 
 @end

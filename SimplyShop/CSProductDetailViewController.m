@@ -127,10 +127,12 @@
             // TODO: better error handling
             self.sidebarView.prices = nil;
             self.sidebarView.price = nil;
+            self.sidebarView.priceContext = nil;
             return;
         }
         
         self.sidebarView.prices = firstPage.priceList;
+        self.sidebarView.priceContext = self.priceContext;
         [self.priceContext getBestPrice:firstPage.priceList
                                callback:^(id<CSPrice> bestPrice)
         {
