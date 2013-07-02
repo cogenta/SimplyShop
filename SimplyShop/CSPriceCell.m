@@ -84,7 +84,6 @@
 
     [self.contentView setNeedsDisplay];
     [self setNeedsLayout];
-    [self layoutIfNeeded];
 }
 
 - (void)setPrice:(id<CSPrice>)price

@@ -111,7 +111,6 @@
     [self setStock:self.price.stock];
     
     [self setNeedsLayout];
-    [self layoutIfNeeded];
 }
 
 - (void)setPrice:(id<CSPrice>)price
