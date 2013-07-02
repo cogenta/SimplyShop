@@ -130,6 +130,7 @@
 {
     price = newPrice;
     [self updateContent];
+    [self updatePriceList];
 }
 
 - (void)setPrices:(id<CSPriceList>)prices
@@ -334,8 +335,20 @@
     }
     cell.textLabel.backgroundColor = cell.backgroundView.backgroundColor;
     
+
     id<CSPrice> result = [self priceForRowAtIndexPath:indexPath];
     cell.price = result;
+    NSURL *cellURL = cell.price.purchaseURL;
+    NSURL *selfURL = self.price.purchaseURL;
+    BOOL selected = [cellURL isEqual:selfURL];
+
+    if (selected && ! cell.isSelected) {
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+    
+    if ( ! selected && cell.isSelected) {
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
     
     return cell;
 }

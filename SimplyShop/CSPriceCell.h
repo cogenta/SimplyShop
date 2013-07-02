@@ -27,6 +27,9 @@
 @property (strong, nonatomic) UIFont *deliveryLabelFont UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *deliveryLabelColor UI_APPEARANCE_SELECTOR;
 
+@property (strong, nonatomic) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *selectedForegroundColor UI_APPEARANCE_SELECTOR;
+
 @property (nonatomic) id<CSPrice> price;
 
 @end

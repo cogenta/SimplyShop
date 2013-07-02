@@ -46,6 +46,7 @@
                 objectAtIndex:0];
     _subview.frame = self.contentView.bounds;
     [self.contentView addSubview:_subview];
+//    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self updateContent];
 }
 
@@ -80,7 +81,7 @@
     
     self.deliveryLabel.text = [self deliveryText];
     self.stockView.price = self.price;
-    
+
     [self.contentView setNeedsDisplay];
     [self setNeedsLayout];
     [self layoutIfNeeded];
@@ -129,14 +130,10 @@
     self.priceLabel.font = font;
 }
 
-- (UIColor *)priceLabelColor
-{
-    return self.priceLabel.textColor;
-}
-
 - (void)setPriceLabelColor:(UIColor *)color
 {
-    self.priceLabel.textColor = color;
+    _priceLabelColor = color;
+    self.priceLabel.textColor = _priceLabelColor;
 }
 
 - (UIFont *)deliveryLabelFont
@@ -149,14 +146,10 @@
     self.deliveryLabel.font = font;
 }
 
-- (UIColor *)deliveryLabelColor
-{
-    return self.deliveryLabel.textColor;
-}
-
 - (void)setDeliveryLabelColor:(UIColor *)color
 {
-    self.deliveryLabel.textColor = color;
+    _deliveryLabelColor = color;
+    self.deliveryLabel.textColor = _deliveryLabelColor;
 }
 
 - (UIFont *)retailerNameLabelFont
@@ -169,14 +162,25 @@
     self.retailerNameLabel.font = font;
 }
 
-- (UIColor *)retailerNameLabelColor
-{
-    return self.retailerNameLabel.textColor;
-}
-
 - (void)setRetailerNameLabelColor:(UIColor *)color
 {
-    self.retailerNameLabel.textColor = color;
+    _retailerNameLabelColor = color;
+    self.retailerNameLabel.textColor = _retailerNameLabelColor;
+}
+
+- (void)setSelectedBackgroundColor:(UIColor *)selectedBackgroundColor
+{
+    _selectedBackgroundColor = selectedBackgroundColor;
+    self.selectedBackgroundView = [[UIView alloc] init];
+    self.selectedBackgroundView.backgroundColor = selectedBackgroundColor;
+}
+
+- (void)setSelectedForegroundColor:(UIColor *)selectedForegroundColor
+{
+    _selectedForegroundColor = selectedForegroundColor;
+    self.retailerNameLabel.highlightedTextColor = selectedForegroundColor;
+    self.priceLabel.highlightedTextColor = selectedForegroundColor;
+    self.deliveryLabel.highlightedTextColor = selectedForegroundColor;
 }
 
 @end

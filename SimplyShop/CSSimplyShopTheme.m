@@ -29,6 +29,7 @@
 #import "CSSidebarFooterButton.h"
 #import "CSBuyNowButton.h"
 #import "CSDashboardTableView.h"
+#import "CSPriceCell.h"
 
 @implementation CSSimplyShopTheme
 
@@ -288,6 +289,14 @@
     [sidebarFooter setTitleLabelShadowOffset:CGSizeMake(0.0, 1.0)];
     UIImage *sidebarFooterBg = [[UIImage imageNamed:@"AllPricesBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 1.0, 34.0, 1.0)];
     [sidebarFooter setBackgroundImage:sidebarFooterBg forState:UIControlStateNormal];
+    
+    CSPriceCell *priceCell = [CSPriceCell appearance];
+    [priceCell setRetailerNameLabelColor:[UIColor colorWithHexString:@"#e87363"]];
+    [priceCell setDeliveryLabelColor:[UIColor colorWithHexString:@"#999999"]];
+    [priceCell setPriceLabelColor:[UIColor colorWithHexString:@"#606060"]];
+    
+    [priceCell setSelectedBackgroundColor:[UIColor colorWithHexString:@"#e87363"]];
+    [priceCell setSelectedForegroundColor:[UIColor whiteColor]];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
