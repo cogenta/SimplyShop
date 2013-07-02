@@ -232,7 +232,10 @@
 
 - (IBAction)didTapViewBest:(id)sender
 {
-    [self showSinglePriceAnimated:YES];
+    [self.priceContext getBestPrice:self.prices callback:^(id<CSPrice> aPrice) {
+        self.price = aPrice;
+        [self showSinglePriceAnimated:YES];
+    }];
 }
 
 - (void)showAllPricesAnimated:(BOOL)animated
