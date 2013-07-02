@@ -1,17 +1,17 @@
 //
-//  CSPriceView.m
+//  CSPriceCell.m
 //  SimplyShop
 //
-//  Created by Will Harris on 07/05/2013.
+//  Created by Will Harris on 02/07/2013.
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#import "CSPriceView.h"
+#import "CSPriceCell.h"
 #import "CSStockView.h"
 #import <CSApi/CSAPI.h>
 #import "NSNumber+CSStringForCurrency.h"
 
-@interface CSPriceView ()
+@interface CSPriceCell ()
 
 @property (strong, nonatomic) UIView *subview;
 
@@ -21,41 +21,38 @@
 
 @end
 
-@implementation CSPriceView
+@implementation CSPriceCell
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initialize];
     }
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self initialize];
-    }
-    return self;
+    return [self initWithStyle:UITableViewCellStyleDefault
+               reuseIdentifier:@"CSPriceCell"];
 }
 
 - (void)initialize
 {
-    _subview = [[[NSBundle mainBundle] loadNibNamed:@"CSPriceView"
+    _subview = [[[NSBundle mainBundle] loadNibNamed:@"CSPriceCell"
                                               owner:self
                                             options:nil]
                 objectAtIndex:0];
-    _subview.frame = self.bounds;
-    self.backgroundColor = [UIColor clearColor];
-    [self addSubview:_subview];
+    _subview.frame = self.contentView.bounds;
+    [self.contentView addSubview:_subview];
     [self updateContent];
 }
 
 - (void)layoutSubviews
 {
-    self.subview.frame = self.bounds;
+    [super layoutSubviews];
+    self.subview.frame = self.contentView.bounds;
 }
 
 - (NSString *)stringForCurrency:(NSNumber *)value
@@ -84,6 +81,7 @@
     self.deliveryLabel.text = [self deliveryText];
     self.stockView.price = self.price;
     
+    [self.contentView setNeedsDisplay];
     [self setNeedsLayout];
     [self layoutIfNeeded];
 }
@@ -91,6 +89,13 @@
 - (void)setPrice:(id<CSPrice>)price
 {
     _price = price;
+    [price getRetailer:^(id<CSRetailer> retailer, NSError *error) {
+        if (error) {
+            // TODO: handler error
+            return;
+        }
+        self.retailerNameLabel.text = retailer.name;
+    }];
     [self updateContent];
 }
 
@@ -152,6 +157,26 @@
 - (void)setDeliveryLabelColor:(UIColor *)color
 {
     self.deliveryLabel.textColor = color;
+}
+
+- (UIFont *)retailerNameLabelFont
+{
+    return self.retailerNameLabel.font;
+}
+
+- (void)setRetailerNameLabelFont:(UIFont *)font
+{
+    self.retailerNameLabel.font = font;
+}
+
+- (UIColor *)retailerNameLabelColor
+{
+    return self.retailerNameLabel.textColor;
+}
+
+- (void)setRetailerNameLabelColor:(UIColor *)color
+{
+    self.retailerNameLabel.textColor = color;
 }
 
 @end

@@ -1,21 +1,25 @@
 //
-//  CSPriceView.h
+//  CSPriceCell.h
 //  SimplyShop
 //
-//  Created by Will Harris on 07/05/2013.
+//  Created by Will Harris on 02/07/2013.
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@protocol CSPrice;
 @class CSStockView;
+@protocol CSPrice;
 
-@interface CSPriceView : UIView
+@interface CSPriceCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *retailerNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deliveryLabel;
 @property (weak, nonatomic) IBOutlet CSStockView *stockView;
+
+@property (strong, nonatomic) UIFont *retailerNameLabelFont UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *retailerNameLabelColor UI_APPEARANCE_SELECTOR;
 
 @property (strong, nonatomic) UIFont *priceLabelFont UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *priceLabelColor UI_APPEARANCE_SELECTOR;

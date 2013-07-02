@@ -89,6 +89,8 @@
 		BE8EB73C1781900A00F93A3D /* CSBuyNowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8EB73B1781900A00F93A3D /* CSBuyNowButton.m */; };
 		BE8EB73E1781BC4400F93A3D /* CSProductSidebarView_List.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE8EB73D1781BC4400F93A3D /* CSProductSidebarView_List.xib */; };
 		BE8EB7411781D6A400F93A3D /* CSDashboardTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8EB7401781D6A400F93A3D /* CSDashboardTableView.m */; };
+		BE8EB7441782DE6500F93A3D /* CSPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8EB7431782DE6500F93A3D /* CSPriceCell.m */; };
+		BE8EB7481782DF1D00F93A3D /* CSPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE8EB7471782DF1C00F93A3D /* CSPriceCell.xib */; };
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
 		BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */; };
 		BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E1E1768725800081E33 /* CSRetailersCell.m */; };
@@ -247,6 +249,9 @@
 		BE8EB73D1781BC4400F93A3D /* CSProductSidebarView_List.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductSidebarView_List.xib; sourceTree = "<group>"; };
 		BE8EB73F1781D6A300F93A3D /* CSDashboardTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDashboardTableView.h; sourceTree = "<group>"; };
 		BE8EB7401781D6A400F93A3D /* CSDashboardTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDashboardTableView.m; sourceTree = "<group>"; };
+		BE8EB7421782DE6400F93A3D /* CSPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPriceCell.h; sourceTree = "<group>"; };
+		BE8EB7431782DE6500F93A3D /* CSPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPriceCell.m; sourceTree = "<group>"; };
+		BE8EB7471782DF1C00F93A3D /* CSPriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSPriceCell.xib; sourceTree = "<group>"; };
 		BEA6DA36170EDD82001AC881 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BEA6DA38170EE8C6001AC881 /* CSRoundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRoundImageView.h; sourceTree = "<group>"; };
 		BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRoundImageView.m; sourceTree = "<group>"; };
@@ -499,6 +504,9 @@
 				BEC1E2EB17438C0100D12EF2 /* CSEmptyProductGridView.xib */,
 				BE8EB73F1781D6A300F93A3D /* CSDashboardTableView.h */,
 				BE8EB7401781D6A400F93A3D /* CSDashboardTableView.m */,
+				BE8EB7421782DE6400F93A3D /* CSPriceCell.h */,
+				BE8EB7431782DE6500F93A3D /* CSPriceCell.m */,
+				BE8EB7471782DF1C00F93A3D /* CSPriceCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -733,6 +741,7 @@
 				BEB28E251768770500081E33 /* CSCategoryRetailersCell.xib in Resources */,
 				BE8EB73917818CD900F93A3D /* AllPricesBg@2x.png in Resources */,
 				BE8EB73E1781BC4400F93A3D /* CSProductSidebarView_List.xib in Resources */,
+				BE8EB7481782DF1D00F93A3D /* CSPriceCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,6 +844,7 @@
 				BE8EB73717818B0200F93A3D /* CSSidebarFooterButton.m in Sources */,
 				BE8EB73C1781900A00F93A3D /* CSBuyNowButton.m in Sources */,
 				BE8EB7411781D6A400F93A3D /* CSDashboardTableView.m in Sources */,
+				BE8EB7441782DE6500F93A3D /* CSPriceCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

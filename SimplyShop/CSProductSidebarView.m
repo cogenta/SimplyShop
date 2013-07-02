@@ -10,6 +10,7 @@
 #import "CSRetailerLogoView.h"
 #import "CSPriceView.h"
 #import "CSPriceContext.h"
+#import "CSPriceCell.h"
 #import <CSApi/CSAPI.h>
 #import <MBCategory/MBCategory.h>
 
@@ -320,12 +321,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    CSPriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CSPriceCell"];
     if ( ! cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+        cell = [[CSPriceCell alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, 39.0)];
         cell.backgroundView = [[UIView alloc] init];
     }
-    cell.textLabel.text = @"Loading";
     
     if (indexPath.row % 2 == 0) {
         cell.backgroundView.backgroundColor = [UIColor whiteColor];
@@ -335,18 +335,14 @@
     cell.textLabel.backgroundColor = cell.backgroundView.backgroundColor;
     
     id<CSPrice> result = [self priceForRowAtIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", result.effectivePrice];
-    
-    [result getRetailer:^(id<CSRetailer> retailer, NSError *error) {
-        if (error) {
-            // TODO: better error handling
-            return;
-        }
-        cell.detailTextLabel.text = retailer.name;
-        cell.detailTextLabel.backgroundColor = cell.backgroundView.backgroundColor;
-    }];
+    cell.price = result;
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 39.0;
 }
 
 #pragma mark - UITableViewDelegate

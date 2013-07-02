@@ -58,8 +58,33 @@
     self.backgroundView.frame = self.subview.bounds;
 }
 
+- (void)setInStockImage:(UIImage *)inStockImage
+{
+    _inStockImage = inStockImage;
+    [self setStock:self.price.stock];
+}
+
+- (void)setInStockColor:(UIColor *)inStockColor
+{
+    _inStockColor = inStockColor;
+    [self setStock:self.price.stock];
+}
+
+- (void)setNoStockImage:(UIImage *)noStockImage
+{
+    _noStockImage = noStockImage;
+    [self setStock:self.price.stock];
+}
+
+- (void)setNoStockColor:(UIColor *)noStockColor
+{
+    _noStockColor = noStockColor;
+    [self setStock:self.price.stock];
+}
+
 - (void)setStock:(NSString *)stock
 {
+    [self setNeedsDisplay];
     if ([stock isEqualToString:@"IN_STOCK"]) {
         self.label.text = @"IN STOCK";
         self.backgroundImage = self.inStockImage;
@@ -118,6 +143,7 @@
     [self.subview insertSubview:self.backgroundView atIndex:0];
     self.subview.backgroundColor = [UIColor clearColor];
     self.subview.opaque = NO;
+    [self setNeedsDisplay];
 }
 
 @end
