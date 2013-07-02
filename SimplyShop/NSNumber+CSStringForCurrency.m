@@ -12,17 +12,40 @@
 
 - (NSString *)stringForCurrencySymbol:(NSString *)symbol code:(NSString *)code
 {
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setCurrencySymbol:symbol];
-    [formatter setCurrencyCode:code];
-    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    [formatter setLocale:[NSLocale autoupdatingCurrentLocale]];
+    static NSMutableDictionary *symbolDicts = nil;
+    if ( ! symbolDicts) {
+        symbolDicts = [[NSMutableDictionary alloc] initWithCapacity:1];
+    }
+    
+    NSMutableDictionary *symbolDict = symbolDicts[symbol];
+    if ( ! symbolDict) {
+        symbolDict = [[NSMutableDictionary alloc] initWithCapacity:1];
+        symbolDicts[symbol] = symbolDict;
+    }
+    
+    NSMutableDictionary *formatters = symbolDict[code];
+    if ( ! formatters) {
+        formatters = [[NSMutableDictionary alloc] initWithCapacity:2];
+        symbolDict[code] = formatters;
+    }
     
     NSNumber *roundedValue = [NSNumber numberWithInteger:[self integerValue]];
     BOOL isIntegerValue = [self isEqualToNumber:roundedValue];
     
-    if (isIntegerValue) {
-        [formatter setMaximumFractionDigits:0];
+    NSNumberFormatter *formatter = formatters[@(isIntegerValue)];
+    
+    if ( ! formatter) {
+        formatter = [[NSNumberFormatter alloc] init];
+        [formatter setCurrencySymbol:symbol];
+        [formatter setCurrencyCode:code];
+        [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [formatter setLocale:[NSLocale autoupdatingCurrentLocale]];
+        
+        if (isIntegerValue) {
+            [formatter setMaximumFractionDigits:0];
+        }
+        
+        formatters[@(isIntegerValue)] = formatter;
     }
     
     return [formatter stringFromNumber:self];
