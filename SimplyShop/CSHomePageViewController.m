@@ -824,23 +824,37 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark - Search Bar
 
+const static CGFloat kSmallSearchBarWidth = 200.0;
+const static CGFloat kLargeSearchBarWidth = 300.0;
+const static CGRect kSmallSearchBarFrame = {
+    .size.width = kSmallSearchBarWidth,
+    .size.height = 44.0,
+    .origin.x = kLargeSearchBarWidth - kSmallSearchBarWidth,
+    .origin.y = 0.0
+};
+const static CGRect kLargeSearchBarFrame = {
+    .size.width = kLargeSearchBarWidth,
+    .size.height = 44.0,
+    .origin.x = 0.0,
+    .origin.y = 0.0
+};
+
 - (void)addSearchToNavigationBar
 {
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(100.0, 0.0, 200.0, 44.0)];
+    UISearchBar *searchBar = [[UISearchBar alloc]
+                              initWithFrame:kSmallSearchBarFrame];
     searchBar.delegate = self;
     searchBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
-    searchItem.width = 300.0;
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc]
+                                   initWithCustomView:searchBar];
+    searchItem.width = kLargeSearchBarWidth;
     [self.navigationItem setRightBarButtonItem:searchItem];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     [UIView animateWithDuration:0.25 animations:^{
-        CGRect frame = searchBar.frame;
-        frame.size.width = 300.0;
-        frame.origin.x = 0.0;
-        searchBar.frame = frame;
+        searchBar.frame = kLargeSearchBarFrame;
         [searchBar layoutSubviews];
     }];
     return YES;
@@ -849,10 +863,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
     [UIView animateWithDuration:0.25 animations:^{
-        CGRect frame = searchBar.frame;
-        frame.size.width = 200.0;
-        frame.origin.x = 100.0;
-        searchBar.frame = frame;
+        searchBar.frame = kSmallSearchBarFrame;
         [searchBar layoutSubviews];
     }];
     return YES;
