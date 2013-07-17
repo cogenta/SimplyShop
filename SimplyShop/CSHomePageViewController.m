@@ -109,6 +109,8 @@
 
 - (void)prepareRootDashboard
 {
+    [self addSearchToNavigationBar];
+    
     self.topProductsCell = [[CSProductSummariesCell alloc]
                             initWithStyle:UITableViewCellStyleDefault
                             reuseIdentifier:nil];
@@ -135,6 +137,8 @@
 
 - (void)prepareCategoryDashboard
 {
+    [self addSearchToNavigationBar];
+
     self.categoryProductsCell = [[CSProductSummariesCell alloc]
                                  initWithStyle:UITableViewCellStyleDefault
                                  reuseIdentifier:nil];
@@ -524,7 +528,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     NSAssert(self.group || self.category || self.retailer, nil);
     CSProductGridViewController *vc = (id) segue.destinationViewController;
     if (self.category) {
-        [vc setCategory:self.category likes:self.likeList];
+        [vc setCategory:self.category likes:self.likeList query:q];
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
                                                           retailer:self.retailer];
     } else if (self.retailer) {
@@ -532,7 +536,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
                                                           retailer:self.retailer];
     } else {
-        [vc setGroup:self.group likes:self.likeList];
+        [vc setGroup:self.group likes:self.likeList query:q];
     }
 }
 

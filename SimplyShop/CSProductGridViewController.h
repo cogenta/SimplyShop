@@ -25,8 +25,12 @@
 - (void)setRetailer:(id<CSRetailer>)retailer
               likes:(id<CSLikeList>)likes
               query:(NSString *)query;
-- (void)setGroup:(id<CSGroup>)group likes:(id<CSLikeList>)likes;
-- (void)setCategory:(id<CSCategory>)category likes:(id<CSLikeList>)likes;
+- (void)setGroup:(id<CSGroup>)group
+           likes:(id<CSLikeList>)likes
+           query:(NSString *)query;
+- (void)setCategory:(id<CSCategory>)category
+              likes:(id<CSLikeList>)likes
+              query:(NSString *)query;
 - (void)setProductSummaries:(id<CSProductSummaryList>)products;
 - (void)setProducts:(id<CSProductList>)products;
 - (void)setErrorState;

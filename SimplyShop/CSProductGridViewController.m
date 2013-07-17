@@ -227,35 +227,80 @@
     }
 }
 
-- (void)setGroup:(id<CSGroup>)group likes:(id<CSLikeList>)likes
+- (void)setGroup:(id<CSGroup>)group
+           likes:(id<CSLikeList>)likes
+           query:(NSString *)query
 {
     self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes];
-    self.title = @"Top Products";
+    if (query) {
+        self.title = [NSString stringWithFormat:@"Search for '%@'", query];
+    } else {
+        self.title = @"Top Products";
+    }
     [self setLoadingState];
-    [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        [self setProducts:firstPage.productList];
-    }];
+    if (query) {
+        [group getProductsWithQuery:query
+                           callback:^(id<CSProductListPage> firstPage,
+                                      NSError *error)
+        {
+            if (error) {
+                [self setErrorState];
+                return;
+            }
+            
+            [self setProducts:firstPage.productList];
+        }];
+    } else {
+        [group getProducts:^(id<CSProductListPage> firstPage, NSError *error)
+        {
+            if (error) {
+                [self setErrorState];
+                return;
+            }
+            
+            [self setProducts:firstPage.productList];
+        }];
+    }
 }
 
 
-- (void)setCategory:(id<CSCategory>)category likes:(id<CSLikeList>)likes
+- (void)setCategory:(id<CSCategory>)category
+              likes:(id<CSLikeList>)likes
+              query:(NSString *)query
 {
     self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes];
-    self.title = category.name;
+    if (query) {
+        self.title = [NSString stringWithFormat:@"Search for '%@' in %@",
+                      query, category.name];
+    } else {
+        self.title = category.name;
+    }
+
     [self setLoadingState];
-    [category getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        [self setProducts:firstPage.productList];
-    }];
+    if (query) {
+        [category getProductsWithQuery:query
+                              callback:^(id<CSProductListPage> firstPage,
+                                         NSError *error)
+         {
+             if (error) {
+                 [self setErrorState];
+                 return;
+             }
+             
+             [self setProducts:firstPage.productList];
+         }];
+    } else {
+        [category getProducts:^(id<CSProductListPage> firstPage,
+                                NSError *error)
+        {
+            if (error) {
+                [self setErrorState];
+                return;
+            }
+            
+            [self setProducts:firstPage.productList];
+        }];
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
