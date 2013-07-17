@@ -845,6 +845,7 @@ const static CGRect kLargeSearchBarFrame = {
                               initWithFrame:kSmallSearchBarFrame];
     searchBar.delegate = self;
     searchBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    searchBar.placeholder = @"Search Products";
     UIBarButtonItem *searchItem = [[UIBarButtonItem alloc]
                                    initWithCustomView:searchBar];
     searchItem.width = kLargeSearchBarWidth;
