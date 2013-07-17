@@ -59,6 +59,7 @@
 
 @interface CSHomePageViewController () <
     UIAlertViewDelegate,
+    UISearchBarDelegate,
     CSFavoriteStoresCellDelegate,
     CSProductSummariesCellDelegate,
     CSCategoriesCellDelegate,
@@ -90,6 +91,8 @@
 - (void)loadRootDashboard;
 - (void)loadCategoryDashboard;
 - (void)setErrorState;
+
+- (void)addSearchToNavigationBar;
 
 @end
 
@@ -185,6 +188,7 @@
 
 - (void)prepareRetailerDashboard
 {
+    [self addSearchToNavigationBar];
     self.retailerProductsCell = [[CSProductSummariesCell alloc]
                                  initWithStyle:UITableViewCellStyleDefault
                                  reuseIdentifier:nil];
@@ -510,6 +514,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 - (void)prepareForShowTopProductsGridSegue:(UIStoryboardSegue *)segue
                                     sender:(id)sender
 {
+    NSString *q = nil;
+    if ([sender isKindOfClass:[UISearchBar class]]) {
+        UISearchBar *searchBar = sender;
+        q = searchBar.text;
+    }
+    
     NSAssert(self.likeList, nil);
     NSAssert(self.group || self.category || self.retailer, nil);
     CSProductGridViewController *vc = (id) segue.destinationViewController;
@@ -518,7 +528,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
                                                           retailer:self.retailer];
     } else if (self.retailer) {
-        [vc setRetailer:self.retailer likes:self.likeList];
+        [vc setRetailer:self.retailer likes:self.likeList query:q];
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
                                                           retailer:self.retailer];
     } else {
@@ -806,6 +816,47 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         [self.navigationController pushViewController:vc animated:YES];
         
     }];
+}
+
+#pragma mark - Search Bar
+
+- (void)addSearchToNavigationBar
+{
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(100.0, 0.0, 200.0, 44.0)];
+    searchBar.delegate = self;
+    searchBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
+    searchItem.width = 300.0;
+    [self.navigationItem setRightBarButtonItem:searchItem];
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        CGRect frame = searchBar.frame;
+        frame.size.width = 300.0;
+        frame.origin.x = 0.0;
+        searchBar.frame = frame;
+        [searchBar layoutSubviews];
+    }];
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        CGRect frame = searchBar.frame;
+        frame.size.width = 200.0;
+        frame.origin.x = 100.0;
+        searchBar.frame = frame;
+        [searchBar layoutSubviews];
+    }];
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self performSegueWithIdentifier:@"showTopProductsGrid" sender:searchBar];
 }
 
 @end

@@ -22,7 +22,9 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-- (void)setRetailer:(id<CSRetailer>)retailer likes:(id<CSLikeList>)likes;
+- (void)setRetailer:(id<CSRetailer>)retailer
+              likes:(id<CSLikeList>)likes
+              query:(NSString *)query;
 - (void)setGroup:(id<CSGroup>)group likes:(id<CSLikeList>)likes;
 - (void)setCategory:(id<CSCategory>)category likes:(id<CSLikeList>)likes;
 - (void)setProductSummaries:(id<CSProductSummaryList>)products;

@@ -186,21 +186,45 @@
     [self setProductListWrapper:[CSProductListWrapper wrapperWithProducts:products]];
 }
 
-- (void)setRetailer:(id<CSRetailer>)retailer likes:(id<CSLikeList>)likes
+- (void)setRetailer:(id<CSRetailer>)retailer
+              likes:(id<CSLikeList>)likes
+              query:(NSString *)query
 {
     self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes
                                                         retailer:retailer];
-    self.title = retailer.name;
+    if (query) {
+        self.title = [NSString stringWithFormat:@"Search for '%@' at %@",
+                      query, retailer.name];
+    } else {
+        self.title = retailer.name;
+    }
+    
     [self setLoadingState];
     
-    [retailer getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        self.products = firstPage.productList;
-    }];
+    if (query) {
+        [retailer getProductsWithQuery:query
+                              callback:^(id<CSProductListPage> firstPage,
+                                         NSError *error)
+         {
+            if (error) {
+                [self setErrorState];
+                return;
+            }
+            
+            self.products = firstPage.productList;
+        }];
+    } else {
+        [retailer getProducts:^(id<CSProductListPage> firstPage,
+                                NSError *error)
+         {
+            if (error) {
+                [self setErrorState];
+                return;
+            }
+            
+            self.products = firstPage.productList;
+        }];
+    }
 }
 
 - (void)setGroup:(id<CSGroup>)group likes:(id<CSLikeList>)likes
