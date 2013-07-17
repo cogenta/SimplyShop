@@ -526,30 +526,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
 }
 
-- (void)prepareForShowRetailerProductsGridSegue:(UIStoryboardSegue *)segue
-                                         sender:(id)sender
-{
-    NSAssert(self.likeList, nil);
-    
-    NSDictionary *address = sender;
-    id<CSRetailer> retailer = address[@"retailer"];
-    
-    CSProductGridViewController *vc = (id) segue.destinationViewController;
-    [vc setRetailer:retailer likes:self.likeList];
-}
-
-- (void)prepareForShowCategoryProductsGridSegue:(UIStoryboardSegue *)segue
-                                         sender:(id)sender
-{
-    NSAssert(self.likeList, nil);
-    
-    NSDictionary *address = sender;
-    id<CSCategory> category = address[@"category"];
-    
-    CSProductGridViewController *vc = (id) segue.destinationViewController;
-    [vc setCategory:category likes:self.likeList];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showRetailerSelection"] ||
@@ -565,16 +541,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     if ([segue.identifier isEqualToString:@"showTopProductsGrid"]) {
         [self prepareForShowTopProductsGridSegue:segue sender:sender];
-        return;
-    }
-    
-    if ([segue.identifier isEqualToString:@"showRetailerProductsGrid"]) {
-        [self prepareForShowRetailerProductsGridSegue:segue sender:sender];
-        return;
-    }
-    
-    if ([segue.identifier isEqualToString:@"showCategoryProductsGrid"]) {
-        [self prepareForShowCategoryProductsGridSegue:segue sender:sender];
         return;
     }
 }

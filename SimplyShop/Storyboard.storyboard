@@ -330,8 +330,6 @@
                     <connections>
                         <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="ZYU-Pi-qDu"/>
-                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showRetailerProductsGrid" id="3NJ-DI-Ofs"/>
-                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showCategoryProductsGrid" id="dtc-w4-Gxe"/>
                         <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="wFQ-9t-ZRk"/>
                         <segue destination="Tla-Ne-hRZ" kind="push" identifier="showTopProductsGrid" id="eVM-5M-7tg"/>
                     </connections>
@@ -589,7 +587,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="3NJ-DI-Ofs"/>
         <segue reference="ZYU-Pi-qDu"/>
     </inferredMetricsTieBreakers>
 </document>
