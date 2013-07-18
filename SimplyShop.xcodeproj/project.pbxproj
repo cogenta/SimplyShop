@@ -84,6 +84,7 @@
 		BE7367A2172FCFE800B4691C /* CSProductStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7367A1172FCFE700B4691C /* CSProductStatsView.m */; };
 		BE7367A5172FD02700B4691C /* CSProductStats.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7367A4172FD02700B4691C /* CSProductStats.m */; };
 		BE7367AA172FD0E700B4691C /* CSProductStatsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7367A9172FD0E700B4691C /* CSProductStatsTests.m */; };
+		BE7E39BB179842C800E2A139 /* CSSearchBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7E39BA179842C800E2A139 /* CSSearchBarController.m */; };
 		BE8EB73717818B0200F93A3D /* CSSidebarFooterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8EB73617818B0200F93A3D /* CSSidebarFooterButton.m */; };
 		BE8EB73917818CD900F93A3D /* AllPricesBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8EB73817818CD900F93A3D /* AllPricesBg@2x.png */; };
 		BE8EB73C1781900A00F93A3D /* CSBuyNowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8EB73B1781900A00F93A3D /* CSBuyNowButton.m */; };
@@ -241,6 +242,8 @@
 		BE7367A3172FD02700B4691C /* CSProductStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductStats.h; sourceTree = "<group>"; };
 		BE7367A4172FD02700B4691C /* CSProductStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductStats.m; sourceTree = "<group>"; };
 		BE7367A9172FD0E700B4691C /* CSProductStatsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductStatsTests.m; sourceTree = "<group>"; };
+		BE7E39B9179842C800E2A139 /* CSSearchBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSearchBarController.h; sourceTree = "<group>"; };
+		BE7E39BA179842C800E2A139 /* CSSearchBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSearchBarController.m; sourceTree = "<group>"; };
 		BE8EB73517818B0200F93A3D /* CSSidebarFooterButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSidebarFooterButton.h; sourceTree = "<group>"; };
 		BE8EB73617818B0200F93A3D /* CSSidebarFooterButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSidebarFooterButton.m; sourceTree = "<group>"; };
 		BE8EB73817818CD900F93A3D /* AllPricesBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AllPricesBg@2x.png"; sourceTree = "<group>"; };
@@ -478,6 +481,8 @@
 				BE73677C1729614000B4691C /* CSProductDetailViewController.m */,
 				BE34F3D2173AB63100871FC1 /* CSProductGridViewController.h */,
 				BE34F3D3173AB63100871FC1 /* CSProductGridViewController.m */,
+				BE7E39B9179842C800E2A139 /* CSSearchBarController.h */,
+				BE7E39BA179842C800E2A139 /* CSSearchBarController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -869,6 +874,7 @@
 				BE8EB73C1781900A00F93A3D /* CSBuyNowButton.m in Sources */,
 				BE8EB7411781D6A400F93A3D /* CSDashboardTableView.m in Sources */,
 				BE8EB7441782DE6500F93A3D /* CSPriceCell.m in Sources */,
+				BE7E39BB179842C800E2A139 /* CSSearchBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

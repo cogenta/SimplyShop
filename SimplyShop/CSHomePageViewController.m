@@ -17,6 +17,7 @@
 #import "CSProductGridViewController.h"
 #import "CSProductWrapper.h"
 #import <CSApi/CSAPI.h>
+#import "CSSearchBarController.h"
 
 @protocol CSHomePageRow <NSObject>
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView;
@@ -59,7 +60,7 @@
 
 @interface CSHomePageViewController () <
     UIAlertViewDelegate,
-    UISearchBarDelegate,
+    CSSearchBarControllerDelegate,
     CSFavoriteStoresCellDelegate,
     CSProductSummariesCellDelegate,
     CSCategoriesCellDelegate,
@@ -83,6 +84,8 @@
 @property (strong, nonatomic) NSObject<CSProductList> *retailerProducts;
 @property (strong, nonatomic) NSObject<CSCategoryList> *categories;
 @property (strong, nonatomic) NSObject<CSRetailerList> *categoryRetailers;
+
+@property (strong, nonatomic) CSSearchBarController *searchBarController;
 
 - (void)loadRetailers;
 - (void)loadCellsFromGroup:(NSObject<CSGroup> *)group;
@@ -824,50 +827,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark - Search Bar
 
-const static CGFloat kSmallSearchBarWidth = 200.0;
-const static CGFloat kLargeSearchBarWidth = 300.0;
-const static CGRect kSmallSearchBarFrame = {
-    .size.width = kSmallSearchBarWidth,
-    .size.height = 44.0,
-    .origin.x = kLargeSearchBarWidth - kSmallSearchBarWidth,
-    .origin.y = 0.0
-};
-const static CGRect kLargeSearchBarFrame = {
-    .size.width = kLargeSearchBarWidth,
-    .size.height = 44.0,
-    .origin.x = 0.0,
-    .origin.y = 0.0
-};
-
 - (void)addSearchToNavigationBar
 {
-    UISearchBar *searchBar = [[UISearchBar alloc]
-                              initWithFrame:kSmallSearchBarFrame];
-    searchBar.delegate = self;
-    searchBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-    searchBar.placeholder = @"Search Products";
-    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc]
-                                   initWithCustomView:searchBar];
-    searchItem.width = kLargeSearchBarWidth;
-    [self.navigationItem setRightBarButtonItem:searchItem];
-}
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    [UIView animateWithDuration:0.25 animations:^{
-        searchBar.frame = kLargeSearchBarFrame;
-        [searchBar layoutSubviews];
-    }];
-    return YES;
-}
-
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
-{
-    [UIView animateWithDuration:0.25 animations:^{
-        searchBar.frame = kSmallSearchBarFrame;
-        [searchBar layoutSubviews];
-    }];
-    return YES;
+    self.searchBarController = [[CSSearchBarController alloc]
+                                initWithPlaceholder:@"Search Products"
+                                navigationItem:self.navigationItem];
+    self.searchBarController.delegate = self;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
