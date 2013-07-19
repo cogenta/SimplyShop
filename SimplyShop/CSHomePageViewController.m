@@ -833,6 +833,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    if ( ! [searchBar.text length]) {
+        return;
+    }
     [self performSegueWithIdentifier:@"showTopProductsGrid" sender:searchBar];
 }
 

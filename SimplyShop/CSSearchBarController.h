@@ -13,6 +13,7 @@
 @interface CSSearchBarController : NSObject
 
 @property (weak, nonatomic) id<CSSearchBarControllerDelegate> delegate;
+@property (copy, nonatomic) NSString *query;
 
 - (id)initWithPlaceholder:(NSString *)placeholder
            navigationItem:(UINavigationItem *)navigationItem;

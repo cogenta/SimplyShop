@@ -26,6 +26,7 @@ const static CGRect kLargeSearchBarFrame = {
 
 @interface CSSearchBarController () <UISearchBarDelegate>
 
+@property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UINavigationItem *navigationItem;
 
 @end
@@ -38,13 +39,13 @@ const static CGRect kLargeSearchBarFrame = {
     self = [self init];
     if (self) {
         self.navigationItem = navigationItem;
-        UISearchBar *searchBar = [[UISearchBar alloc]
-                                  initWithFrame:kSmallSearchBarFrame];
-        searchBar.delegate = self;
-        searchBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        searchBar.placeholder = placeholder;
+        self.searchBar = [[UISearchBar alloc]
+                          initWithFrame:kSmallSearchBarFrame];
+        self.searchBar.delegate = self;
+        self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        self.searchBar.placeholder = placeholder;
         UIBarButtonItem *searchItem = [[UIBarButtonItem alloc]
-                                       initWithCustomView:searchBar];
+                                       initWithCustomView:self.searchBar];
         searchItem.width = kLargeSearchBarWidth;
         [navigationItem setRightBarButtonItem:searchItem];
     }
@@ -54,6 +55,16 @@ const static CGRect kLargeSearchBarFrame = {
 - (void)dealloc
 {
     [self.navigationItem setRightBarButtonItem:nil];
+}
+
+- (NSString *)query
+{
+    return self.searchBar.text;
+}
+
+- (void)setQuery:(NSString *)query
+{
+    self.searchBar.text = query;
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
@@ -76,7 +87,15 @@ const static CGRect kLargeSearchBarFrame = {
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [searchBar resignFirstResponder];
     [self.delegate searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    if ( ! [searchBar.text length]) {
+        [self.delegate searchBarSearchButtonClicked:searchBar];
+    }
 }
 
 @end

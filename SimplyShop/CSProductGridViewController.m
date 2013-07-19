@@ -13,6 +13,7 @@
 #import "CSPriceContext.h"
 #import "CSProductWrapper.h"
 #import "CSEmptyProductGridView.h"
+#import "CSSearchBarController.h"
 
 @interface CSProductSummaryListWrapper : NSObject <CSProductListWrapper>
 
@@ -69,13 +70,275 @@
 
 @end
 
-@interface CSProductGridViewController () <CSProductSummaryCellDelegate>
+@protocol CSProductSearchState <NSObject>
+
+@property (readonly) NSString *query;
+
+- (id<CSProductSearchState>)stateWithQuery:(NSString *)query;
+- (void)apply:(CSProductGridViewController *)controller;
+
+@end
+
+@interface CSRetailerProductSearchState : NSObject <CSProductSearchState>
+
+@property (readonly) id<CSRetailer> retailer;
+@property (readonly) id<CSLikeList> likes;
+@property (readonly) NSString *query;
+
+- (id)initWithRetailer:(id<CSRetailer>)retailer
+                 likes:(id<CSLikeList>)likes
+                 query:(NSString *)query;
+
+@end
+
+@implementation CSRetailerProductSearchState
+
+- (id)initWithRetailer:(id<CSRetailer>)retailer
+                 likes:(id<CSLikeList>)likes
+                 query:(NSString *)query
+{
+    self = [super init];
+    if (self) {
+        _retailer = retailer;
+        _likes = likes;
+        _query = query;
+    }
+    
+    return self;
+}
+
+- (id<CSProductSearchState>)stateWithQuery:(NSString *)query
+{
+    if ( ! [query length] && ! [self.query length]) {
+        return self;
+    }
+    
+    if ([query isEqualToString:self.query]) {
+        return self;
+    }
+    
+    return [[CSRetailerProductSearchState alloc] initWithRetailer:self.retailer
+                                                            likes:self.likes
+                                                            query:query];
+}
+
+- (void)apply:(CSProductGridViewController *)controller
+{
+    controller.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likes
+                                                              retailer:self.retailer];
+    if (self.query) {
+        controller.title = [NSString stringWithFormat:@"Search for '%@' at %@",
+                            self.query, self.retailer.name];
+    } else {
+        controller.title = self.retailer.name;
+    }
+    
+    [controller setLoadingState];
+    
+    if (self.query) {
+        [self.retailer getProductsWithQuery:self.query
+                                   callback:^(id<CSProductListPage> firstPage,
+                                              NSError *error)
+         {
+             if (error) {
+                 [controller setErrorState];
+                 return;
+             }
+             
+             controller.products = firstPage.productList;
+         }];
+    } else {
+        [self.retailer getProducts:^(id<CSProductListPage> firstPage,
+                                     NSError *error)
+         {
+             if (error) {
+                 [controller setErrorState];
+                 return;
+             }
+             
+             controller.products = firstPage.productList;
+         }];
+    }
+}
+
+@end
+
+@interface CSGroupProductSearchState : NSObject <CSProductSearchState>
+
+@property (readonly) id<CSGroup> group;
+@property (readonly) id<CSLikeList> likes;
+@property (readonly) NSString *query;
+
+- (id)initWithGroup:(id<CSGroup>)group
+              likes:(id<CSLikeList>)likes
+              query:(NSString *)query;
+
+@end
+
+@implementation CSGroupProductSearchState
+
+- (id)initWithGroup:(id<CSGroup>)group
+              likes:(id<CSLikeList>)likes
+              query:(NSString *)query
+{
+    self = [super init];
+    if (self) {
+        _group = group;
+        _likes = likes;
+        _query = query;
+    }
+    return self;
+}
+
+- (id<CSProductSearchState>)stateWithQuery:(NSString *)query
+{
+    if ( ! [query length] && ! [self.query length]) {
+        return self;
+    }
+    
+    if ([query isEqualToString:self.query]) {
+        return self;
+    }
+    
+    return [[CSGroupProductSearchState alloc] initWithGroup:self.group
+                                                      likes:self.likes
+                                                      query:query];
+}
+
+- (void)apply:(CSProductGridViewController *)controller
+{
+    controller.priceContext = [[CSPriceContext alloc]
+                               initWithLikeList:self.likes];
+    if (self.query) {
+        controller.title = [NSString stringWithFormat:@"Search for '%@'",
+                            self.query];
+    } else {
+        controller.title = @"Top Products";
+    }
+    [controller setLoadingState];
+    if (self.query) {
+        [self.group getProductsWithQuery:self.query
+                                callback:^(id<CSProductListPage> firstPage,
+                                           NSError *error)
+         {
+             if (error) {
+                 [controller setErrorState];
+                 return;
+             }
+             
+             [controller setProducts:firstPage.productList];
+         }];
+    } else {
+        [self.group getProducts:^(id<CSProductListPage> firstPage,
+                                  NSError *error)
+         {
+             if (error) {
+                 [controller setErrorState];
+                 return;
+             }
+             
+             [controller setProducts:firstPage.productList];
+         }];
+    }
+}
+
+@end
+
+@interface CSCategoryProductSearchState : NSObject <CSProductSearchState>
+
+@property (readonly) id<CSCategory>category;
+@property (readonly) id<CSLikeList>likes;
+@property (readonly) NSString *query;
+
+- (id)initWithCategory:(id<CSCategory>)category
+                 likes:(id<CSLikeList>)likes
+                 query:(NSString *)query;
+
+@end
+
+@implementation CSCategoryProductSearchState
+
+- (id)initWithCategory:(id<CSCategory>)category
+                 likes:(id<CSLikeList>)likes
+                 query:(NSString *)query
+{
+    self = [super init];
+    if (self) {
+        _category = category;
+        _likes = likes;
+        _query = query;
+    }
+    return self;
+}
+
+- (id<CSProductSearchState>)stateWithQuery:(NSString *)query
+{
+    if ( ! [query length] && ! [self.query length]) {
+        return self;
+    }
+    
+    if ([query isEqualToString:self.query]) {
+        return self;
+    }
+    
+    return [[CSCategoryProductSearchState alloc] initWithCategory:self.category
+                                                            likes:self.likes
+                                                            query:query];
+}
+
+- (void)apply:(CSProductGridViewController *)controller
+{
+    controller.priceContext = [[CSPriceContext alloc]
+                               initWithLikeList:self.likes];
+    if (self.query) {
+        controller.title = [NSString stringWithFormat:@"Search for '%@' in %@",
+                            self.query, self.category.name];
+    } else {
+        controller.title = self.category.name;
+    }
+    
+    [controller setLoadingState];
+    if (self.query) {
+        [self.category getProductsWithQuery:self.query
+                                   callback:^(id<CSProductListPage> firstPage,
+                                              NSError *error)
+         {
+             if (error) {
+                 [controller setErrorState];
+                 return;
+             }
+             
+             [controller setProducts:firstPage.productList];
+         }];
+    } else {
+        [self.category getProducts:^(id<CSProductListPage> firstPage,
+                                     NSError *error)
+         {
+             if (error) {
+                 [controller setErrorState];
+                 return;
+             }
+             
+             [controller setProducts:firstPage.productList];
+         }];
+    }
+}
+
+@end
+
+@interface CSProductGridViewController () <
+    CSProductSummaryCellDelegate,
+    CSSearchBarControllerDelegate
+>
 
 @property (strong, nonatomic) id<CSProductListWrapper> productListWrapper;
 
 @property (strong, nonatomic) CSEmptyProductGridView *emptyView;
 @property (strong, nonatomic) CSEmptyProductGridView *errorView;
 @property (strong, nonatomic) CSEmptyProductGridView *loadingView;
+
+@property (strong, nonatomic) CSSearchBarController *searchBarController;
+@property (strong, nonatomic) id<CSProductSearchState> searchState;
 
 - (void)hideAllEmptyViews;
 
@@ -87,6 +350,8 @@
 
 - (void)showLoadingView;
 - (void)hideLoadingView;
+
+- (void)addSearchToNavigationBar;
 
 @end
 
@@ -106,7 +371,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	[self addSearchToNavigationBar];
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,7 +432,9 @@
 {
     productListWrapper = wrapper;
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (productListWrapper.count) {
+        if ( ! productListWrapper) {
+            [self showLoadingView];
+        } else if (productListWrapper.count) {
             [self hideAllEmptyViews];
         } else {
             [self showEmptyView];
@@ -178,89 +445,32 @@
 
 - (void)setProductSummaries:(id<CSProductSummaryList>)products
 {
-    [self setProductListWrapper:[CSProductSummaryListWrapper wrapperWithProducts:products]];
+    [self setProductListWrapper:[CSProductSummaryListWrapper
+                                 wrapperWithProducts:products]];
 }
 
 - (void)setProducts:(id<CSProductList>)products
 {
-    [self setProductListWrapper:[CSProductListWrapper wrapperWithProducts:products]];
+    [self setProductListWrapper:[CSProductListWrapper
+                                 wrapperWithProducts:products]];
 }
 
 - (void)setRetailer:(id<CSRetailer>)retailer
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
-    self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes
-                                                        retailer:retailer];
-    if (query) {
-        self.title = [NSString stringWithFormat:@"Search for '%@' at %@",
-                      query, retailer.name];
-    } else {
-        self.title = retailer.name;
-    }
-    
-    [self setLoadingState];
-    
-    if (query) {
-        [retailer getProductsWithQuery:query
-                              callback:^(id<CSProductListPage> firstPage,
-                                         NSError *error)
-         {
-            if (error) {
-                [self setErrorState];
-                return;
-            }
-            
-            self.products = firstPage.productList;
-        }];
-    } else {
-        [retailer getProducts:^(id<CSProductListPage> firstPage,
-                                NSError *error)
-         {
-            if (error) {
-                [self setErrorState];
-                return;
-            }
-            
-            self.products = firstPage.productList;
-        }];
-    }
+    self.searchState = [[CSRetailerProductSearchState alloc]
+                        initWithRetailer:retailer likes:likes query:query];
+    [self.searchState apply:self];
 }
 
 - (void)setGroup:(id<CSGroup>)group
            likes:(id<CSLikeList>)likes
            query:(NSString *)query
 {
-    self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes];
-    if (query) {
-        self.title = [NSString stringWithFormat:@"Search for '%@'", query];
-    } else {
-        self.title = @"Top Products";
-    }
-    [self setLoadingState];
-    if (query) {
-        [group getProductsWithQuery:query
-                           callback:^(id<CSProductListPage> firstPage,
-                                      NSError *error)
-        {
-            if (error) {
-                [self setErrorState];
-                return;
-            }
-            
-            [self setProducts:firstPage.productList];
-        }];
-    } else {
-        [group getProducts:^(id<CSProductListPage> firstPage, NSError *error)
-        {
-            if (error) {
-                [self setErrorState];
-                return;
-            }
-            
-            [self setProducts:firstPage.productList];
-        }];
-    }
+    self.searchState = [[CSGroupProductSearchState alloc]
+                        initWithGroup:group likes:likes query:query];
+    [self.searchState apply:self];
 }
 
 
@@ -268,39 +478,9 @@
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
-    self.priceContext = [[CSPriceContext alloc] initWithLikeList:likes];
-    if (query) {
-        self.title = [NSString stringWithFormat:@"Search for '%@' in %@",
-                      query, category.name];
-    } else {
-        self.title = category.name;
-    }
-
-    [self setLoadingState];
-    if (query) {
-        [category getProductsWithQuery:query
-                              callback:^(id<CSProductListPage> firstPage,
-                                         NSError *error)
-         {
-             if (error) {
-                 [self setErrorState];
-                 return;
-             }
-             
-             [self setProducts:firstPage.productList];
-         }];
-    } else {
-        [category getProducts:^(id<CSProductListPage> firstPage,
-                                NSError *error)
-        {
-            if (error) {
-                [self setErrorState];
-                return;
-            }
-            
-            [self setProducts:firstPage.productList];
-        }];
-    }
+    self.searchState = [[CSCategoryProductSearchState alloc]
+                        initWithCategory:category likes:likes query:query];
+    [self.searchState apply:self];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -436,6 +616,32 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         self.errorView.frame = self.view.bounds;
         self.emptyView.frame = self.view.bounds;
     }];
+}
+
+#pragma mark - Search Bar
+
+- (void)addSearchToNavigationBar
+{
+    self.searchBarController = [[CSSearchBarController alloc]
+                                initWithPlaceholder:@"Search Products"
+                                navigationItem:self.navigationItem];
+    self.searchBarController.query = self.searchState.query;
+    self.searchBarController.delegate = self;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSString *query = searchBar.text;
+    if ( ! [query length]) {
+        query = 0;
+    }
+    
+    id<CSProductSearchState> newState = [self.searchState stateWithQuery:query];
+    if (newState != self.searchState) {
+        self.searchState = newState;
+        [self setProductListWrapper:nil];
+        [self.searchState apply:self];
+    }
 }
 
 @end
