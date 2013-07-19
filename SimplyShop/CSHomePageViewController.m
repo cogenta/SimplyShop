@@ -112,8 +112,6 @@
 
 - (void)prepareRootDashboard
 {
-    [self addSearchToNavigationBar];
-    
     self.topProductsCell = [[CSProductSummariesCell alloc]
                             initWithStyle:UITableViewCellStyleDefault
                             reuseIdentifier:nil];
@@ -140,8 +138,6 @@
 
 - (void)prepareCategoryDashboard
 {
-    [self addSearchToNavigationBar];
-
     self.categoryProductsCell = [[CSProductSummariesCell alloc]
                                  initWithStyle:UITableViewCellStyleDefault
                                  reuseIdentifier:nil];
@@ -195,7 +191,6 @@
 
 - (void)prepareRetailerDashboard
 {
-    [self addSearchToNavigationBar];
     self.retailerProductsCell = [[CSProductSummariesCell alloc]
                                  initWithStyle:UITableViewCellStyleDefault
                                  reuseIdentifier:nil];
@@ -234,6 +229,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self addSearchToNavigationBar];
     
     if (self.category) {
         [self prepareCategoryDashboard];
