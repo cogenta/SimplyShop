@@ -633,7 +633,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *query = searchBar.text;
     if ( ! [query length]) {
-        query = 0;
+        query = nil;
     }
     
     id<CSProductSearchState> newState = [self.searchState stateWithQuery:query];
@@ -642,6 +642,21 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         [self setProductListWrapper:nil];
         [self.searchState apply:self];
     }
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSString *query = searchBar.text;
+    if ( ! [query length]) {
+        query = nil;
+    }
+    
+    id<CSProductSearchState> newState = [self.searchState stateWithQuery:query];
+    if (newState != self.searchState) {
+        self.searchState = newState;
+        [self setProductListWrapper:nil];
+        [self.searchState apply:self];
+    }    
 }
 
 @end

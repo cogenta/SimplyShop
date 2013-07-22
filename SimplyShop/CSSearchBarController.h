@@ -22,6 +22,8 @@
 
 @protocol CSSearchBarControllerDelegate <NSObject>
 
+@optional
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText;
 
 @end

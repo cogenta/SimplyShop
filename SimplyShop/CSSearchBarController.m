@@ -88,13 +88,27 @@ const static CGRect kLargeSearchBarFrame = {
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
-    [self.delegate searchBarSearchButtonClicked:searchBar];
+    SEL sel = @selector(searchBarSearchButtonClicked:);
+    if ([self.delegate respondsToSelector:sel]) {
+        [self.delegate searchBarSearchButtonClicked:searchBar];
+    }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     if ( ! [searchBar.text length]) {
-        [self.delegate searchBarSearchButtonClicked:searchBar];
+        SEL sel = @selector(searchBarSearchButtonClicked:);
+        if ([self.delegate respondsToSelector:sel]) {
+            [self.delegate searchBarSearchButtonClicked:searchBar];
+        }
+    }
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    SEL sel = @selector(searchBar:textDidChange:);
+    if ([self.delegate respondsToSelector:sel]) {
+        [self.delegate searchBar:searchBar textDidChange:searchText];
     }
 }
 
