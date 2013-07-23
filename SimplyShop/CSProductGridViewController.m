@@ -380,49 +380,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section
-{
-    return self.productListWrapper.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CSProductSummaryCell *cell =
-    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSProductSummaryPriceCell"
-                                              forIndexPath:indexPath];
-    
-    if (cell.address != indexPath) {
-        [self productSummaryCell:cell needsReloadWithAddress:indexPath];
-    }
-    
-    return cell;
-}
-
-- (void)productSummaryCell:(CSProductSummaryCell *)cell
-    needsReloadWithAddress:(NSObject *)address
-{
-    cell.priceContext = self.priceContext;
-    [cell setLoadingAddress:address];
-    [self.productListWrapper getProductWrapperAtIndex:((NSIndexPath *)address).row
-                                             callback:^(CSProductWrapper *result,
-                                                        NSError *error)
-     {
-         if (error) {
-             [cell setError:error address:address];
-             return;
-         }
-         
-         [cell setWrapper:result address:address];
-     }];
-}
-
 - (id<CSProductListWrapper>)productListWrapper
 {
     return productListWrapper;
@@ -481,13 +438,6 @@
     self.searchState = [[CSCategoryProductSearchState alloc]
                         initWithCategory:category likes:likes query:query];
     [self.searchState apply:self];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView
-didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary *address = @{@"index": @(indexPath.row)};
-    [self performSegueWithIdentifier:@"showProduct" sender:address];
 }
 
 - (void)showErrorAlert
@@ -616,6 +566,61 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         self.errorView.frame = self.view.bounds;
         self.emptyView.frame = self.view.bounds;
     }];
+}
+
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section
+{
+    return self.productListWrapper.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CSProductSummaryCell *cell =
+    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSProductSummaryPriceCell"
+                                              forIndexPath:indexPath];
+    
+    if (cell.address != indexPath) {
+        [self productSummaryCell:cell needsReloadWithAddress:indexPath];
+    }
+    
+    return cell;
+}
+
+- (void)productSummaryCell:(CSProductSummaryCell *)cell
+    needsReloadWithAddress:(NSObject *)address
+{
+    cell.priceContext = self.priceContext;
+    [cell setLoadingAddress:address];
+    [self.productListWrapper getProductWrapperAtIndex:((NSIndexPath *)address).row
+                                             callback:^(CSProductWrapper *result,
+                                                        NSError *error)
+     {
+         if (error) {
+             [cell setError:error address:address];
+             return;
+         }
+         
+         [cell setWrapper:result address:address];
+     }];
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *address = @{@"index": @(indexPath.row)};
+    [self performSegueWithIdentifier:@"showProduct" sender:address];
 }
 
 #pragma mark - Search Bar
