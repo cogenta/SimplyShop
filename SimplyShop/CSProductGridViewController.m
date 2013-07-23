@@ -14,10 +14,13 @@
 #import "CSProductWrapper.h"
 #import "CSEmptyProductGridView.h"
 #import "CSSearchBarController.h"
+#import "CSProductSearchStateTitleFormatter.h"
 
 @protocol CSProductSearchState <NSObject>
 
 @property (readonly) NSString *query;
+
+- (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter;
 
 - (id<CSProductSearchState>)stateWithQuery:(NSString *)query;
 - (void)apply:(CSProductGridViewController *)controller;
@@ -67,17 +70,19 @@
                                                             query:query];
 }
 
+- (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
+{
+    if (self.query) {
+        return [formatter titleWithRetailer:self.retailer query:self.query];
+    }
+    
+    return [formatter titleWithRetailer:self.retailer];
+}
+
 - (void)apply:(CSProductGridViewController *)controller
 {
     controller.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likes
                                                               retailer:self.retailer];
-    if (self.query) {
-        controller.title = [NSString stringWithFormat:@"Search for '%@' at %@",
-                            self.query, self.retailer.name];
-    } else {
-        controller.title = self.retailer.name;
-    }
-    
     [controller setLoadingState];
     
     if (self.query) {
@@ -150,16 +155,19 @@
                                                       query:query];
 }
 
+- (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
+{
+    if (self.query) {
+        return [formatter titleWithQuery:self.query];
+    }
+    
+    return [formatter title];
+}
+
 - (void)apply:(CSProductGridViewController *)controller
 {
     controller.priceContext = [[CSPriceContext alloc]
                                initWithLikeList:self.likes];
-    if (self.query) {
-        controller.title = [NSString stringWithFormat:@"Search for '%@'",
-                            self.query];
-    } else {
-        controller.title = @"Top Products";
-    }
     [controller setLoadingState];
     if (self.query) {
         [self.group getProductsWithQuery:self.query
@@ -231,17 +239,19 @@
                                                             query:query];
 }
 
+- (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
+{
+    if (self.query) {
+        return [formatter titleWithCategory:self.category query:self.query];
+    }
+    
+    return [formatter titleWithCategory:self.category];
+}
+
 - (void)apply:(CSProductGridViewController *)controller
 {
     controller.priceContext = [[CSPriceContext alloc]
                                initWithLikeList:self.likes];
-    if (self.query) {
-        controller.title = [NSString stringWithFormat:@"Search for '%@' in %@",
-                            self.query, self.category.name];
-    } else {
-        controller.title = self.category.name;
-    }
-    
     [controller setLoadingState];
     if (self.query) {
         [self.category getProductsWithQuery:self.query
@@ -364,6 +374,7 @@
     self.searchState = [[CSRetailerProductSearchState alloc]
                         initWithRetailer:retailer likes:likes query:query];
     [self.searchState apply:self];
+    self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
 }
 
 - (void)setGroup:(id<CSGroup>)group
@@ -373,6 +384,7 @@
     self.searchState = [[CSGroupProductSearchState alloc]
                         initWithGroup:group likes:likes query:query];
     [self.searchState apply:self];
+    self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
 }
 
 
@@ -383,6 +395,7 @@
     self.searchState = [[CSCategoryProductSearchState alloc]
                         initWithCategory:category likes:likes query:query];
     [self.searchState apply:self];
+    self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
 }
 
 - (void)showErrorAlert
@@ -591,6 +604,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         self.searchState = newState;
         [self setProductListWrapper:nil];
         [self.searchState apply:self];
+        self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
     }
 }
 
@@ -606,7 +620,8 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         self.searchState = newState;
         [self setProductListWrapper:nil];
         [self.searchState apply:self];
-    }    
+        self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
+    }
 }
 
 @end

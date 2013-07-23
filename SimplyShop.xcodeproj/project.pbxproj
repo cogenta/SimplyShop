@@ -92,6 +92,7 @@
 		BE8EB7411781D6A400F93A3D /* CSDashboardTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8EB7401781D6A400F93A3D /* CSDashboardTableView.m */; };
 		BE8EB7441782DE6500F93A3D /* CSPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8EB7431782DE6500F93A3D /* CSPriceCell.m */; };
 		BE8EB7481782DF1D00F93A3D /* CSPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE8EB7471782DF1C00F93A3D /* CSPriceCell.xib */; };
+		BE922C93179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C92179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m */; };
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
 		BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */; };
 		BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E1E1768725800081E33 /* CSRetailersCell.m */; };
@@ -255,6 +256,8 @@
 		BE8EB7421782DE6400F93A3D /* CSPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPriceCell.h; sourceTree = "<group>"; };
 		BE8EB7431782DE6500F93A3D /* CSPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPriceCell.m; sourceTree = "<group>"; };
 		BE8EB7471782DF1C00F93A3D /* CSPriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSPriceCell.xib; sourceTree = "<group>"; };
+		BE922C91179EBFFF00448365 /* CSProductSearchStateTitleFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductSearchStateTitleFormatter.h; sourceTree = "<group>"; };
+		BE922C92179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductSearchStateTitleFormatter.m; sourceTree = "<group>"; };
 		BEA6DA36170EDD82001AC881 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BEA6DA38170EE8C6001AC881 /* CSRoundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRoundImageView.h; sourceTree = "<group>"; };
 		BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRoundImageView.m; sourceTree = "<group>"; };
@@ -496,6 +499,8 @@
 				BE6E2F521733FDAF00DCE47E /* CSPriceContext.m */,
 				BEC1E2B8173BCFFE00D12EF2 /* CSProductWrapper.h */,
 				BEC1E2B9173BCFFE00D12EF2 /* CSProductWrapper.m */,
+				BE922C91179EBFFF00448365 /* CSProductSearchStateTitleFormatter.h */,
+				BE922C92179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -875,6 +880,7 @@
 				BE8EB7411781D6A400F93A3D /* CSDashboardTableView.m in Sources */,
 				BE8EB7441782DE6500F93A3D /* CSPriceCell.m in Sources */,
 				BE7E39BB179842C800E2A139 /* CSSearchBarController.m in Sources */,
+				BE922C93179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
