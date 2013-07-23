@@ -59,12 +59,12 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <outlet property="delegate" destination="Tla-Ne-hRZ" id="LJ3-vM-e5J"/>
+                                            <outlet property="delegate" destination="0xs-xM-TrT" id="cSs-Xr-oLP"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="Tla-Ne-hRZ" id="0N6-4I-X9l"/>
+                                    <outlet property="dataSource" destination="0xs-xM-TrT" id="5mR-o2-6h2"/>
                                     <outlet property="delegate" destination="Tla-Ne-hRZ" id="eVd-Km-XRN"/>
                                 </connections>
                             </collectionView>
@@ -80,11 +80,13 @@
                     <navigationItem key="navigationItem" id="eMn-l0-9Iy"/>
                     <connections>
                         <outlet property="collectionView" destination="LGW-7A-6RE" id="P0x-s5-obT"/>
+                        <outlet property="dataSource" destination="0xs-xM-TrT" id="B6s-R9-Wnu"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="Ch1-bg-3XV"/>
                         <segue destination="aYb-e4-eYg" kind="unwind" identifier="doneShowProductsGrid" unwindAction="doneShowProductsGrid:" id="EDH-xx-5ve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sEg-xk-5d8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="0xs-xM-TrT" customClass="CSProductGridDataSource"/>
             </objects>
             <point key="canvasLocation" x="-324" y="-2062"/>
         </scene>
@@ -473,11 +475,15 @@
                 <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
+        <class className="CSProductGridDataSource" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductGridDataSource.h"/>
+        </class>
         <class className="CSProductGridViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductGridViewController.h"/>
             <relationships>
                 <relationship kind="action" name="doneShowProduct:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="dataSource" candidateClass="CSProductGridDataSource"/>
             </relationships>
         </class>
         <class className="CSProductSidebarView" superclassName="UIView">

@@ -7,8 +7,6 @@
 //
 
 #import "CSProductGridViewController.h"
-#import <CSApi/CSAPI.h>
-#import "CSProductSummaryCell.h"
 #import "CSProductDetailViewController.h"
 #import "CSPriceContext.h"
 #import "CSProductWrapper.h"
@@ -16,9 +14,9 @@
 #import "CSSearchBarController.h"
 #import "CSProductSearchStateTitleFormatter.h"
 #import "CSProductSearchState.h"
+#import "CSProductGridDataSource.h"
 
 @interface CSProductGridViewController () <
-    CSProductSummaryCellDelegate,
     CSSearchBarControllerDelegate
 >
 
@@ -48,8 +46,6 @@
 
 @implementation CSProductGridViewController
 
-@synthesize productListWrapper;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -71,18 +67,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (CSPriceContext *)priceContext
+{
+    return self.dataSource.priceContext;
+}
+
+- (void)setPriceContext:(CSPriceContext *)priceContext
+{
+    self.dataSource.priceContext = priceContext;
+}
+
 - (id<CSProductListWrapper>)productListWrapper
 {
-    return productListWrapper;
+    return self.dataSource.productListWrapper;
 }
 
 - (void)setProductListWrapper:(id<CSProductListWrapper>)wrapper
 {
-    productListWrapper = wrapper;
+    self.dataSource.productListWrapper = wrapper;
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ( ! productListWrapper) {
+        if ( ! wrapper) {
             [self showLoadingView];
-        } else if (productListWrapper.count) {
+        } else if (wrapper.count) {
             [self hideAllEmptyViews];
         } else {
             [self showEmptyView];
@@ -170,8 +176,8 @@
 {
     if ([segue.identifier isEqualToString:@"showProduct"]) {
         CSProductDetailViewController *vc = (id) segue.destinationViewController;
-        vc.priceContext = self.priceContext;
-        
+        vc.priceContext = self.searchState.priceContext;
+
         NSDictionary *address = sender;
         NSInteger index = [address[@"index"] integerValue];
         [vc setProductListWrapper:self.productListWrapper index:index];
@@ -272,52 +278,6 @@
         self.errorView.frame = self.view.bounds;
         self.emptyView.frame = self.view.bounds;
     }];
-}
-
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section
-{
-    return self.productListWrapper.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CSProductSummaryCell *cell =
-    [collectionView dequeueReusableCellWithReuseIdentifier:@"CSProductSummaryPriceCell"
-                                              forIndexPath:indexPath];
-    
-    if (cell.address != indexPath) {
-        [self productSummaryCell:cell needsReloadWithAddress:indexPath];
-    }
-    
-    return cell;
-}
-
-- (void)productSummaryCell:(CSProductSummaryCell *)cell
-    needsReloadWithAddress:(NSObject *)address
-{
-    cell.priceContext = self.priceContext;
-    [cell setLoadingAddress:address];
-    [self.productListWrapper getProductWrapperAtIndex:((NSIndexPath *)address).row
-                                             callback:^(CSProductWrapper *result,
-                                                        NSError *error)
-     {
-         if (error) {
-             [cell setError:error address:address];
-             return;
-         }
-         
-         [cell setWrapper:result address:address];
-     }];
 }
 
 #pragma mark - UICollectionViewDelegate

@@ -16,11 +16,13 @@
 @protocol CSCategory;
 
 @class CSPriceContext;
+@class CSProductGridDataSource;
 
 @interface CSProductGridViewController : UIViewController
-<UICollectionViewDataSource, UICollectionViewDelegate>
+<UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) IBOutlet CSProductGridDataSource *dataSource;
 
 - (void)setRetailer:(id<CSRetailer>)retailer
               likes:(id<CSLikeList>)likes
