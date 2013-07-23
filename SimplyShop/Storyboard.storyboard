@@ -37,7 +37,7 @@
         <!--Product Grid View Controller-->
         <scene sceneID="JuO-rQ-2s5">
             <objects>
-                <viewController id="Tla-Ne-hRZ" customClass="CSProductGridViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CSProductGridViewController" id="Tla-Ne-hRZ" customClass="CSProductGridViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NEy-LX-lz2">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -587,6 +587,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZYU-Pi-qDu"/>
+        <segue reference="Ch1-bg-3XV"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -86,6 +86,7 @@
 @property (strong, nonatomic) NSObject<CSRetailerList> *categoryRetailers;
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
+@property (strong, nonatomic) CSProductGridViewController *grid;
 
 - (void)loadRetailers;
 - (void)loadCellsFromGroup:(NSObject<CSGroup> *)group;
@@ -831,12 +832,36 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.searchBarController.delegate = self;
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    if ( ! [searchBar.text length]) {
+    NSString *query = searchBar.text;
+    if ( ! [query length]) {
+        query = nil;
+    }
+    
+    if ( ! query) {
+        [self.grid.view removeFromSuperview];
+        self.grid = nil;
         return;
     }
-    [self performSegueWithIdentifier:@"showTopProductsGrid" sender:searchBar];
+    
+    if ( ! self.grid) {
+        self.grid = [self.storyboard instantiateViewControllerWithIdentifier:@"CSProductGridViewController"];
+        self.grid.view.frame = self.view.bounds;
+        [self.view.superview addSubview:self.grid.view];
+    }
+    
+    if (self.category) {
+        [self.grid setCategory:self.category likes:self.likeList query:query];
+        self.grid.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
+                                                          retailer:self.retailer];
+    } else if (self.retailer) {
+        [self.grid setRetailer:self.retailer likes:self.likeList query:query];
+        self.grid.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
+                                                          retailer:self.retailer];
+    } else {
+        [self.grid setGroup:self.group likes:self.likeList query:query];
+    }
 }
 
 @end
