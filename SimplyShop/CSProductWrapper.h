@@ -38,3 +38,12 @@
 + (instancetype) wrapperWithProducts:(id<CSProductList>)products;
 
 @end
+
+
+@interface CSProductSummaryListWrapper : NSObject <CSProductListWrapper>
+
+@property id<CSProductSummaryList> products;
+
++ (instancetype) wrapperWithProducts:(id<CSProductSummaryList>)products;
+
+@end

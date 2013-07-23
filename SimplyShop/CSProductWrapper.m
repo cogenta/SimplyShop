@@ -150,3 +150,59 @@
 }
 
 @end
+
+
+@implementation CSProductSummaryListWrapper
+
++ (instancetype)wrapperWithProducts:(id<CSProductSummaryList>)products
+{
+    CSProductSummaryListWrapper *result = [[CSProductSummaryListWrapper alloc] init];
+    result.products = products;
+    return result;
+}
+
+- (NSUInteger)count
+{
+    return [self.products count];
+}
+
+- (void)getProductWrapperAtIndex:(NSUInteger)index
+                        callback:(void (^)(CSProductWrapper *, NSError *))callback
+{
+    [self.products getProductSummaryAtIndex:index
+                                   callback:^(id<CSProductSummary> result, NSError *error)
+     {
+         if (error) {
+             callback(nil, error);
+             return;
+         }
+         
+         callback([CSProductWrapper wrapperForSummary:result], nil);
+     }];
+}
+
+- (void)getProductAtIndex:(NSUInteger)index
+                 callback:(void (^)(id<CSProduct>, NSError *))callback
+{
+    [self.products getProductSummaryAtIndex:index
+                                   callback:^(id<CSProductSummary> result,
+                                              NSError *error)
+     {
+         if (error) {
+             callback(nil, error);
+             return;
+         }
+         
+         [result getProduct:callback];
+     }];
+}
+
+- (void)getProductSummaryAtIndex:(NSUInteger)index
+                        callback:(void (^)(id<CSProductSummary>,
+                                           NSError *))callback
+{
+    [self.products getProductSummaryAtIndex:index callback:callback];
+}
+
+@end
+
