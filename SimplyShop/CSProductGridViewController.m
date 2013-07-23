@@ -19,11 +19,12 @@
 @protocol CSProductSearchState <NSObject>
 
 @property (readonly) NSString *query;
+@property (readonly) CSPriceContext *priceContext;
 
 - (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter;
 
 - (id<CSProductSearchState>)stateWithQuery:(NSString *)query;
-- (void)apply:(CSProductGridViewController *)controller;
+- (void)getProducts:(void (^)(id<CSProductList>, NSError *))callback;
 
 @end
 
@@ -79,34 +80,26 @@
     return [formatter titleWithRetailer:self.retailer];
 }
 
-- (void)apply:(CSProductGridViewController *)controller
+- (CSPriceContext *)priceContext
 {
-    controller.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likes
-                                                              retailer:self.retailer];
-    [controller setLoadingState];
-    
+    return [[CSPriceContext alloc] initWithLikeList:self.likes
+                                           retailer:self.retailer];
+}
+
+- (void)getProducts:(void (^)(id<CSProductList>, NSError *))callback
+{
     if (self.query) {
         [self.retailer getProductsWithQuery:self.query
                                    callback:^(id<CSProductListPage> firstPage,
                                               NSError *error)
          {
-             if (error) {
-                 [controller setErrorState];
-                 return;
-             }
-             
-             controller.products = firstPage.productList;
+             callback(firstPage.productList, error);
          }];
     } else {
         [self.retailer getProducts:^(id<CSProductListPage> firstPage,
                                      NSError *error)
          {
-             if (error) {
-                 [controller setErrorState];
-                 return;
-             }
-             
-             controller.products = firstPage.productList;
+             callback(firstPage.productList, error);
          }];
     }
 }
@@ -164,33 +157,25 @@
     return [formatter title];
 }
 
-- (void)apply:(CSProductGridViewController *)controller
+- (CSPriceContext *)priceContext
 {
-    controller.priceContext = [[CSPriceContext alloc]
-                               initWithLikeList:self.likes];
-    [controller setLoadingState];
+    return [[CSPriceContext alloc] initWithLikeList:self.likes];
+}
+
+- (void)getProducts:(void (^)(id<CSProductList>, NSError *))callback
+{
     if (self.query) {
         [self.group getProductsWithQuery:self.query
                                 callback:^(id<CSProductListPage> firstPage,
                                            NSError *error)
          {
-             if (error) {
-                 [controller setErrorState];
-                 return;
-             }
-             
-             [controller setProducts:firstPage.productList];
+             callback(firstPage.productList, error);
          }];
     } else {
         [self.group getProducts:^(id<CSProductListPage> firstPage,
                                   NSError *error)
          {
-             if (error) {
-                 [controller setErrorState];
-                 return;
-             }
-             
-             [controller setProducts:firstPage.productList];
+             callback(firstPage.productList, error);
          }];
     }
 }
@@ -248,33 +233,25 @@
     return [formatter titleWithCategory:self.category];
 }
 
-- (void)apply:(CSProductGridViewController *)controller
+- (CSPriceContext *)priceContext
 {
-    controller.priceContext = [[CSPriceContext alloc]
-                               initWithLikeList:self.likes];
-    [controller setLoadingState];
+    return [[CSPriceContext alloc] initWithLikeList:self.likes];
+}
+
+- (void)getProducts:(void (^)(id<CSProductList>, NSError *))callback
+{
     if (self.query) {
         [self.category getProductsWithQuery:self.query
                                    callback:^(id<CSProductListPage> firstPage,
                                               NSError *error)
          {
-             if (error) {
-                 [controller setErrorState];
-                 return;
-             }
-             
-             [controller setProducts:firstPage.productList];
+             callback(firstPage.productList, error);
          }];
     } else {
         [self.category getProducts:^(id<CSProductListPage> firstPage,
                                      NSError *error)
          {
-             if (error) {
-                 [controller setErrorState];
-                 return;
-             }
-             
-             [controller setProducts:firstPage.productList];
+             callback(firstPage.productList, error);
          }];
     }
 }
@@ -367,14 +344,30 @@
                                  wrapperWithProducts:products]];
 }
 
+- (void)setSearchState:(id<CSProductSearchState>)searchState
+{
+    _searchState = searchState;
+    
+    [self setLoadingState];
+    [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        self.products = products;
+    }];
+    
+    self.priceContext = searchState.priceContext;
+    self.title = [searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
+}
+
 - (void)setRetailer:(id<CSRetailer>)retailer
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
     self.searchState = [[CSRetailerProductSearchState alloc]
                         initWithRetailer:retailer likes:likes query:query];
-    [self.searchState apply:self];
-    self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
 }
 
 - (void)setGroup:(id<CSGroup>)group
@@ -383,8 +376,6 @@
 {
     self.searchState = [[CSGroupProductSearchState alloc]
                         initWithGroup:group likes:likes query:query];
-    [self.searchState apply:self];
-    self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
 }
 
 
@@ -394,8 +385,6 @@
 {
     self.searchState = [[CSCategoryProductSearchState alloc]
                         initWithCategory:category likes:likes query:query];
-    [self.searchState apply:self];
-    self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
 }
 
 - (void)showErrorAlert
@@ -603,8 +592,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     if (newState != self.searchState) {
         self.searchState = newState;
         [self setProductListWrapper:nil];
-        [self.searchState apply:self];
-        self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
     }
 }
 
@@ -619,8 +606,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     if (newState != self.searchState) {
         self.searchState = newState;
         [self setProductListWrapper:nil];
-        [self.searchState apply:self];
-        self.title = [self.searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
     }
 }
 
