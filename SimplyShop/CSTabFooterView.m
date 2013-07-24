@@ -41,7 +41,6 @@
 {
     backgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
     [self addSubview:self.backgroundImageView];
-    [self layoutSubviews];
 }
 
 - (void)setBackgroundImage:(UIImage *)image
