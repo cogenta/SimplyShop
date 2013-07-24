@@ -15,6 +15,7 @@
 #import "CSProductSearchStateTitleFormatter.h"
 #import "CSProductSearchState.h"
 #import "CSProductGridDataSource.h"
+#import "CSPlaceholderView.h"
 
 @interface CSProductGridViewController () <
     CSSearchBarControllerDelegate
@@ -22,23 +23,8 @@
 
 @property (strong, nonatomic) id<CSProductListWrapper> productListWrapper;
 
-@property (strong, nonatomic) CSEmptyProductGridView *emptyView;
-@property (strong, nonatomic) CSEmptyProductGridView *errorView;
-@property (strong, nonatomic) CSEmptyProductGridView *loadingView;
-
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
 @property (strong, nonatomic) id<CSProductSearchState> searchState;
-
-- (void)hideAllEmptyViews;
-
-- (void)showEmptyView;
-- (void)hideEmptyView;
-
-- (void)showErrorView;
-- (void)hideErrorView;
-
-- (void)showLoadingView;
-- (void)hideLoadingView;
 
 - (void)addSearchToNavigationBar;
 
@@ -58,6 +44,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.placeholderView.emptyViewTitle = @"No Products";
+    self.placeholderView.errorViewDetail = @"Failed to communicate with server";
+    [self.placeholderView showLoadingView];
+
 	[self addSearchToNavigationBar];
 }
 
@@ -87,11 +77,12 @@
     self.dataSource.productListWrapper = wrapper;
     dispatch_async(dispatch_get_main_queue(), ^{
         if ( ! wrapper) {
-            [self showLoadingView];
+            [self.placeholderView showLoadingView];
         } else if (wrapper.count) {
-            [self hideAllEmptyViews];
+            [self.placeholderView showContentView];
         } else {
-            [self showEmptyView];
+            self.placeholderView.emptyViewDetail = [self detailForEmptyView];
+            [self.placeholderView showEmptyView];
         }
         [self.collectionView reloadData];
     });
@@ -113,10 +104,10 @@
 {
     _searchState = searchState;
     
-    [self setLoadingState];
+    [self.placeholderView showLoadingView];
     [searchState getProducts:^(id<CSProductList> products, NSError *error) {
         if (error) {
-            [self setErrorState];
+            [self.placeholderView showErrorView];
             return;
         }
         
@@ -152,26 +143,6 @@
                         initWithCategory:category likes:likes query:query];
 }
 
-- (void)showErrorAlert
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                    message:@"Failed to communicate with the server."
-                                                   delegate:self
-                                          cancelButtonTitle:@"Retry"
-                                          otherButtonTitles:nil];
-    [alert show];
-}
-
-- (void)setErrorState
-{
-    [self showErrorView];
-}
-
-- (void)setLoadingState
-{
-    [self showLoadingView];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showProduct"]) {
@@ -199,85 +170,6 @@
     }
     
     return @"No products were found for your search.";
-}
-
-- (void)showEmptyView
-{
-    [self hideAllEmptyViews];
-    
-    self.emptyView = [[CSEmptyProductGridView alloc]
-                      initWithFrame:self.view.bounds];
-    
-    self.emptyView.frame = self.view.bounds;
-    self.emptyView.detailText = [self detailForEmptyView];
-    [self.view addSubview:self.emptyView];
-}
-
-- (void)hideEmptyView
-{
-    [self.emptyView removeFromSuperview];
-    self.emptyView = nil;
-}
-
-- (void)showErrorView
-{
-    [self hideAllEmptyViews];
-    
-    self.errorView = [[CSEmptyProductGridView alloc]
-                      initWithFrame:self.view.bounds];
-    
-    self.errorView.frame = self.view.bounds;
-    self.errorView.headerText = @"Error";
-    self.errorView.detailText = @"Failed to communicate with server";
-    [self.view addSubview:self.errorView];
-}
-
-- (void)hideErrorView
-{
-    [self.errorView removeFromSuperview];
-    self.errorView = nil;
-}
-
-- (void)showLoadingView
-{
-    [self hideAllEmptyViews];
-    
-    self.loadingView = [[CSEmptyProductGridView alloc]
-                        initWithFrame:self.view.bounds];
-    
-    self.loadingView.frame = self.view.bounds;
-    self.loadingView.headerText = @"Loading";
-    self.loadingView.detailText = nil;
-    self.loadingView.active = YES;
-    [self.view addSubview:self.loadingView];
-}
-
-- (void)hideLoadingView
-{
-    [self.loadingView removeFromSuperview];
-    self.loadingView = nil;
-}
-
-- (void)hideAllEmptyViews
-{
-    [self hideEmptyView];
-    [self hideErrorView];
-    [self hideLoadingView];
-}
-
-- (void)viewDidLayoutSubviews
-{
-    [UIView animateWithDuration:0.0 animations:^{
-        CGPoint center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                                     CGRectGetMidY(self.view.bounds));
-        self.loadingView.center = center;
-        self.errorView.center = center;
-        self.emptyView.center = center;
-    } completion:^(BOOL finished) {
-        self.loadingView.frame = self.view.bounds;
-        self.errorView.frame = self.view.bounds;
-        self.emptyView.frame = self.view.bounds;
-    }];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -310,7 +202,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     id<CSProductSearchState> newState = [self.searchState stateWithQuery:query];
     if (newState != self.searchState) {
         self.searchState = newState;
-        [self setProductListWrapper:nil];
     }
 }
 
@@ -324,7 +215,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     id<CSProductSearchState> newState = [self.searchState stateWithQuery:query];
     if (newState != self.searchState) {
         self.searchState = newState;
-        [self setProductListWrapper:nil];
     }
 }
 

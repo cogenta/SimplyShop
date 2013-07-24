@@ -281,6 +281,7 @@
                                    NSForegroundColorAttributeName:
                                        [UIColor colorWithHexString:@"#606060"],
                                    NSShadowAttributeName: emptyShadow};
+    empty.backgroundColor = [self collectionViewBackgroundColor];
     
     CSSidebarFooterButton *sidebarFooter = [CSSidebarFooterButton appearance];
     [sidebarFooter setTitleFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0]];

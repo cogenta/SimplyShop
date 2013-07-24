@@ -15,6 +15,7 @@
 @protocol CSGroup;
 @protocol CSCategory;
 
+@class CSPlaceholderView;
 @class CSPriceContext;
 @class CSProductGridDataSource;
 
@@ -22,6 +23,7 @@
 <UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet CSPlaceholderView *placeholderView;
 @property (strong, nonatomic) IBOutlet CSProductGridDataSource *dataSource;
 
 - (void)setRetailer:(id<CSRetailer>)retailer
@@ -35,8 +37,6 @@
               query:(NSString *)query;
 - (void)setProductSummaries:(id<CSProductSummaryList>)products;
 - (void)setProducts:(id<CSProductList>)products;
-- (void)setErrorState;
-- (void)setLoadingState;
 
 @property (strong, nonatomic) CSPriceContext *priceContext;
 

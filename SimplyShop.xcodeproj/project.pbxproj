@@ -95,6 +95,7 @@
 		BE922C93179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C92179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m */; };
 		BE922C96179EC7A300448365 /* CSProductSearchState.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C95179EC7A200448365 /* CSProductSearchState.m */; };
 		BE922C99179EDB8700448365 /* CSProductGridDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C98179EDB8700448365 /* CSProductGridDataSource.m */; };
+		BE922C9C179EE40700448365 /* CSPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C9B179EE40700448365 /* CSPlaceholderView.m */; };
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
 		BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */; };
 		BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E1E1768725800081E33 /* CSRetailersCell.m */; };
@@ -264,6 +265,8 @@
 		BE922C95179EC7A200448365 /* CSProductSearchState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductSearchState.m; sourceTree = "<group>"; };
 		BE922C97179EDB8700448365 /* CSProductGridDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductGridDataSource.h; sourceTree = "<group>"; };
 		BE922C98179EDB8700448365 /* CSProductGridDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductGridDataSource.m; sourceTree = "<group>"; };
+		BE922C9A179EE40700448365 /* CSPlaceholderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPlaceholderView.h; sourceTree = "<group>"; };
+		BE922C9B179EE40700448365 /* CSPlaceholderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPlaceholderView.m; sourceTree = "<group>"; };
 		BEA6DA36170EDD82001AC881 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BEA6DA38170EE8C6001AC881 /* CSRoundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRoundImageView.h; sourceTree = "<group>"; };
 		BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRoundImageView.m; sourceTree = "<group>"; };
@@ -475,6 +478,8 @@
 				BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */,
 				BE6E2F4B1733EDBC00DCE47E /* UIImageView+CSImageSelection.h */,
 				BE6E2F4C1733EDBD00DCE47E /* UIImageView+CSImageSelection.m */,
+				BE922C9A179EE40700448365 /* CSPlaceholderView.h */,
+				BE922C9B179EE40700448365 /* CSPlaceholderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -893,6 +898,7 @@
 				BE922C93179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m in Sources */,
 				BE922C96179EC7A300448365 /* CSProductSearchState.m in Sources */,
 				BE922C99179EDB8700448365 /* CSProductGridDataSource.m in Sources */,
+				BE922C9C179EE40700448365 /* CSPlaceholderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
