@@ -10,11 +10,18 @@
 #import "CSCategoryCell.h"
 #import <CSApi/CSAPI.h>
 
+@interface CSCategoriesCell ()
+
+@property (strong, nonatomic) NSMutableDictionary *cache;
+
+@end
+
 @implementation CSCategoriesCell
 
 - (void)initialize
 {
     [super initialize];
+    self.cache = [[NSMutableDictionary alloc] init];
 
     [self addObserver:self
            forKeyPath:@"categories"
@@ -33,6 +40,7 @@
                        context:(void *)context
 {
     if ([keyPath isEqualToString:@"categories"]) {
+        self.cache = [[NSMutableDictionary alloc] init];
         [self reloadData];
         return;
     }
@@ -53,6 +61,24 @@
                      done:(void (^)(id, NSError *))done
 {
     [self.categories getCategoryAtIndex:index callback:done];
+}
+
+- (void)fetchModelWithAddress:(id)address
+                         done:(void (^)(id model, NSError *error))done
+{
+    id model = [self.cache objectForKey:address];
+    if ( ! model) {
+        [self fetchModelAtIndex:((NSIndexPath *)address).row done:^(id model, NSError *error) {
+            if ( ! model) {
+                done(model, error);
+                return;
+            }
+            [self.cache setObject:model forKey:address];
+            done(model, error);
+        }];
+    }
+    
+    done(model, nil);
 }
 
 - (NSInteger)modelCount
