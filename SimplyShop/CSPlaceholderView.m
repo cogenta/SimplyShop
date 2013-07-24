@@ -55,14 +55,25 @@
         self.loadingViewTitle = @"Loading";
     }
     
+    self.translatesAutoresizingMaskIntoConstraints = YES;
+    self.autoresizingMask = (UIViewAutoresizingFlexibleWidth
+                             | UIViewAutoresizingFlexibleHeight);
     [self showContentView];
+}
+
+- (void)activateView:(UIView *)view
+{
+    view.frame = self.bounds;
+    view.translatesAutoresizingMaskIntoConstraints = YES;
+    view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
+                             | UIViewAutoresizingFlexibleHeight);
+    [self addSubview:view];
 }
 
 - (void)showContentView
 {
     [self hideAllPlaceholderViews];
-    self.contentView.frame = self.bounds;
-    [self addSubview:self.contentView];
+    [self activateView:self.contentView];
 }
 
 - (void)showEmptyView
@@ -72,10 +83,10 @@
     self.emptyView = [[CSEmptyProductGridView alloc]
                       initWithFrame:self.bounds];
     
-    self.emptyView.frame = self.bounds;
     self.emptyView.headerText = self.emptyViewTitle;
     self.emptyView.detailText = self.emptyViewDetail;
-    [self addSubview:self.emptyView];
+
+    [self activateView:self.emptyView];
 }
 
 - (void)showErrorView
@@ -85,10 +96,10 @@
     self.errorView = [[CSEmptyProductGridView alloc]
                       initWithFrame:self.bounds];
     
-    self.errorView.frame = self.bounds;
     self.errorView.headerText = self.errorViewTitle;
     self.errorView.detailText = self.errorViewDetail;
-    [self addSubview:self.errorView];
+    
+    [self activateView:self.errorView];
 }
 
 - (void)showLoadingView
@@ -98,11 +109,11 @@
     self.loadingView = [[CSEmptyProductGridView alloc]
                         initWithFrame:self.bounds];
     
-    self.loadingView.frame = self.bounds;
     self.loadingView.headerText = self.loadingViewTitle;
     self.loadingView.detailText = self.loadingViewDetail;
     self.loadingView.active = YES;
-    [self addSubview:self.loadingView];
+    
+    [self activateView:self.loadingView];
 }
 
 - (void)hideContentView
@@ -135,31 +146,6 @@
     [self hideEmptyView];
     [self hideErrorView];
     [self hideLoadingView];
-}
-
-- (void)centerSubviews
-{
-    CGPoint center = CGPointMake(CGRectGetMidX(self.bounds),
-                                 CGRectGetMidY(self.bounds));
-    self.contentView.center = center;
-    self.loadingView.center = center;
-    self.errorView.center = center;
-    self.emptyView.center = center;
-}
-
-- (void)sizeSubviews
-{
-    self.contentView.frame = self.bounds;
-    self.loadingView.frame = self.bounds;
-    self.errorView.frame = self.bounds;
-    self.emptyView.frame = self.bounds;
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    [self centerSubviews];
-    [self sizeSubviews];
 }
 
 @end
