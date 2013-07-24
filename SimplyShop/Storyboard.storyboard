@@ -346,6 +346,7 @@
                     <navigationItem key="navigationItem" title="Dashboard" id="nVt-ve-mMv"/>
                     <connections>
                         <outlet property="gridView" destination="hbN-U6-4QK" id="pmk-wJ-3jX"/>
+                        <outlet property="placeholderView" destination="gGC-qF-4l8" id="kR8-Qz-dlB"/>
                         <outlet property="tableView" destination="ove-eW-Hz6" id="uD7-N7-vLj"/>
                         <segue destination="Tla-Ne-hRZ" kind="push" identifier="showTopProductsGrid" id="pPS-Gb-yAF"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="uc5-Vg-PGF"/>
@@ -485,6 +486,7 @@
                 <relationship kind="action" name="doneShowProduct:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="action" name="doneShowProductsGrid:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="outlet" name="gridView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="placeholderView" candidateClass="CSPlaceholderView"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>

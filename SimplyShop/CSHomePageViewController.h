@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class CSAPI;
+@class CSPlaceholderView;
 @protocol CSCategory;
 @protocol CSRetailer;
 
@@ -16,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *gridView;
+@property (weak, nonatomic) IBOutlet CSPlaceholderView *placeholderView;
 
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) id<CSCategory> category;

@@ -18,6 +18,7 @@
 #import "CSProductWrapper.h"
 #import <CSApi/CSAPI.h>
 #import "CSSearchBarController.h"
+#import "CSPlaceholderView.h"
 #import "UIView+CSKeyboardAwareness.h"
 
 @protocol CSHomePageRow <NSObject>
@@ -231,6 +232,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self addSearchToNavigationBar];
     
     if (self.category) {
@@ -290,12 +292,14 @@
 
 - (void)loadModel
 {
+    [self.placeholderView showLoadingView];
     [self.api login:^(id<CSUser> user, NSError *error) {
         if (error) {
             [self setErrorState];
             return;
         }
         
+        [self.placeholderView showContentView];
         self.user = user;
         [self loadRetailers];
     }];
@@ -471,6 +475,8 @@
 
 - (void)setErrorState
 {
+    self.placeholderView.errorViewDetail = @"Failed to communicate with the server.";
+    [self.placeholderView showErrorView];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Failed to communicate with the server."
                                                    delegate:self
