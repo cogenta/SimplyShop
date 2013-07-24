@@ -49,7 +49,7 @@ UIViewAnimationOptionsMake(UIViewAnimationCurve curve)
 
 -(void)CSKeyboardAwareness_keyboardDidShow:(NSNotification *)notification
 {
-    NSDictionary  *userInfo = [notification userInfo];
+    NSDictionary *userInfo = [notification userInfo];
     
     CGRect keyboardEndFrame;
     [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey]
@@ -65,7 +65,7 @@ UIViewAnimationOptionsMake(UIViewAnimationCurve curve)
 
 -(void)CSKeyboardAwareness_keyboardWillHide:(NSNotification *)notification
 {
-    NSDictionary  *userInfo = [notification userInfo];
+    NSDictionary *userInfo = [notification userInfo];
     
     UIViewAnimationCurve curve;
     [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey]
