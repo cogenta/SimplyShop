@@ -12,7 +12,10 @@
 @protocol CSCategory;
 @protocol CSRetailer;
 
-@interface CSHomePageViewController : UITableViewController
+@interface CSHomePageViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UICollectionView *gridView;
 
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) id<CSCategory> category;

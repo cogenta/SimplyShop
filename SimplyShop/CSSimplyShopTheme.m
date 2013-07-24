@@ -189,6 +189,7 @@
     
     UITableView *dashboardTableView = [CSDashboardTableView appearance];
     [dashboardTableView setBackgroundColor:[self tableViewBackgroundColor]];
+    [dashboardTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     CSAppearanceButton *
     retailerEditButton = [CSAppearanceButton appearanceWhenContainedIn:

@@ -18,6 +18,7 @@
 #import "CSProductWrapper.h"
 #import <CSApi/CSAPI.h>
 #import "CSSearchBarController.h"
+#import "UIView+CSKeyboardAwareness.h"
 
 @protocol CSHomePageRow <NSObject>
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView;
@@ -256,13 +257,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.view becomeAwareOfKeyboard];
     [self addObserver:self forKeyPath:@"rows" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
     [self removeObserver:self forKeyPath:@"rows"];
+    [self.view becomeUnawareOfKeyboard];
+    [super viewDidDisappear:animated];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

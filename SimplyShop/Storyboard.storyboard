@@ -12,12 +12,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="xEY-py-EMq" kind="relationship" relationship="rootViewController" id="PIK-Fb-TqV"/>
+                        <segue destination="2uh-Nv-3WO" kind="relationship" relationship="rootViewController" id="k4v-ni-PSN"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2a-pb-kCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2325" y="-1282"/>
+            <point key="canvasLocation" x="-2617" y="-1282"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YdK-bY-ZSW">
@@ -32,7 +32,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UzH-ms-J1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-324" y="-2"/>
+            <point key="canvasLocation" x="-396" y="-2"/>
         </scene>
         <!--Product Grid View Controller-->
         <scene sceneID="JuO-rQ-2s5">
@@ -86,13 +86,13 @@
                         <outlet property="dataSource" destination="0xs-xM-TrT" id="B6s-R9-Wnu"/>
                         <outlet property="placeholderView" destination="NEy-LX-lz2" id="eMV-4t-doN"/>
                         <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="Ch1-bg-3XV"/>
-                        <segue destination="aYb-e4-eYg" kind="unwind" identifier="doneShowProductsGrid" unwindAction="doneShowProductsGrid:" id="EDH-xx-5ve"/>
+                        <segue destination="Krk-pa-IPL" kind="unwind" identifier="doneShowProduct" unwindAction="doneShowProduct:" id="gzn-7A-KaS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sEg-xk-5d8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="0xs-xM-TrT" customClass="CSProductGridDataSource"/>
             </objects>
-            <point key="canvasLocation" x="-324" y="-2062"/>
+            <point key="canvasLocation" x="-396" y="-2062"/>
         </scene>
         <!--Product Detail View Controller-->
         <scene sceneID="b1o-hg-sQX">
@@ -124,7 +124,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="faX-58-B8I" kind="unwind" unwindAction="doneShowProduct:" id="H2V-vL-aes"/>
+                                            <segue destination="faX-58-B8I" kind="unwind" identifier="doneShowProduct" unwindAction="doneShowProduct:" id="dvq-vR-8n2"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -173,11 +173,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KIR-G7-hYt">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="ux8-Lk-L1B">
-                            <connections>
-                                <segue destination="aYb-e4-eYg" kind="unwind" identifier="doneShowProduct" unwindAction="doneShowProduct:" id="kva-84-Tzr"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="ux8-Lk-L1B"/>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -191,7 +187,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pxr-0e-PSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="faX-58-B8I" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="680" y="-1146"/>
+            <point key="canvasLocation" x="640" y="-1080"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hc5-CI-TXP">
@@ -207,7 +203,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qZM-gm-bMr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="6IA-Ac-6YR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1590" y="-1339"/>
+            <point key="canvasLocation" x="1598" y="-1282"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="YlF-p7-wPo">
@@ -228,7 +224,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XI2-Wb-bPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2557" y="-1339"/>
+            <point key="canvasLocation" x="2633" y="-1282"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="huO-qq-cWy">
@@ -287,7 +283,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="aYb-e4-eYg" kind="unwind" unwindAction="doneInitialRetailerSelection:" id="x8o-re-q1D"/>
+                                            <segue destination="8jC-nt-26O" kind="unwind" unwindAction="doneInitialRetailerSelection:" id="RUf-2U-noq"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -316,34 +312,79 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSX-OL-I5w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8jC-nt-26O" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="640" y="-2"/>
         </scene>
         <!--Home Page View Controller - Dashboard-->
-        <scene sceneID="Gix-Es-flg">
+        <scene sceneID="WK4-Co-7jQ">
             <objects>
-                <tableViewController storyboardIdentifier="CSHomePageViewController" id="xEY-py-EMq" customClass="CSHomePageViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" id="w42-11-Xqh" customClass="CSDashboardTableView">
+                <viewController storyboardIdentifier="CSHomePageViewController" id="2uh-Nv-3WO" customClass="CSHomePageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gGC-qF-4l8" customClass="CSPlaceholderView">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <sections/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ove-eW-Hz6" customClass="CSDashboardTableView">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="2uh-Nv-3WO" id="y4c-5m-SFF"/>
+                                    <outlet property="delegate" destination="2uh-Nv-3WO" id="ESq-J3-C0t"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ove-eW-Hz6" firstAttribute="leading" secondItem="gGC-qF-4l8" secondAttribute="leading" type="default" id="IQN-gB-DUW"/>
+                            <constraint firstItem="ove-eW-Hz6" firstAttribute="trailing" secondItem="gGC-qF-4l8" secondAttribute="trailing" type="default" id="YuH-oT-C91"/>
+                            <constraint firstItem="ove-eW-Hz6" firstAttribute="bottom" secondItem="gGC-qF-4l8" secondAttribute="bottom" type="default" id="hdb-tm-r1b"/>
+                            <constraint firstItem="ove-eW-Hz6" firstAttribute="top" secondItem="gGC-qF-4l8" secondAttribute="top" type="default" id="ooU-4d-ZxV"/>
+                        </constraints>
                         <connections>
-                            <outlet property="dataSource" destination="xEY-py-EMq" id="Ebf-X0-B0B"/>
-                            <outlet property="delegate" destination="xEY-py-EMq" id="Xxh-As-scL"/>
+                            <outlet property="contentView" destination="ove-eW-Hz6" id="qgB-fz-dpq"/>
                         </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Dashboard" id="NXv-dU-jYd"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Dashboard" id="nVt-ve-mMv"/>
                     <connections>
-                        <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" animates="NO" id="4ft-LW-QE4"/>
-                        <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="ZYU-Pi-qDu"/>
-                        <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="wFQ-9t-ZRk"/>
-                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showTopProductsGrid" id="eVM-5M-7tg"/>
+                        <outlet property="gridView" destination="hbN-U6-4QK" id="pmk-wJ-3jX"/>
+                        <outlet property="tableView" destination="ove-eW-Hz6" id="uD7-N7-vLj"/>
+                        <segue destination="Tla-Ne-hRZ" kind="push" identifier="showTopProductsGrid" id="pPS-Gb-yAF"/>
+                        <segue destination="F7K-1c-g0S" kind="modal" identifier="showProduct" modalPresentationStyle="formSheet" id="uc5-Vg-PGF"/>
+                        <segue destination="oRR-M6-WOS" kind="modal" identifier="showRetailerSelection" modalTransitionStyle="flipHorizontal" id="234-gw-v6x"/>
+                        <segue destination="WPV-1r-rpg" kind="modal" identifier="changeRetailerSelection" modalTransitionStyle="flipHorizontal" id="ecc-E7-eu9"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gHH-v1-4b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="aYb-e4-eYg" userLabel="Exit" sceneMemberID="exit"/>
+                </viewController>
+                <customObject id="0ug-1a-JfO" customClass="CSProductGridDataSource"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="hbN-U6-4QK">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VSv-Is-TkO">
+                        <size key="itemSize" width="246" height="300"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
+                    </collectionViewFlowLayout>
+                    <cells>
+                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CSProductSummaryPriceCell" id="5IQ-Vq-Yb7" customClass="CSProductSummaryPriceCell">
+                            <rect key="frame" x="5" y="5" width="246" height="300"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                <rect key="frame" x="0.0" y="0.0" width="246" height="300"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <connections>
+                                <outlet property="delegate" destination="0xs-xM-TrT" id="gBQ-Gp-SNq"/>
+                            </connections>
+                        </collectionViewCell>
+                    </cells>
+                    <connections>
+                        <outlet property="dataSource" destination="0ug-1a-JfO" id="fzO-PL-Etd"/>
+                        <outlet property="delegate" destination="2uh-Nv-3WO" id="2Tx-9W-6SJ"/>
+                    </connections>
+                </collectionView>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Guq-yF-lnF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Krk-pa-IPL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1447" y="-1282"/>
+            <point key="canvasLocation" x="-1507" y="-1282"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rfq-Rh-lQt">
@@ -358,7 +399,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gie-98-FEK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-304" y="1272"/>
+            <point key="canvasLocation" x="-396" y="1272"/>
         </scene>
         <!--Retailer Selection View Controller - Favourite Stores-->
         <scene sceneID="fWV-7s-YXx">
@@ -409,7 +450,7 @@
                     <navigationItem key="navigationItem" title="Favourite Stores" id="Kym-Jv-fco">
                         <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="uZR-nU-Aif">
                             <connections>
-                                <segue destination="aYb-e4-eYg" kind="unwind" unwindAction="doneChangeRetailerSelection:" id="qrK-bP-P6n"/>
+                                <segue destination="mRt-Zx-9qM" kind="unwind" unwindAction="doneChangeRetailerSelection:" id="3q9-5C-sdF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -418,19 +459,195 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VJb-3J-1nG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="mRt-Zx-9qM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="572" y="1272"/>
+            <point key="canvasLocation" x="640" y="1272"/>
         </scene>
     </scenes>
     <resources>
         <image name="BigX@2x.png" width="51" height="51"/>
     </resources>
+    <classes>
+        <class className="CSAppearanceButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSAppearanceButton.h"/>
+        </class>
+        <class className="CSCTAButton" superclassName="CSAppearanceButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSCTAButton.h"/>
+        </class>
+        <class className="CSDashboardTableView" superclassName="UITableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSDashboardTableView.h"/>
+        </class>
+        <class className="CSHomePageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSHomePageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneChangeRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="doneInitialRetailerSelection:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="doneShowProduct:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="doneShowProductsGrid:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="gridView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CSPlaceholderView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSPlaceholderView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="contentView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="CSPriceView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSPriceView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="deliveryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="stockView" candidateClass="CSStockView"/>
+            </relationships>
+        </class>
+        <class className="CSProductDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneShowPurchasePage:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="productDetailsView" candidateClass="CSProductDetailsView"/>
+                <relationship kind="outlet" name="sidebarView" candidateClass="CSProductSidebarView"/>
+                <relationship kind="outlet" name="titleBarView" candidateClass="CSTitleBarView"/>
+            </relationships>
+        </class>
+        <class className="CSProductDetailsView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductDetailsView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="galleryView" candidateClass="CSProductGalleryView"/>
+                <relationship kind="outlet" name="productStatsView" candidateClass="CSProductStatsView"/>
+                <relationship kind="outlet" name="tabBarView" candidateClass="CSTabBarView"/>
+                <relationship kind="outlet" name="tabFooterView" candidateClass="CSTabFooterView"/>
+            </relationships>
+        </class>
+        <class className="CSProductGalleryView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductGalleryView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="footerImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="CSProductGridDataSource" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductGridDataSource.h"/>
+        </class>
+        <class className="CSProductGridViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductGridViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneShowProduct:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="dataSource" candidateClass="CSProductGridDataSource"/>
+                <relationship kind="outlet" name="placeholderView" candidateClass="CSPlaceholderView"/>
+            </relationships>
+        </class>
+        <class className="CSProductSidebarView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSidebarView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="allPricesButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buyNowButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="delegate"/>
+                <relationship kind="outlet" name="logoView" candidateClass="CSRetailerLogoView"/>
+                <relationship kind="outlet" name="priceView" candidateClass="CSPriceView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CSProductStatsView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductStatsView.h"/>
+        </class>
+        <class className="CSProductSummaryCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummaryCell.h"/>
+            <relationships>
+                <relationship kind="action" name="didTapRetryButton:"/>
+                <relationship kind="outlet" name="delegate"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="productDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="productImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="productNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="retryButton" candidateClass="CSCTAButton"/>
+            </relationships>
+        </class>
+        <class className="CSProductSummaryPriceCell" superclassName="CSProductSummaryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSProductSummaryPriceCell.h"/>
+        </class>
+        <class className="CSRetailerLogoView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerLogoView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerSelectionCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="retailerNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CSRetailerSelectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSRetailerSelectionViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+            </relationships>
+        </class>
+        <class className="CSStockView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSStockView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CSTabArrowView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTabArrowView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="arrowImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="CSTabBarView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTabBarView.h"/>
+            <relationships>
+                <relationship kind="action" name="didSelectTab:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="arrowView" candidateClass="CSTabArrowView"/>
+                <relationship kind="outlet" name="defaultButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="CSTabFooterView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTabFooterView.h"/>
+        </class>
+        <class className="CSTitleBarView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CSTitleBarView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PBWebViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PBWebViewController.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Ch1-bg-3XV"/>
+        <segue reference="uc5-Vg-PGF"/>
     </inferredMetricsTieBreakers>
 </document>
