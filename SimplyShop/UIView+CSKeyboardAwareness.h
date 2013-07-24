@@ -10,4 +10,7 @@
 
 @interface UIView (CSKeyboardAwareness)
 
+- (void)becomeAwareOfKeyboard;
+- (void)becomeUnawareOfKeyboard;
+
 @end

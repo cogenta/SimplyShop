@@ -96,6 +96,7 @@
 		BE922C96179EC7A300448365 /* CSProductSearchState.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C95179EC7A200448365 /* CSProductSearchState.m */; };
 		BE922C99179EDB8700448365 /* CSProductGridDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C98179EDB8700448365 /* CSProductGridDataSource.m */; };
 		BE922C9C179EE40700448365 /* CSPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C9B179EE40700448365 /* CSPlaceholderView.m */; };
+		BE922C9F179FE70C00448365 /* UIView+CSKeyboardAwareness.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C9E179FE70C00448365 /* UIView+CSKeyboardAwareness.m */; };
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
 		BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */; };
 		BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E1E1768725800081E33 /* CSRetailersCell.m */; };
@@ -267,6 +268,8 @@
 		BE922C98179EDB8700448365 /* CSProductGridDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductGridDataSource.m; sourceTree = "<group>"; };
 		BE922C9A179EE40700448365 /* CSPlaceholderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPlaceholderView.h; sourceTree = "<group>"; };
 		BE922C9B179EE40700448365 /* CSPlaceholderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPlaceholderView.m; sourceTree = "<group>"; };
+		BE922C9D179FE70C00448365 /* UIView+CSKeyboardAwareness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CSKeyboardAwareness.h"; sourceTree = "<group>"; };
+		BE922C9E179FE70C00448365 /* UIView+CSKeyboardAwareness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CSKeyboardAwareness.m"; sourceTree = "<group>"; };
 		BEA6DA36170EDD82001AC881 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BEA6DA38170EE8C6001AC881 /* CSRoundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRoundImageView.h; sourceTree = "<group>"; };
 		BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRoundImageView.m; sourceTree = "<group>"; };
@@ -608,6 +611,8 @@
 			children = (
 				BEC1E2C7173C048600D12EF2 /* NSNumber+CSStringForCurrency.h */,
 				BEC1E2C8173C048600D12EF2 /* NSNumber+CSStringForCurrency.m */,
+				BE922C9D179FE70C00448365 /* UIView+CSKeyboardAwareness.h */,
+				BE922C9E179FE70C00448365 /* UIView+CSKeyboardAwareness.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -899,6 +904,7 @@
 				BE922C96179EC7A300448365 /* CSProductSearchState.m in Sources */,
 				BE922C99179EDB8700448365 /* CSProductGridDataSource.m in Sources */,
 				BE922C9C179EE40700448365 /* CSPlaceholderView.m in Sources */,
+				BE922C9F179FE70C00448365 /* UIView+CSKeyboardAwareness.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

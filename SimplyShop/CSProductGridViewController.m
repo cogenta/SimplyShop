@@ -16,6 +16,7 @@
 #import "CSProductSearchState.h"
 #import "CSProductGridDataSource.h"
 #import "CSPlaceholderView.h"
+#import "UIView+CSKeyboardAwareness.h"
 
 @interface CSProductGridViewController () <
     CSSearchBarControllerDelegate
@@ -49,6 +50,16 @@
     [self.placeholderView showLoadingView];
 
 	[self addSearchToNavigationBar];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.view becomeAwareOfKeyboard];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.view becomeUnawareOfKeyboard];
 }
 
 - (void)didReceiveMemoryWarning
