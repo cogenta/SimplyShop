@@ -18,9 +18,7 @@
 #import "CSPlaceholderView.h"
 #import "UIView+CSKeyboardAwareness.h"
 
-@interface CSProductGridViewController () <
-    CSSearchBarControllerDelegate
->
+@interface CSProductGridViewController () <CSSearchBarControllerDelegate>
 
 @property (strong, nonatomic) id<CSProductListWrapper> productListWrapper;
 
@@ -126,7 +124,8 @@
     }];
     
     self.priceContext = searchState.priceContext;
-    self.title = [searchState titleWithFormatter:[CSProductSearchStateTitleFormatter instance]];
+    id formatter = [CSProductSearchStateTitleFormatter instance];
+    self.title = [searchState titleWithFormatter:formatter];
 }
 
 - (void)setRetailer:(id<CSRetailer>)retailer
@@ -157,7 +156,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showProduct"]) {
-        CSProductDetailViewController *vc = (id) segue.destinationViewController;
+        CSProductDetailViewController *vc = segue.destinationViewController;
         vc.priceContext = self.searchState.priceContext;
 
         NSDictionary *address = sender;
@@ -170,7 +169,8 @@
 
 - (void)doneShowProduct:(UIStoryboardSegue *)segue
 {
-    [segue.destinationViewController dismissViewControllerAnimated:YES completion:NULL];
+    [segue.destinationViewController dismissViewControllerAnimated:YES
+                                                        completion:NULL];
 }
 
 - (NSString *)detailForEmptyView
