@@ -20,6 +20,8 @@
 #import "CSSearchBarController.h"
 #import "CSPlaceholderView.h"
 #import "UIView+CSKeyboardAwareness.h"
+#import "CSProductGridDataSource.h"
+#import "CSProductSearchState.h"
 
 @protocol CSHomePageRow <NSObject>
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView;
@@ -66,7 +68,8 @@
     CSFavoriteStoresCellDelegate,
     CSProductSummariesCellDelegate,
     CSCategoriesCellDelegate,
-    CSCategoryRetailersCellDelegate
+    CSCategoryRetailersCellDelegate,
+    UICollectionViewDelegate
 >
 
 @property (strong, nonatomic) CSProductSummariesCell *topProductsCell;
@@ -88,7 +91,7 @@
 @property (strong, nonatomic) NSObject<CSRetailerList> *categoryRetailers;
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
-@property (strong, nonatomic) CSProductGridViewController *grid;
+
 
 - (void)loadRetailers;
 - (void)loadCellsFromGroup:(NSObject<CSGroup> *)group;
@@ -259,8 +262,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.view becomeAwareOfKeyboard];
     [self addObserver:self forKeyPath:@"rows" options:NSKeyValueObservingOptionNew context:NULL];
+    [self.view becomeAwareOfKeyboard];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -518,10 +521,16 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
     
     NSDictionary *address = sender;
-    CSProductSummariesCell *cell = address[@"cell"];
-    id<CSProductSummaryList> list = cell.productSummaries;
-    NSInteger index = [address[@"index"] integerValue];
-    [vc setProductSummaryList:list index:index];
+    if ([address[@"collection"] isEqualToString:@"grid"]) {
+        NSInteger index = [address[@"index"] integerValue];
+        [vc setProductListWrapper:self.gridDataSource.productListWrapper
+                            index:index];
+    } else {
+        CSProductSummariesCell *cell = address[@"cell"];
+        id<CSProductSummaryList> list = cell.productSummaries;
+        NSInteger index = [address[@"index"] integerValue];
+        [vc setProductSummaryList:list index:index];
+    }
 }
 
 - (void)prepareForShowTopProductsGridSegue:(UIStoryboardSegue *)segue
@@ -721,7 +730,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         didSelectItemAtIndex:(NSUInteger)index
 {
     NSDictionary *address = @{@"cell": cell,
-                              @"index": @(index)};
+                              @"index": @(index),
+                              @"collection": @"row"};
     [self performSegueWithIdentifier:@"showProduct" sender:address];
 }
 
@@ -831,6 +841,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }];
 }
 
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *address = @{@"index": @(indexPath.row), @"collection": @"grid"};
+    [self performSegueWithIdentifier:@"showProduct" sender:address];
+}
+
 #pragma mark - Search Bar
 
 - (void)addSearchToNavigationBar
@@ -849,28 +867,38 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
     if ( ! query) {
-        [self.grid.view removeFromSuperview];
-        self.grid = nil;
+        [self.placeholderView setContentView:self.tableView];
+        [self.tableView reloadData];
         return;
     }
     
-    if ( ! self.grid) {
-        self.grid = [self.storyboard instantiateViewControllerWithIdentifier:@"CSProductGridViewController"];
-        self.grid.view.frame = self.view.bounds;
-        [self.view.superview addSubview:self.grid.view];
+    id<CSProductSearchState> searchState = nil;
+    if (self.category) {
+        searchState = [[CSCategoryProductSearchState alloc] initWithCategory:self.category likes:self.likeList query:query];
+    } else if (self.retailer) {
+        searchState = [[CSRetailerProductSearchState alloc] initWithRetailer:self.retailer likes:self.likeList query:query];
+    } else {
+        searchState = [[CSGroupProductSearchState alloc] initWithGroup:self.group likes:self.likeList query:query];
     }
     
-    if (self.category) {
-        [self.grid setCategory:self.category likes:self.likeList query:query];
-        self.grid.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
-                                                          retailer:self.retailer];
-    } else if (self.retailer) {
-        [self.grid setRetailer:self.retailer likes:self.likeList query:query];
-        self.grid.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
-                                                          retailer:self.retailer];
-    } else {
-        [self.grid setGroup:self.group likes:self.likeList query:query];
-    }
+    self.gridDataSource.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList retailer:self.retailer];
+    
+    [self.placeholderView showLoadingView];    
+    [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+        if (error) {
+            [self.placeholderView showErrorView];
+            return;
+        }
+        
+        self.gridDataSource.productListWrapper = [CSProductListWrapper wrapperWithProducts:products];
+        [self.gridView reloadData];
+        if (products.count) {
+            [self.placeholderView setContentView:self.gridView];
+            [self.placeholderView showContentView];
+        } else {
+            [self.placeholderView showEmptyView];
+        }
+    }];
 }
 
 @end

@@ -15,6 +15,8 @@
 @property (strong, nonatomic) CSEmptyProductGridView *errorView;
 @property (strong, nonatomic) CSEmptyProductGridView *loadingView;
 
+@property (weak, nonatomic) UIView *activeView;
+
 - (void)hideAllPlaceholderViews;
 - (void)hideEmptyView;
 - (void)hideErrorView;
@@ -34,7 +36,6 @@
     }
     return self;
 }
-
 
 - (void)awakeFromNib
 {
@@ -68,6 +69,18 @@
     view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                              | UIViewAutoresizingFlexibleHeight);
     [self addSubview:view];
+    self.activeView = view;
+}
+
+- (void)setContentView:(UIView *)contentView
+{
+    if (self.activeView == _contentView) {
+        [self hideAllPlaceholderViews];
+        _contentView = contentView;
+        [self showContentView];
+    } else {
+        _contentView = contentView;
+    }
 }
 
 - (void)showContentView

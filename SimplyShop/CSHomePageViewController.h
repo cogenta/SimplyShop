@@ -10,14 +10,16 @@
 
 @class CSAPI;
 @class CSPlaceholderView;
+@class CSProductGridDataSource;
 @protocol CSCategory;
 @protocol CSRetailer;
 
 @interface CSHomePageViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UICollectionView *gridView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UICollectionView *gridView;
 @property (weak, nonatomic) IBOutlet CSPlaceholderView *placeholderView;
+@property (weak, nonatomic) IBOutlet CSProductGridDataSource *gridDataSource;
 
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) id<CSCategory> category;

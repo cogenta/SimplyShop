@@ -52,12 +52,14 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self.view becomeAwareOfKeyboard];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.view becomeUnawareOfKeyboard];
+    [super viewDidDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning

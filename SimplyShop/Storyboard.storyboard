@@ -42,7 +42,7 @@
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LGW-7A-6RE">
+                            <collectionView autoresizesSubviews="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LGW-7A-6RE">
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="O8q-r8-kw9">
                                     <size key="itemSize" width="246" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -345,6 +345,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Dashboard" id="nVt-ve-mMv"/>
                     <connections>
+                        <outlet property="gridDataSource" destination="0ug-1a-JfO" id="PVR-gL-JEC"/>
                         <outlet property="gridView" destination="hbN-U6-4QK" id="pmk-wJ-3jX"/>
                         <outlet property="placeholderView" destination="gGC-qF-4l8" id="kR8-Qz-dlB"/>
                         <outlet property="tableView" destination="ove-eW-Hz6" id="uD7-N7-vLj"/>
@@ -355,7 +356,7 @@
                     </connections>
                 </viewController>
                 <customObject id="0ug-1a-JfO" customClass="CSProductGridDataSource"/>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="hbN-U6-4QK">
+                <collectionView autoresizesSubviews="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="hbN-U6-4QK">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VSv-Is-TkO">
                         <size key="itemSize" width="246" height="300"/>
@@ -485,6 +486,7 @@
                 <relationship kind="action" name="doneInitialRetailerSelection:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="action" name="doneShowProduct:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="action" name="doneShowProductsGrid:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="gridDataSource" candidateClass="CSProductGridDataSource"/>
                 <relationship kind="outlet" name="gridView" candidateClass="UICollectionView"/>
                 <relationship kind="outlet" name="placeholderView" candidateClass="CSPlaceholderView"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
