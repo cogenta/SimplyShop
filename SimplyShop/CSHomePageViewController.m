@@ -92,7 +92,6 @@
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
 
-
 - (void)loadRetailers;
 - (void)loadCellsFromGroup:(NSObject<CSGroup> *)group;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
@@ -868,6 +867,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     if ( ! query) {
         [self.placeholderView setContentView:self.tableView];
+        [self.placeholderView showContentView];
         [self.tableView reloadData];
         return;
     }
@@ -883,8 +883,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     self.gridDataSource.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList retailer:self.retailer];
     
-    [self.placeholderView showLoadingView];    
+    [self.placeholderView showLoadingView];
     [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+        if (searchText != self.searchBarController.query &&
+            ! [searchText isEqualToString:self.searchBarController.query]) {
+            return;
+        }
+        
         if (error) {
             [self.placeholderView showErrorView];
             return;
