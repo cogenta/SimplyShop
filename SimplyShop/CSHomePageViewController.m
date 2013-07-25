@@ -22,6 +22,7 @@
 #import "UIView+CSKeyboardAwareness.h"
 #import "CSProductGridDataSource.h"
 #import "CSProductSearchState.h"
+#import "CSProductSearchStateTitleFormatter.h"
 
 @protocol CSHomePageRow <NSObject>
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView;
@@ -232,6 +233,22 @@
     [self loadRetailerDashboard];
 }
 
+- (NSString *)dashboardTitle
+{
+    if (self.category) {
+        if (self.retailer) {
+            return [NSString stringWithFormat:@"%@ from %@",
+                    self.category.name, self.retailer.name];
+        } else {
+            return self.category.name;
+        }
+    } else if (self.retailer) {
+        return self.retailer.name;
+    } else {
+        return @"Dashboard";
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -241,22 +258,19 @@
     if (self.category) {
         [self prepareCategoryDashboard];
         if (self.retailer) {
-            self.navigationItem.title = [NSString stringWithFormat:@"%@ from %@",
-                                         self.category.name, self.retailer.name];
             self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
                                                      initWithTitle:self.category.name
                                                      style:UIBarButtonItemStylePlain
                                                      target:nil
                                                      action:NULL];
-        } else {
-            self.navigationItem.title = self.category.name;
         }
     } else if (self.retailer) {
         [self prepareRetailerDashboard];
-        self.navigationItem.title = self.retailer.name;
     } else {
         [self prepareRootDashboard];
     }
+    
+    self.navigationItem.title = [self dashboardTitle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -870,6 +884,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         [self.placeholderView setContentView:self.tableView];
         [self.placeholderView showContentView];
         [self.tableView reloadData];
+        self.navigationItem.title = [self dashboardTitle];
         return;
     }
     
@@ -881,6 +896,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     } else {
         searchState = [[CSGroupProductSearchState alloc] initWithGroup:self.group likes:self.likeList query:query];
     }
+    
+    id formatter = [CSProductSearchStateTitleFormatter instance];
+    self.navigationItem.title = [searchState titleWithFormatter:formatter];
     
     self.gridDataSource.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList retailer:self.retailer];
     
