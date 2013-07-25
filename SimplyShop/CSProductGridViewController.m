@@ -24,6 +24,7 @@
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
 @property (strong, nonatomic) id<CSProductSearchState> searchState;
+@property (strong, nonatomic) id<CSAPIRequest> searchRequest;
 
 - (void)addSearchToNavigationBar;
 
@@ -116,7 +117,9 @@
     _searchState = searchState;
     
     [self.placeholderView showLoadingView];
-    [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+    [self.searchRequest cancel];
+    self.searchRequest = [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+        self.searchRequest = nil;
         if ( ! [self.searchState isEqual:searchState]) {
             return;
         }

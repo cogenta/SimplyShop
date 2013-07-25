@@ -57,17 +57,17 @@
                                            retailer:self.retailer];
 }
 
-- (void)getProducts:(void (^)(id<CSProductList>, NSError *))callback
+- (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
 {
     if (self.query) {
-        [self.retailer getProductsWithQuery:self.query
+        return [self.retailer getProductsWithQuery:self.query
                                    callback:^(id<CSProductListPage> firstPage,
                                               NSError *error)
          {
              callback(firstPage.productList, error);
          }];
     } else {
-        [self.retailer getProducts:^(id<CSProductListPage> firstPage,
+        return [self.retailer getProducts:^(id<CSProductListPage> firstPage,
                                      NSError *error)
          {
              callback(firstPage.productList, error);
@@ -133,17 +133,17 @@
     return [[CSPriceContext alloc] initWithLikeList:self.likes];
 }
 
-- (void)getProducts:(void (^)(id<CSProductList>, NSError *))callback
+- (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
 {
     if (self.query) {
-        [self.group getProductsWithQuery:self.query
+        return [self.group getProductsWithQuery:self.query
                                 callback:^(id<CSProductListPage> firstPage,
                                            NSError *error)
          {
              callback(firstPage.productList, error);
          }];
     } else {
-        [self.group getProducts:^(id<CSProductListPage> firstPage,
+        return [self.group getProducts:^(id<CSProductListPage> firstPage,
                                   NSError *error)
          {
              callback(firstPage.productList, error);
@@ -208,17 +208,17 @@
     return [[CSPriceContext alloc] initWithLikeList:self.likes];
 }
 
-- (void)getProducts:(void (^)(id<CSProductList>, NSError *))callback
+- (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
 {
     if (self.query) {
-        [self.category getProductsWithQuery:self.query
+        return [self.category getProductsWithQuery:self.query
                                    callback:^(id<CSProductListPage> firstPage,
                                               NSError *error)
          {
              callback(firstPage.productList, error);
          }];
     } else {
-        [self.category getProducts:^(id<CSProductListPage> firstPage,
+        return [self.category getProducts:^(id<CSProductListPage> firstPage,
                                      NSError *error)
          {
              callback(firstPage.productList, error);

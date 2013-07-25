@@ -91,6 +91,7 @@
 @property (strong, nonatomic) NSObject<CSRetailerList> *categoryRetailers;
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
+@property (strong, nonatomic) id<CSAPIRequest> searchRequest;
 
 - (void)loadRetailers;
 - (void)loadCellsFromGroup:(NSObject<CSGroup> *)group;
@@ -884,7 +885,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.gridDataSource.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList retailer:self.retailer];
     
     [self.placeholderView showLoadingView];
-    [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+    [self.searchRequest cancel];
+    self.searchRequest = [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+        self.searchRequest = nil;
         if (searchText != self.searchBarController.query &&
             ! [searchText isEqualToString:self.searchBarController.query]) {
             return;
