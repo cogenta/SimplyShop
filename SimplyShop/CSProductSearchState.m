@@ -75,6 +75,17 @@
     }
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if ( ! [object isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    CSRetailerProductSearchState *state = object;
+    return ((state.query == self.query || [state.query isEqual:self.query])
+            && [state.retailer.URL isEqual:self.retailer.URL]);
+}
+
 @end
 
 
@@ -140,6 +151,17 @@
     }
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if ( ! [object isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    CSGroupProductSearchState *state = object;
+    return ((state.query == self.query || [state.query isEqual:self.query])
+            && [state.group.URL isEqual:self.group.URL]);
+}
+
 @end
 
 @implementation CSCategoryProductSearchState
@@ -202,6 +224,17 @@
              callback(firstPage.productList, error);
          }];
     }
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if ( ! [object isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    CSCategoryProductSearchState *state = object;
+    return ((state.query == self.query || [state.query isEqual:self.query])
+            && [state.category.URL isEqual:self.category.URL]);
 }
 
 @end

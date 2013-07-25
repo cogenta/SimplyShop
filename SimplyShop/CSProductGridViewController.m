@@ -117,6 +117,10 @@
     
     [self.placeholderView showLoadingView];
     [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+        if ( ! [self.searchState isEqual:searchState]) {
+            return;
+        }
+        
         if (error) {
             [self.placeholderView showErrorView];
             return;
