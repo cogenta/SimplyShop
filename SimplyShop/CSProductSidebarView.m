@@ -24,6 +24,8 @@
 @property (strong, nonatomic) NSArray *favoritePrices;
 @property (strong, nonatomic) NSArray *otherPrices;
 
+@property (assign, nonatomic) BOOL isShowingAllPrices;
+
 - (void)initialize;
 - (void)updateContent;
 - (void)updatePriceList;
@@ -104,6 +106,36 @@
     [self insertSubview:self.backgroundView atIndex:0];
 }
 
+- (void)layoutPriceViews
+{
+    if (_isShowingAllPrices) {
+        CGRect frame = _clippingView.bounds;
+        frame.origin.x = -frame.size.width - 1.0;
+        _singlePriceView.frame = frame;
+        
+        _priceListView.frame = _clippingView.bounds;
+    } else {
+        _singlePriceView.frame = _clippingView.bounds;
+        
+        CGRect frame = _clippingView.bounds;
+        frame.origin.x = frame.size.width + 1.0;
+        _priceListView.frame = frame;
+    };
+}
+
+- (void)layoutPriceViewsAnimated:(BOOL)animated
+{
+    void (^animation)() = ^{
+        [self layoutPriceViews];
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:0.25 animations:animation];
+    } else {
+        animation();
+    }
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -111,13 +143,7 @@
     clippingFrame.origin.x += 1.0;
     clippingFrame.size.width -= 1.0;
     _clippingView.frame = clippingFrame;
-    
-    _singlePriceView.frame = _clippingView.bounds;
-    
-    CGRect pricelistViewFrame = _clippingView.bounds;
-    pricelistViewFrame.origin.x += _clippingView.bounds.size.width;
-    _priceListView.frame = pricelistViewFrame;
-    
+    [self layoutPriceViews];
     self.backgroundView.frame = self.bounds;
 }
 
@@ -240,37 +266,14 @@
 
 - (void)showAllPricesAnimated:(BOOL)animated
 {
-    void (^animation)() = ^{
-        CGRect frame = self.clippingView.bounds;
-        frame.origin.x = -frame.size.width - 1.0;
-        self.singlePriceView.frame = frame;
-        
-        _priceListView.frame = self.clippingView.bounds;
-    };
-    
-    if (animated) {
-        [UIView animateWithDuration:0.25 animations:animation];
-    } else {
-        animation();
-    }
-    
+    self.isShowingAllPrices = YES;
+    [self layoutPriceViewsAnimated:animated];
 }
 
 - (void)showSinglePriceAnimated:(BOOL)animated
 {
-    void (^animation)() = ^{
-        self.singlePriceView.frame = self.clippingView.bounds;
-        
-        CGRect frame = self.clippingView.bounds;
-        frame.origin.x = frame.size.width + 1.0;
-        self.priceListView.frame = frame;
-    };
-    
-    if (animated) {
-        [UIView animateWithDuration:0.25 animations:animation];
-    } else {
-        animation();
-    }
+    self.isShowingAllPrices = NO;
+    [self layoutPriceViewsAnimated:animated];
 }
 
 #pragma mark - UITableViewDataSource
