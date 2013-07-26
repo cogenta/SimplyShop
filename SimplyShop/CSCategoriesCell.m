@@ -89,12 +89,23 @@
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    SEL sel = @selector(categoriesCell:didSelectItemAtIndex:);
+    SEL sel = @selector(categoriesCell:didSelectCategory:atIndex:);
     if ( ! [self.delegate respondsToSelector:sel]) {
         return;
     }
     
-    [self.delegate categoriesCell:self didSelectItemAtIndex:indexPath.row];
+    [self fetchModelWithAddress:[self addressForItemAtIndexPath:indexPath]
+                           done:^(id<CSCategory> category, NSError *error)
+    {
+        if (error) {
+            NSLog(@"Ignoring selection. Error getting category: %@", error);
+            return;
+        }
+        [self.delegate categoriesCell:self
+                    didSelectCategory:category
+                              atIndex:indexPath.row];
+    }];
+    
 }
 
 @end

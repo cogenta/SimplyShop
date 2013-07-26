@@ -8,6 +8,7 @@
 
 #import "CSDashboardRowCell.h"
 
+@protocol CSCategory;
 @protocol CSCategoryList;
 @protocol CSCategoriesCellDelegate;
 
@@ -24,7 +25,8 @@
 @optional
 
 - (void)categoriesCell:(CSCategoriesCell *)cell
-  didSelectItemAtIndex:(NSUInteger)index;
+     didSelectCategory:(id<CSCategory>)category
+               atIndex:(NSUInteger)index;
 
 @end
 

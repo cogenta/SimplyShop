@@ -136,10 +136,6 @@
     
     self.favoriteStoresCell.api = self.api;
     
-    self.rows = @[[[CSHomePageRow alloc] initWithCell:self.topProductsCell],
-                  [[CSHomePageRow alloc] initWithCell:self.categoriesCell],
-                  [[CSHomePageRow alloc] initWithCell:self.favoriteStoresCell]];
-    
     [self loadRootDashboard];
 }
 
@@ -161,12 +157,6 @@
     CSHomePageRow *retailersRow = [[CSHomePageRow alloc]
                                    initWithCell:self.categoryRetailersCell];
 
-    if (self.retailer) {
-        self.rows = @[productsRow];
-    } else {
-        self.rows = @[productsRow, retailersRow];
-    }
-    
     [self.category getImmediateSubcategories:^(id<CSCategoryListPage> result,
                                                NSError *error)
     {
@@ -190,6 +180,13 @@
                               categoriesRow,
                               retailersRow];
             }
+        } else {
+            if (self.retailer) {
+                self.rows = @[productsRow];
+            } else {
+                self.rows = @[productsRow, retailersRow];
+            }
+
         }
     }];
     
@@ -205,8 +202,6 @@
     
     CSHomePageRow *productsRow = [[CSHomePageRow alloc]
                                   initWithCell:self.retailerProductsCell];
-    
-    self.rows = @[productsRow];
     
     [self.retailer getCategories:^(id<CSCategoryListPage> result,
                                                NSError *error)
@@ -227,6 +222,8 @@
              CSHomePageRow *categoriesRow = [[CSHomePageRow alloc]
                                              initWithCell:self.categoriesCell];
              self.rows = @[productsRow, categoriesRow];
+         } else {
+             self.rows = @[productsRow];
          }
      }];
     
@@ -253,6 +250,8 @@
 {
     [super viewDidLoad];
     
+    [self.placeholderView showLoadingView];
+
     [self addSearchToNavigationBar];
     
     if (self.category) {
@@ -276,6 +275,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (self.rows) {
+        [self.placeholderView showContentView];
+    }
     [self addObserver:self forKeyPath:@"rows" options:NSKeyValueObservingOptionNew context:NULL];
     [self.view becomeAwareOfKeyboard];
 }
@@ -291,6 +293,7 @@
 {
     if (object == self && [keyPath isEqualToString:@"rows"]) {
         [self.tableView reloadData];
+        [self.placeholderView showContentView];
     }
 }
 
@@ -309,14 +312,12 @@
 
 - (void)loadModel
 {
-    [self.placeholderView showLoadingView];
     [self.api login:^(id<CSUser> user, NSError *error) {
         if (error) {
             [self setErrorState];
             return;
         }
         
-        [self.placeholderView showContentView];
         self.user = user;
         [self loadRetailers];
     }];
@@ -349,6 +350,10 @@
         
         self.topProductSummaries = firstPage.productSummaryList;
         self.topProductsCell.productSummaries = self.topProductSummaries;
+        
+        self.rows = @[[[CSHomePageRow alloc] initWithCell:self.topProductsCell],
+                      [[CSHomePageRow alloc] initWithCell:self.categoriesCell],
+                      [[CSHomePageRow alloc] initWithCell:self.favoriteStoresCell]];
     }];
     
     [group getCategories:^(id<CSCategoryListPage> firstPage, NSError *error) {
@@ -375,6 +380,7 @@
         self.categoryProducts = list;
         self.categoryProductsCell.productSummaries = [CSProductListWrapper
                                                       wrapperWithProducts:list];
+        [self.placeholderView showContentView];
     }];
     
     [category getImmediateSubcategories:^(id<CSCategoryListPage> firstPage,
@@ -413,6 +419,7 @@
         self.retailerProducts = list;
         self.retailerProductsCell.productSummaries = [CSProductListWrapper
                                                       wrapperWithProducts:list];
+        [self.placeholderView showContentView];
     }];
 }
 
@@ -505,6 +512,7 @@
 - (void)alertView:(UIAlertView *)alertView
 didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    [self.placeholderView showLoadingView];
     if (self.category) {
         [self loadCategoryDashboard];
     } else if (self.retailer) {
@@ -771,23 +779,17 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self performSegueWithIdentifier:@"changeRetailerSelection" sender:cell];
 }
 
-- (void)categoriesCell:(CSCategoriesCell *)cell didSelectItemAtIndex:(NSUInteger)index
+- (void)categoriesCell:(CSCategoriesCell *)cell
+     didSelectCategory:(id<CSCategory>)category
+               atIndex:(NSUInteger)index
 {
-    [cell.categories getCategoryAtIndex:index callback:^(id<CSCategory> cat,
-                                                         NSError *error) {
-        if (error) {
-            NSLog(@"Error getting category: %@", error);
-            return;
-        }
-        
-        CSHomePageViewController *vc = [self.storyboard
-                                        instantiateViewControllerWithIdentifier:
-                                        @"CSHomePageViewController"];
-        vc.api = self.api;
-        vc.retailer = self.retailer;
-        vc.category = cat;
-        [self.navigationController pushViewController:vc animated:YES];
-    }];
+    CSHomePageViewController *vc = [self.storyboard
+                                    instantiateViewControllerWithIdentifier:
+                                    @"CSHomePageViewController"];
+    vc.api = self.api;
+    vc.retailer = self.retailer;
+    vc.category = category;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue
