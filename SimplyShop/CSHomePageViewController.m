@@ -289,11 +289,52 @@
     [super viewDidDisappear:animated];
 }
 
+- (void)showContent
+{
+    if ([self.rows count] == 1) {
+        self.gridDataSource.priceContext = [[CSPriceContext alloc]
+                                            initWithLikeList:self.likeList
+                                            retailer:self.retailer];
+        
+        id<CSProductListWrapper> wrapper;
+        if (self.topProductSummaries) {
+            wrapper = [CSProductSummaryListWrapper
+                       wrapperWithProducts:self.topProductSummaries];
+        } else if (self.categoryProducts) {
+            wrapper = [CSProductListWrapper
+                       wrapperWithProducts:self.categoryProducts];
+        } else if (self.retailerProducts) {
+            wrapper = [CSProductListWrapper
+                       wrapperWithProducts:self.retailerProducts];
+        } else {
+            wrapper = nil;
+        }
+        
+        self.gridDataSource.productListWrapper = wrapper;
+        
+        [self.gridView reloadData];
+        
+        if (wrapper.count) {
+            [self.placeholderView setContentView:self.gridView];
+            [self.placeholderView showContentView];
+        } else if (wrapper == nil) {
+            [self.placeholderView showLoadingView];
+        } else {
+            [self.placeholderView showEmptyView];
+        }
+    } else {
+        [self.placeholderView setContentView:self.tableView];
+        [self.placeholderView showContentView];
+        [self.tableView reloadData];
+    }
+    
+    self.navigationItem.title = [self dashboardTitle];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (object == self && [keyPath isEqualToString:@"rows"]) {
-        [self.tableView reloadData];
-        [self.placeholderView showContentView];
+        [self showContent];
     }
 }
 
@@ -380,7 +421,7 @@
         self.categoryProducts = list;
         self.categoryProductsCell.productSummaries = [CSProductListWrapper
                                                       wrapperWithProducts:list];
-        [self.placeholderView showContentView];
+        [self showContent];
     }];
     
     [category getImmediateSubcategories:^(id<CSCategoryListPage> firstPage,
@@ -419,7 +460,7 @@
         self.retailerProducts = list;
         self.retailerProductsCell.productSummaries = [CSProductListWrapper
                                                       wrapperWithProducts:list];
-        [self.placeholderView showContentView];
+        [self showContent];
     }];
 }
 
@@ -883,10 +924,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
     if ( ! query) {
-        [self.placeholderView setContentView:self.tableView];
-        [self.placeholderView showContentView];
-        [self.tableView reloadData];
-        self.navigationItem.title = [self dashboardTitle];
+        [self showContent];
         return;
     }
     
