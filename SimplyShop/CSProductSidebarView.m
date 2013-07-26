@@ -14,6 +14,30 @@
 #import <CSApi/CSAPI.h>
 #import <MBCategory/MBCategory.h>
 
+@interface CSPricesSection : NSObject
+
+@property (readonly) NSString *title;
+@property (readonly) NSArray *priceList;
+
+- (id)initWithTitle:(NSString *)title priceList:(NSArray *)priceList;
+
+@end
+
+@implementation CSPricesSection
+
+- (id)initWithTitle:(NSString *)title priceList:(NSArray *)priceList
+{
+    self = [super init];
+    if (self) {
+        _title = title;
+        _priceList = priceList;
+    }
+    return self;
+}
+
+@end
+
+
 @interface CSProductSidebarView () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UIView *clippingView;
@@ -23,6 +47,7 @@
 
 @property (strong, nonatomic) NSArray *favoritePrices;
 @property (strong, nonatomic) NSArray *otherPrices;
+@property (strong, nonatomic) NSArray *sections;
 
 @property (assign, nonatomic) BOOL isShowingAllPrices;
 
@@ -233,6 +258,7 @@
 - (void)setFavoritePrices:(NSArray *)favoritePrices
 {
     _favoritePrices = favoritePrices;
+    
     if (self.favoritePrices && self.otherPrices) {
         [self.tableView reloadData];
     }
@@ -278,27 +304,40 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSArray *)sections
 {
-    if (self.favoritePrices && self.otherPrices) {
-        return 2;
+    NSArray *sections = @[];
+    
+    if ([self.favoritePrices count]) {
+        CSPricesSection *section = [[CSPricesSection alloc]
+                                    initWithTitle:@"Favourites"
+                                    priceList:self.favoritePrices];
+        sections = [sections arrayByAddingObject:section];
     }
     
-    return 0;
+    if ([self.otherPrices count]) {
+        CSPricesSection *section = [[CSPricesSection alloc]
+                                    initWithTitle:@"Other stores"
+                                    priceList:self.otherPrices];
+        sections = [sections arrayByAddingObject:section];
+    }
+    
+    return sections;
+}
+
+- (CSPricesSection *)sectionAtIndex:(NSInteger)index
+{
+    return [self.sections objectAtIndex:index];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [self.sections count];
 }
 
 - (NSArray *)priceListForSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            return self.favoritePrices;
-            
-        case 1:
-            return self.otherPrices;
-            
-        default:
-            return nil;
-    }
+    return [self sectionAtIndex:section].priceList;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -308,16 +347,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            return @"Favourites";
-            
-        case 1:
-            return @"Other stores";
-            
-        default:
-            return @"";
-    }
+    return [self sectionAtIndex:section].title;
 }
 
 - (id<CSPrice>)priceForRowAtIndexPath:(NSIndexPath *)indexPath
