@@ -12,14 +12,13 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "CSTheme.h"
 #import "CSCTAButton.h"
-#import "CSProductWrapper.h"
 #import "CSPriceContext.h"
 #import "NSNumber+CSStringForCurrency.h"
 
 @interface CSProductSummaryCell ()
 
 @property (strong, nonatomic) UIImageView *backgroundView;
-@property (strong, nonatomic) CSProductWrapper *wrapper;
+@property (strong, nonatomic) id<CSProduct> product;
 @property (strong, nonatomic) NSError *error;
 @property (assign, nonatomic) SEL nameTransform;
 @property (strong, nonatomic) UIView *subview;
@@ -87,7 +86,7 @@
     self.priceLabel.text = @"";
     
     self.address = nil;
-    self.wrapper = nil;
+    self.product = nil;
 }
 
 - (void)setTheme:(id<CSTheme>)newTheme
@@ -115,20 +114,20 @@
 
 - (void)setLoadingAddress:(NSObject *)address
 {
-    if ([address isEqual:self.address] && self.wrapper) {
+    if ([address isEqual:self.address] && self.product) {
         return;
     }
     
-    self.wrapper = nil;
+    self.product = nil;
     self.error = nil;
     self.address = address;
     [self updateContent];
 }
 
-- (void)setWrapper:(CSProductWrapper *)wrapper
+- (void)setProduct:(id<CSProduct>)product
            address:(NSObject *)address
 {
-    if (self.wrapper) {
+    if (self.product) {
         // A product is already set.
         return;
     }
@@ -144,18 +143,18 @@
     }
     
     self.error = nil;
-    self.wrapper = wrapper;
+    self.product = product;
     [self updateContent];
 }
 
 - (void)setModel:(id)model address:(id)address
 {
-    [self setWrapper:model address:address];
+    [self setProduct:model address:address];
 }
 
 - (void)setError:(NSError *)error address:(NSObject *)address
 {
-    if (self.wrapper) {
+    if (self.product) {
         // A product is already set.
         return;
     }
@@ -171,7 +170,7 @@
     }
     
     self.error = error;
-    self.wrapper = nil;
+    self.product = nil;
     [self updateContent];
 }
 
@@ -205,7 +204,7 @@
 {
     id priceAddress = self.address;
 
-    [self.wrapper getPrices:^(id<CSPriceListPage> firstPage, NSError *error) {
+    [self.product getPrices:^(id<CSPriceListPage> firstPage, NSError *error) {
         if (priceAddress != self.address) {
             return;
         }
@@ -236,7 +235,7 @@
 {
     id pictureAddress = self.address;
     
-    [self.wrapper getPictures:^(id<CSPictureListPage> firstPage,
+    [self.product getPictures:^(id<CSPictureListPage> firstPage,
                                 NSError *error)
      {
          if (firstPage.count == 0) {
@@ -303,9 +302,9 @@
 - (void)showProduct
 {
     self.retryButton.hidden = YES;
-    self.productNameLabel.text = [self transformedName:self.wrapper.name];
-    if (self.wrapper.description_ != (id) [NSNull null]) {
-        self.productDescriptionLabel.text = self.wrapper.description_;
+    self.productNameLabel.text = [self transformedName:self.product.name];
+    if (self.product.description_ != (id) [NSNull null]) {
+        self.productDescriptionLabel.text = self.product.description_;
     }
     
     if (self.priceLabel) {
@@ -320,7 +319,7 @@
 
 - (void)updateContent
 {
-    if (self.wrapper) {
+    if (self.product) {
         [self showProduct];
         return;
     }

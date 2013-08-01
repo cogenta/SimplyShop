@@ -8,7 +8,6 @@
 
 #import "CSProductSummariesCell.h"
 #import "CSProductSummaryCell.h"
-#import "CSProductWrapper.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSProductSummariesCell () <CSProductSummaryCellDelegate>
@@ -22,14 +21,14 @@
     [super initialize];
     
     [self addObserver:self
-           forKeyPath:@"productSummaries"
+           forKeyPath:@"products"
               options:NSKeyValueObservingOptionNew
               context:NULL];
 }
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"productSummaries"];
+    [self removeObserver:self forKeyPath:@"products"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -37,8 +36,8 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if ([keyPath isEqualToString:@"productSummaries"]) {
-        self.seeAllButton.enabled = [object productSummaries] != nil;
+    if ([keyPath isEqualToString:@"products"]) {
+        self.seeAllButton.enabled = [object products] != nil;
         [self.collectionView reloadData];
         return;
     }
@@ -56,22 +55,13 @@
 
 - (NSInteger)modelCount
 {
-    return self.productSummaries.count;
+    return self.products.count;
 }
 
 - (void)fetchModelWithAddress:(id)address done:(void (^)(id, NSError *))done
 {
-    [self.productSummaries getProductSummaryAtIndex:((NSIndexPath *)address).row
-                                           callback:^(id<CSProductSummary> result,
-                                                      NSError *error)
-     {
-         if (error) {
-             done(nil, error);
-             return;
-         }
-         
-         done([CSProductWrapper wrapperForSummary:result], nil);
-     }];
+    [self.products getProductAtIndex:((NSIndexPath *)address).row
+                            callback:done];
 }
 
 - (UICollectionViewCell<CSAddressCell> *)collectionView:(UICollectionView *)collectionView

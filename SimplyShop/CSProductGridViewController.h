@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol CSProductSummaryList;
 @protocol CSProductList;
 @protocol CSRetailer;
 @protocol CSLikeList;
@@ -35,7 +34,6 @@
 - (void)setCategory:(id<CSCategory>)category
               likes:(id<CSLikeList>)likes
               query:(NSString *)query;
-- (void)setProductSummaries:(id<CSProductSummaryList>)products;
 - (void)setProducts:(id<CSProductList>)products;
 
 @property (strong, nonatomic) CSPriceContext *priceContext;

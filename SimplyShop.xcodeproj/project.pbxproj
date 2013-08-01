@@ -103,7 +103,6 @@
 		BEB28E231768760600081E33 /* CSCategoryRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E221768760600081E33 /* CSCategoryRetailersCell.m */; };
 		BEB28E251768770500081E33 /* CSCategoryRetailersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEB28E241768770500081E33 /* CSCategoryRetailersCell.xib */; };
 		BEC1E2B7173BCFD400D12EF2 /* CSProductWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */; };
-		BEC1E2BA173BCFFE00D12EF2 /* CSProductWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2B9173BCFFE00D12EF2 /* CSProductWrapper.m */; };
 		BEC1E2BD173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2BC173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m */; };
 		BEC1E2BF173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEC1E2BE173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib */; };
 		BEC1E2C5173BFE9C00D12EF2 /* CSProductSummaryPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2C4173BFE9C00D12EF2 /* CSProductSummaryPriceCell.m */; };
@@ -279,8 +278,6 @@
 		BEB28E221768760600081E33 /* CSCategoryRetailersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCategoryRetailersCell.m; sourceTree = "<group>"; };
 		BEB28E241768770500081E33 /* CSCategoryRetailersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSCategoryRetailersCell.xib; sourceTree = "<group>"; };
 		BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductWrapperTests.m; sourceTree = "<group>"; };
-		BEC1E2B8173BCFFE00D12EF2 /* CSProductWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductWrapper.h; sourceTree = "<group>"; };
-		BEC1E2B9173BCFFE00D12EF2 /* CSProductWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductWrapper.m; sourceTree = "<group>"; };
 		BEC1E2BB173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenTestCase+CSAsyncTestCase.h"; sourceTree = "<group>"; };
 		BEC1E2BC173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SenTestCase+CSAsyncTestCase.m"; sourceTree = "<group>"; };
 		BEC1E2BE173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductSummaryPriceCell.xib; sourceTree = "<group>"; };
@@ -513,8 +510,6 @@
 				BE7367A4172FD02700B4691C /* CSProductStats.m */,
 				BE6E2F511733FDAF00DCE47E /* CSPriceContext.h */,
 				BE6E2F521733FDAF00DCE47E /* CSPriceContext.m */,
-				BEC1E2B8173BCFFE00D12EF2 /* CSProductWrapper.h */,
-				BEC1E2B9173BCFFE00D12EF2 /* CSProductWrapper.m */,
 				BE922C91179EBFFF00448365 /* CSProductSearchStateTitleFormatter.h */,
 				BE922C92179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m */,
 				BE922C94179EC7A200448365 /* CSProductSearchState.h */,
@@ -886,7 +881,6 @@
 				BE08AFAA17394584007184E0 /* CSPriceView.m in Sources */,
 				BE08AFAF17396631007184E0 /* CSStockView.m in Sources */,
 				BE34F3D4173AB63100871FC1 /* CSProductGridViewController.m in Sources */,
-				BEC1E2BA173BCFFE00D12EF2 /* CSProductWrapper.m in Sources */,
 				BEC1E2C5173BFE9C00D12EF2 /* CSProductSummaryPriceCell.m in Sources */,
 				BEC1E2C9173C048600D12EF2 /* NSNumber+CSStringForCurrency.m in Sources */,
 				BEC1E2EA17438BC600D12EF2 /* CSEmptyProductGridView.m in Sources */,

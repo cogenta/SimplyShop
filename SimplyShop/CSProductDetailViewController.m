@@ -12,7 +12,6 @@
 #import "CSTitleBarView.h"
 #import "CSProductStats.h"
 #import "CSPriceContext.h"
-#import "CSProductWrapper.h"
 #import <PBWebViewController/PBWebViewController.h>
 #import <CSApi/CSAPI.h>
 #import <TUSafariActivity/TUSafariActivity.h>
@@ -141,47 +140,17 @@
     }];
 }
 
-- (void)setProductSummary:(id<CSProductSummary>)productSummary
-{
-    self.titleBarView.title = [productSummary.name uppercaseString];
-    self.productDetailsView.description_ = productSummary.description_;
-    
-    self.sidebarView.price = nil;
-    [self updateSizing];
-}
-
-- (void)setProductListWrapper:(id<CSProductListWrapper>)list
-                        index:(NSUInteger)index
-{
-    [list getProductAtIndex:index
-                   callback:^(id<CSProduct> product, NSError *error)
-     {
-         if (error) {
-             [self setErrorState];
-             return;
-         }
-         self.product = product;
-     }];
-}
-
-- (void)setProductSummaryList:(id<CSProductSummaryList>)list index:(NSInteger)index
+- (void)setProductList:(id<CSProductList>)list index:(NSInteger)index
 {
     [list
-     getProductSummaryAtIndex:index
-     callback:^(id<CSProductSummary> result, NSError *error)
+     getProductAtIndex:index
+     callback:^(id<CSProduct> result, NSError *error)
      {
          if (error) {
              [self setErrorState];
              return;
          }
-         self.productSummary = result;
-         [result getProduct:^(id<CSProduct> product, NSError *error) {
-             if (error) {
-                 [self setErrorState];
-                 return;
-             }
-             self.product = product;
-         }];
+         self.product = result;
      }];
 }
 

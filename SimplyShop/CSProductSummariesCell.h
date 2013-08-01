@@ -8,12 +8,12 @@
 
 #import "CSDashboardRowCell.h"
 
-@protocol CSProductSummaryList;
+@protocol CSProductList;
 @protocol CSProductSummariesCellDelegate;
 
 @interface CSProductSummariesCell : CSDashboardRowCell
 
-@property (strong, nonatomic) NSObject<CSProductSummaryList> *productSummaries;
+@property (strong, nonatomic) NSObject<CSProductList> *products;
 
 @property (weak, nonatomic) IBOutlet UIButton *seeAllButton;
 @property (weak, nonatomic) IBOutlet id<CSProductSummariesCellDelegate> delegate;

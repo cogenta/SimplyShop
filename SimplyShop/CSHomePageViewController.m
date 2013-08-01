@@ -15,7 +15,6 @@
 #import "CSProductDetailViewController.h"
 #import "CSPriceContext.h"
 #import "CSProductGridViewController.h"
-#import "CSProductWrapper.h"
 #import <CSApi/CSAPI.h>
 #import "CSSearchBarController.h"
 #import "CSPlaceholderView.h"
@@ -85,7 +84,7 @@
 @property (strong, nonatomic) NSObject<CSLikeList> *likeList;
 @property (strong, nonatomic) NSObject<CSGroup> *group;
 @property (strong, nonatomic) NSArray *selectedRetailerURLs;
-@property (strong, nonatomic) NSObject<CSProductSummaryList> *topProductSummaries;
+@property (strong, nonatomic) NSObject<CSProductList> *topProducts;
 @property (strong, nonatomic) NSObject<CSProductList> *categoryProducts;
 @property (strong, nonatomic) NSObject<CSProductList> *retailerProducts;
 @property (strong, nonatomic) NSObject<CSCategoryList> *categories;
@@ -296,28 +295,25 @@
                                             initWithLikeList:self.likeList
                                             retailer:self.retailer];
         
-        id<CSProductListWrapper> wrapper;
-        if (self.topProductSummaries) {
-            wrapper = [CSProductSummaryListWrapper
-                       wrapperWithProducts:self.topProductSummaries];
+        id<CSProductList> products;
+        if (self.topProducts) {
+            products = self.topProducts;
         } else if (self.categoryProducts) {
-            wrapper = [CSProductListWrapper
-                       wrapperWithProducts:self.categoryProducts];
+            products = self.categoryProducts;
         } else if (self.retailerProducts) {
-            wrapper = [CSProductListWrapper
-                       wrapperWithProducts:self.retailerProducts];
+            products = self.retailerProducts;
         } else {
-            wrapper = nil;
+            products = nil;
         }
         
-        self.gridDataSource.productListWrapper = wrapper;
+        self.gridDataSource.products = products;
         
         [self.gridView reloadData];
         
-        if (wrapper.count) {
+        if (products.count) {
             [self.placeholderView setContentView:self.gridView];
             [self.placeholderView showContentView];
-        } else if (wrapper == nil) {
+        } else if (products == nil) {
             [self.placeholderView showLoadingView];
         } else {
             [self.placeholderView showEmptyView];
@@ -382,15 +378,14 @@
 - (void)loadCellsFromGroup:(NSObject<CSGroup> *)group
 {
     self.group = group;
-    [group getProductSummaries:^(id<CSProductSummaryListPage> firstPage,
-                                 NSError *error) {
+    [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
         if (error) {
             [self setErrorState];
             return;
         }
         
-        self.topProductSummaries = firstPage.productSummaryList;
-        self.topProductsCell.productSummaries = self.topProductSummaries;
+        self.topProducts = firstPage.productList;
+        self.topProductsCell.products = self.topProducts;
         
         self.rows = @[[[CSHomePageRow alloc] initWithCell:self.topProductsCell],
                       [[CSHomePageRow alloc] initWithCell:self.categoriesCell],
@@ -419,8 +414,7 @@
         
         id<CSProductList> list = firstPage.productList;
         self.categoryProducts = list;
-        self.categoryProductsCell.productSummaries = [CSProductListWrapper
-                                                      wrapperWithProducts:list];
+        self.categoryProductsCell.products = list;
         [self showContent];
     }];
     
@@ -458,8 +452,7 @@
         
         id<CSProductList> list = firstPage.productList;
         self.retailerProducts = list;
-        self.retailerProductsCell.productSummaries = [CSProductListWrapper
-                                                      wrapperWithProducts:list];
+        self.retailerProductsCell.products = list;
         [self showContent];
     }];
 }
@@ -586,13 +579,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     NSDictionary *address = sender;
     if ([address[@"collection"] isEqualToString:@"grid"]) {
         NSInteger index = [address[@"index"] integerValue];
-        [vc setProductListWrapper:self.gridDataSource.productListWrapper
-                            index:index];
+        [vc setProductList:self.gridDataSource.products index:index];
     } else {
         CSProductSummariesCell *cell = address[@"cell"];
-        id<CSProductSummaryList> list = cell.productSummaries;
+        id<CSProductList> list = cell.products;
         NSInteger index = [address[@"index"] integerValue];
-        [vc setProductSummaryList:list index:index];
+        [vc setProductList:list index:index];
     }
 }
 
@@ -956,7 +948,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             return;
         }
         
-        self.gridDataSource.productListWrapper = [CSProductListWrapper wrapperWithProducts:products];
+        self.gridDataSource.products = products;
         [self.gridView reloadData];
         if (products.count) {
             [self.placeholderView setContentView:self.gridView];

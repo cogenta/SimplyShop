@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "CSProductSummaryCell.h"
 
-@protocol CSProductListWrapper;
+@protocol CSProductList;
 
 @interface CSProductGridDataSource : NSObject <
 UICollectionViewDataSource,
 CSProductSummaryCellDelegate>
 
 @property (strong, nonatomic) CSPriceContext *priceContext;
-@property (strong, nonatomic) id<CSProductListWrapper> productListWrapper;
+@property (strong, nonatomic) id<CSProductList> products;
 
 @end

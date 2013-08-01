@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSProduct;
-@protocol CSProductSummary;
-@protocol CSProductListWrapper;
-@protocol CSProductSummaryList;
+@protocol CSProductList;
 @class CSTitleBarView;
 @class CSProductDetailsView;
 @class CSProductSidebarView;
@@ -23,14 +21,10 @@
 @property (weak, nonatomic) IBOutlet CSProductDetailsView *productDetailsView;
 @property (weak, nonatomic) IBOutlet CSProductSidebarView *sidebarView;
 
-@property (nonatomic, strong) id<CSProductSummary> productSummary;
 @property (nonatomic, strong) id<CSProduct> product;
 @property (nonatomic, strong) CSPriceContext *priceContext;
 
-- (void)setProductListWrapper:(id<CSProductListWrapper>)list
-                        index:(NSUInteger)index;
-- (void)setProductSummaryList:(id<CSProductSummaryList>)list
-                        index:(NSInteger)index;
+- (void)setProductList:(id<CSProductList>)list index:(NSInteger)index;
 
 - (void)setErrorState;
 

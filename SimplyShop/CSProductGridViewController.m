@@ -9,7 +9,6 @@
 #import "CSProductGridViewController.h"
 #import "CSProductDetailViewController.h"
 #import "CSPriceContext.h"
-#import "CSProductWrapper.h"
 #import "CSEmptyProductGridView.h"
 #import "CSSearchBarController.h"
 #import "CSProductSearchStateTitleFormatter.h"
@@ -20,7 +19,7 @@
 
 @interface CSProductGridViewController () <CSSearchBarControllerDelegate>
 
-@property (strong, nonatomic) id<CSProductListWrapper> productListWrapper;
+@property (strong, nonatomic) id<CSProductList> products;
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
 @property (strong, nonatomic) id<CSProductSearchState> searchState;
@@ -79,18 +78,18 @@
     self.dataSource.priceContext = priceContext;
 }
 
-- (id<CSProductListWrapper>)productListWrapper
+- (id<CSProductList>)products
 {
-    return self.dataSource.productListWrapper;
+    return self.dataSource.products;
 }
 
-- (void)setProductListWrapper:(id<CSProductListWrapper>)wrapper
+- (void)setProducts:(id<CSProductList>)products
 {
-    self.dataSource.productListWrapper = wrapper;
+    self.dataSource.products = products;
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ( ! wrapper) {
+        if ( ! products) {
             [self.placeholderView showLoadingView];
-        } else if (wrapper.count) {
+        } else if (products.count) {
             [self.placeholderView showContentView];
         } else {
             self.placeholderView.emptyViewDetail = [self detailForEmptyView];
@@ -98,18 +97,6 @@
         }
         [self.collectionView reloadData];
     });
-}
-
-- (void)setProductSummaries:(id<CSProductSummaryList>)products
-{
-    [self setProductListWrapper:[CSProductSummaryListWrapper
-                                 wrapperWithProducts:products]];
-}
-
-- (void)setProducts:(id<CSProductList>)products
-{
-    [self setProductListWrapper:[CSProductListWrapper
-                                 wrapperWithProducts:products]];
 }
 
 - (void)setSearchState:(id<CSProductSearchState>)searchState
@@ -170,7 +157,7 @@
 
         NSDictionary *address = sender;
         NSInteger index = [address[@"index"] integerValue];
-        [vc setProductListWrapper:self.productListWrapper index:index];
+        [vc setProductList:self.products index:index];
         
         return;
     }

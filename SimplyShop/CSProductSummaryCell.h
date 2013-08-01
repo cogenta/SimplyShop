@@ -10,11 +10,10 @@
 #import "CSAddressCell.h"
 
 @protocol CSTheme;
-@protocol CSProductSummary;
+@protocol CSProduct;
 
 @class CSCTAButton;
 @class CSProductSummaryCell;
-@class CSProductWrapper;
 @class CSPriceContext;
 
 @protocol CSProductSummaryCellDelegate <NSObject>
@@ -39,7 +38,7 @@
 
 - (IBAction)didTapRetryButton:(id)sender;
 - (void)setLoadingAddress:(NSObject *)address;
-- (void)setWrapper:(CSProductWrapper *)wrapper
+- (void)setProduct:(id<CSProduct>)product
            address:(NSObject *)address;
 - (void)setError:(NSError *)error address:(NSObject *)address;
 
