@@ -84,11 +84,23 @@
 @property (strong, nonatomic) NSObject<CSLikeList> *likeList;
 @property (strong, nonatomic) NSObject<CSGroup> *group;
 @property (strong, nonatomic) NSArray *selectedRetailerURLs;
-@property (strong, nonatomic) NSObject<CSProductList> *topProducts;
-@property (strong, nonatomic) NSObject<CSProductList> *categoryProducts;
-@property (strong, nonatomic) NSObject<CSProductList> *retailerProducts;
-@property (strong, nonatomic) NSObject<CSCategoryList> *categories;
-@property (strong, nonatomic) NSObject<CSRetailerList> *categoryRetailers;
+
+@property (strong, nonatomic) NSObject<CSProductList> *products;
+@property (strong, nonatomic) NSObject<CSNarrowList> *categoryNarrows;
+@property (strong, nonatomic) NSObject<CSNarrowList> *retailerNarrows;
+
+// TODO: do we need categoryNarrows and retailerNarrows
+
+@property (strong, nonatomic) NSObject<CSProductList> *topProducts
+__attribute__((deprecated ("Use products instead")));
+@property (strong, nonatomic) NSObject<CSProductList> *categoryProducts
+__attribute__((deprecated ("Use products instead")));
+@property (strong, nonatomic) NSObject<CSProductList> *retailerProducts
+__attribute__((deprecated ("Use products instead")));
+@property (strong, nonatomic) NSObject<CSCategoryList> *categories
+__attribute__((deprecated ("Use categoryNarrows instead")));
+@property (strong, nonatomic) NSObject<CSRetailerList> *categoryRetailers
+__attribute__((deprecated ("Use retailerNarrows instead")));
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
 @property (strong, nonatomic) id<CSAPIRequest> searchRequest;
@@ -201,10 +213,8 @@
     
     CSHomePageRow *productsRow = [[CSHomePageRow alloc]
                                   initWithCell:self.retailerProductsCell];
-    
-    [self.retailer getCategories:^(id<CSCategoryListPage> result,
-                                               NSError *error)
-     {
+    [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result, NSError *error)
+    {
          if (error) {
              [self setErrorState];
              return;
@@ -215,8 +225,8 @@
                                     initWithStyle:UITableViewCellStyleDefault
                                     reuseIdentifier:nil];
              self.categoriesCell.delegate = self;
-             self.categories = result.categoryList;
-             self.categoriesCell.categories = self.categories;
+             self.categoryNarrows = result.narrowList;
+             self.categoriesCell.narrows = self.categoryNarrows;
              
              CSHomePageRow *categoriesRow = [[CSHomePageRow alloc]
                                              initWithCell:self.categoriesCell];
@@ -295,25 +305,14 @@
                                             initWithLikeList:self.likeList
                                             retailer:self.retailer];
         
-        id<CSProductList> products;
-        if (self.topProducts) {
-            products = self.topProducts;
-        } else if (self.categoryProducts) {
-            products = self.categoryProducts;
-        } else if (self.retailerProducts) {
-            products = self.retailerProducts;
-        } else {
-            products = nil;
-        }
-        
-        self.gridDataSource.products = products;
+        self.gridDataSource.products = self.products;
         
         [self.gridView reloadData];
         
-        if (products.count) {
+        if (self.products.count) {
             [self.placeholderView setContentView:self.gridView];
             [self.placeholderView showContentView];
-        } else if (products == nil) {
+        } else if (self.products == nil) {
             [self.placeholderView showLoadingView];
         } else {
             [self.placeholderView showEmptyView];
@@ -378,28 +377,41 @@
 - (void)loadCellsFromGroup:(NSObject<CSGroup> *)group
 {
     self.group = group;
-    [group getProducts:^(id<CSProductListPage> firstPage, NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        self.topProducts = firstPage.productList;
-        self.topProductsCell.products = self.topProducts;
-        
-        self.rows = @[[[CSHomePageRow alloc] initWithCell:self.topProductsCell],
-                      [[CSHomePageRow alloc] initWithCell:self.categoriesCell],
-                      [[CSHomePageRow alloc] initWithCell:self.favoriteStoresCell]];
-    }];
     
-    [group getCategories:^(id<CSCategoryListPage> firstPage, NSError *error) {
+    [self.group getSlice:^(id<CSSlice> slice, NSError *error) {
         if (error) {
             [self setErrorState];
             return;
         }
         
-        self.categories = firstPage.categoryList;
-        self.categoriesCell.categories = self.categories;
+        self.slice = slice;
+        
+        [self.slice getProducts:^(id<CSProductListPage> firstPage,
+                                  NSError *error)
+        {
+            if (error) {
+                [self setErrorState];
+                return;
+            }
+            
+            self.products = firstPage.productList;
+            self.topProductsCell.products = self.products;
+            
+            self.rows = @[[[CSHomePageRow alloc] initWithCell:self.topProductsCell],
+                          [[CSHomePageRow alloc] initWithCell:self.categoriesCell],
+                          [[CSHomePageRow alloc] initWithCell:self.favoriteStoresCell]];
+        }];
+        
+        [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result, NSError *error)
+         {
+             if (error) {
+                 [self setErrorState];
+                 return;
+             }
+             
+             self.categoryNarrows = result.narrowList;
+             self.categoriesCell.narrows = self.categoryNarrows;
+         }];
     }];
 }
 
@@ -418,15 +430,16 @@
         [self showContent];
     }];
     
-    [category getImmediateSubcategories:^(id<CSCategoryListPage> firstPage,
-                                          NSError *error) {
+    [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result,
+                                     NSError *error)
+    {
         if (error) {
             [self setErrorState];
             return;
         }
         
-        self.categories = firstPage.categoryList;
-        self.categoriesCell.categories = self.categories;
+        self.categoryNarrows = result.narrowList;
+        self.categoriesCell.narrows = self.categoryNarrows;
     }];
     
     [category getRetailers:^(id<CSRetailerListPage> result,
@@ -813,16 +826,33 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 }
 
 - (void)categoriesCell:(CSCategoriesCell *)cell
-     didSelectCategory:(id<CSCategory>)category
+     didSelectNarrow:(id<CSNarrow>)narrow
                atIndex:(NSUInteger)index
 {
-    CSHomePageViewController *vc = [self.storyboard
-                                    instantiateViewControllerWithIdentifier:
-                                    @"CSHomePageViewController"];
-    vc.api = self.api;
-    vc.retailer = self.retailer;
-    vc.category = category;
-    [self.navigationController pushViewController:vc animated:YES];
+    [narrow getSlice:^(id<CSSlice> slice, NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        [slice getFiltersByCategory:^(id<CSCategory> category,
+                                      NSError *error) {
+            if (error) {
+                [self setErrorState];
+                return;
+            }
+         
+            CSHomePageViewController *vc =
+            [self.storyboard instantiateViewControllerWithIdentifier:
+             @"CSHomePageViewController"];
+            vc.api = self.api;
+            vc.slice = slice;
+            
+            vc.retailer = self.retailer;
+            vc.category = category;
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+    }];
 }
 
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue

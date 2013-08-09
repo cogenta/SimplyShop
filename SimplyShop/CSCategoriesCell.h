@@ -8,15 +8,15 @@
 
 #import "CSDashboardRowCell.h"
 
-@protocol CSCategory;
-@protocol CSCategoryList;
+@protocol CSNarrowList;
+@protocol CSNarrow;
 @protocol CSCategoriesCellDelegate;
 
 @interface CSCategoriesCell : CSDashboardRowCell
 
 @property (weak, nonatomic) IBOutlet id<CSCategoriesCellDelegate> delegate;
 
-@property (nonatomic, retain) NSObject<CSCategoryList> *categories;
+@property (nonatomic, retain) NSObject<CSNarrowList> *narrows;
 
 @end
 
@@ -25,7 +25,7 @@
 @optional
 
 - (void)categoriesCell:(CSCategoriesCell *)cell
-     didSelectCategory:(id<CSCategory>)category
+       didSelectNarrow:(id<CSNarrow>)narrow
                atIndex:(NSUInteger)index;
 
 @end

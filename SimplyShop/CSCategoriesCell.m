@@ -12,7 +12,8 @@
 
 @interface CSCategoriesCell ()
 
-@property (strong, nonatomic) NSMutableDictionary *cache;
+@property (strong, nonatomic) NSMutableDictionary *categoryCache;
+@property (strong, nonatomic) NSMutableDictionary *narrowCache;
 
 @end
 
@@ -21,17 +22,18 @@
 - (void)initialize
 {
     [super initialize];
-    self.cache = [[NSMutableDictionary alloc] init];
+    self.categoryCache = [[NSMutableDictionary alloc] init];
+    self.narrowCache = [[NSMutableDictionary alloc] init];
 
     [self addObserver:self
-           forKeyPath:@"categories"
+           forKeyPath:@"narrows"
               options:NSKeyValueObservingOptionNew
               context:NULL];
 }
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"categories"];
+    [self removeObserver:self forKeyPath:@"narrows"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -39,8 +41,9 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if ([keyPath isEqualToString:@"categories"]) {
-        self.cache = [[NSMutableDictionary alloc] init];
+    if ([keyPath isEqualToString:@"narrows"]) {
+        self.categoryCache = [[NSMutableDictionary alloc] init];
+        self.narrowCache = [[NSMutableDictionary alloc] init];
         [self reloadData];
         return;
     }
@@ -56,56 +59,117 @@
     return [CSCategoryCell class];
 }
 
+- (void)fetchNarrowAtIndex:(NSUInteger)index
+                      done:(void (^)(id<CSNarrow>, NSError *))done
+{
+    id<CSNarrow> cachedNarrow = self.narrowCache[@(index)];
+    if (cachedNarrow) {
+        done(cachedNarrow, nil);
+        return;
+    }
+    
+    [self.narrows getNarrowAtIndex:index
+                          callback:^(id<CSNarrow> narrow, NSError *error)
+    {
+        if (error) {
+            done(nil, error);
+            return;
+        }
+        
+        if (narrow) {
+            self.narrowCache[@(index)] = narrow;
+        }
+        
+        done(narrow, nil);
+    }];
+}
+
 
 - (void)fetchModelAtIndex:(NSUInteger)index
                      done:(void (^)(id, NSError *))done
 {
-    [self.categories getCategoryAtIndex:index callback:done];
+    id cachedModel = self.categoryCache[@(index)];
+    if (cachedModel) {
+        done(cachedModel, nil);
+        return;
+    }
+    
+    [self fetchNarrowAtIndex:index done:^(id<CSNarrow> narrow, NSError *error)
+    {
+        if (error) {
+            done(nil, error);
+            return;
+        }
+        
+        [narrow getNarrowsByCategory:^(id<CSCategory> result, NSError *error)
+        {
+            if (error) {
+                done(nil, error);
+                return;
+            }
+            
+            if ( ! result) {
+                NSString *msg = [NSString stringWithFormat:
+                                 @"%s:%d: narrow %@ lacks a category",
+                                 __FILE__, __LINE__, narrow];
+                NSDictionary *userInfo = @{NSLocalizedDescriptionKey: msg};
+                NSError *error = [NSError errorWithDomain:@"com.cogenta.SimplyShop.error"
+                                                     code:0
+                                                 userInfo:userInfo];
+                done(nil, error);
+                return;
+            }
+            
+            self.categoryCache[@(index)] = result;
+            
+            done(result, nil);
+        }];
+    }];
 }
 
 - (void)fetchModelWithAddress:(id)address
                          done:(void (^)(id model, NSError *error))done
 {
-    id model = [self.cache objectForKey:address];
-    if ( ! model) {
-        [self fetchModelAtIndex:((NSIndexPath *)address).row done:^(id model, NSError *error) {
-            if ( ! model) {
-                done(model, error);
-                return;
-            }
-            [self.cache setObject:model forKey:address];
-            done(model, error);
-        }];
+    if ( ! [address isKindOfClass:[NSIndexPath class]]) {
+        NSString *msg = [NSString stringWithFormat:
+                         @"%s:%d: Bad address %@",
+                         __FILE__, __LINE__, address];
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: msg};
+        NSError *error = [NSError errorWithDomain:@"com.cogenta.SimplyShop.error"
+                                             code:0
+                                         userInfo:userInfo];
+        done(nil, error);
+        return;
     }
     
-    done(model, nil);
+    [self fetchModelAtIndex:((NSIndexPath *)address).row done:done];
 }
 
 - (NSInteger)modelCount
 {
-    return self.categories.count;
+    return self.narrows.count;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    SEL sel = @selector(categoriesCell:didSelectCategory:atIndex:);
+    SEL sel = @selector(categoriesCell:didSelectNarrow:atIndex:);
     if ( ! [self.delegate respondsToSelector:sel]) {
         return;
     }
     
-    [self fetchModelWithAddress:[self addressForItemAtIndexPath:indexPath]
-                           done:^(id<CSCategory> category, NSError *error)
+    [self fetchNarrowAtIndex:indexPath.row
+                        done:^(id<CSNarrow> narrow, NSError *error)
     {
         if (error) {
-            NSLog(@"Ignoring selection. Error getting category: %@", error);
+            NSLog(@"Ignoring selection. Error getting narrow: %@", error);
             return;
         }
+        
         [self.delegate categoriesCell:self
-                    didSelectCategory:category
+                      didSelectNarrow:narrow
                               atIndex:indexPath.row];
     }];
-    
 }
 
 @end
