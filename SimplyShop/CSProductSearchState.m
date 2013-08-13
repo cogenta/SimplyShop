@@ -67,11 +67,7 @@
 
 - (CSPriceContext *)priceContext
 {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-            reason:(@"failed to override CSProductSearchState's "
-                    "priceContext method")
-            userInfo:nil];
+    return [[CSPriceContext alloc] initWithLikeList:self.likes];
 }
 
 - (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
@@ -249,11 +245,6 @@
     return [formatter title];
 }
 
-- (CSPriceContext *)priceContext
-{
-    return [[CSPriceContext alloc] initWithLikeList:self.likes];
-}
-
 @end
 
 @implementation CSCategoryProductSearchState
@@ -293,11 +284,6 @@
     }
     
     return [formatter titleWithCategory:self.category];
-}
-
-- (CSPriceContext *)priceContext
-{
-    return [[CSPriceContext alloc] initWithLikeList:self.likes];
 }
 
 - (BOOL)isEqual:(id)object
