@@ -618,17 +618,13 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     NSAssert(self.likeList, nil);
     NSAssert(self.group || self.category || self.retailer, nil);
     CSProductGridViewController *vc = (id) segue.destinationViewController;
-    if (self.category) {
-        [vc setSlice:self.slice category:self.category likes:self.likeList query:q];
-        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
-                                                          retailer:self.retailer];
-    } else if (self.retailer) {
-        [vc setSlice:self.slice retailer:self.retailer likes:self.likeList query:q];
-        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
-                                                          retailer:self.retailer];
-    } else {
-        [vc setSlice:self.slice likes:self.likeList query:q];
-    }
+    id<CSProductSearchState> searchState = [CSProductSearchState
+                                            stateWithSlice:self.slice
+                                            retailer:nil
+                                            category:self.category
+                                            likes:self.likeList
+                                            query:q];
+    vc.searchState = searchState;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

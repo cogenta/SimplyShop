@@ -22,7 +22,6 @@
 @property (strong, nonatomic) id<CSProductList> products;
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
-@property (strong, nonatomic) id<CSProductSearchState> searchState;
 @property (strong, nonatomic) id<CSAPIRequest> searchRequest;
 
 - (void)addSearchToNavigationBar;
@@ -68,16 +67,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (CSPriceContext *)priceContext
-{
-    return self.dataSource.priceContext;
-}
-
-- (void)setPriceContext:(CSPriceContext *)priceContext
-{
-    self.dataSource.priceContext = priceContext;
-}
-
 - (id<CSProductList>)products
 {
     return self.dataSource.products;
@@ -119,7 +108,6 @@
         self.products = products;
     }];
     
-    self.priceContext = searchState.priceContext;
     id formatter = [CSProductSearchStateTitleFormatter instance];
     self.title = [searchState titleWithFormatter:formatter];
 }
@@ -181,9 +169,9 @@
 
 - (NSString *)detailForEmptyView
 {
-    if (self.priceContext.retailer) {
+    if (self.searchState.priceContext.retailer) {
         return [NSString stringWithFormat:@"We found no products for %@.",
-                self.priceContext.retailer.name];
+                self.searchState.priceContext.retailer.name];
     }
     
     return @"No products were found for your search.";

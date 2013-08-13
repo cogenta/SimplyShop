@@ -9,14 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @protocol CSProductList;
-@protocol CSRetailer;
-@protocol CSLikeList;
-@protocol CSGroup;
-@protocol CSCategory;
-@protocol CSSlice;
+@protocol CSProductSearchState;
 
 @class CSPlaceholderView;
-@class CSPriceContext;
 @class CSProductGridDataSource;
 
 @interface CSProductGridViewController : UIViewController
@@ -26,21 +21,9 @@
 @property (weak, nonatomic) IBOutlet CSPlaceholderView *placeholderView;
 @property (strong, nonatomic) IBOutlet CSProductGridDataSource *dataSource;
 
-- (void)setSlice:(id<CSSlice>)slice
-        retailer:(id<CSRetailer>)retailer
-           likes:(id<CSLikeList>)likes
-           query:(NSString *)query;
-- (void)setSlice:(id<CSSlice>)slice
-           likes:(id<CSLikeList>)likes
-           query:(NSString *)query;
-- (void)setSlice:(id<CSSlice>)slice
-        category:(id<CSCategory>)category
-           likes:(id<CSLikeList>)likes
-           query:(NSString *)query;
-
 - (void)setProducts:(id<CSProductList>)products;
 
-@property (strong, nonatomic) CSPriceContext *priceContext;
+@property (strong, nonatomic) id<CSProductSearchState> searchState;
 
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue;
 
