@@ -191,17 +191,17 @@
 - (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
 {
     if (self.query) {
-        return [self.retailer getProductsWithQuery:self.query
-                                   callback:^(id<CSProductListPage> firstPage,
-                                              NSError *error)
+        return [self.slice getProductsWithQuery:self.query
+                                       callback:^(id<CSProductListPage> page,
+                                                  NSError *error)
          {
-             callback(firstPage.productList, error);
+             callback(page.productList, error);
          }];
     } else {
-        return [self.retailer getProducts:^(id<CSProductListPage> firstPage,
-                                     NSError *error)
+        return [self.slice getProducts:^(id<CSProductListPage> page,
+                                         NSError *error)
          {
-             callback(firstPage.productList, error);
+             callback(page.productList, error);
          }];
     }
 }
@@ -268,17 +268,17 @@
 - (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
 {
     if (self.query) {
-        return [self.group getProductsWithQuery:self.query
-                                callback:^(id<CSProductListPage> firstPage,
-                                           NSError *error)
+        return [self.slice getProductsWithQuery:self.query
+                                       callback:^(id<CSProductListPage> page,
+                                                  NSError *error)
          {
-             callback(firstPage.productList, error);
+             callback(page.productList, error);
          }];
     } else {
-        return [self.group getProducts:^(id<CSProductListPage> firstPage,
-                                  NSError *error)
+        return [self.slice getProducts:^(id<CSProductListPage> page,
+                                         NSError *error)
          {
-             callback(firstPage.productList, error);
+             callback(page.productList, error);
          }];
     }
 }
@@ -344,17 +344,17 @@
 - (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
 {
     if (self.query) {
-        return [self.category getProductsWithQuery:self.query
-                                   callback:^(id<CSProductListPage> firstPage,
-                                              NSError *error)
+        return [self.slice getProductsWithQuery:self.query
+                                       callback:^(id<CSProductListPage> page,
+                                                  NSError *error)
          {
-             callback(firstPage.productList, error);
+             callback(page.productList, error);
          }];
     } else {
-        return [self.category getProducts:^(id<CSProductListPage> firstPage,
-                                     NSError *error)
+        return [self.slice getProducts:^(id<CSProductListPage> page,
+                                         NSError *error)
          {
-             callback(firstPage.productList, error);
+             callback(page.productList, error);
          }];
     }
 }
