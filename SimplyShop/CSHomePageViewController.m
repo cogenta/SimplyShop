@@ -159,6 +159,10 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 
 - (NSString *)dashboardTitle
 {
+    if ( ! self.slice) {
+        return @"Loading...";
+    }
+    
     if (self.category) {
         if (self.retailer) {
             return [NSString stringWithFormat:@"%@ from %@",
@@ -253,7 +257,22 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
         return;
     }
     
-    // If no slice is loaded, get a slice of the user's selected retailers.
+    // If no slice is loaded, try first to get it from a supplied narrow.
+    if (self.narrow) {
+        [self.narrow getSlice:^(id<CSSlice> result, NSError *error) {
+            if (error) {
+                [self setErrorState];
+                return;
+            }
+            
+            self.slice = result;
+            callback(YES, nil);
+        }];
+        return;
+    }
+    
+    // If no slice is loaded, and we don't have a narrow, get a slice of the
+    // user's selected retailers.
     [self loadGroup:^(BOOL success, NSError *error) {
         if ( ! success) {
             callback(NO, error);
@@ -787,19 +806,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 - (void)sliceRetailersCell:(CSSliceRetailersCell *)cell
            didSelectNarrow:(id<CSNarrow>)narrow
 {
-    [narrow getSlice:^(id<CSSlice> slice, NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        CSHomePageViewController *vc =
-        [self.storyboard instantiateViewControllerWithIdentifier:
-         @"CSHomePageViewController"];
-        vc.api = self.api;
-        vc.slice = slice;
-        [self.navigationController pushViewController:vc animated:YES];
-    }];
+    CSHomePageViewController *vc =
+    [self.storyboard instantiateViewControllerWithIdentifier:
+     @"CSHomePageViewController"];
+    vc.api = self.api;
+    vc.narrow = narrow;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)sliceRetailersCellDidTapChooseButton:(CSSliceRetailersCell *)cell
@@ -811,20 +823,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
        didSelectNarrow:(id<CSNarrow>)narrow
                atIndex:(NSUInteger)index
 {
-    [narrow getSlice:^(id<CSSlice> slice, NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        CSHomePageViewController *vc =
-        [self.storyboard instantiateViewControllerWithIdentifier:
-         @"CSHomePageViewController"];
-        vc.api = self.api;
-        vc.slice = slice;
-        
-        [self.navigationController pushViewController:vc animated:YES];
-    }];
+    CSHomePageViewController *vc =
+    [self.storyboard instantiateViewControllerWithIdentifier:
+     @"CSHomePageViewController"];
+    vc.api = self.api;
+    vc.narrow = narrow;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue

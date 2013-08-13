@@ -12,8 +12,7 @@
 @class CSPlaceholderView;
 @class CSProductGridDataSource;
 @protocol CSSlice;
-@protocol CSCategory;
-@protocol CSRetailer;
+@protocol CSNarrow;
 
 @interface CSHomePageViewController : UIViewController
 
@@ -24,6 +23,7 @@
 
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) id<CSSlice> slice;
+@property (strong, nonatomic) id<CSNarrow> narrow;
 
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;
