@@ -13,6 +13,7 @@
 @protocol CSLikeList;
 @protocol CSGroup;
 @protocol CSCategory;
+@protocol CSSlice;
 
 @class CSPlaceholderView;
 @class CSPriceContext;
@@ -25,15 +26,18 @@
 @property (weak, nonatomic) IBOutlet CSPlaceholderView *placeholderView;
 @property (strong, nonatomic) IBOutlet CSProductGridDataSource *dataSource;
 
-- (void)setRetailer:(id<CSRetailer>)retailer
-              likes:(id<CSLikeList>)likes
-              query:(NSString *)query;
-- (void)setGroup:(id<CSGroup>)group
+- (void)setSlice:(id<CSSlice>)slice
+        retailer:(id<CSRetailer>)retailer
            likes:(id<CSLikeList>)likes
            query:(NSString *)query;
-- (void)setCategory:(id<CSCategory>)category
-              likes:(id<CSLikeList>)likes
-              query:(NSString *)query;
+- (void)setSlice:(id<CSSlice>)slice
+           group:(id<CSGroup>)group
+           likes:(id<CSLikeList>)likes
+           query:(NSString *)query;
+- (void)setSlice:(id<CSSlice>)slice
+        category:(id<CSCategory>)category
+           likes:(id<CSLikeList>)likes
+           query:(NSString *)query;
 
 - (void)setProducts:(id<CSProductList>)products;
 

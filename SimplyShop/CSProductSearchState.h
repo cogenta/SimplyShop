@@ -13,6 +13,7 @@
 
 @protocol CSProductSearchState <NSObject>
 
+@property (readonly) id<CSSlice> slice;
 @property (readonly) NSString *query;
 @property (readonly) CSPriceContext *priceContext;
 
@@ -25,17 +26,20 @@
 
 @interface CSProductSearchState : NSObject <CSProductSearchState>
 
-+ (id)stateWithRetailer:(id<CSRetailer>)retailer
-                  likes:(id<CSLikeList>)likes
-                  query:(NSString *)query;
-
-+ (id)stateWithGroup:(id<CSGroup>)group
++ (id)stateWithSlice:(id<CSSlice>)slice
+            retailer:(id<CSRetailer>)retailer
                likes:(id<CSLikeList>)likes
                query:(NSString *)query;
 
-+ (id)stateWithCategory:(id<CSCategory>)category
-                  likes:(id<CSLikeList>)likes
-                  query:(NSString *)query;
++ (id)stateWithSlice:(id<CSSlice>)slice
+               group:(id<CSGroup>)group
+               likes:(id<CSLikeList>)likes
+               query:(NSString *)query;
+
++ (id)stateWithSlice:(id<CSSlice>)slice
+            category:(id<CSCategory>)category
+               likes:(id<CSLikeList>)likes
+               query:(NSString *)query;
 
 @end
 

@@ -124,32 +124,38 @@
     self.title = [searchState titleWithFormatter:formatter];
 }
 
-- (void)setRetailer:(id<CSRetailer>)retailer
-              likes:(id<CSLikeList>)likes
-              query:(NSString *)query
-{
-    self.searchState = [CSProductSearchState stateWithRetailer:retailer
-                                                         likes:likes
-                                                         query:query];
-}
-
-- (void)setGroup:(id<CSGroup>)group
+- (void)setSlice:(id<CSSlice>)slice
+        retailer:(id<CSRetailer>)retailer
            likes:(id<CSLikeList>)likes
            query:(NSString *)query
 {
-    self.searchState = [CSProductSearchState stateWithGroup:group
+    self.searchState = [CSProductSearchState stateWithSlice:slice
+                                                   retailer:retailer
+                                                      likes:likes
+                                                      query:query];
+}
+
+- (void)setSlice:(id<CSSlice>)slice
+           group:(id<CSGroup>)group
+           likes:(id<CSLikeList>)likes
+           query:(NSString *)query
+{
+    self.searchState = [CSProductSearchState stateWithSlice:slice
+                                                      group:group
                                                       likes:likes
                                                       query:query];
 }
 
 
-- (void)setCategory:(id<CSCategory>)category
-              likes:(id<CSLikeList>)likes
-              query:(NSString *)query
+- (void)setSlice:(id<CSSlice>)slice
+        category:(id<CSCategory>)category
+           likes:(id<CSLikeList>)likes
+           query:(NSString *)query
 {
-    self.searchState = [CSProductSearchState stateWithCategory:category
-                                                         likes:likes
-                                                         query:query];
+    self.searchState = [CSProductSearchState stateWithSlice:slice
+                                                   category:category
+                                                      likes:likes
+                                                      query:query];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

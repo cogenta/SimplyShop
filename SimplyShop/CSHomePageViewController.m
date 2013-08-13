@@ -619,15 +619,15 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     NSAssert(self.group || self.category || self.retailer, nil);
     CSProductGridViewController *vc = (id) segue.destinationViewController;
     if (self.category) {
-        [vc setCategory:self.category likes:self.likeList query:q];
+        [vc setSlice:self.slice category:self.category likes:self.likeList query:q];
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
                                                           retailer:self.retailer];
     } else if (self.retailer) {
-        [vc setRetailer:self.retailer likes:self.likeList query:q];
+        [vc setSlice:self.slice retailer:self.retailer likes:self.likeList query:q];
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
                                                           retailer:self.retailer];
     } else {
-        [vc setGroup:self.group likes:self.likeList query:q];
+        [vc setSlice:self.slice group:self.group likes:self.likeList query:q];
     }
 }
 
@@ -909,15 +909,18 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     id<CSProductSearchState> searchState = nil;
     if (self.category) {
-        searchState = [CSProductSearchState stateWithCategory:self.category
-                                                        likes:self.likeList
-                                                        query:query];
+        searchState = [CSProductSearchState stateWithSlice:self.slice
+                                                  category:self.category
+                                                     likes:self.likeList
+                                                     query:query];
     } else if (self.retailer) {
-        searchState = [CSProductSearchState stateWithRetailer:self.retailer
-                                                        likes:self.likeList
-                                                        query:query];
+        searchState = [CSProductSearchState stateWithSlice:self.slice
+                                                  retailer:self.retailer
+                                                     likes:self.likeList
+                                                     query:query];
     } else {
-        searchState = [CSProductSearchState stateWithGroup:self.group
+        searchState = [CSProductSearchState stateWithSlice:self.slice
+                                                     group:self.group
                                                      likes:self.likeList
                                                      query:query];
     }
