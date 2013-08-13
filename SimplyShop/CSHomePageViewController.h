@@ -25,9 +25,6 @@
 @property (strong, nonatomic) CSAPI *api;
 @property (strong, nonatomic) id<CSSlice> slice;
 
-@property (strong, nonatomic) id<CSCategory> category;
-@property (strong, nonatomic) id<CSRetailer> retailer;
-
 - (IBAction)doneInitialRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneChangeRetailerSelection:(UIStoryboardSegue *)segue;
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue;

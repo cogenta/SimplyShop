@@ -8,8 +8,7 @@
 
 #import "CSHomePageViewController.h"
 #import "CSRetailerSelectionViewController.h"
-#import "CSFavoriteStoresCell.h"
-#import "CSCategoryRetailersCell.h"
+#import "CSSliceRetailersCell.h"
 #import "CSProductSummariesCell.h"
 #import "CSCategoriesCell.h"
 #import "CSProductDetailViewController.h"
@@ -65,29 +64,25 @@
 @interface CSHomePageViewController () <
     UIAlertViewDelegate,
     CSSearchBarControllerDelegate,
-    CSFavoriteStoresCellDelegate,
+    CSSliceRetailersCellDelegate,
     CSProductSummariesCellDelegate,
     CSCategoriesCellDelegate,
-    CSCategoryRetailersCellDelegate,
     UICollectionViewDelegate
 >
 
 @property (strong, nonatomic) CSProductSummariesCell *topProductsCell;
 @property (strong, nonatomic) CSProductSummariesCell *categoryProductsCell;
 @property (strong, nonatomic) CSProductSummariesCell *retailerProductsCell;
-@property (strong, nonatomic) CSFavoriteStoresCell *favoriteStoresCell;
-@property (strong, nonatomic) CSCategoryRetailersCell *categoryRetailersCell;
+@property (strong, nonatomic) CSSliceRetailersCell *favoriteStoresCell;
 @property (strong, nonatomic) CSCategoriesCell *categoriesCell;
 @property (strong, nonatomic) NSArray *rows;
-
-@property (strong, nonatomic) NSObject<CSUser> *user;
-@property (strong, nonatomic) NSObject<CSLikeList> *likeList;
-@property (strong, nonatomic) NSObject<CSGroup> *group;
-@property (strong, nonatomic) NSArray *selectedRetailerURLs;
 
 @property (strong, nonatomic) NSObject<CSProductList> *products;
 @property (strong, nonatomic) NSObject<CSNarrowList> *categoryNarrows;
 @property (strong, nonatomic) NSObject<CSNarrowList> *retailerNarrows;
+
+@property (strong, nonatomic) id<CSCategory> category;
+@property (strong, nonatomic) id<CSRetailer> retailer;
 
 // TODO: do we need categoryNarrows and retailerNarrows
 
@@ -105,15 +100,29 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
 @property (strong, nonatomic) id<CSAPIRequest> searchRequest;
 
-- (void)loadRetailers;
-- (void)loadCellsFromGroup:(NSObject<CSGroup> *)group;
+- (void)loadModel;
+- (void)reloadModel;
+
+- (void)loadCellsFromSlice;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
 
-- (void)loadRootDashboard;
-- (void)loadCategoryDashboard;
 - (void)setErrorState;
 
 - (void)addSearchToNavigationBar;
+
+- (void)loadSlice:(void (^)(BOOL success, NSError *error))callback;
+
+@property (strong, nonatomic) id<CSLikeList> likeList;
+- (void)loadLikeList:(void (^)(BOOL success, NSError *error))callback;
+
+@property (strong, nonatomic) NSArray *selectedRetailerURLs;
+- (void)loadSelectedRetailerURLs:(void (^)(BOOL success, NSError *error))callback;
+
+@property (strong, nonatomic) NSObject<CSGroup> *group;
+- (void)loadGroup:(void (^)(BOOL success, NSError *error))callback;
+
+@property (strong, nonatomic) NSObject<CSUser> *user;
+- (void)loadUser:(void (^)(BOOL success, NSError *error))callback;
 
 @end
 
@@ -135,7 +144,7 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
                             reuseIdentifier:nil];
     self.topProductsCell.delegate = self;
     
-    self.favoriteStoresCell = [[CSFavoriteStoresCell alloc]
+    self.favoriteStoresCell = [[CSSliceRetailersCell alloc]
                                initWithStyle:UITableViewCellStyleDefault
                                reuseIdentifier:nil];
     self.favoriteStoresCell.delegate = self;
@@ -145,98 +154,7 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
                            reuseIdentifier:nil];
     self.categoriesCell.delegate = self;
     
-    self.favoriteStoresCell.api = self.api;
-    
-    [self loadRootDashboard];
-}
-
-- (void)prepareCategoryDashboard
-{
-    self.categoryProductsCell = [[CSProductSummariesCell alloc]
-                                 initWithStyle:UITableViewCellStyleDefault
-                                 reuseIdentifier:nil];
-    self.categoryProductsCell.delegate = self;
-    
-    CSHomePageRow *productsRow = [[CSHomePageRow alloc]
-                                  initWithCell:self.categoryProductsCell];
-    
-    self.categoryRetailersCell = [[CSCategoryRetailersCell alloc]
-                                  initWithStyle:UITableViewCellStyleDefault
-                                  reuseIdentifier:nil];
-    self.categoryRetailersCell.delegate = self;
-    
-    CSHomePageRow *retailersRow = [[CSHomePageRow alloc]
-                                   initWithCell:self.categoryRetailersCell];
-
-    [self.category getImmediateSubcategories:^(id<CSCategoryListPage> result,
-                                               NSError *error)
-    {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        if (result.count > 1) {
-            self.categoriesCell = [[CSCategoriesCell alloc]
-                                   initWithStyle:UITableViewCellStyleDefault
-                                   reuseIdentifier:nil];
-            self.categoriesCell.delegate = self;
-            CSHomePageRow *categoriesRow = [[CSHomePageRow alloc]
-                                            initWithCell:self.categoriesCell];
-            if (self.retailer) {
-                self.rows = @[productsRow,
-                              categoriesRow];
-            } else {
-                self.rows = @[productsRow,
-                              categoriesRow,
-                              retailersRow];
-            }
-        } else {
-            if (self.retailer) {
-                self.rows = @[productsRow];
-            } else {
-                self.rows = @[productsRow, retailersRow];
-            }
-
-        }
-    }];
-    
-    [self loadCategoryDashboard];
-}
-
-- (void)prepareRetailerDashboard
-{
-    self.retailerProductsCell = [[CSProductSummariesCell alloc]
-                                 initWithStyle:UITableViewCellStyleDefault
-                                 reuseIdentifier:nil];
-    self.retailerProductsCell.delegate = self;
-    
-    CSHomePageRow *productsRow = [[CSHomePageRow alloc]
-                                  initWithCell:self.retailerProductsCell];
-    [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result, NSError *error)
-    {
-         if (error) {
-             [self setErrorState];
-             return;
-         }
-         
-         if (result.count > 1) {
-             self.categoriesCell = [[CSCategoriesCell alloc]
-                                    initWithStyle:UITableViewCellStyleDefault
-                                    reuseIdentifier:nil];
-             self.categoriesCell.delegate = self;
-             self.categoryNarrows = result.narrowList;
-             self.categoriesCell.narrows = self.categoryNarrows;
-             
-             CSHomePageRow *categoriesRow = [[CSHomePageRow alloc]
-                                             initWithCell:self.categoriesCell];
-             self.rows = @[productsRow, categoriesRow];
-         } else {
-             self.rows = @[productsRow];
-         }
-     }];
-    
-    [self loadRetailerDashboard];
+    [self loadModel];
 }
 
 - (NSString *)dashboardTitle
@@ -263,20 +181,7 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 
     [self addSearchToNavigationBar];
     
-    if (self.category) {
-        [self prepareCategoryDashboard];
-        if (self.retailer) {
-            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
-                                                     initWithTitle:self.category.name
-                                                     style:UIBarButtonItemStylePlain
-                                                     target:nil
-                                                     action:NULL];
-        }
-    } else if (self.retailer) {
-        [self prepareRetailerDashboard];
-    } else {
-        [self prepareRootDashboard];
-    }
+    [self prepareRootDashboard];
     
     self.navigationItem.title = [self dashboardTitle];
 }
@@ -326,7 +231,9 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
     self.navigationItem.title = [self dashboardTitle];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
 {
     if (object == self && [keyPath isEqualToString:@"rows"]) {
         [self showContent];
@@ -339,181 +246,254 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didLoadRetailers
+- (void)loadSlice:(void (^)(BOOL, NSError *))callback
 {
-    if ([self.selectedRetailerURLs count] < 3) {
-        [self performSegueWithIdentifier:@"showRetailerSelection" sender:self];
+    if (self.slice) {
+        callback(YES, nil);
+        return;
     }
+    
+    // If no slice is loaded, get a slice of the user's selected retailers.
+    [self loadGroup:^(BOOL success, NSError *error) {
+        if ( ! success) {
+            callback(NO, error);
+            return;
+        }
+        
+        [self.group getSlice:^(id<CSSlice> slice, NSError *error) {
+            if (error) {
+                callback(NO, error);
+                return;
+            }
+            
+            self.slice = slice;
+            callback(YES, nil);
+        }];
+    }];
 }
 
-- (void)loadModel
+- (void)loadGroup:(void (^)(BOOL, NSError *))callback
 {
+    if (self.group) {
+        callback(YES, nil);
+        return;
+    }
+    
+    // If the group hasn't been loaded, get it from the user.
+    [self loadUser:^(BOOL success, NSError *error) {
+        if ( ! success) {
+            callback(NO, error);
+            return;
+        }
+        
+        [self ensureFavoriteRetailersGroup:^(id<CSGroup> group,
+                                             NSError *error)
+        {
+            if (error) {
+                callback(NO, error);
+                return;
+            }
+            
+            self.group = group;
+            callback(YES, nil);
+        }];
+    }];
+}
+
+- (void)loadUser:(void (^)(BOOL, NSError *))callback
+{
+    if (self.user) {
+        callback(YES, nil);
+        return;
+    }
+    
+    // If the user hasn't been loaded, log in.
     [self.api login:^(id<CSUser> user, NSError *error) {
-        if (error) {
-            [self setErrorState];
+        if ( ! user) {
+            callback(NO, error);
             return;
         }
         
         self.user = user;
-        [self loadRetailers];
+        callback(YES, nil);
     }];
 }
 
-- (void)loadRootDashboard
+- (void)loadModel
 {
-    [self loadModel];
+    [self loadSlice:^(BOOL success, NSError *error) {
+        if ( ! success) {
+            [self setErrorState];
+            return;
+        }
+        
+        [self loadSelectedRetailerURLs:^(BOOL success, NSError *error) {
+            if ( ! success) {
+                [self setErrorState];
+                return;
+            }
+            
+            [self loadCellsFromSlice];
+        }];
+    }];
 }
 
-- (void)loadCategoryDashboard
+- (void)loadSelectedRetailerURLs:(void (^)(BOOL, NSError *))callback
 {
-    [self loadModel];
+    if (self.selectedRetailerURLs) {
+        callback(YES, nil);
+        return;
+    }
+
+    [self loadLikeList:^(BOOL success, NSError *error) {
+        if ( ! success) {
+            callback(NO, error);
+            return;
+        }
+        
+        id<CSLikeList> likeList = self.likeList;
+        __block NSInteger urlsToGet = likeList.count;
+        if (urlsToGet == 0) {
+            self.selectedRetailerURLs = [NSArray array];
+            callback(YES, nil);
+            return;
+        }
+        
+        NSMutableSet *urls = [NSMutableSet setWithCapacity:urlsToGet];
+        for (NSInteger i = 0; i < urlsToGet; ++i) {
+            [likeList getLikeAtIndex:i callback:^(id<CSLike> like,
+                                                  NSError *error)
+            {
+                if (error) {
+                    callback(NO, error);
+                    return;
+                }
+                
+                --urlsToGet;
+                if (like) {
+                    [urls addObject:like.likedURL];
+                }
+                if (urlsToGet == 0) {
+                    self.selectedRetailerURLs = [urls allObjects];
+                    callback(YES, nil);
+                    return;
+                }
+            }];
+        }
+    }];
 }
 
-- (void)loadRetailerDashboard
-{
-    [self loadModel];
-}
 
-- (void)loadCellsFromGroup:(NSObject<CSGroup> *)group
+- (void)loadLikeList:(void (^)(BOOL, NSError *))callback
 {
-    self.group = group;
+    if (self.likeList) {
+        callback(YES, nil);
+        return;
+    }
     
-    [self.group getSlice:^(id<CSSlice> slice, NSError *error) {
+    [self loadGroup:^(BOOL success, NSError *error) {
+        if ( ! success) {
+            callback(NO, error);
+            return;
+        }
+        
+        [self.group getLikes:^(id<CSLikeListPage> firstPage, NSError *error) {
+            if (error) {
+                callback(NO, error);
+                return;
+            }
+            
+            self.likeList = firstPage.likeList;
+            callback(YES, nil);
+        }];
+    }];
+}
+
+- (void)reloadModel
+{
+    [self.placeholderView showLoadingView];
+    self.slice = nil;
+    self.selectedRetailerURLs = nil;
+    self.likeList = nil;
+    self.group = nil;
+    [self loadModel];
+}
+
+- (void)loadCellsFromSlice
+{
+    NSMutableArray *rows = [[NSMutableArray alloc] initWithCapacity:3];
+    
+    if (self.slice.productsURL) {
+        [rows addObject:[[CSHomePageRow alloc]
+                         initWithCell:self.topProductsCell]];
+    }
+    
+    if (self.slice.categoryNarrowsURL) {
+        [rows addObject:[[CSHomePageRow alloc]
+                         initWithCell:self.categoriesCell]];
+    }
+    
+    if (self.slice.retailerNarrowsURL) {
+        [rows addObject:[[CSHomePageRow alloc]
+                         initWithCell:self.favoriteStoresCell]];
+    }
+    
+    self.rows = rows;
+    
+    [self.slice getFiltersByCategory:^(id<CSCategory> category,
+                                       NSError *error)
+    {
         if (error) {
             [self setErrorState];
             return;
         }
         
-        self.slice = slice;
-        
-        [self.slice getProducts:^(id<CSProductListPage> firstPage,
-                                  NSError *error)
+        [self.slice getFiltersByRetailer:^(id<CSRetailer> retailer,
+                                           NSError *error)
         {
             if (error) {
                 [self setErrorState];
                 return;
             }
             
-            self.products = firstPage.productList;
-            self.topProductsCell.products = self.products;
+            self.retailer = retailer;
+            self.category = category;
             
-            self.rows = @[[[CSHomePageRow alloc] initWithCell:self.topProductsCell],
-                          [[CSHomePageRow alloc] initWithCell:self.categoriesCell],
-                          [[CSHomePageRow alloc] initWithCell:self.favoriteStoresCell]];
+            self.navigationItem.title = [self dashboardTitle];
         }];
-        
-        [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result, NSError *error)
-         {
-             if (error) {
-                 [self setErrorState];
-                 return;
-             }
-             
-             self.categoryNarrows = result.narrowList;
-             self.categoriesCell.narrows = self.categoryNarrows;
-         }];
     }];
-}
 
-- (void)loadCellsFromCategory:(NSObject<CSCategory> *)category
-{
-    [category getProducts:^(id<CSProductListPage> firstPage,
-                            NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        id<CSProductList> list = firstPage.productList;
-        self.categoryProducts = list;
-        self.categoryProductsCell.products = list;
-        [self showContent];
-    }];
+    [self.slice getProducts:^(id<CSProductListPage> firstPage,
+                              NSError *error)
+     {
+         if (error) {
+             [self setErrorState];
+             return;
+         }
+         
+         self.products = firstPage.productList;
+         self.topProductsCell.products = self.products;
+     }];
     
-    [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result,
-                                     NSError *error)
-    {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        self.categoryNarrows = result.narrowList;
-        self.categoriesCell.narrows = self.categoryNarrows;
-    }];
+    [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result, NSError *error)
+     {
+         if (error) {
+             [self setErrorState];
+             return;
+         }
+         
+         self.categoryNarrows = result.narrowList;
+         self.categoriesCell.narrows = self.categoryNarrows;
+     }];
     
-    [category getRetailers:^(id<CSRetailerListPage> result,
-                             NSError *error) {
+    [self.slice getRetailerNarrows:^(id<CSNarrowListPage> result, NSError *error) {
         if (error) {
             [self setErrorState];
             return;
         }
         
-        self.categoryRetailers = result.retailerList;
-        self.categoryRetailersCell.retailers = self.categoryRetailers;
-    }];
-}
-
-- (void)loadCellsFromRetailer:(NSObject<CSRetailer> *)retailer
-{
-    [retailer getProducts:^(id<CSProductListPage> firstPage,
-                            NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        id<CSProductList> list = firstPage.productList;
-        self.retailerProducts = list;
-        self.retailerProductsCell.products = list;
-        [self showContent];
-    }];
-}
-
-- (void)loadRetailers
-{
-    [self ensureFavoriteRetailersLikeList:^(id<CSLikeList> likeList,
-                                            id<CSGroup> group,
-                                            NSError *error)
-    {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        self.likeList = likeList;
-        
-        if (self.category) {
-            [self loadCellsFromCategory:self.category];
-        } else if (self.retailer) {
-            [self loadCellsFromRetailer:self.retailer];
-        } else {
-            [self loadCellsFromGroup:group];
-            
-            __block NSInteger urlsToGet = likeList.count;
-            if (urlsToGet == 0) {
-                self.selectedRetailerURLs = [NSArray array];
-                self.favoriteStoresCell.selectedRetailerURLs = self.selectedRetailerURLs;
-                [self didLoadRetailers];
-                return;
-            }
-            
-            NSMutableSet *urls = [NSMutableSet setWithCapacity:urlsToGet];
-            for (NSInteger i = 0; i < urlsToGet; ++i) {
-                [likeList getLikeAtIndex:i callback:^(id<CSLike> like, NSError *error)
-                 {
-                     --urlsToGet;
-                     if (like) {
-                         [urls addObject:like.likedURL];
-                     }
-                     if (urlsToGet == 0) {
-                         self.selectedRetailerURLs = [urls allObjects];
-                         self.favoriteStoresCell.selectedRetailerURLs = self.selectedRetailerURLs;
-                         [self didLoadRetailers];
-                     }
-                 }];
-            }
-        }
+        self.retailerNarrows = result.narrowList;
+        self.favoriteStoresCell.narrows = self.retailerNarrows;
     }];
 }
 
@@ -527,16 +507,14 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
     [alert show];
 }
 
-- (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
+- (void)sliceRetailersCell:(CSSliceRetailersCell *)cell
    failedToLoadRetailerURL:(NSURL *)retailerURL
                      error:(NSError *)error
 {
     if ([error.userInfo[@"NSHTTPPropertyStatusCodeKey"] isEqual:@(404)]) {
         [self showMissingRetailer:retailerURL];
         
-        NSMutableSet *retailerSet = [NSMutableSet setWithArray:cell.selectedRetailerURLs];
-        [retailerSet removeObject:retailerURL];
-        [self saveRetailerSelection:retailerSet];
+        // TODO: remove retailer at retailerURL from likes.
         
         return;
     }
@@ -560,13 +538,7 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [self.placeholderView showLoadingView];
-    if (self.category) {
-        [self loadCategoryDashboard];
-    } else if (self.retailer) {
-        [self loadRetailerDashboard];
-    } else {
-        [self loadRootDashboard];
-    }
+    [self loadModel];
 }
 
 - (void)prepareForShowRetailerSelectionForSegue:(UIStoryboardSegue *)segue
@@ -705,6 +677,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self saveRetailerSelection:modal.selectedRetailerURLs];
 }
 
+
+
 - (void)saveRetailerSelection:(NSSet *)selectedURLs
 {
     NSMutableSet *urlsToAdd = [NSMutableSet setWithSet:selectedURLs];
@@ -724,9 +698,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             __block NSInteger changesToApply = ([likesToDelete count] +
                                                 [urlsToAdd count]);
             if (changesToApply == 0) {
-                self.selectedRetailerURLs = [selectedURLs allObjects];
-                self.favoriteStoresCell.selectedRetailerURLs = self.selectedRetailerURLs;
-                [self loadRetailers];
+                [self reloadModel];
             }
             for (id<CSLike> like in likesToDelete) {
                 [like remove:^(BOOL success, NSError *error) {
@@ -737,9 +709,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                     
                     --changesToApply;
                     if (changesToApply == 0) {
-                        self.selectedRetailerURLs = [selectedURLs allObjects];
-                        self.favoriteStoresCell.selectedRetailerURLs = self.selectedRetailerURLs;
-                        [self loadRetailers];
+                        [self reloadModel];
                     }
                 }];
             }
@@ -755,9 +725,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                     
                     --changesToApply;
                     if (changesToApply == 0) {
-                        self.selectedRetailerURLs = [selectedURLs allObjects];
-                        self.favoriteStoresCell.selectedRetailerURLs = self.selectedRetailerURLs;
-                        [self loadRetailers];
+                        [self reloadModel];
                     }
                 }];
             }
@@ -808,25 +776,31 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self performSegueWithIdentifier:@"showTopProductsGrid" sender:cell];
 }
 
-- (void)favoriteStoresCell:(CSFavoriteStoresCell *)cell
-         didSelectRetailer:(id<CSRetailer>)retailer
-                     index:(NSUInteger)index
+- (void)sliceRetailersCell:(CSSliceRetailersCell *)cell
+           didSelectNarrow:(id<CSNarrow>)narrow
 {
-    CSHomePageViewController *vc = [self.storyboard
-                                    instantiateViewControllerWithIdentifier:
-                                    @"CSHomePageViewController"];
-    vc.api = self.api;
-    vc.retailer = retailer;
-    [self.navigationController pushViewController:vc animated:YES];
+    [narrow getSlice:^(id<CSSlice> slice, NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        CSHomePageViewController *vc =
+        [self.storyboard instantiateViewControllerWithIdentifier:
+         @"CSHomePageViewController"];
+        vc.api = self.api;
+        vc.slice = slice;
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
 }
 
-- (void)favoriteStoresCellDidTapChooseButton:(CSFavoriteStoresCell *)cell
+- (void)sliceRetailersCellDidTapChooseButton:(CSSliceRetailersCell *)cell
 {
     [self performSegueWithIdentifier:@"changeRetailerSelection" sender:cell];
 }
 
 - (void)categoriesCell:(CSCategoriesCell *)cell
-     didSelectNarrow:(id<CSNarrow>)narrow
+       didSelectNarrow:(id<CSNarrow>)narrow
                atIndex:(NSUInteger)index
 {
     [narrow getSlice:^(id<CSSlice> slice, NSError *error) {
@@ -835,23 +809,13 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             return;
         }
         
-        [slice getFiltersByCategory:^(id<CSCategory> category,
-                                      NSError *error) {
-            if (error) {
-                [self setErrorState];
-                return;
-            }
-         
-            CSHomePageViewController *vc =
-            [self.storyboard instantiateViewControllerWithIdentifier:
-             @"CSHomePageViewController"];
-            vc.api = self.api;
-            vc.slice = slice;
-            
-            vc.retailer = self.retailer;
-            vc.category = category;
-            [self.navigationController pushViewController:vc animated:YES];
-        }];
+        CSHomePageViewController *vc =
+        [self.storyboard instantiateViewControllerWithIdentifier:
+         @"CSHomePageViewController"];
+        vc.api = self.api;
+        vc.slice = slice;
+        
+        [self.navigationController pushViewController:vc animated:YES];
     }];
 }
 
@@ -893,31 +857,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id<CSHomePageRow> row = self.rows[indexPath.row];
     return [row height];
-}
-
-#pragma mark - CSCategoryRetailersCellDelegate
-
-- (void)categoryRetailersCell:(CSCategoryRetailersCell *)cell
-     didSelectRetailerAtIndex:(NSInteger)index
-{
-    CSHomePageViewController *vc = [self.storyboard
-                                    instantiateViewControllerWithIdentifier:
-                                    @"CSHomePageViewController"];
-    vc.api = self.api;
-    
-    [cell.retailers getRetailerAtIndex:index
-                              callback:^(id<CSRetailer> retailer,
-                                         NSError *error)
-    {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        vc.retailer = retailer;
-        [self.navigationController pushViewController:vc animated:YES];
-        
-    }];
 }
 
 #pragma mark - UICollectionViewDelegate

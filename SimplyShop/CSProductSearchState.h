@@ -58,5 +58,3 @@
                  query:(NSString *)query;
 
 @end
-
-
