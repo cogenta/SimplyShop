@@ -421,24 +421,32 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 
 - (void)loadCellsFromSlice
 {
-    NSMutableArray *rows = [[NSMutableArray alloc] initWithCapacity:3];
-    
-    if (self.slice.productsURL) {
-        [rows addObject:[[CSHomePageRow alloc]
-                         initWithCell:self.topProductsCell]];
-    }
-    
-    if (self.slice.categoryNarrowsURL) {
-        [rows addObject:[[CSHomePageRow alloc]
-                         initWithCell:self.categoriesCell]];
-    }
-    
-    if (self.slice.retailerNarrowsURL) {
-        [rows addObject:[[CSHomePageRow alloc]
-                         initWithCell:self.favoriteStoresCell]];
-    }
-    
-    self.rows = rows;
+    [self.slice getCategoryNarrows:^(id<CSNarrowListPage> categoryNarrows,
+                                     NSError *error) {
+        if (error) {
+            [self setErrorState];
+            return;
+        }
+        
+        NSMutableArray *rows = [[NSMutableArray alloc] initWithCapacity:3];
+        
+        if (self.slice.productsURL) {
+            [rows addObject:[[CSHomePageRow alloc]
+                             initWithCell:self.topProductsCell]];
+        }
+        
+        if (self.slice.categoryNarrowsURL && categoryNarrows.count > 0) {
+            [rows addObject:[[CSHomePageRow alloc]
+                             initWithCell:self.categoriesCell]];
+        }
+        
+        if (self.slice.retailerNarrowsURL) {
+            [rows addObject:[[CSHomePageRow alloc]
+                             initWithCell:self.favoriteStoresCell]];
+        }
+        
+        self.rows = [NSArray arrayWithArray:rows];
+    }];
     
     [self.slice getFiltersByCategory:^(id<CSCategory> category,
                                        NSError *error)
