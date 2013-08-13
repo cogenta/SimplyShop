@@ -11,18 +11,6 @@
 #import "CSProductSearchStateTitleFormatter.h"
 #import "CSPriceContext.h"
 
-@interface CSRetailerProductSearchState : CSProductSearchState
-
-@end
-
-@interface CSGroupProductSearchState : CSProductSearchState
-
-@end
-
-@interface CSCategoryProductSearchState : CSProductSearchState
-
-@end
-
 @interface CSProductSearchState ()
 
 @property (readonly) id<CSRetailer> retailer;
@@ -55,25 +43,52 @@
 
 - (CSPriceContext *)priceContext
 {
-    return [[CSPriceContext alloc] initWithLikeList:self.likes];
+    if (self.retailer) {
+        return [[CSPriceContext alloc] initWithLikeList:self.likes
+                                               retailer:self.retailer];
+    } else {
+        return [[CSPriceContext alloc] initWithLikeList:self.likes];
+    }
 }
 
 - (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
 {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-            reason:(@"failed to override CSProductSearchState's "
-                    "titleWithFormatter: method")
-            userInfo:nil];
+    if (self.retailer) {
+        if (self.query) {
+            return [formatter titleWithRetailer:self.retailer query:self.query];
+        }
+        
+        return [formatter titleWithRetailer:self.retailer];
+    } else if (self.category) {
+        if (self.query) {
+            return [formatter titleWithCategory:self.category query:self.query];
+        }
+        
+        return [formatter titleWithCategory:self.category];
+    } else {
+        if (self.query) {
+            return [formatter titleWithQuery:self.query];
+        }
+        
+        return [formatter title];
+    }
 }
 
 - (id<CSProductSearchState>)stateWithQuery:(NSString *)query
 {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-            reason:(@"failed to override CSProductSearchState's "
-                    "stateWithQuery: method")
-            userInfo:nil];
+    if ( ! [query length] && ! [self.query length]) {
+        return self;
+    }
+    
+    if ([query isEqualToString:self.query]) {
+        return self;
+    }
+    
+    return [[CSProductSearchState alloc] initWithSlice:self.slice
+                                              retailer:self.retailer
+                                              category:self.category
+                                                 likes:self.likes
+                                                 query:query];
 }
 
 - (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
@@ -96,185 +111,31 @@
 
 + (id)stateWithSlice:(id<CSSlice>)slice
             retailer:(id<CSRetailer>)retailer
-               likes:(id<CSLikeList>)likes
-               query:(NSString *)query
-{
-    return [[CSRetailerProductSearchState alloc] initWithSlice:slice
-                                                      retailer:retailer
-                                                      category:nil
-                                                         likes:likes
-                                                         query:query];
-}
-
-+ (id)stateWithSlice:(id<CSSlice>)slice
-               likes:(id<CSLikeList>)likes
-               query:(NSString *)query
-{
-    return [[CSGroupProductSearchState alloc] initWithSlice:slice
-                                                   retailer:nil
-                                                   category:nil
-                                                      likes:likes
-                                                      query:query];
-}
-
-+ (id)stateWithSlice:(id<CSSlice>)slice
             category:(id<CSCategory>)category
                likes:(id<CSLikeList>)likes
                query:(NSString *)query
 {
-    return [[CSCategoryProductSearchState alloc] initWithSlice:slice
-                                                      retailer:nil
-                                                      category:category
-                                                         likes:likes
-                                                         query:query];
-}
-
-+ (id)stateWithSlice:(id<CSSlice>)slice
-            retailer:(id<CSRetailer>)retailer
-            category:(id<CSCategory>)category
-               likes:(id<CSLikeList>)likes
-               query:(NSString *)query
-{
-    if (retailer) {
-        return [[CSRetailerProductSearchState alloc] initWithSlice:slice
-                                                          retailer:retailer
-                                                          category:nil
-                                                             likes:likes
-                                                             query:query];
-    } else if (category) {
-        return [[CSCategoryProductSearchState alloc] initWithSlice:slice
-                                                          retailer:nil
-                                                          category:category
-                                                             likes:likes
-                                                             query:query];
-    } else {
-        return [[CSGroupProductSearchState alloc] initWithSlice:slice
-                                                       retailer:nil
-                                                       category:nil
-                                                          likes:likes
-                                                          query:query];
-    }
+    return [[CSProductSearchState alloc] initWithSlice:slice
+                                              retailer:retailer
+                                              category:category
+                                                 likes:likes
+                                                 query:query];
 }
 
 - (BOOL)isEqual:(id)object
 {
-    if ( ! [object isKindOfClass:[self class]]) {
+    if ( ! [object isKindOfClass:[CSProductSearchState class]]) {
         return NO;
     }
     
-    CSGroupProductSearchState *state = object;
+    CSProductSearchState *state = object;
     return ((state.query == self.query || [state.query isEqual:self.query]) &&
             (state.category.URL == self.category.URL ||
-             [state.category.URL isEqual:self.category.URL]));
+             [state.category.URL isEqual:self.category.URL]) &&
+            (state.retailer.URL == self.retailer.URL ||
+             [state.retailer.URL isEqual:self.retailer.URL]));
 }
 
 @end
 
-@implementation CSRetailerProductSearchState
-
-- (id<CSProductSearchState>)stateWithQuery:(NSString *)query
-{
-    if ( ! [query length] && ! [self.query length]) {
-        return self;
-    }
-    
-    if ([query isEqualToString:self.query]) {
-        return self;
-    }
-    
-    return [[CSRetailerProductSearchState alloc] initWithSlice:self.slice
-                                                      retailer:self.retailer
-                                                      category:self.category
-                                                         likes:self.likes
-                                                         query:query];
-}
-
-- (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
-{
-    if (self.query) {
-        return [formatter titleWithRetailer:self.retailer query:self.query];
-    }
-    
-    return [formatter titleWithRetailer:self.retailer];
-}
-
-- (CSPriceContext *)priceContext
-{
-    return [[CSPriceContext alloc] initWithLikeList:self.likes
-                                           retailer:self.retailer];
-}
-
-- (BOOL)isEqual:(id)object
-{
-    if ( ! [object isKindOfClass:[self class]]) {
-        return NO;
-    }
-    
-    CSRetailerProductSearchState *state = object;
-    return ((state.query == self.query || [state.query isEqual:self.query])
-            && [state.retailer.URL isEqual:self.retailer.URL]);
-}
-
-@end
-
-
-@implementation CSGroupProductSearchState
-
-- (id<CSProductSearchState>)stateWithQuery:(NSString *)query
-{
-    if ( ! [query length] && ! [self.query length]) {
-        return self;
-    }
-    
-    if ([query isEqualToString:self.query]) {
-        return self;
-    }
-    
-    return [[CSGroupProductSearchState alloc] initWithSlice:self.slice
-                                                   retailer:self.retailer
-                                                   category:self.category
-                                                      likes:self.likes
-                                                      query:query];
-}
-
-- (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
-{
-    if (self.query) {
-        return [formatter titleWithQuery:self.query];
-    }
-    
-    return [formatter title];
-}
-
-@end
-
-@implementation CSCategoryProductSearchState
-
-- (id<CSProductSearchState>)stateWithQuery:(NSString *)query
-{
-    if ( ! [query length] && ! [self.query length]) {
-        return self;
-    }
-    
-    if ([query isEqualToString:self.query]) {
-        return self;
-    }
-    
-    return [[CSCategoryProductSearchState alloc] initWithSlice:self.slice
-                                                      retailer:self.retailer
-                                                      category:self.category
-                                                         likes:self.likes
-                                                         query:query];
-}
-
-- (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
-{
-    if (self.query) {
-        return [formatter titleWithCategory:self.category query:self.query];
-    }
-    
-    return [formatter titleWithCategory:self.category];
-}
-
-@end
 
