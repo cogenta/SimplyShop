@@ -11,17 +11,130 @@
 #import "CSProductSearchStateTitleFormatter.h"
 #import "CSPriceContext.h"
 
+@interface CSRetailerProductSearchState : CSProductSearchState
+
+@property (readonly) id<CSRetailer> retailer;
+@property (readonly) id<CSLikeList> likes;
+@property (readonly) NSString *query;
+
+- (id)initWithRetailer:(id<CSRetailer>)retailer
+                 likes:(id<CSLikeList>)likes
+                 query:(NSString *)query;
+
+@end
+
+@interface CSGroupProductSearchState : CSProductSearchState
+
+@property (readonly) id<CSGroup> group;
+@property (readonly) id<CSLikeList> likes;
+@property (readonly) NSString *query;
+
+- (id)initWithGroup:(id<CSGroup>)group
+              likes:(id<CSLikeList>)likes
+              query:(NSString *)query;
+
+@end
+
+@interface CSCategoryProductSearchState : CSProductSearchState
+
+@property (readonly) id<CSCategory>category;
+@property (readonly) id<CSLikeList>likes;
+@property (readonly) NSString *query;
+
+- (id)initWithCategory:(id<CSCategory>)category
+                 likes:(id<CSLikeList>)likes
+                 query:(NSString *)query;
+
+@end
+
+@implementation CSProductSearchState
+
+@synthesize query = _query;
+
+- (id)initWithQuery:(NSString *)query;
+{
+    self = [super init];
+    if (self) {
+        _query = query;
+    }
+    return self;
+}
+
+- (CSPriceContext *)priceContext
+{
+    @throw [NSException
+            exceptionWithName:NSInternalInconsistencyException
+            reason:(@"failed to override CSProductSearchState's "
+                    "priceContext method")
+            userInfo:nil];
+}
+
+- (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter
+{
+    @throw [NSException
+            exceptionWithName:NSInternalInconsistencyException
+            reason:(@"failed to override CSProductSearchState's "
+                    "titleWithFormatter: method")
+            userInfo:nil];
+}
+
+- (id<CSProductSearchState>)stateWithQuery:(NSString *)query
+{
+    @throw [NSException
+            exceptionWithName:NSInternalInconsistencyException
+            reason:(@"failed to override CSProductSearchState's "
+                    "stateWithQuery: method")
+            userInfo:nil];
+}
+
+- (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
+{
+    @throw [NSException
+            exceptionWithName:NSInternalInconsistencyException
+            reason:(@"failed to override CSProductSearchState's "
+                    "getProducts: method")
+            userInfo:nil];
+}
+
++ (id)stateWithRetailer:(id<CSRetailer>)retailer
+                  likes:(id<CSLikeList>)likes
+                  query:(NSString *)query
+{
+    return [[CSRetailerProductSearchState alloc] initWithRetailer:retailer
+                                                            likes:likes
+                                                            query:query];
+}
+
++ (id)stateWithGroup:(id<CSGroup>)group
+               likes:(id<CSLikeList>)likes
+               query:(NSString *)query
+{
+    return [[CSGroupProductSearchState alloc] initWithGroup:group
+                                                      likes:likes
+                                                      query:query];
+}
+
++ (id)stateWithCategory:(id<CSCategory>)category
+                  likes:(id<CSLikeList>)likes
+                  query:(NSString *)query
+{
+    return [[CSCategoryProductSearchState alloc] initWithCategory:category
+                                                            likes:likes
+                                                            query:query];
+}
+
+@end
+
 @implementation CSRetailerProductSearchState
 
 - (id)initWithRetailer:(id<CSRetailer>)retailer
                  likes:(id<CSLikeList>)likes
                  query:(NSString *)query
 {
-    self = [super init];
+    self = [super initWithQuery:query];
     if (self) {
         _retailer = retailer;
         _likes = likes;
-        _query = query;
     }
     
     return self;
@@ -95,11 +208,10 @@
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
-    self = [super init];
+    self = [super initWithQuery:query];
     if (self) {
         _group = group;
         _likes = likes;
-        _query = query;
     }
     return self;
 }
@@ -170,11 +282,10 @@
                  likes:(id<CSLikeList>)likes
                  query:(NSString *)query
 {
-    self = [super init];
+    self = [super initWithQuery:query];
     if (self) {
         _category = category;
         _likes = likes;
-        _query = query;
     }
     return self;
 }

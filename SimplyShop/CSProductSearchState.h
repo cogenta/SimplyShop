@@ -23,38 +23,19 @@
 
 @end
 
-@interface CSRetailerProductSearchState : NSObject <CSProductSearchState>
+@interface CSProductSearchState : NSObject <CSProductSearchState>
 
-@property (readonly) id<CSRetailer> retailer;
-@property (readonly) id<CSLikeList> likes;
-@property (readonly) NSString *query;
++ (id)stateWithRetailer:(id<CSRetailer>)retailer
+                  likes:(id<CSLikeList>)likes
+                  query:(NSString *)query;
 
-- (id)initWithRetailer:(id<CSRetailer>)retailer
-                 likes:(id<CSLikeList>)likes
-                 query:(NSString *)query;
++ (id)stateWithGroup:(id<CSGroup>)group
+               likes:(id<CSLikeList>)likes
+               query:(NSString *)query;
 
-@end
-
-@interface CSGroupProductSearchState : NSObject <CSProductSearchState>
-
-@property (readonly) id<CSGroup> group;
-@property (readonly) id<CSLikeList> likes;
-@property (readonly) NSString *query;
-
-- (id)initWithGroup:(id<CSGroup>)group
-              likes:(id<CSLikeList>)likes
-              query:(NSString *)query;
++ (id)stateWithCategory:(id<CSCategory>)category
+                  likes:(id<CSLikeList>)likes
+                  query:(NSString *)query;
 
 @end
 
-@interface CSCategoryProductSearchState : NSObject <CSProductSearchState>
-
-@property (readonly) id<CSCategory>category;
-@property (readonly) id<CSLikeList>likes;
-@property (readonly) NSString *query;
-
-- (id)initWithCategory:(id<CSCategory>)category
-                 likes:(id<CSLikeList>)likes
-                 query:(NSString *)query;
-
-@end

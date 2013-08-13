@@ -909,11 +909,17 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     id<CSProductSearchState> searchState = nil;
     if (self.category) {
-        searchState = [[CSCategoryProductSearchState alloc] initWithCategory:self.category likes:self.likeList query:query];
+        searchState = [CSProductSearchState stateWithCategory:self.category
+                                                        likes:self.likeList
+                                                        query:query];
     } else if (self.retailer) {
-        searchState = [[CSRetailerProductSearchState alloc] initWithRetailer:self.retailer likes:self.likeList query:query];
+        searchState = [CSProductSearchState stateWithRetailer:self.retailer
+                                                        likes:self.likeList
+                                                        query:query];
     } else {
-        searchState = [[CSGroupProductSearchState alloc] initWithGroup:self.group likes:self.likeList query:query];
+        searchState = [CSProductSearchState stateWithGroup:self.group
+                                                     likes:self.likeList
+                                                     query:query];
     }
     
     id formatter = [CSProductSearchStateTitleFormatter instance];

@@ -128,16 +128,18 @@
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
-    self.searchState = [[CSRetailerProductSearchState alloc]
-                        initWithRetailer:retailer likes:likes query:query];
+    self.searchState = [CSProductSearchState stateWithRetailer:retailer
+                                                         likes:likes
+                                                         query:query];
 }
 
 - (void)setGroup:(id<CSGroup>)group
            likes:(id<CSLikeList>)likes
            query:(NSString *)query
 {
-    self.searchState = [[CSGroupProductSearchState alloc]
-                        initWithGroup:group likes:likes query:query];
+    self.searchState = [CSProductSearchState stateWithGroup:group
+                                                      likes:likes
+                                                      query:query];
 }
 
 
@@ -145,8 +147,9 @@
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
-    self.searchState = [[CSCategoryProductSearchState alloc]
-                        initWithCategory:category likes:likes query:query];
+    self.searchState = [CSProductSearchState stateWithCategory:category
+                                                         likes:likes
+                                                         query:query];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

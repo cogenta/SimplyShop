@@ -34,6 +34,7 @@
 - (void)setCategory:(id<CSCategory>)category
               likes:(id<CSLikeList>)likes
               query:(NSString *)query;
+
 - (void)setProducts:(id<CSProductList>)products;
 
 @property (strong, nonatomic) CSPriceContext *priceContext;
