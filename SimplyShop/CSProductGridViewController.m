@@ -112,41 +112,6 @@
     self.title = [searchState titleWithFormatter:formatter];
 }
 
-- (void)setSlice:(id<CSSlice>)slice
-        retailer:(id<CSRetailer>)retailer
-           likes:(id<CSLikeList>)likes
-           query:(NSString *)query
-{
-    self.searchState = [CSProductSearchState stateWithSlice:slice
-                                                   retailer:retailer
-                                                   category:nil
-                                                      likes:likes
-                                                      query:query];
-}
-
-- (void)setSlice:(id<CSSlice>)slice
-           likes:(id<CSLikeList>)likes
-           query:(NSString *)query
-{
-    self.searchState = [CSProductSearchState stateWithSlice:slice
-                                                   retailer:nil
-                                                   category:nil
-                                                      likes:likes
-                                                      query:query];
-}
-
-- (void)setSlice:(id<CSSlice>)slice
-        category:(id<CSCategory>)category
-           likes:(id<CSLikeList>)likes
-           query:(NSString *)query
-{
-    self.searchState = [CSProductSearchState stateWithSlice:slice
-                                                   retailer:nil
-                                                   category:category
-                                                      likes:likes
-                                                      query:query];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showProduct"]) {
