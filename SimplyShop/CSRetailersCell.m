@@ -13,7 +13,7 @@
 
 - (NSString *)cellNibName
 {
-    return @"CSFavoriteStoresCell";
+    return @"CSSliceRetailersCell";
 }
 
 - (Class)itemCellClass

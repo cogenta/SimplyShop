@@ -47,12 +47,10 @@
 		BE3D4E281704B5A600644AD6 /* CSCTAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E271704B5A600644AD6 /* CSCTAButton.m */; };
 		BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */; };
 		BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */; };
-		BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */; };
 		BE3DCFAF175F94FC002F568C /* CSDashboardRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3DCFAE175F94FC002F568C /* CSDashboardRowCell.m */; };
 		BE558EB4174E586D009FA3DA /* CSCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE558EB3174E586D009FA3DA /* CSCategoryCell.m */; };
 		BE558EB6174E5ABC009FA3DA /* CSCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE558EB5174E5ABC009FA3DA /* CSCategoryCell.xib */; };
 		BE558EB9174E5D5C009FA3DA /* CSCategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE558EB8174E5D5C009FA3DA /* CSCategoriesCell.m */; };
-		BE56D09E175E41E200B19F3F /* CSFavoriteStoresCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE56D09D175E41E200B19F3F /* CSFavoriteStoresCell.xib */; };
 		BE56D0A0175E46D900B19F3F /* CSCategoriesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE56D09F175E46D900B19F3F /* CSCategoriesCell.xib */; };
 		BE56D0A2175E492800B19F3F /* CSProductSummariesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE56D0A1175E492800B19F3F /* CSProductSummariesCell.xib */; };
 		BE5765DA17B52EAC0082B4C3 /* CSSliceRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5765D917B52EAC0082B4C3 /* CSSliceRetailersCell.m */; };
@@ -102,8 +100,6 @@
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
 		BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */; };
 		BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E1E1768725800081E33 /* CSRetailersCell.m */; };
-		BEB28E231768760600081E33 /* CSCategoryRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E221768760600081E33 /* CSCategoryRetailersCell.m */; };
-		BEB28E251768770500081E33 /* CSCategoryRetailersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEB28E241768770500081E33 /* CSCategoryRetailersCell.xib */; };
 		BEC1E2B7173BCFD400D12EF2 /* CSProductWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */; };
 		BEC1E2BD173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2BC173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m */; };
 		BEC1E2BF173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEC1E2BE173BED5D00D12EF2 /* CSProductSummaryPriceCell.xib */; };
@@ -193,8 +189,6 @@
 		BE3D4E2A170C572800644AD6 /* CSHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSHomePageViewController.m; sourceTree = "<group>"; };
 		BE3D4E33170DDF9100644AD6 /* CSAppearanceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAppearanceButton.h; sourceTree = "<group>"; };
 		BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAppearanceButton.m; sourceTree = "<group>"; };
-		BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFavoriteStoresCell.h; sourceTree = "<group>"; };
-		BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFavoriteStoresCell.m; sourceTree = "<group>"; };
 		BE3DCFAD175F94FC002F568C /* CSDashboardRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDashboardRowCell.h; sourceTree = "<group>"; };
 		BE3DCFAE175F94FC002F568C /* CSDashboardRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDashboardRowCell.m; sourceTree = "<group>"; };
 		BE3DCFB0175F96EA002F568C /* CSAddressCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSAddressCell.h; sourceTree = "<group>"; };
@@ -203,7 +197,6 @@
 		BE558EB5174E5ABC009FA3DA /* CSCategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSCategoryCell.xib; sourceTree = "<group>"; };
 		BE558EB7174E5D5C009FA3DA /* CSCategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCategoriesCell.h; sourceTree = "<group>"; };
 		BE558EB8174E5D5C009FA3DA /* CSCategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCategoriesCell.m; sourceTree = "<group>"; };
-		BE56D09D175E41E200B19F3F /* CSFavoriteStoresCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSFavoriteStoresCell.xib; sourceTree = "<group>"; };
 		BE56D09F175E46D900B19F3F /* CSCategoriesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSCategoriesCell.xib; sourceTree = "<group>"; };
 		BE56D0A1175E492800B19F3F /* CSProductSummariesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductSummariesCell.xib; sourceTree = "<group>"; };
 		BE5765D817B52EAC0082B4C3 /* CSSliceRetailersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSliceRetailersCell.h; sourceTree = "<group>"; };
@@ -279,9 +272,6 @@
 		BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRoundImageView.m; sourceTree = "<group>"; };
 		BEB28E1D1768725800081E33 /* CSRetailersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailersCell.h; sourceTree = "<group>"; };
 		BEB28E1E1768725800081E33 /* CSRetailersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailersCell.m; sourceTree = "<group>"; };
-		BEB28E211768760600081E33 /* CSCategoryRetailersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCategoryRetailersCell.h; sourceTree = "<group>"; };
-		BEB28E221768760600081E33 /* CSCategoryRetailersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCategoryRetailersCell.m; sourceTree = "<group>"; };
-		BEB28E241768770500081E33 /* CSCategoryRetailersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSCategoryRetailersCell.xib; sourceTree = "<group>"; };
 		BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductWrapperTests.m; sourceTree = "<group>"; };
 		BEC1E2BB173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenTestCase+CSAsyncTestCase.h"; sourceTree = "<group>"; };
 		BEC1E2BC173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SenTestCase+CSAsyncTestCase.m"; sourceTree = "<group>"; };
@@ -596,12 +586,6 @@
 			children = (
 				BEB28E1D1768725800081E33 /* CSRetailersCell.h */,
 				BEB28E1E1768725800081E33 /* CSRetailersCell.m */,
-				BE3D4E38170DEA4E00644AD6 /* CSFavoriteStoresCell.h */,
-				BE3D4E39170DEA4E00644AD6 /* CSFavoriteStoresCell.m */,
-				BE56D09D175E41E200B19F3F /* CSFavoriteStoresCell.xib */,
-				BEB28E211768760600081E33 /* CSCategoryRetailersCell.h */,
-				BEB28E221768760600081E33 /* CSCategoryRetailersCell.m */,
-				BEB28E241768770500081E33 /* CSCategoryRetailersCell.xib */,
 				BE5765D817B52EAC0082B4C3 /* CSSliceRetailersCell.h */,
 				BE5765D917B52EAC0082B4C3 /* CSSliceRetailersCell.m */,
 				BE5765DB17B8E98D0082B4C3 /* CSSliceRetailersCell.xib */,
@@ -792,10 +776,8 @@
 				BE052637174F6C8E0040AF65 /* ProductRightBg@2x.png in Resources */,
 				BE052638174F6C8E0040AF65 /* SelectedTabBg@2x.png in Resources */,
 				BE052639174F6C8E0040AF65 /* BigRetailerBackground@2x.png in Resources */,
-				BE56D09E175E41E200B19F3F /* CSFavoriteStoresCell.xib in Resources */,
 				BE56D0A0175E46D900B19F3F /* CSCategoriesCell.xib in Resources */,
 				BE56D0A2175E492800B19F3F /* CSProductSummariesCell.xib in Resources */,
-				BEB28E251768770500081E33 /* CSCategoryRetailersCell.xib in Resources */,
 				BE8EB73917818CD900F93A3D /* AllPricesBg@2x.png in Resources */,
 				BE8EB73E1781BC4400F93A3D /* CSProductSidebarView_List.xib in Resources */,
 				BE8EB7481782DF1D00F93A3D /* CSPriceCell.xib in Resources */,
@@ -870,7 +852,6 @@
 				BE3D4E281704B5A600644AD6 /* CSCTAButton.m in Sources */,
 				BE3D4E2B170C572800644AD6 /* CSHomePageViewController.m in Sources */,
 				BE3D4E35170DDF9100644AD6 /* CSAppearanceButton.m in Sources */,
-				BE3D4E3A170DEA4E00644AD6 /* CSFavoriteStoresCell.m in Sources */,
 				BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */,
 				BEDC02D9171317A90023059E /* CSProductSummariesCell.m in Sources */,
 				BEDC02E0171455510023059E /* CSProductSummaryCell.m in Sources */,
@@ -897,7 +878,6 @@
 				BE558EB9174E5D5C009FA3DA /* CSCategoriesCell.m in Sources */,
 				BE3DCFAF175F94FC002F568C /* CSDashboardRowCell.m in Sources */,
 				BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */,
-				BEB28E231768760600081E33 /* CSCategoryRetailersCell.m in Sources */,
 				BE8EB73717818B0200F93A3D /* CSSidebarFooterButton.m in Sources */,
 				BE8EB73C1781900A00F93A3D /* CSBuyNowButton.m in Sources */,
 				BE8EB7411781D6A400F93A3D /* CSDashboardTableView.m in Sources */,
