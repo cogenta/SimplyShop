@@ -14,7 +14,6 @@
 @interface CSRetailerProductSearchState : CSProductSearchState
 
 @property (readonly) id<CSRetailer> retailer;
-@property (readonly) id<CSLikeList> likes;
 
 - (id)initWithSlice:(id<CSSlice>)slice
            retailer:(id<CSRetailer>)retailer
@@ -25,8 +24,6 @@
 
 @interface CSGroupProductSearchState : CSProductSearchState
 
-@property (readonly) id<CSLikeList> likes;
-
 - (id)initWithSlice:(id<CSSlice>)slice
               likes:(id<CSLikeList>)likes
               query:(NSString *)query;
@@ -36,7 +33,6 @@
 @interface CSCategoryProductSearchState : CSProductSearchState
 
 @property (readonly) id<CSCategory>category;
-@property (readonly) id<CSLikeList>likes;
 
 - (id)initWithSlice:(id<CSSlice>)slice
            category:(id<CSCategory>)category
@@ -45,11 +41,9 @@
 
 @end
 
-@interface CSSliceProductSearchState : CSProductSearchState
+@interface CSProductSearchState ()
 
-@property (readonly) id<CSCategory>category;
-@property (readonly) id<CSRetailer> retailer;
-@property (readonly) id<CSLikeList> likes;
+@property (readonly) id<CSLikeList>likes;
 
 @end
 
@@ -58,11 +52,14 @@
 @synthesize slice = _slice;
 @synthesize query = _query;
 
-- (id)initWithSlice:(id<CSSlice>)slice query:(NSString *)query;
+- (id)initWithSlice:(id<CSSlice>)slice
+              likes:(id<CSLikeList>)likes
+              query:(NSString *)query
 {
     self = [super init];
     if (self) {
         _slice = slice;
+        _likes = likes;
         _query = query;
     }
     return self;
@@ -163,10 +160,9 @@
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
-    self = [super initWithSlice:slice query:query];
+    self = [super initWithSlice:slice likes:likes query:query];
     if (self) {
         _retailer = retailer;
-        _likes = likes;
     }
     
     return self;
@@ -223,9 +219,8 @@
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
-    self = [super initWithSlice:slice query:query];
+    self = [super initWithSlice:slice likes:likes query:query];
     if (self) {
-        _likes = likes;
     }
     return self;
 }
@@ -268,10 +263,9 @@
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
-    self = [super initWithSlice:slice query:query];
+    self = [super initWithSlice:slice likes:likes query:query];
     if (self) {
         _category = category;
-        _likes = likes;
     }
     return self;
 }
