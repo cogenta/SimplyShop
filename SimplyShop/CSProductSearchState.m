@@ -13,13 +13,6 @@
 
 @interface CSRetailerProductSearchState : CSProductSearchState
 
-@property (readonly) id<CSRetailer> retailer;
-
-- (id)initWithSlice:(id<CSSlice>)slice
-           retailer:(id<CSRetailer>)retailer
-              likes:(id<CSLikeList>)likes
-              query:(NSString *)query;
-
 @end
 
 @interface CSGroupProductSearchState : CSProductSearchState
@@ -32,8 +25,9 @@
 
 @interface CSProductSearchState ()
 
-@property (readonly) id<CSCategory>category;
-@property (readonly) id<CSLikeList>likes;
+@property (readonly) id<CSRetailer> retailer;
+@property (readonly) id<CSCategory> category;
+@property (readonly) id<CSLikeList> likes;
 
 @end
 
@@ -43,6 +37,7 @@
 @synthesize query = _query;
 
 - (id)initWithSlice:(id<CSSlice>)slice
+           retailer:(id<CSRetailer>)retailer
            category:(id<CSCategory>)category
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
@@ -50,6 +45,7 @@
     self = [super init];
     if (self) {
         _slice = slice;
+        _retailer = retailer;
         _category = category;
         _likes = likes;
         _query = query;
@@ -105,6 +101,7 @@
 {
     return [[CSRetailerProductSearchState alloc] initWithSlice:slice
                                                       retailer:retailer
+                                                      category:nil
                                                          likes:likes
                                                          query:query];
 }
@@ -114,6 +111,7 @@
                query:(NSString *)query
 {
     return [[CSGroupProductSearchState alloc] initWithSlice:slice
+                                                   retailer:nil
                                                    category:nil
                                                       likes:likes
                                                       query:query];
@@ -125,6 +123,7 @@
                query:(NSString *)query
 {
     return [[CSCategoryProductSearchState alloc] initWithSlice:slice
+                                                      retailer:nil
                                                       category:category
                                                          likes:likes
                                                          query:query];
@@ -139,15 +138,18 @@
     if (retailer) {
         return [[CSRetailerProductSearchState alloc] initWithSlice:slice
                                                           retailer:retailer
+                                                          category:nil
                                                              likes:likes
                                                              query:query];
     } else if (category) {
         return [[CSCategoryProductSearchState alloc] initWithSlice:slice
+                                                          retailer:nil
                                                           category:category
                                                              likes:likes
                                                              query:query];
     } else {
         return [[CSGroupProductSearchState alloc] initWithSlice:slice
+                                                       retailer:nil
                                                        category:nil
                                                           likes:likes
                                                           query:query];
@@ -170,19 +172,6 @@
 
 @implementation CSRetailerProductSearchState
 
-- (id)initWithSlice:(id<CSSlice>)slice
-           retailer:(id<CSRetailer>)retailer
-              likes:(id<CSLikeList>)likes
-              query:(NSString *)query
-{
-    self = [super initWithSlice:slice category:nil likes:likes query:query];
-    if (self) {
-        _retailer = retailer;
-    }
-    
-    return self;
-}
-
 - (id<CSProductSearchState>)stateWithQuery:(NSString *)query
 {
     if ( ! [query length] && ! [self.query length]) {
@@ -195,6 +184,7 @@
     
     return [[CSRetailerProductSearchState alloc] initWithSlice:self.slice
                                                       retailer:self.retailer
+                                                      category:self.category
                                                          likes:self.likes
                                                          query:query];
 }
@@ -241,6 +231,7 @@
     }
     
     return [[CSGroupProductSearchState alloc] initWithSlice:self.slice
+                                                   retailer:self.retailer
                                                    category:self.category
                                                       likes:self.likes
                                                       query:query];
@@ -270,6 +261,7 @@
     }
     
     return [[CSCategoryProductSearchState alloc] initWithSlice:self.slice
+                                                      retailer:self.retailer
                                                       category:self.category
                                                          likes:self.likes
                                                          query:query];
