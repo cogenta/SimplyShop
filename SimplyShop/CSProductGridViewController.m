@@ -131,6 +131,7 @@
 {
     self.searchState = [CSProductSearchState stateWithSlice:slice
                                                    retailer:retailer
+                                                   category:nil
                                                       likes:likes
                                                       query:query];
 }
@@ -140,10 +141,11 @@
            query:(NSString *)query
 {
     self.searchState = [CSProductSearchState stateWithSlice:slice
+                                                   retailer:nil
+                                                   category:nil
                                                       likes:likes
                                                       query:query];
 }
-
 
 - (void)setSlice:(id<CSSlice>)slice
         category:(id<CSCategory>)category
@@ -151,6 +153,7 @@
            query:(NSString *)query
 {
     self.searchState = [CSProductSearchState stateWithSlice:slice
+                                                   retailer:nil
                                                    category:category
                                                       likes:likes
                                                       query:query];

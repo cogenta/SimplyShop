@@ -130,6 +130,30 @@
                                                          query:query];
 }
 
++ (id)stateWithSlice:(id<CSSlice>)slice
+            retailer:(id<CSRetailer>)retailer
+            category:(id<CSCategory>)category
+               likes:(id<CSLikeList>)likes
+               query:(NSString *)query
+{
+    if (retailer) {
+        return [[CSRetailerProductSearchState alloc] initWithSlice:slice
+                                                          retailer:retailer
+                                                             likes:likes
+                                                             query:query];
+    } else if (category) {
+        return [[CSCategoryProductSearchState alloc] initWithSlice:slice
+                                                          category:category
+                                                             likes:likes
+                                                             query:query];
+    } else {
+        return [[CSGroupProductSearchState alloc] initWithSlice:slice
+                                                       category:nil
+                                                          likes:likes
+                                                          query:query];
+    }
+}
+
 - (BOOL)isEqual:(id)object
 {
     if ( ! [object isKindOfClass:[self class]]) {

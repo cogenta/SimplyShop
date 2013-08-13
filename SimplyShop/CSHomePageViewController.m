@@ -907,22 +907,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         return;
     }
     
-    id<CSProductSearchState> searchState = nil;
-    if (self.category) {
-        searchState = [CSProductSearchState stateWithSlice:self.slice
-                                                  category:self.category
-                                                     likes:self.likeList
-                                                     query:query];
-    } else if (self.retailer) {
-        searchState = [CSProductSearchState stateWithSlice:self.slice
-                                                  retailer:self.retailer
-                                                     likes:self.likeList
-                                                     query:query];
-    } else {
-        searchState = [CSProductSearchState stateWithSlice:self.slice
-                                                     likes:self.likeList
-                                                     query:query];
-    }
+    id<CSProductSearchState> searchState = [CSProductSearchState
+                                            stateWithSlice:self.slice
+                                            retailer:nil
+                                            category:self.category
+                                            likes:self.likeList
+                                            query:query];
     
     id formatter = [CSProductSearchStateTitleFormatter instance];
     self.navigationItem.title = [searchState titleWithFormatter:formatter];

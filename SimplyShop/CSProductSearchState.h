@@ -28,17 +28,8 @@
 
 + (id)stateWithSlice:(id<CSSlice>)slice
             retailer:(id<CSRetailer>)retailer
-               likes:(id<CSLikeList>)likes
-               query:(NSString *)query;
-
-+ (id)stateWithSlice:(id<CSSlice>)slice
-               likes:(id<CSLikeList>)likes
-               query:(NSString *)query;
-
-+ (id)stateWithSlice:(id<CSSlice>)slice
             category:(id<CSCategory>)category
                likes:(id<CSLikeList>)likes
                query:(NSString *)query;
-
 @end
 
