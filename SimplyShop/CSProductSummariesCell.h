@@ -14,8 +14,10 @@
 @interface CSProductSummariesCell : CSDashboardRowCell
 
 @property (strong, nonatomic) NSObject<CSProductList> *products;
+@property (assign, nonatomic) BOOL isRoot;
 
 @property (weak, nonatomic) IBOutlet UIButton *seeAllButton;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet id<CSProductSummariesCellDelegate> delegate;
 
 - (IBAction)didTapSeeAllButton:(id)sender;

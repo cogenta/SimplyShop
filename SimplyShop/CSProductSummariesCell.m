@@ -12,6 +12,11 @@
 
 @interface CSProductSummariesCell () <CSProductSummaryCellDelegate>
 
+- (void)productsChanged;
+- (void)isRootChanged;
+
+- (NSString *)titleLabelText;
+
 @end
 
 @implementation CSProductSummariesCell
@@ -24,11 +29,17 @@
            forKeyPath:@"products"
               options:NSKeyValueObservingOptionNew
               context:NULL];
+    
+    [self addObserver:self
+           forKeyPath:@"isRoot"
+              options:NSKeyValueObservingOptionNew
+              context:NULL];
 }
 
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"products"];
+    [self removeObserver:self forKeyPath:@"isRoot"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -36,9 +47,17 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
+    if (object != self) {
+        return;
+    }
+    
     if ([keyPath isEqualToString:@"products"]) {
-        self.seeAllButton.enabled = [object products] != nil;
-        [self.collectionView reloadData];
+        [self productsChanged];
+        return;
+    }
+    
+    if ([keyPath isEqualToString:@"isRoot"]) {
+        [self isRootChanged];
         return;
     }
 }
@@ -51,6 +70,26 @@
 - (Class)itemCellClass
 {
     return [CSProductSummaryCell class];
+}
+
+- (void)productsChanged
+{
+    self.seeAllButton.enabled = self.products != nil;
+    [self.collectionView reloadData];
+}
+
+- (void)isRootChanged
+{
+    self.titleLabel.text = [self titleLabelText];
+}
+
+- (NSString *)titleLabelText
+{
+    if (self.isRoot) {
+        return NSLocalizedString(@"Top Products", nil);
+    }
+    
+    return NSLocalizedString(@"Products", nil);
 }
 
 - (NSInteger)modelCount

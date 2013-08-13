@@ -14,7 +14,11 @@
 @property (nonatomic, strong) NSMutableDictionary *retailerCache;
 @property (nonatomic, strong) NSMutableDictionary *narrowCache;
 
+- (void)configure;
 - (void)narrowsChanged;
+- (void)isRootChanged;
+
+- (NSString *)titleLabelText;
 
 @end
 
@@ -26,8 +30,14 @@
     self.narrowCache = [[NSMutableDictionary alloc] init];
     self.retailerCache = [[NSMutableDictionary alloc] init];
     
+    [self configure];
+    
     [self addObserver:self
            forKeyPath:@"narrows"
+              options:NSKeyValueObservingOptionNew
+              context:NULL];
+    [self addObserver:self
+           forKeyPath:@"isRoot"
               options:NSKeyValueObservingOptionNew
               context:NULL];
 }
@@ -40,6 +50,7 @@
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"narrows"];
+    [self removeObserver:self forKeyPath:@"isRoot"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -55,6 +66,11 @@
         [self narrowsChanged];
         return;
     }
+    
+    if ([keyPath isEqualToString:@"isRoot"]) {
+        [self isRootChanged];
+        return;
+    }
 }
 
 - (void)narrowsChanged
@@ -62,6 +78,26 @@
     [self.narrowCache removeAllObjects];
     [self.retailerCache removeAllObjects];
     [self reloadData];
+}
+
+- (void)isRootChanged
+{
+    [self configure];
+}
+
+- (void)configure
+{
+    self.titleLabel.text = [self titleLabelText];
+    self.chooseStoresButton.hidden = ! self.isRoot;
+}
+
+- (NSString *)titleLabelText
+{
+    if (self.isRoot) {
+        return NSLocalizedString(@"Favorite Stores", nil);
+    }
+    
+    return NSLocalizedString(@"Stores", nil);
 }
 
 - (NSInteger)retailerCount

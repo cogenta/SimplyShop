@@ -103,6 +103,8 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 - (void)loadModel;
 - (void)reloadModel;
 
+- (NSString *)dashboardTitle;
+
 - (void)loadCellsFromSlice;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
 
@@ -139,15 +141,19 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 
 - (void)prepareRootDashboard
 {
+    BOOL isRoot = self.narrow == nil;
+    
     self.topProductsCell = [[CSProductSummariesCell alloc]
                             initWithStyle:UITableViewCellStyleDefault
                             reuseIdentifier:nil];
     self.topProductsCell.delegate = self;
+    self.topProductsCell.isRoot = isRoot;
     
     self.favoriteStoresCell = [[CSSliceRetailersCell alloc]
                                initWithStyle:UITableViewCellStyleDefault
                                reuseIdentifier:nil];
     self.favoriteStoresCell.delegate = self;
+    self.favoriteStoresCell.isRoot = isRoot;
     
     self.categoriesCell = [[CSCategoriesCell alloc]
                            initWithStyle:UITableViewCellStyleDefault

@@ -15,7 +15,11 @@
 @interface CSSliceRetailersCell : CSRetailersCell
 
 @property (nonatomic, weak) IBOutlet id<CSSliceRetailersCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *chooseStoresButton;
+
 @property (nonatomic, strong) NSObject<CSNarrowList> *narrows;
+@property (nonatomic, assign) BOOL isRoot;
 
 - (IBAction)didTapChooseStores:(id)sender;
 
