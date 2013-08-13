@@ -32,7 +32,6 @@
                query:(NSString *)query;
 
 + (id)stateWithSlice:(id<CSSlice>)slice
-               group:(id<CSGroup>)group
                likes:(id<CSLikeList>)likes
                query:(NSString *)query;
 

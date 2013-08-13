@@ -31,7 +31,6 @@
            likes:(id<CSLikeList>)likes
            query:(NSString *)query;
 - (void)setSlice:(id<CSSlice>)slice
-           group:(id<CSGroup>)group
            likes:(id<CSLikeList>)likes
            query:(NSString *)query;
 - (void)setSlice:(id<CSSlice>)slice

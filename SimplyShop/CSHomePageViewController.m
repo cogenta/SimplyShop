@@ -627,7 +627,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
                                                           retailer:self.retailer];
     } else {
-        [vc setSlice:self.slice group:self.group likes:self.likeList query:q];
+        [vc setSlice:self.slice likes:self.likeList query:q];
     }
 }
 
@@ -920,7 +920,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                                                      query:query];
     } else {
         searchState = [CSProductSearchState stateWithSlice:self.slice
-                                                     group:self.group
                                                      likes:self.likeList
                                                      query:query];
     }

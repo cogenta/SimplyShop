@@ -25,11 +25,9 @@
 
 @interface CSGroupProductSearchState : CSProductSearchState
 
-@property (readonly) id<CSGroup> group;
 @property (readonly) id<CSLikeList> likes;
 
 - (id)initWithSlice:(id<CSSlice>)slice
-              group:(id<CSGroup>)group
               likes:(id<CSLikeList>)likes
               query:(NSString *)query;
 
@@ -99,11 +97,20 @@
 
 - (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
 {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-            reason:(@"failed to override CSProductSearchState's "
-                    "getProducts: method")
-            userInfo:nil];
+    if (self.query) {
+        return [self.slice getProductsWithQuery:self.query
+                                       callback:^(id<CSProductListPage> page,
+                                                  NSError *error)
+         {
+             callback(page.productList, error);
+         }];
+    } else {
+        return [self.slice getProducts:^(id<CSProductListPage> page,
+                                         NSError *error)
+         {
+             callback(page.productList, error);
+         }];
+    }
 }
 
 + (id)stateWithSlice:(id<CSSlice>)slice
@@ -118,12 +125,10 @@
 }
 
 + (id)stateWithSlice:(id<CSSlice>)slice
-               group:(id<CSGroup>)group
                likes:(id<CSLikeList>)likes
                query:(NSString *)query
 {
     return [[CSGroupProductSearchState alloc] initWithSlice:slice
-                                                      group:group
                                                       likes:likes
                                                       query:query];
 }
@@ -137,6 +142,16 @@
                                                       category:category
                                                          likes:likes
                                                          query:query];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if ( ! [object isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    CSGroupProductSearchState *state = object;
+    return (state.query == self.query || [state.query isEqual:self.query]);
 }
 
 @end
@@ -188,24 +203,6 @@
                                            retailer:self.retailer];
 }
 
-- (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
-{
-    if (self.query) {
-        return [self.slice getProductsWithQuery:self.query
-                                       callback:^(id<CSProductListPage> page,
-                                                  NSError *error)
-         {
-             callback(page.productList, error);
-         }];
-    } else {
-        return [self.slice getProducts:^(id<CSProductListPage> page,
-                                         NSError *error)
-         {
-             callback(page.productList, error);
-         }];
-    }
-}
-
 - (BOOL)isEqual:(id)object
 {
     if ( ! [object isKindOfClass:[self class]]) {
@@ -223,13 +220,11 @@
 @implementation CSGroupProductSearchState
 
 - (id)initWithSlice:(id<CSSlice>)slice
-              group:(id<CSGroup>)group
               likes:(id<CSLikeList>)likes
               query:(NSString *)query
 {
     self = [super initWithSlice:slice query:query];
     if (self) {
-        _group = group;
         _likes = likes;
     }
     return self;
@@ -246,7 +241,6 @@
     }
     
     return [[CSGroupProductSearchState alloc] initWithSlice:self.slice
-                                                      group:self.group
                                                       likes:self.likes
                                                       query:query];
 }
@@ -263,35 +257,6 @@
 - (CSPriceContext *)priceContext
 {
     return [[CSPriceContext alloc] initWithLikeList:self.likes];
-}
-
-- (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
-{
-    if (self.query) {
-        return [self.slice getProductsWithQuery:self.query
-                                       callback:^(id<CSProductListPage> page,
-                                                  NSError *error)
-         {
-             callback(page.productList, error);
-         }];
-    } else {
-        return [self.slice getProducts:^(id<CSProductListPage> page,
-                                         NSError *error)
-         {
-             callback(page.productList, error);
-         }];
-    }
-}
-
-- (BOOL)isEqual:(id)object
-{
-    if ( ! [object isKindOfClass:[self class]]) {
-        return NO;
-    }
-    
-    CSGroupProductSearchState *state = object;
-    return ((state.query == self.query || [state.query isEqual:self.query])
-            && [state.group.URL isEqual:self.group.URL]);
 }
 
 @end
@@ -339,24 +304,6 @@
 - (CSPriceContext *)priceContext
 {
     return [[CSPriceContext alloc] initWithLikeList:self.likes];
-}
-
-- (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback
-{
-    if (self.query) {
-        return [self.slice getProductsWithQuery:self.query
-                                       callback:^(id<CSProductListPage> page,
-                                                  NSError *error)
-         {
-             callback(page.productList, error);
-         }];
-    } else {
-        return [self.slice getProducts:^(id<CSProductListPage> page,
-                                         NSError *error)
-         {
-             callback(page.productList, error);
-         }];
-    }
 }
 
 - (BOOL)isEqual:(id)object

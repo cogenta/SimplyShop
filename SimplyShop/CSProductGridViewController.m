@@ -136,12 +136,10 @@
 }
 
 - (void)setSlice:(id<CSSlice>)slice
-           group:(id<CSGroup>)group
            likes:(id<CSLikeList>)likes
            query:(NSString *)query
 {
     self.searchState = [CSProductSearchState stateWithSlice:slice
-                                                      group:group
                                                       likes:likes
                                                       query:query];
 }
