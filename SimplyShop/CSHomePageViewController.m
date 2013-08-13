@@ -620,7 +620,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     CSProductGridViewController *vc = (id) segue.destinationViewController;
     id<CSProductSearchState> searchState = [CSProductSearchState
                                             stateWithSlice:self.slice
-                                            retailer:nil
+                                            retailer:self.retailer
                                             category:self.category
                                             likes:self.likeList
                                             query:q];
@@ -905,7 +905,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     id<CSProductSearchState> searchState = [CSProductSearchState
                                             stateWithSlice:self.slice
-                                            retailer:nil
+                                            retailer:self.retailer
                                             category:self.category
                                             likes:self.likeList
                                             query:query];
