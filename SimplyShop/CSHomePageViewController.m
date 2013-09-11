@@ -625,6 +625,9 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                                             likes:self.likeList
                                             query:q];
     vc.searchState = searchState;
+    vc.dataSource.priceContext = [[CSPriceContext alloc]
+                                  initWithLikeList:self.likeList];
+
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
