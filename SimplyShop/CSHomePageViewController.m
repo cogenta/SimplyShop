@@ -285,6 +285,18 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
             return;
         }
         
+        [self.group getLikes:^(id<CSLikeListPage> firstPage, NSError *error) {
+            if (error) {
+                callback(NO, error);
+                return;
+            }
+            
+            if (firstPage.count < 3) {
+                [self performSegueWithIdentifier:@"changeRetailerSelection"
+                                          sender:self];
+            }
+        }];
+        
         [self.group getSlice:^(id<CSSlice> slice, NSError *error) {
             if (error) {
                 callback(NO, error);
