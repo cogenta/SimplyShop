@@ -518,6 +518,7 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
          
          self.products = firstPage.productList;
          self.topProductsCell.products = self.products;
+         [self showContent];
      }];
     
     [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result, NSError *error)
