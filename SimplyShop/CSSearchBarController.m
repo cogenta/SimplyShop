@@ -47,7 +47,9 @@ const static CGRect kLargeSearchBarFrame = {
         UIBarButtonItem *searchItem = [[UIBarButtonItem alloc]
                                        initWithCustomView:self.searchBar];
         searchItem.width = kLargeSearchBarWidth;
-        [navigationItem setRightBarButtonItem:searchItem];
+        NSArray *items = @[searchItem];
+        items = [items arrayByAddingObjectsFromArray:self.navigationItem.rightBarButtonItems];
+        self.navigationItem.rightBarButtonItems = items;
     }
     return self;
 }

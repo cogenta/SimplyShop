@@ -20,6 +20,7 @@
 - (NSString *)titleWithFormatter:(id<CSProductSearchStateTitleFormatter>)formatter;
 
 - (id<CSProductSearchState>)stateWithQuery:(NSString *)query;
+- (id<CSProductSearchState>)stateWithSlice:(id<CSSlice>)slice;
 - (id<CSAPIRequest>)getProducts:(void (^)(id<CSProductList>, NSError *))callback;
 
 @end

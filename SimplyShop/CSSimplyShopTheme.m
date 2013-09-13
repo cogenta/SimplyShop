@@ -151,6 +151,15 @@
      setTitleTextAttributes:[self navigationBarTitleTextAttributes]];
     
     //
+    
+    UINavigationBar *popoverNavBar = [UINavigationBar appearanceWhenContainedIn:[UIPopoverController class], nil];
+    [popoverNavBar
+     setBackgroundImage:nil
+     forBarMetrics:UIBarMetricsDefault];
+    [popoverNavBar
+     setTitleTextAttributes:nil];
+    
+    //
         
     UIBarButtonItem *navButtonItem = [UIBarButtonItem
                                       appearanceWhenContainedIn:[UINavigationBar class],

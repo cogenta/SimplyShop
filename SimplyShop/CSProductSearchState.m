@@ -122,6 +122,15 @@
                                                  query:query];
 }
 
+- (id<CSProductSearchState>)stateWithSlice:(id<CSSlice>)slice
+{
+    return [[CSProductSearchState alloc] initWithSlice:slice
+                                              retailer:self.retailer
+                                              category:self.category
+                                                 likes:self.likes
+                                                 query:self.query];
+}
+
 - (BOOL)isEqual:(id)object
 {
     if ( ! [object isKindOfClass:[CSProductSearchState class]]) {

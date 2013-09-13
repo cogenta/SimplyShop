@@ -15,16 +15,22 @@
 #import "CSProductSearchState.h"
 #import "CSProductGridDataSource.h"
 #import "CSPlaceholderView.h"
+#import "CSRefineSelectionViewController.h"
 #import "UIView+CSKeyboardAwareness.h"
 
-@interface CSProductGridViewController () <CSSearchBarControllerDelegate>
+@interface CSProductGridViewController ()
+<CSSearchBarControllerDelegate,
+CSRefineSelectionViewControllerDelegate>
 
 @property (strong, nonatomic) id<CSProductList> products;
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
 @property (strong, nonatomic) id<CSAPIRequest> searchRequest;
 
+@property (strong, nonatomic) UIPopoverController *popover;
+
 - (void)addSearchToNavigationBar;
+- (void)addRefineToNavigationBar;
 
 @end
 
@@ -47,6 +53,7 @@
     [self.placeholderView showLoadingView];
 
 	[self addSearchToNavigationBar];
+    [self addRefineToNavigationBar];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -186,6 +193,86 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     if (newState != self.searchState) {
         self.searchState = newState;
     }
+}
+
+#pragma mark - Refine Menu
+
+- (void)addRefineToNavigationBar
+{
+    UIBarButtonItem *refineButton = [[UIBarButtonItem alloc] initWithTitle:@"Refine" style:UIBarButtonItemStyleBordered target:self action:@selector(didTapRefineButton:)];
+    NSArray *items = @[refineButton];
+    items = [items arrayByAddingObjectsFromArray:self.navigationItem.rightBarButtonItems];
+    self.navigationItem.rightBarButtonItems = items;
+}
+
+- (IBAction)didTapRefineButton:(id)sender
+{
+    if (self.popover.popoverVisible) {
+        [self.popover dismissPopoverAnimated:YES];
+        self.popover = nil;
+        return;
+    }
+    
+    CSRefineSelectionViewController *content = [[CSRefineSelectionViewController alloc] initWithNibName:@"CSRefineSelectionViewController" bundle:nil];
+    content.selectionDelegate = self;
+    content.navigationItem.title = @"Author";
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:content];
+    self.popover = [[UIPopoverController alloc] initWithContentViewController:nav];
+    [self.popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+#pragma mark - CSRefineSelectionViewControllerDelegate
+
+- (id<CSNarrow>)selectedNarrow
+{
+    return nil;
+}
+
+- (void)getNarrows:(void (^)(id<CSNarrowList>, NSError *))callback
+{
+    [self.searchState.slice getAuthorNarrows:^(id<CSNarrowListPage> result,
+                                               NSError *error) {
+        if (error) {
+            callback(nil, error);
+            return;
+        }
+        
+        callback(result.narrowList, nil);
+    }];
+}
+
+- (void)didSelectNarrowAtIndex:(NSUInteger)index
+{
+    [self.placeholderView showLoadingView];
+    [self.popover dismissPopoverAnimated:YES];
+    self.popover = nil;
+    [self.searchState.slice getAuthorNarrows:^(id<CSNarrowListPage> listPage,
+                                               NSError *error) {
+        if (error) {
+            // TODO: report error
+            return;
+        }
+        
+        [listPage.narrowList getNarrowAtIndex:index
+                                     callback:^(id<CSNarrow> narrow,
+                                                NSError *error)
+        {
+            if (error) {
+                // TODO: report error
+                return;
+            }
+            
+            [narrow getSlice:^(id<CSSlice> result, NSError *error) {
+                if (error) {
+                    // TODO: report error
+                    return;
+                }
+                
+                self.searchState = [self.searchState stateWithSlice:result];
+            }];
+        }];
+    }];
+
 }
 
 @end

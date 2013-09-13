@@ -120,6 +120,9 @@
 		BEF2CF87174A37DD00EDEDA3 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7F174A37DD00EDEDA3 /* Icon-Small@2x.png */; };
 		BEF2CF88174A37DD00EDEDA3 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF80174A37DD00EDEDA3 /* iTunesArtwork */; };
 		BEF2CF89174A37DD00EDEDA3 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF81174A37DD00EDEDA3 /* iTunesArtwork@2x */; };
+		BEF627F717E3108C00B5AF6C /* CSRefineSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF627F517E3108C00B5AF6C /* CSRefineSelectionViewController.m */; };
+		BEF627F817E3108C00B5AF6C /* CSRefineSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEF627F617E3108C00B5AF6C /* CSRefineSelectionViewController.xib */; };
+		BEF627FB17E3148400B5AF6C /* CSNarrowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF627FA17E3148400B5AF6C /* CSNarrowCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -299,6 +302,11 @@
 		BEF2CF7F174A37DD00EDEDA3 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		BEF2CF80174A37DD00EDEDA3 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		BEF2CF81174A37DD00EDEDA3 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = "<group>"; };
+		BEF627F417E3108C00B5AF6C /* CSRefineSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineSelectionViewController.h; sourceTree = "<group>"; };
+		BEF627F517E3108C00B5AF6C /* CSRefineSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineSelectionViewController.m; sourceTree = "<group>"; };
+		BEF627F617E3108C00B5AF6C /* CSRefineSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRefineSelectionViewController.xib; sourceTree = "<group>"; };
+		BEF627F917E3148400B5AF6C /* CSNarrowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSNarrowCell.h; sourceTree = "<group>"; };
+		BEF627FA17E3148400B5AF6C /* CSNarrowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSNarrowCell.m; sourceTree = "<group>"; };
 		C59BE071388B42FB9540159A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -482,6 +490,7 @@
 		BE3D4E37170DE92000644AD6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BEF627F017E3100900B5AF6C /* Refine */,
 				BE3D4E1F170465AD00644AD6 /* CSRetailerSelectionViewController.h */,
 				BE3D4E20170465AD00644AD6 /* CSRetailerSelectionViewController.m */,
 				BE3D4E29170C572800644AD6 /* CSHomePageViewController.h */,
@@ -655,6 +664,18 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		BEF627F017E3100900B5AF6C /* Refine */ = {
+			isa = PBXGroup;
+			children = (
+				BEF627F417E3108C00B5AF6C /* CSRefineSelectionViewController.h */,
+				BEF627F517E3108C00B5AF6C /* CSRefineSelectionViewController.m */,
+				BEF627F617E3108C00B5AF6C /* CSRefineSelectionViewController.xib */,
+				BEF627F917E3148400B5AF6C /* CSNarrowCell.h */,
+				BEF627FA17E3148400B5AF6C /* CSNarrowCell.m */,
+			);
+			name = Refine;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -782,6 +803,7 @@
 				BE8EB73E1781BC4400F93A3D /* CSProductSidebarView_List.xib in Resources */,
 				BE8EB7481782DF1D00F93A3D /* CSPriceCell.xib in Resources */,
 				BE5765DC17B8E98D0082B4C3 /* CSSliceRetailersCell.xib in Resources */,
+				BEF627F817E3108C00B5AF6C /* CSRefineSelectionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,6 +911,8 @@
 				BE922C9C179EE40700448365 /* CSPlaceholderView.m in Sources */,
 				BE922C9F179FE70C00448365 /* UIView+CSKeyboardAwareness.m in Sources */,
 				BE5765DA17B52EAC0082B4C3 /* CSSliceRetailersCell.m in Sources */,
+				BEF627F717E3108C00B5AF6C /* CSRefineSelectionViewController.m in Sources */,
+				BEF627FB17E3148400B5AF6C /* CSNarrowCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
