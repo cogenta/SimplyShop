@@ -9,6 +9,7 @@
 #import <CSApi/CSAPI.h>
 
 @class CSPriceContext;
+@class CSRefineBarState;
 @protocol CSProductSearchStateTitleFormatter;
 
 @protocol CSProductSearchState <NSObject>

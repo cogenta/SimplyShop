@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		8795017384E8439AB90A9230 /* libPods-test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2B2CCA674454E08BDE20C2B /* libPods-test.a */; };
 		A172FB01282545C594A858F8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 745CEB81A3744A0A93F6CAC6 /* libPods.a */; };
+		BE029CC017E70638002B8276 /* CSRefineBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE029CBF17E70638002B8276 /* CSRefineBarView.m */; };
+		BE029CC317E70791002B8276 /* CSRefineBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE029CC217E70791002B8276 /* CSRefineBarView.xib */; };
+		BE029CC917E710BF002B8276 /* CSRefine.m in Sources */ = {isa = PBXBuildFile; fileRef = BE029CC817E710BF002B8276 /* CSRefine.m */; };
+		BE029CCC17E71111002B8276 /* CSRefineBarState.m in Sources */ = {isa = PBXBuildFile; fileRef = BE029CCB17E71111002B8276 /* CSRefineBarState.m */; };
+		BE029CD517E74F57002B8276 /* CSRefineBarRemoveButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE029CD417E74F57002B8276 /* CSRefineBarRemoveButtonView.m */; };
 		BE052637174F6C8E0040AF65 /* ProductRightBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE052634174F6C8E0040AF65 /* ProductRightBg@2x.png */; };
 		BE052638174F6C8E0040AF65 /* SelectedTabBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE052635174F6C8E0040AF65 /* SelectedTabBg@2x.png */; };
 		BE052639174F6C8E0040AF65 /* BigRetailerBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE052636174F6C8E0040AF65 /* BigRetailerBackground@2x.png */; };
@@ -139,6 +144,15 @@
 		556CD3EBC7A04BBBA707A657 /* Pods-test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test.xcconfig"; path = "Pods/Pods-test.xcconfig"; sourceTree = SOURCE_ROOT; };
 		745CEB81A3744A0A93F6CAC6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B2CCA674454E08BDE20C2B /* libPods-test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE029CBE17E70638002B8276 /* CSRefineBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineBarView.h; sourceTree = "<group>"; };
+		BE029CBF17E70638002B8276 /* CSRefineBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineBarView.m; sourceTree = "<group>"; };
+		BE029CC217E70791002B8276 /* CSRefineBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRefineBarView.xib; sourceTree = "<group>"; };
+		BE029CC717E710BF002B8276 /* CSRefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefine.h; sourceTree = "<group>"; };
+		BE029CC817E710BF002B8276 /* CSRefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefine.m; sourceTree = "<group>"; };
+		BE029CCA17E71111002B8276 /* CSRefineBarState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineBarState.h; sourceTree = "<group>"; };
+		BE029CCB17E71111002B8276 /* CSRefineBarState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineBarState.m; sourceTree = "<group>"; };
+		BE029CD317E74F57002B8276 /* CSRefineBarRemoveButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineBarRemoveButtonView.h; sourceTree = "<group>"; };
+		BE029CD417E74F57002B8276 /* CSRefineBarRemoveButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineBarRemoveButtonView.m; sourceTree = "<group>"; };
 		BE052634174F6C8E0040AF65 /* ProductRightBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ProductRightBg@2x.png"; sourceTree = "<group>"; };
 		BE052635174F6C8E0040AF65 /* SelectedTabBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SelectedTabBg@2x.png"; sourceTree = "<group>"; };
 		BE052636174F6C8E0040AF65 /* BigRetailerBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BigRetailerBackground@2x.png"; sourceTree = "<group>"; };
@@ -338,6 +352,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE029CC117E70770002B8276 /* Refine Bar */ = {
+			isa = PBXGroup;
+			children = (
+				BE029CBE17E70638002B8276 /* CSRefineBarView.h */,
+				BE029CBF17E70638002B8276 /* CSRefineBarView.m */,
+				BE029CC217E70791002B8276 /* CSRefineBarView.xib */,
+				BE029CD317E74F57002B8276 /* CSRefineBarRemoveButtonView.h */,
+				BE029CD417E74F57002B8276 /* CSRefineBarRemoveButtonView.m */,
+			);
+			name = "Refine Bar";
+			sourceTree = "<group>";
+		};
 		BE3D4DC4170331AA00644AD6 = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +500,7 @@
 		BE3D4E36170DE8FC00644AD6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BE029CC117E70770002B8276 /* Refine Bar */,
 				BE7E39B8179836CF00E2A139 /* Product */,
 				BE7E39B71798280000E2A139 /* Tab Bar */,
 				BE7E39B6179827D300E2A139 /* Buttons */,
@@ -518,6 +545,10 @@
 				BE922C92179EBFFF00448365 /* CSProductSearchStateTitleFormatter.m */,
 				BE922C94179EC7A200448365 /* CSProductSearchState.h */,
 				BE922C95179EC7A200448365 /* CSProductSearchState.m */,
+				BE029CC717E710BF002B8276 /* CSRefine.h */,
+				BE029CC817E710BF002B8276 /* CSRefine.m */,
+				BE029CCA17E71111002B8276 /* CSRefineBarState.h */,
+				BE029CCB17E71111002B8276 /* CSRefineBarState.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -804,6 +835,7 @@
 				BE8EB7481782DF1D00F93A3D /* CSPriceCell.xib in Resources */,
 				BE5765DC17B8E98D0082B4C3 /* CSSliceRetailersCell.xib in Resources */,
 				BEF627F817E3108C00B5AF6C /* CSRefineSelectionViewController.xib in Resources */,
+				BE029CC317E70791002B8276 /* CSRefineBarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -913,6 +945,10 @@
 				BE5765DA17B52EAC0082B4C3 /* CSSliceRetailersCell.m in Sources */,
 				BEF627F717E3108C00B5AF6C /* CSRefineSelectionViewController.m in Sources */,
 				BEF627FB17E3148400B5AF6C /* CSNarrowCell.m in Sources */,
+				BE029CC017E70638002B8276 /* CSRefineBarView.m in Sources */,
+				BE029CC917E710BF002B8276 /* CSRefine.m in Sources */,
+				BE029CCC17E71111002B8276 /* CSRefineBarState.m in Sources */,
+				BE029CD517E74F57002B8276 /* CSRefineBarRemoveButtonView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

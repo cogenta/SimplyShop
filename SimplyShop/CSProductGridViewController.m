@@ -17,10 +17,14 @@
 #import "CSPlaceholderView.h"
 #import "CSRefineSelectionViewController.h"
 #import "UIView+CSKeyboardAwareness.h"
+#import "CSRefineBarView.h"
+#import "CSRefineBarState.h"
+#import "CSRefine.h"
 
 @interface CSProductGridViewController ()
 <CSSearchBarControllerDelegate,
-CSRefineSelectionViewControllerDelegate>
+CSRefineSelectionViewControllerDelegate,
+CSRefineBarViewDelegate>
 
 @property (strong, nonatomic) id<CSProductList> products;
 
@@ -30,7 +34,6 @@ CSRefineSelectionViewControllerDelegate>
 @property (strong, nonatomic) UIPopoverController *popover;
 
 - (void)addSearchToNavigationBar;
-- (void)addRefineToNavigationBar;
 
 @end
 
@@ -53,7 +56,6 @@ CSRefineSelectionViewControllerDelegate>
     [self.placeholderView showLoadingView];
 
 	[self addSearchToNavigationBar];
-    [self addRefineToNavigationBar];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -101,7 +103,8 @@ CSRefineSelectionViewControllerDelegate>
     
     [self.placeholderView showLoadingView];
     [self.searchRequest cancel];
-    self.searchRequest = [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+    self.searchRequest = [searchState getProducts:^(id<CSProductList> products,
+                                                    NSError *error) {
         self.searchRequest = nil;
         if ( ! [self.searchState isEqual:searchState]) {
             return;
@@ -112,11 +115,34 @@ CSRefineSelectionViewControllerDelegate>
             return;
         }
         
-        self.products = products;
+        [self.searchState.slice getFiltersByAuthor:^(id<CSAuthor> author,
+                                                     NSError *error) {
+            if (error) {
+                [self.placeholderView showErrorView];
+                return;
+            }
+            
+            
+            CSRefineBarState *refineBarState = [[CSRefineBarState alloc] init];
+            refineBarState.canRefineMore = self.searchState.slice.authorNarrowsURL != nil;
+            
+            if (author) {
+                CSRefine *refine = [[CSRefine alloc] init];
+                refine.name = @"Author";
+                refine.valueName = author.name;
+                refineBarState.refines = @[refine];
+            } else {
+                refineBarState.refines = @[];
+            }
+            
+            self.refineBarView.state = refineBarState;
+            self.products = products;
+        }];
     }];
     
     id formatter = [CSProductSearchStateTitleFormatter instance];
     self.title = [searchState titleWithFormatter:formatter];
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -195,32 +221,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
-#pragma mark - Refine Menu
-
-- (void)addRefineToNavigationBar
-{
-    UIBarButtonItem *refineButton = [[UIBarButtonItem alloc] initWithTitle:@"Refine" style:UIBarButtonItemStyleBordered target:self action:@selector(didTapRefineButton:)];
-    NSArray *items = @[refineButton];
-    items = [items arrayByAddingObjectsFromArray:self.navigationItem.rightBarButtonItems];
-    self.navigationItem.rightBarButtonItems = items;
-}
-
-- (IBAction)didTapRefineButton:(id)sender
-{
-    if (self.popover.popoverVisible) {
-        [self.popover dismissPopoverAnimated:YES];
-        self.popover = nil;
-        return;
-    }
-    
-    CSRefineSelectionViewController *content = [[CSRefineSelectionViewController alloc] initWithNibName:@"CSRefineSelectionViewController" bundle:nil];
-    content.selectionDelegate = self;
-    content.navigationItem.title = @"Author";
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:content];
-    self.popover = [[UIPopoverController alloc] initWithContentViewController:nav];
-    [self.popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-}
-
 #pragma mark - CSRefineSelectionViewControllerDelegate
 
 - (id<CSNarrow>)selectedNarrow
@@ -273,6 +273,36 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         }];
     }];
 
+}
+
+#pragma mark - CSRefineBarViewDelegate
+
+- (void)refineBarView:(CSRefineBarView *)bar didRequestRefineMenu:(id)sender
+{
+    if (self.popover.popoverVisible) {
+        [self.popover dismissPopoverAnimated:YES];
+        self.popover = nil;
+        return;
+    }
+    
+    CSRefineSelectionViewController *content = [[CSRefineSelectionViewController alloc] initWithNibName:@"CSRefineSelectionViewController" bundle:nil];
+    content.selectionDelegate = self;
+    content.navigationItem.title = @"Author";
+    
+    UINavigationController *nav = [[UINavigationController alloc]
+                                   initWithRootViewController:content];
+    self.popover = [[UIPopoverController alloc] initWithContentViewController:nav];
+    
+    UIView *senderView = (UIView *)sender;
+    [self.popover  presentPopoverFromRect:senderView.bounds
+                                   inView:senderView
+                permittedArrowDirections:UIPopoverArrowDirectionUp
+                                 animated:YES];
+}
+
+- (void)refineBarView:(CSRefineBarView *)bar didSelectRemoval:(CSRefine *)refine
+{
+    // TODO: remove refine
 }
 
 @end
