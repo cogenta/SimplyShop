@@ -39,7 +39,7 @@
 {
     NSDictionary *defaultMappings = @{@"author": @"Author",
                                       @"softwarePlatform": @"Platform",
-                                      @"manufacturer": @"Manfacturer",
+                                      @"manufacturer": @"Manufacturer",
                                       @"coverType": @"Cover"};
     return [self initWithMappings:defaultMappings];
 }

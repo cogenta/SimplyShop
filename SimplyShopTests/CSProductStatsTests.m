@@ -93,7 +93,7 @@
 {
     NSDictionary *mappings = @{@"author": @"Author",
                                @"softwarePlatform": @"Platform",
-                               @"manufacturer": @"Manfacturer",
+                               @"manufacturer": @"Manufacturer",
                                @"coverType": @"Cover"};
     CSProductStats *stats = [[CSProductStats alloc] init];
     STAssertEqualObjects(stats.mappings, mappings, nil);
