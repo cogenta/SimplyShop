@@ -302,7 +302,17 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)refineBarView:(CSRefineBarView *)bar didSelectRemoval:(CSRefine *)refine
 {
-    // TODO: remove refine
+    [self.placeholderView showLoadingView];
+    [refine getSliceWithoutRefine:self.searchState.slice
+                         callback:^(id<CSSlice> result, NSError *error)
+    {
+        if (error) {
+            [self.placeholderView showErrorView];
+            return;
+        }
+        
+        self.searchState = [self.searchState stateWithSlice:result];
+    }];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "CSRefine.h"
+#import <CSApi/CSAPI.h>
 
 @implementation CSRefine
 
@@ -34,6 +35,23 @@
     return ((self.name == other.name || [self.name isEqualToString:other.name])
             && (self.valueName == other.valueName
                 || [self.valueName isEqualToString:other.valueName]));
+}
+
+- (void)getSliceWithoutRefine:(id<CSSlice>)slice
+                     callback:(void (^)(id<CSSlice>, NSError *))callback
+{
+    if ( ! [self.name isEqualToString:@"Author"]) {
+        NSString *message = [NSString stringWithFormat:
+                             @"Can only undo Author refine (%@)", self.name];
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: message};
+        NSError *error = [NSError errorWithDomain:@"SimplyShop"
+                                             code:0
+                                         userInfo:userInfo];
+        callback(nil, error);
+        return;
+    }
+    
+    [slice getSliceWithoutAuthorFilter:callback];
 }
 
 - (NSString *)description

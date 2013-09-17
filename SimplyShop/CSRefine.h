@@ -8,9 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol CSSlice;
+
 @interface CSRefine : NSObject <NSCopying>
 
 @property (copy, nonatomic) NSString *name;
 @property (copy, nonatomic) NSString *valueName;
+
+- (void)getSliceWithoutRefine:(id<CSSlice>)slice
+                     callback:(void (^)(id<CSSlice> result,
+                                        NSError *error))callback;
 
 @end
