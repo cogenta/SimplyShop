@@ -42,12 +42,15 @@
 {
     __block CSProductStats *stats = nil;
     __block id error = @"NOT CALLED";
-    [CSProductStats loadProduct:product
-                       callback:^(CSProductStats *theStats, NSError *anError)
-     {
-         stats = theStats;
-         error = anError;
-     }];
+    CALL_AND_WAIT(^(void (^done)()) {
+        [CSProductStats loadProduct:product
+                           callback:^(CSProductStats *theStats, NSError *anError)
+         {
+             stats = theStats;
+             error = anError;
+             done();
+         }];
+    });
     
     STAssertNil(error, @"%@", error);
     STAssertNotNil(stats, nil);
@@ -56,7 +59,9 @@
 
 - (id)authorWithName:(NSString *)name
 {
-    return name;
+    id mockAuthor = [OCMockObject mockForProtocol:@protocol(CSAuthor)];
+    [[[mockAuthor stub] andReturn:name] name];
+    return mockAuthor;
 }
 
 - (id)softwarePlatformWithName:(NSString *)name
@@ -76,8 +81,11 @@
 
 - (void)stubAuthor:(id)author
 {
-    [[[mockProduct stub] andReturn:author] author];
-    [[[mockProduct stub] andReturn:author] valueForKey:@"author"];
+    [[[mockProduct stub] andDo:^(NSInvocation *inv) {
+        void (^cb)(id<CSAuthor> result, NSError *error);
+        [inv getArgument:&cb atIndex:2];
+        cb(author, nil);
+    }] getAuthor:OCMOCK_ANY];
 }
 
 - (void)stubSoftwarePlatform:(id)softwarePlatform
@@ -104,6 +112,25 @@
     [self stubSoftwarePlatform:nil];
     [self stubManufacturer:nil];
     [self stubCoverType:nil];
+}
+
+- (void)testMockedAuthor
+{
+    id expectedAuthor = [self authorWithName:@"Test Author"];
+    [self stubAuthor:expectedAuthor];
+    
+    __block id<CSAuthor> author = nil;
+    __block id error = @"NOT CALLED";
+    CALL_AND_WAIT(^(void (^done)()) {
+        [product getAuthor:^(id anAuthor, NSError *anError) {
+            author = anAuthor;
+            error = anError;
+            done();
+        }];
+    });
+    
+    STAssertNil(error, @"%@", error);
+    STAssertEquals(author, expectedAuthor, nil);
 }
 
 - (void)testStatsHasStatForMapping

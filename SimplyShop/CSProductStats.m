@@ -10,10 +10,9 @@
 #import <CSApi/CSAPI.h>
 #import <NSArray+Functional/NSArray+Functional.h>
 
-@interface CSProductStats ()
+@interface CSProductStat ()
 
-@property (strong, nonatomic) id<CSProduct> product;
-@property (readonly) NSDictionary *mappings;
+- (void)addToStats:(NSMutableArray *)stats;
 
 @end
 
@@ -29,8 +28,27 @@
     return self;
 }
 
+- (void)addToStats:(NSMutableArray *)stats
+{
+    if ( ! self.value) {
+        return;
+    }
+    
+    if ([self.value isKindOfClass:[NSNull class]]) {
+        return;
+    }
+
+    [stats addObject:self];
+}
+
 @end
 
+@interface CSProductStats ()
+
+@property (strong, nonatomic) id<CSProduct> product;
+@property (readonly) NSDictionary *mappings;
+
+@end
 @implementation CSProductStats
 
 @synthesize product = _product;
@@ -52,38 +70,46 @@
                                  userInfo:nil];
 }
 
-- (NSArray *)stats
+- (void)loadStats:(void (^)(NSArray *stats, NSError *error))cb
 {
     NSMutableArray *result = [[NSMutableArray alloc]
                               initWithCapacity:[_mappings count]];
     [_mappings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         NSString *label = obj;
         NSString *value = [(NSObject *) _product valueForKey:key];
-        if ( ! value) {
-            return;
-        }
-        
-        if ([value isKindOfClass:[NSNull class]]) {
-            return;
-        }
         
         CSProductStat *stat = [[CSProductStat alloc] initWithLabel:label
                                                              value:value];
-        [result addObject:stat];
+        [stat addToStats:result];
     }];
     
-    [result sortUsingComparator:^NSComparisonResult(CSProductStat *obj1,
-                                                    CSProductStat *obj2) {
-        return [[obj1 label] localizedCaseInsensitiveCompare:[obj2 label]];
-    }];
+    void (^sortAndReturn)() = ^() {
+        [result sortUsingComparator:^NSComparisonResult(CSProductStat *obj1,
+                                                        CSProductStat *obj2) {
+            return [[obj1 label] localizedCaseInsensitiveCompare:[obj2 label]];
+        }];
+        
+        cb(result, nil);
+    };
     
-    return [NSArray arrayWithArray:result];
+    [_product getAuthor:^(id<CSAuthor> author, NSError *error) {
+        // If there is an error fetching the author, we still want to return
+        // the rest of the stats.
+        if (author && ! error) {
+            NSString *value = author.name;
+            
+            CSProductStat *stat = [[CSProductStat alloc] initWithLabel:@"Author"
+                                                                 value:value];
+            [stat addToStats:result];
+        }
+        
+        sortAndReturn();
+    }];
 }
 
 + (void)loadProduct:(id<CSProduct>)product callback:(void (^)(CSProductStats *, NSError *))callback
 {
-    NSDictionary *defaultMappings = @{@"author": @"Author",
-                                      @"softwarePlatform": @"Platform",
+    NSDictionary *defaultMappings = @{@"softwarePlatform": @"Platform",
                                       @"manufacturer": @"Manufacturer",
                                       @"coverType": @"Cover"};
     [CSProductStats loadProduct:product
@@ -97,7 +123,15 @@
 {
     CSProductStats *result = [[CSProductStats alloc] initWithMappings:mappings];
     result.product = product;
-    callback(result, nil);
+    [result loadStats:^(NSArray *stats, NSError *error) {
+        if (error) {
+            callback(nil, error);
+            return;
+        }
+        
+        result->_stats = stats;
+        callback(result, nil);
+    }];
 }
 
 @end
