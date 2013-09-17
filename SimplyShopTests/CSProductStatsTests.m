@@ -44,7 +44,8 @@
     __block id error = @"NOT CALLED";
     CALL_AND_WAIT(^(void (^done)()) {
         [CSProductStats loadProduct:product
-                           callback:^(CSProductStats *theStats, NSError *anError)
+                           callback:^(CSProductStats *theStats,
+                                      NSError *anError)
          {
              stats = theStats;
              error = anError;
@@ -57,26 +58,31 @@
     return stats;
 }
 
+- (id)thingWithProtocol:(Protocol *)protocol name:(NSString *)name
+{
+    id mockThing = [OCMockObject mockForProtocol:protocol];
+    [[[mockThing stub] andReturn:name] name];
+    return mockThing;
+}
+
 - (id)authorWithName:(NSString *)name
 {
-    id mockAuthor = [OCMockObject mockForProtocol:@protocol(CSAuthor)];
-    [[[mockAuthor stub] andReturn:name] name];
-    return mockAuthor;
+    return [self thingWithProtocol:@protocol(CSAuthor) name:name];
 }
 
 - (id)softwarePlatformWithName:(NSString *)name
 {
-    return name;
+    return [self thingWithProtocol:@protocol(CSSoftwarePlatform) name:name];
 }
 
 - (id)manufacturerWithName:(NSString *)name
 {
-    return name;
+    return [self thingWithProtocol:@protocol(CSManufacturer) name:name];
 }
 
 - (id)coverTypeWithName:(NSString *)name
 {
-    return name;
+    return [self thingWithProtocol:@protocol(CSCoverType) name:name];
 }
 
 - (void)stubAuthor:(id)author
@@ -90,21 +96,27 @@
 
 - (void)stubSoftwarePlatform:(id)softwarePlatform
 {
-    [[[mockProduct stub] andReturn:softwarePlatform] softwarePlatform];
-    [[[mockProduct stub] andReturn:softwarePlatform] valueForKey:@"softwarePlatform"];
-}
+    [[[mockProduct stub] andDo:^(NSInvocation *inv) {
+        void (^cb)(id<CSSoftwarePlatform> result, NSError *error);
+        [inv getArgument:&cb atIndex:2];
+        cb(softwarePlatform, nil);
+    }] getSoftwarePlatform:OCMOCK_ANY];}
 
 - (void)stubManufacturer:(id)manufacturer
 {
-    [[[mockProduct stub] andReturn:manufacturer] manufacturer];
-    [[[mockProduct stub] andReturn:manufacturer] valueForKey:@"manufacturer"];
-}
+    [[[mockProduct stub] andDo:^(NSInvocation *inv) {
+        void (^cb)(id<CSManufacturer> result, NSError *error);
+        [inv getArgument:&cb atIndex:2];
+        cb(manufacturer, nil);
+    }] getManufacturer:OCMOCK_ANY];}
 
 - (void)stubCoverType:(id)coverType
 {
-    [[[mockProduct stub] andReturn:coverType] coverType];
-    [[[mockProduct stub] andReturn:coverType] valueForKey:@"coverType"];
-}
+    [[[mockProduct stub] andDo:^(NSInvocation *inv) {
+        void (^cb)(id<CSCoverType> result, NSError *error);
+        [inv getArgument:&cb atIndex:2];
+        cb(coverType, nil);
+    }] getCoverType:OCMOCK_ANY];}
 
 - (void)stubOnlyAuthor:(id)author
 {
@@ -199,8 +211,6 @@
     
     STAssertEqualObjects(actualStats, expecedStats, nil);
 }
-
-
 
 - (void)testStatsHaveAlphabeticalOrder
 {

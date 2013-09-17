@@ -9,6 +9,7 @@
 #import "CSProductStats.h"
 #import <CSApi/CSAPI.h>
 #import <NSArray+Functional/NSArray+Functional.h>
+#import "CSExplicitBlockOperation.h"
 
 @interface CSProductStat ()
 
@@ -46,82 +47,118 @@
 @interface CSProductStats ()
 
 @property (strong, nonatomic) id<CSProduct> product;
-@property (readonly) NSDictionary *mappings;
 
 @end
+
+typedef void (^done_blk_t)(NSString *value, NSError *error);
+
 @implementation CSProductStats
 
 @synthesize product = _product;
 
-- (id)initWithMappings:(NSDictionary *)mappings
+- (NSOperation *)operationForLabel:(NSString *)label
+                             stats:(NSMutableArray *)stats
+                             block:(void (^)(done_blk_t))blk
 {
-    self = [super init];
-    if (self) {
-        _mappings = [mappings copy];
-    }
-    return self;
-}
-
-- (id)init
-{
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:(@"-init is not a valid initializer "
-                                           "for the class CSProductStats")
-                                 userInfo:nil];
+    return [CSExplicitBlockOperation operationWithBlock:^(void (^done)()) {
+        blk(^(NSString *value, NSError *error) {
+            if (error || ! value) {
+                // If there is an error fetching the author, we still want to
+                // return the rest of the stats.
+                done();
+                return;
+            }
+            
+            CSProductStat *stat = [[CSProductStat alloc] initWithLabel:label
+                                                                 value:value];
+            [stat addToStats:stats];
+            done();
+        });
+    }];
 }
 
 - (void)loadStats:(void (^)(NSArray *stats, NSError *error))cb
 {
-    NSMutableArray *result = [[NSMutableArray alloc]
-                              initWithCapacity:[_mappings count]];
-    [_mappings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        NSString *label = obj;
-        NSString *value = [(NSObject *) _product valueForKey:key];
-        
-        CSProductStat *stat = [[CSProductStat alloc] initWithLabel:label
-                                                             value:value];
-        [stat addToStats:result];
-    }];
+    NSMutableArray *stats = [[NSMutableArray alloc]
+                              initWithCapacity:4];
+    
+    NSDate *start = [NSDate date];
     
     void (^sortAndReturn)() = ^() {
-        [result sortUsingComparator:^NSComparisonResult(CSProductStat *obj1,
-                                                        CSProductStat *obj2) {
+        [stats sortUsingComparator:^NSComparisonResult(CSProductStat *obj1,
+                                                       CSProductStat *obj2) {
             return [[obj1 label] localizedCaseInsensitiveCompare:[obj2 label]];
         }];
         
-        cb(result, nil);
+        NSDate *end = [NSDate date];
+        NSTimeInterval took = [end timeIntervalSinceDate:start];
+        NSLog(@"Took %@s", @(took));
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cb(stats, nil);
+        });
     };
     
-    [_product getAuthor:^(id<CSAuthor> author, NSError *error) {
-        // If there is an error fetching the author, we still want to return
-        // the rest of the stats.
-        if (author && ! error) {
-            NSString *value = author.name;
-            
-            CSProductStat *stat = [[CSProductStat alloc] initWithLabel:@"Author"
-                                                                 value:value];
-            [stat addToStats:result];
-        }
-        
-        sortAndReturn();
+    NSOperation *authorOp = [self operationForLabel:@"Author"
+                                              stats:stats
+                                              block:^(done_blk_t done)
+    {
+        [_product getAuthor:^(id<CSAuthor> result, NSError *error) {
+            done(result.name, error);
+        }];
     }];
+    
+    NSOperation *coverTypeOp = [self operationForLabel:@"Cover"
+                                                 stats:stats
+                                                 block:^(done_blk_t done)
+    {
+        [_product getCoverType:^(id<CSCoverType> result, NSError *error) {
+            done(result.name, error);
+        }];
+    }];
+    
+    NSOperation *manufacturerOp = [self operationForLabel:@"Manufacturer"
+                                                    stats:stats
+                                                    block:^(done_blk_t done)
+    {
+        [_product getManufacturer:^(id<CSManufacturer> result, NSError *error) {
+            done(result.name, error);
+        }];
+    }];
+    
+    NSOperation *platformOp = [self operationForLabel:@"Platform"
+                                                stats:stats
+                                                block:^(done_blk_t done)
+    {
+        [_product getSoftwarePlatform:^(id<CSSoftwarePlatform> result,
+                                        NSError *error)
+        {
+            done(result.name, error);
+        }];
+    }];
+    
+    NSBlockOperation *finishOperation = [NSBlockOperation
+                                         blockOperationWithBlock:sortAndReturn];
+    [finishOperation addDependency:authorOp];
+    [finishOperation addDependency:coverTypeOp];
+    [finishOperation addDependency:manufacturerOp];
+    [finishOperation addDependency:platformOp];
+    
+    NSOperationQueue *stuffQueue = [[NSOperationQueue alloc] init];
+    [stuffQueue setMaxConcurrentOperationCount:4];
+    
+    [stuffQueue addOperation:authorOp];
+    [stuffQueue addOperation:coverTypeOp];
+    [stuffQueue addOperation:manufacturerOp];
+    [stuffQueue addOperation:platformOp];
+    [stuffQueue addOperation:finishOperation];
 }
 
-+ (void)loadProduct:(id<CSProduct>)product callback:(void (^)(CSProductStats *, NSError *))callback
-{
-    NSDictionary *defaultMappings = @{@"softwarePlatform": @"Platform",
-                                      @"manufacturer": @"Manufacturer",
-                                      @"coverType": @"Cover"};
-    [CSProductStats loadProduct:product
-                       mappings:defaultMappings
-                       callback:callback];
-}
 
 + (void)loadProduct:(id<CSProduct>)product
-           mappings:(NSDictionary *)mappings
            callback:(void (^)(CSProductStats *, NSError *))callback
 {
-    CSProductStats *result = [[CSProductStats alloc] initWithMappings:mappings];
+    CSProductStats *result = [[CSProductStats alloc] init];
     result.product = product;
     [result loadStats:^(NSArray *stats, NSError *error) {
         if (error) {
