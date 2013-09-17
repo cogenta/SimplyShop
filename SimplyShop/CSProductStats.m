@@ -10,6 +10,13 @@
 #import <CSApi/CSAPI.h>
 #import <NSArray+Functional/NSArray+Functional.h>
 
+@interface CSProductStats ()
+
+@property (strong, nonatomic) id<CSProduct> product;
+@property (readonly) NSDictionary *mappings;
+
+@end
+
 @implementation CSProductStat
 
 - (id)initWithLabel:(NSString *)label value:(NSString *)value
@@ -26,6 +33,8 @@
 
 @implementation CSProductStats
 
+@synthesize product = _product;
+
 - (id)initWithMappings:(NSDictionary *)mappings
 {
     self = [super init];
@@ -37,11 +46,10 @@
 
 - (id)init
 {
-    NSDictionary *defaultMappings = @{@"author": @"Author",
-                                      @"softwarePlatform": @"Platform",
-                                      @"manufacturer": @"Manufacturer",
-                                      @"coverType": @"Cover"};
-    return [self initWithMappings:defaultMappings];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:(@"-init is not a valid initializer "
+                                           "for the class CSProductStats")
+                                 userInfo:nil];
 }
 
 - (NSArray *)stats
@@ -70,6 +78,26 @@
     }];
     
     return [NSArray arrayWithArray:result];
+}
+
++ (void)loadProduct:(id<CSProduct>)product callback:(void (^)(CSProductStats *, NSError *))callback
+{
+    NSDictionary *defaultMappings = @{@"author": @"Author",
+                                      @"softwarePlatform": @"Platform",
+                                      @"manufacturer": @"Manufacturer",
+                                      @"coverType": @"Cover"};
+    [CSProductStats loadProduct:product
+                       mappings:defaultMappings
+                       callback:callback];
+}
+
++ (void)loadProduct:(id<CSProduct>)product
+           mappings:(NSDictionary *)mappings
+           callback:(void (^)(CSProductStats *, NSError *))callback
+{
+    CSProductStats *result = [[CSProductStats alloc] initWithMappings:mappings];
+    result.product = product;
+    callback(result, nil);
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "SenTestCase+CSAsyncTestCase.h"
 #import <OCMock/OCMock.h>
 #import <CSApi/CSAPI.h>
 #import "CSProductStats.h"
@@ -37,22 +38,79 @@
     product = mockProduct;
 }
 
-- (void)testRemembersMappings
+- (CSProductStats *)statsWithDefaultMappings
 {
-    NSDictionary *mappings = @{@"author": @"Author"};
-    CSProductStats *stats = [[CSProductStats alloc] initWithMappings:mappings];
-    STAssertEqualObjects(stats.mappings, mappings, nil);
+    __block CSProductStats *stats = nil;
+    __block id error = @"NOT CALLED";
+    [CSProductStats loadProduct:product
+                       callback:^(CSProductStats *theStats, NSError *anError)
+     {
+         stats = theStats;
+         error = anError;
+     }];
+    
+    STAssertNil(error, @"%@", error);
+    STAssertNotNil(stats, nil);
+    return stats;
+}
+
+- (id)authorWithName:(NSString *)name
+{
+    return name;
+}
+
+- (id)softwarePlatformWithName:(NSString *)name
+{
+    return name;
+}
+
+- (id)manufacturerWithName:(NSString *)name
+{
+    return name;
+}
+
+- (id)coverTypeWithName:(NSString *)name
+{
+    return name;
+}
+
+- (void)stubAuthor:(id)author
+{
+    [[[mockProduct stub] andReturn:author] author];
+    [[[mockProduct stub] andReturn:author] valueForKey:@"author"];
+}
+
+- (void)stubSoftwarePlatform:(id)softwarePlatform
+{
+    [[[mockProduct stub] andReturn:softwarePlatform] softwarePlatform];
+    [[[mockProduct stub] andReturn:softwarePlatform] valueForKey:@"softwarePlatform"];
+}
+
+- (void)stubManufacturer:(id)manufacturer
+{
+    [[[mockProduct stub] andReturn:manufacturer] manufacturer];
+    [[[mockProduct stub] andReturn:manufacturer] valueForKey:@"manufacturer"];
+}
+
+- (void)stubCoverType:(id)coverType
+{
+    [[[mockProduct stub] andReturn:coverType] coverType];
+    [[[mockProduct stub] andReturn:coverType] valueForKey:@"coverType"];
+}
+
+- (void)stubOnlyAuthor:(id)author
+{
+    [self stubAuthor:author];
+    [self stubSoftwarePlatform:nil];
+    [self stubManufacturer:nil];
+    [self stubCoverType:nil];
 }
 
 - (void)testStatsHasStatForMapping
 {
-    NSDictionary *mappings = @{@"author": @"Author"};
-    CSProductStats *stats = [[CSProductStats alloc] initWithMappings:mappings];
-    
     NSString *authorName = @"Niccolò Machiavelli";
-    [[[mockProduct stub] andReturn:authorName] author];
-    [[[mockProduct stub] andReturn:authorName] valueForKey:@"author"];
-    stats.product = product;
+    [self stubOnlyAuthor:[self authorWithName:authorName]];
+    CSProductStats *stats = [self statsWithDefaultMappings];
     
     STAssertEqualObjects(@([stats.stats count]), @(1), nil);
     
@@ -63,66 +121,74 @@
     STAssertEqualObjects(stat.value, authorName, nil);
 }
 
-- (void)testStatsHasNoStatForNilMapping
+- (void)testStatsHasNoStatForNilNameAuthor
 {
-    NSDictionary *mappings = @{@"author": @"Author"};
-    CSProductStats *stats = [[CSProductStats alloc] initWithMappings:mappings];
-    
     NSString *authorName = nil;
-    [[[mockProduct stub] andReturn:authorName] author];
-    [[[mockProduct stub] andReturn:authorName] valueForKey:@"author"];
-    stats.product = product;
+    [self stubOnlyAuthor:[self authorWithName:authorName]];
+    CSProductStats *stats = [self statsWithDefaultMappings];
     
     STAssertEqualObjects(@([stats.stats count]), @(0), nil);
 }
 
-- (void)testStatsHasNoStatForNullMapping
+- (void)testStatsHasNoStatForNullNameAuthor
 {
-    NSDictionary *mappings = @{@"author": @"Author"};
-    CSProductStats *stats = [[CSProductStats alloc] initWithMappings:mappings];
-    
     NSString *authorName = (NSString *) [NSNull null];
-    [[[mockProduct stub] andReturn:authorName] author];
-    [[[mockProduct stub] andReturn:authorName] valueForKey:@"author"];
-    stats.product = product;
+    [self stubOnlyAuthor:[self authorWithName:authorName]];
+    CSProductStats *stats = [self statsWithDefaultMappings];
     
     STAssertEqualObjects(@([stats.stats count]), @(0), nil);
 }
 
-- (void)testDefaultMappings
+- (void)testStatsHasNoStatForMissingAuthor
 {
-    NSDictionary *mappings = @{@"author": @"Author",
-                               @"softwarePlatform": @"Platform",
-                               @"manufacturer": @"Manufacturer",
-                               @"coverType": @"Cover"};
-    CSProductStats *stats = [[CSProductStats alloc] init];
-    STAssertEqualObjects(stats.mappings, mappings, nil);
+    [self stubOnlyAuthor:nil];
+    CSProductStats *stats = [self statsWithDefaultMappings];
+    
+    STAssertEqualObjects(@([stats.stats count]), @(0), nil);
 }
+
+- (void)testAllStatsPresent
+{
+    id author = [self authorWithName:@"Niccolò Machiavelli"];
+    id softwarePlatform = [self softwarePlatformWithName:@"Kindle"];
+    id manufacturer = [self manufacturerWithName:@"Amazon"];
+    id coverType = [self coverTypeWithName:@"Ebook"];
+    
+    [self stubAuthor:author];
+    [self stubSoftwarePlatform:softwarePlatform];
+    [self stubManufacturer:manufacturer];
+    [self stubCoverType:coverType];
+    
+    CSProductStats *stats = [self statsWithDefaultMappings];
+    NSDictionary *expecedStats = @{@"Author": @"Niccolò Machiavelli",
+                                   @"Platform": @"Kindle",
+                                   @"Manufacturer": @"Amazon",
+                                   @"Cover": @"Ebook"};
+    
+    NSMutableDictionary *actualStats = [[NSMutableDictionary alloc] init];
+    for (CSProductStat *stat in stats.stats) {
+        actualStats[stat.label] = stat.value;
+    }
+    
+    STAssertEqualObjects(actualStats, expecedStats, nil);
+}
+
+
 
 - (void)testStatsHaveAlphabeticalOrder
 {
-    CSProductStats *stats = [[CSProductStats alloc] init];
+    id author = [self authorWithName:@"Niccolò Machiavelli"];
+    id softwarePlatform = [self softwarePlatformWithName:@"Kindle"];
+    id manufacturer = [self manufacturerWithName:@"Amazon"];
+    id coverType = [self coverTypeWithName:@"Ebook"];
     
-    NSString *author = @"Niccolò Machiavelli";
-    NSString *softwarePlatform = @"Kindle";
-    NSString *manufacturer = @"Amazon";
-    NSString *coverType = @"Ebook";
+    [self stubAuthor:author];
+    [self stubSoftwarePlatform:softwarePlatform];
+    [self stubManufacturer:manufacturer];
+    [self stubCoverType:coverType];
+
+    CSProductStats *stats = [self statsWithDefaultMappings];
     
-    [[[mockProduct stub] andReturn:author] author];
-    [[[mockProduct stub] andReturn:author] valueForKey:@"author"];
-
-    [[[mockProduct stub] andReturn:softwarePlatform] softwarePlatform];
-    [[[mockProduct stub] andReturn:softwarePlatform] valueForKey:@"softwarePlatform"];
-
-    [[[mockProduct stub] andReturn:manufacturer] manufacturer];
-    [[[mockProduct stub] andReturn:manufacturer] valueForKey:@"manufacturer"];
-
-    [[[mockProduct stub] andReturn:coverType] coverType];
-    [[[mockProduct stub] andReturn:coverType] valueForKey:@"coverType"];
-
-    stats.product = product;
-    
-    STAssertEqualObjects(@([stats.stats count]), @([stats.mappings count]), nil);
     NSString *lastLabel = @"";
     for (CSProductStat *stat in stats.stats) {
         NSString *label = stat.label;

@@ -21,11 +21,9 @@
 
 @interface CSProductStats : NSObject
 
-@property (readonly) NSDictionary *mappings;
 @property (readonly) NSArray *stats;
-@property (strong, nonatomic) id<CSProduct> product;
 
-- (id)init;
-- (id)initWithMappings:(NSDictionary *)mappings;
++ (void)loadProduct:(id<CSProduct>)product
+           callback:(void (^)(CSProductStats *stats, NSError *error))callback;
 
 @end

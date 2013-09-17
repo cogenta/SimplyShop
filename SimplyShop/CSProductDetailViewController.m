@@ -108,9 +108,11 @@
 {
     self.titleBarView.title = [product.name uppercaseString];
     self.productDetailsView.description_ = product.description_;
-    CSProductStats *stats = [[CSProductStats alloc] init];
-    stats.product = product;
-    self.productDetailsView.stats = stats;
+    [CSProductStats loadProduct:product callback:^(CSProductStats *stats,
+                                                   NSError *error) {
+        self.productDetailsView.stats = stats;
+    }];
+    
     [product getPictures:^(id<CSPictureListPage> firstPage, NSError *error) {
         if (error) {
             // Do nothing
