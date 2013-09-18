@@ -82,17 +82,11 @@ typedef void (^done_blk_t)(NSString *value, NSError *error);
     NSMutableArray *stats = [[NSMutableArray alloc]
                               initWithCapacity:4];
     
-    NSDate *start = [NSDate date];
-    
     void (^sortAndReturn)() = ^() {
         [stats sortUsingComparator:^NSComparisonResult(CSProductStat *obj1,
                                                        CSProductStat *obj2) {
             return [[obj1 label] localizedCaseInsensitiveCompare:[obj2 label]];
         }];
-        
-        NSDate *end = [NSDate date];
-        NSTimeInterval took = [end timeIntervalSinceDate:start];
-        NSLog(@"Took %@s", @(took));
         
         dispatch_async(dispatch_get_main_queue(), ^{
             cb(stats, nil);

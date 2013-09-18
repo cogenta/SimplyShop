@@ -12,11 +12,14 @@
 
 @interface CSRefine : NSObject <NSCopying>
 
-@property (copy, nonatomic) NSString *name;
-@property (copy, nonatomic) NSString *valueName;
+@property (readonly, copy, nonatomic) NSString *name;
+@property (readonly, copy, nonatomic) NSString *valueName;
 
 - (void)getSliceWithoutRefine:(id<CSSlice>)slice
                      callback:(void (^)(id<CSSlice> result,
                                         NSError *error))callback;
+
++ (instancetype) refineWithTypeName:(NSString *)typeName
+                          valueName:(NSString *)valueName;
 
 @end

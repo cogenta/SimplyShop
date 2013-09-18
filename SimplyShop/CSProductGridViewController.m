@@ -115,27 +115,16 @@ CSRefineBarViewDelegate>
             return;
         }
         
-        [self.searchState.slice getFiltersByAuthor:^(id<CSAuthor> author,
-                                                     NSError *error) {
+        [CSRefineBarState getRefineBarStateForSlice:self.searchState.slice
+                                           callback:^(CSRefineBarState *state,
+                                                      NSError *error)
+        {
             if (error) {
                 [self.placeholderView showErrorView];
                 return;
             }
             
-            
-            CSRefineBarState *refineBarState = [[CSRefineBarState alloc] init];
-            refineBarState.canRefineMore = self.searchState.slice.authorNarrowsURL != nil;
-            
-            if (author) {
-                CSRefine *refine = [[CSRefine alloc] init];
-                refine.name = @"Author";
-                refine.valueName = author.name;
-                refineBarState.refines = @[refine];
-            } else {
-                refineBarState.refines = @[];
-            }
-            
-            self.refineBarView.state = refineBarState;
+            self.refineBarView.state = state;
             self.products = products;
         }];
     }];

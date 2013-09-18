@@ -8,9 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol CSSlice;
+
 @interface CSRefineBarState : NSObject
 
 @property (nonatomic, assign) BOOL canRefineMore;
 @property (nonatomic, strong) NSArray *refines;
+
++ (void)getRefineBarStateForSlice:(id<CSSlice>)slice
+                         callback:(void (^)(CSRefineBarState *state,
+                                            NSError *error))cb;
 
 @end
