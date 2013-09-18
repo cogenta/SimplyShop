@@ -115,6 +115,14 @@
 		BEC1E2EC17438C0100D12EF2 /* CSEmptyProductGridView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEC1E2EB17438C0100D12EF2 /* CSEmptyProductGridView.xib */; };
 		BEC6561A17E8AB1E0088070A /* CSExplicitBlockOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6561917E8AB1E0088070A /* CSExplicitBlockOperation.m */; };
 		BEC6561B17E8AB1E0088070A /* CSExplicitBlockOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6561917E8AB1E0088070A /* CSExplicitBlockOperation.m */; };
+		BEC6563217E9B0060088070A /* RefineBarBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6563117E9B0060088070A /* RefineBarBg@2x.png */; };
+		BEC6563317E9B0060088070A /* RefineBarBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6563117E9B0060088070A /* RefineBarBg@2x.png */; };
+		BEC6563517E9B2AC0088070A /* RefineRemoveBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6563417E9B2AC0088070A /* RefineRemoveBg@2x.png */; };
+		BEC6563617E9B2AC0088070A /* RefineRemoveBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6563417E9B2AC0088070A /* RefineRemoveBg@2x.png */; };
+		BEC6563817E9B3400088070A /* RefineButtonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6563717E9B3400088070A /* RefineButtonBg@2x.png */; };
+		BEC6563917E9B3400088070A /* RefineButtonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6563717E9B3400088070A /* RefineButtonBg@2x.png */; };
+		BEC6563C17E9C0E20088070A /* CSRefineMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6563B17E9C0E20088070A /* CSRefineMenuButton.m */; };
+		BEC6564017E9C0FC0088070A /* CSRefineRemoveButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6563F17E9C0FC0088070A /* CSRefineRemoveButton.m */; };
 		BEDC02D6171312BC0023059E /* CSProductSummaryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02D5171312BC0023059E /* CSProductSummaryCell.xib */; };
 		BEDC02D9171317A90023059E /* CSProductSummariesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDC02D8171317A90023059E /* CSProductSummariesCell.m */; };
 		BEDC02DB17144DB20023059E /* CSRetailerSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */; };
@@ -305,6 +313,13 @@
 		BEC1E2EB17438C0100D12EF2 /* CSEmptyProductGridView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSEmptyProductGridView.xib; sourceTree = "<group>"; };
 		BEC6561817E8AB1E0088070A /* CSExplicitBlockOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSExplicitBlockOperation.h; sourceTree = "<group>"; };
 		BEC6561917E8AB1E0088070A /* CSExplicitBlockOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSExplicitBlockOperation.m; sourceTree = "<group>"; };
+		BEC6563117E9B0060088070A /* RefineBarBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RefineBarBg@2x.png"; sourceTree = "<group>"; };
+		BEC6563417E9B2AC0088070A /* RefineRemoveBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RefineRemoveBg@2x.png"; sourceTree = "<group>"; };
+		BEC6563717E9B3400088070A /* RefineButtonBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RefineButtonBg@2x.png"; sourceTree = "<group>"; };
+		BEC6563A17E9C0E20088070A /* CSRefineMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineMenuButton.h; sourceTree = "<group>"; };
+		BEC6563B17E9C0E20088070A /* CSRefineMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineMenuButton.m; sourceTree = "<group>"; };
+		BEC6563E17E9C0FC0088070A /* CSRefineRemoveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineRemoveButton.h; sourceTree = "<group>"; };
+		BEC6563F17E9C0FC0088070A /* CSRefineRemoveButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineRemoveButton.m; sourceTree = "<group>"; };
 		BED98BC91716D361007E8A9C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BEDC02D5171312BC0023059E /* CSProductSummaryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductSummaryCell.xib; sourceTree = "<group>"; };
 		BEDC02D7171317A80023059E /* CSProductSummariesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductSummariesCell.h; sourceTree = "<group>"; };
@@ -477,6 +492,9 @@
 		BE3D4E0F17036D3700644AD6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BEC6563717E9B3400088070A /* RefineButtonBg@2x.png */,
+				BEC6563417E9B2AC0088070A /* RefineRemoveBg@2x.png */,
+				BEC6563117E9B0060088070A /* RefineBarBg@2x.png */,
 				BE8EB73817818CD900F93A3D /* AllPricesBg@2x.png */,
 				BE052634174F6C8E0040AF65 /* ProductRightBg@2x.png */,
 				BE052635174F6C8E0040AF65 /* SelectedTabBg@2x.png */,
@@ -569,6 +587,10 @@
 				BE8EB73B1781900A00F93A3D /* CSBuyNowButton.m */,
 				BE3D4E33170DDF9100644AD6 /* CSAppearanceButton.h */,
 				BE3D4E34170DDF9100644AD6 /* CSAppearanceButton.m */,
+				BEC6563A17E9C0E20088070A /* CSRefineMenuButton.h */,
+				BEC6563B17E9C0E20088070A /* CSRefineMenuButton.m */,
+				BEC6563E17E9C0FC0088070A /* CSRefineRemoveButton.h */,
+				BEC6563F17E9C0FC0088070A /* CSRefineRemoveButton.m */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -850,6 +872,9 @@
 				BE5765DC17B8E98D0082B4C3 /* CSSliceRetailersCell.xib in Resources */,
 				BEF627F817E3108C00B5AF6C /* CSRefineSelectionViewController.xib in Resources */,
 				BE029CC317E70791002B8276 /* CSRefineBarView.xib in Resources */,
+				BEC6563217E9B0060088070A /* RefineBarBg@2x.png in Resources */,
+				BEC6563517E9B2AC0088070A /* RefineRemoveBg@2x.png in Resources */,
+				BEC6563817E9B3400088070A /* RefineButtonBg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +883,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE3D4DF9170331AA00644AD6 /* InfoPlist.strings in Resources */,
+				BEC6563317E9B0060088070A /* RefineBarBg@2x.png in Resources */,
+				BEC6563617E9B2AC0088070A /* RefineRemoveBg@2x.png in Resources */,
+				BEC6563917E9B3400088070A /* RefineButtonBg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -964,6 +992,8 @@
 				BE029CCC17E71111002B8276 /* CSRefineBarState.m in Sources */,
 				BE029CD517E74F57002B8276 /* CSRefineBarRemoveButtonView.m in Sources */,
 				BEC6561A17E8AB1E0088070A /* CSExplicitBlockOperation.m in Sources */,
+				BEC6563C17E9C0E20088070A /* CSRefineMenuButton.m in Sources */,
+				BEC6564017E9C0FC0088070A /* CSRefineRemoveButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

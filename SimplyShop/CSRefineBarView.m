@@ -11,8 +11,8 @@
 #import "CSRefine.h"
 #import "CSRefineBarRemoveButtonView.h"
 
-const static CGPoint kButtonOrigin = { .x = 9.0, .y = 9.0 };
-const static CGSize kButtonSize = { .width = 94.0, .height = 29.0 };
+const static CGPoint kButtonOrigin = { .x = 9.0, .y = 7.0 };
+const static CGSize kButtonSize = { .width = 94.0, .height = 30.0 };
 const static CGFloat kButtonGap = 9.0;
 
 @interface CSRefineBarView () <CSRefineBarRemoveButtonViewDelegate>
@@ -176,6 +176,15 @@ const static CGFloat kButtonGap = 9.0;
     NSAssert([sender isKindOfClass:[CSRefineBarRemoveButtonView class]],
              @"button should be a refine remove button");
     [self.delegate refineBarView:self didSelectRemoval:sender.refine];
+}
+
+- (void)setBackgroundImage:(UIImage *)backgroundImage
+{
+    self.backgroundColor = [UIColor clearColor];
+    UIColor *backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
+    self.loadingView.backgroundColor = backgroundColor;
+    self.loadedView.backgroundColor = backgroundColor;
+    _backgroundImage = backgroundImage;
 }
 
 @end

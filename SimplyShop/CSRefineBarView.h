@@ -25,4 +25,6 @@
 @property (strong, nonatomic) CSRefineBarState *state;
 @property (weak, nonatomic) IBOutlet id<CSRefineBarViewDelegate> delegate;
 
+@property (strong, nonatomic) UIImage *backgroundImage UI_APPEARANCE_SELECTOR;
+
 @end

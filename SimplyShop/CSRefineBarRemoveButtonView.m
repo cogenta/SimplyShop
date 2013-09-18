@@ -8,6 +8,7 @@
 
 #import "CSRefineBarRemoveButtonView.h"
 #import "CSRefine.h"
+#import "CSRefineRemoveButton.h"
 
 @interface CSRefineBarRemoveButtonView ()
 
@@ -36,7 +37,7 @@
 
 - (void)initialize
 {
-    self.button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.button = [CSRefineRemoveButton buttonWithType:UIButtonTypeCustom];
     self.button.frame = self.bounds;
     self.button.autoresizingMask = (UIViewAutoresizingFlexibleHeight
                                     | UIViewAutoresizingFlexibleWidth);

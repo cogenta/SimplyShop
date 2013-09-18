@@ -30,6 +30,9 @@
 #import "CSBuyNowButton.h"
 #import "CSDashboardTableView.h"
 #import "CSPriceCell.h"
+#import "CSRefineBarView.h"
+#import "CSRefineMenuButton.h"
+#import "CSRefineRemoveButton.h"
 
 @implementation CSSimplyShopTheme
 
@@ -308,6 +311,29 @@
     
     [priceCell setSelectedBackgroundColor:[UIColor colorWithHexString:@"#e87363"]];
     [priceCell setSelectedForegroundColor:[UIColor whiteColor]];
+    
+    //
+    
+    CSRefineBarView *refineBar = [CSRefineBarView appearance];
+    [refineBar setBackgroundImage:[UIImage imageNamed:@"RefineBarBg"]];
+
+    CSRefineMenuButton *refineButton = [CSRefineMenuButton appearance];
+    UIImage *refineButtonBg = [[UIImage imageNamed:@"RefineButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(14.0, 6.0, 14.0, 6.0)];
+    [refineButton setBackgroundImage:refineButtonBg forState:UIControlStateNormal];
+    
+    [refineButton setTitleFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0]];
+    [refineButton setTitleColor:[UIColor colorWithHexString:@"#9c9c9c"]
+                       forState:UIControlStateNormal];
+    [refineButton setContentEdgeInsets:UIEdgeInsetsMake(0.0, 13.0, 0.0, 13.0)];
+    
+    CSRefineRemoveButton *refineRemoveButton = [CSRefineRemoveButton appearance];
+    UIImage *refineRemoveButtonBg = [[UIImage imageNamed:@"RefineRemoveBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(14.0, 16.0, 14.0, 25.0)];
+    [refineRemoveButton setBackgroundImage:refineRemoveButtonBg forState:UIControlStateNormal];
+    
+    [refineRemoveButton setTitleFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0]];
+    [refineRemoveButton setTitleColor:[UIColor colorWithHexString:@"#9c9c9c"]
+                             forState:UIControlStateNormal];
+    [refineRemoveButton setContentEdgeInsets:UIEdgeInsetsMake(0.0, 9.0, 0.0, 29.0)];
 }
 
 - (void)themeCTAButton:(CSCTAButton *)button
