@@ -10,10 +10,9 @@
 
 @protocol CSNarrow;
 @protocol CSNarrowList;
+@class CSRefineType;
 
 @protocol CSRefineSelectionViewControllerDelegate <NSObject>
-
-@property (readonly) id<CSNarrow> selectedNarrow;
 
 - (void)getNarrows:(void (^)(id<CSNarrowList> narrows, NSError *error))callback;
 - (void)didSelectNarrowAtIndex:(NSUInteger)index;
@@ -22,7 +21,8 @@
 
 @interface CSRefineSelectionViewController : UITableViewController
 
-@property (weak, nonatomic)
+@property (strong, nonatomic)
 id<CSRefineSelectionViewControllerDelegate> selectionDelegate;
+@property (strong, nonatomic) CSRefineType *type;
 
 @end

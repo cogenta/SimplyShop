@@ -8,6 +8,7 @@
 
 #import "CSRefineSelectionViewController.h"
 #import "CSNarrowCell.h"
+#import "CSRefineType.h"
 #import <CSApi/CSAPI.h>
 
 @interface CSRefineSelectionViewController ()
@@ -18,18 +19,12 @@
 
 @implementation CSRefineSelectionViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.title = self.type.name;
+    
     [self.selectionDelegate getNarrows:^(id<CSNarrowList> narrows,
                                          NSError *error)
      {
@@ -41,12 +36,6 @@
         self.narrows = narrows;
         [self.tableView reloadData];
     }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source

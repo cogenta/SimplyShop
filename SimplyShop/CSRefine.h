@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol CSSlice;
+@class CSRefineType;
 
 @interface CSRefine : NSObject <NSCopying>
 
@@ -19,7 +20,7 @@
                      callback:(void (^)(id<CSSlice> result,
                                         NSError *error))callback;
 
-+ (instancetype) refineWithTypeName:(NSString *)typeName
-                          valueName:(NSString *)valueName;
++ (instancetype) refineWithType:(CSRefineType *)type
+                      valueName:(NSString *)valueName;
 
 @end

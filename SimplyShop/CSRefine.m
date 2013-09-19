@@ -8,52 +8,49 @@
 
 #import "CSRefine.h"
 #import <CSApi/CSAPI.h>
+#import "CSRefineType.h"
 
 @interface CSRefine ()
 
-@property (copy, nonatomic) NSString *typeName;
+@property (strong, nonatomic) CSRefineType *type;
 
 @end
 
 @implementation CSRefine
 
-- (id)initWithTypeName:(NSString *)typeName
-             valueName:(NSString *)valueName
+- (id)initWithType:(CSRefineType *)type
+         valueName:(NSString *)valueName
 {
     self = [super init];
     if (self) {
-        self.typeName = typeName;
+        self.type = type;
         self->_valueName = valueName;
     }
     return self;
 }
 
-+ (instancetype)refineWithTypeName:(NSString *)typeName
-                         valueName:(NSString *)valueName
++ (instancetype)refineWithType:(CSRefineType *)type
+                     valueName:(NSString *)valueName
 {
-    return [[self alloc] initWithTypeName:typeName valueName:valueName];
+    return [[self alloc] initWithType:type valueName:valueName];
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
     CSRefine *result = [[CSRefine allocWithZone:zone] init];
-    result.typeName = self.typeName;
+    result.type = self.type;
     result->_valueName = self->_valueName;
     return result;
 }
 
 - (NSUInteger)hash
 {
-    return [self.typeName hash] ^ [self.valueName hash];
+    return [self.type hash] ^ [self.valueName hash];
 }
 
 - (NSString *)name
 {
-    NSDictionary *labels = @{@"author": @"Author",
-                             @"cover_type": @"Cover",
-                             @"manufacturer": @"Manufacturer",
-                             @"software_platform": @"Platform"};
-    return labels[self.typeName];
+    return self.type.name;
 }
 
 - (BOOL)isEqual:(id)object
@@ -64,8 +61,8 @@
     
     CSRefine *other = (CSRefine *)object;
     
-    return ((self.typeName == other.typeName ||
-             [self.typeName isEqualToString:other.typeName]) &&
+    return ((self.type == other.type ||
+             [self.type isEqual:other.type]) &&
             (self.valueName == other.valueName ||
              [self.valueName isEqualToString:other.valueName]));
 }
@@ -73,33 +70,7 @@
 - (void)getSliceWithoutRefine:(id<CSSlice>)slice
                      callback:(void (^)(id<CSSlice>, NSError *))callback
 {
-    if ([self.typeName isEqualToString:@"author"]) {
-        [slice getSliceWithoutAuthorFilter:callback];
-        return;
-    }
-    
-    if ([self.typeName isEqualToString:@"cover_type"]) {
-        [slice getSliceWithoutCoverTypeFilter:callback];
-        return;
-    }
-    
-    if ([self.typeName isEqualToString:@"manufacturer"]) {
-        [slice getSliceWithoutManufacturerFilter:callback];
-        return;
-    }
-    
-    if ([self.typeName isEqualToString:@"software_platform"]) {
-        [slice getSliceWithoutSoftwarePlatformFilter:callback];
-        return;
-    }
-    
-    NSString *message = [NSString stringWithFormat:
-                         @"Don't know how to undo %@ refine", self.typeName];
-    NSDictionary *userInfo = @{NSLocalizedDescriptionKey: message};
-    NSError *error = [NSError errorWithDomain:@"SimplyShop"
-                                         code:0
-                                     userInfo:userInfo];
-    callback(nil, error);
+    [self.type getSliceWithoutRefine:slice callback:callback];
 }
 
 - (NSString *)description

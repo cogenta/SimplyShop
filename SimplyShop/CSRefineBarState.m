@@ -9,6 +9,7 @@
 #import "CSRefineBarState.h"
 #import <CSApi/CSAPI.h>
 #import "CSRefine.h"
+#import "CSRefineType.h"
 #import "CSExplicitBlockOperation.h"
 
 @implementation CSRefineBarState
@@ -21,14 +22,14 @@
     NSOperation *authorOp = [CSExplicitBlockOperation
                              operationWithBlock:^(void (^done)())
     {
-        [slice getFiltersByAuthor:^(id<CSAuthor> author, NSError *error) {
+        [slice getFiltersByAuthor:^(id<CSAuthor> result, NSError *error) {
             if (error) {
                 [errors addObject:error];
             }
                         
-            if (author) {
-                CSRefine *refine = [CSRefine refineWithTypeName:@"author"
-                                                      valueName:author.name];
+            if (result) {
+                CSRefine *refine = [[CSRefineType authorRefineType]
+                                    refineWithValueName:result.name];
                 [refines addObject:refine];
             }
             
@@ -45,8 +46,8 @@
             }
             
             if (result) {
-                CSRefine *refine = [CSRefine refineWithTypeName:@"cover_type"
-                                                      valueName:result.name];
+                CSRefine *refine = [[CSRefineType coverTypeRefineType]
+                                    refineWithValueName:result.name];
                 [refines addObject:refine];
             }
             
@@ -64,8 +65,8 @@
             }
             
             if (result) {
-                CSRefine *refine = [CSRefine refineWithTypeName:@"manufacturer"
-                                                      valueName:result.name];
+                CSRefine *refine = [[CSRefineType manufacturerRefineType]
+                                    refineWithValueName:result.name];
                 [refines addObject:refine];
             }
             
@@ -83,9 +84,8 @@
             }
             
             if (result) {
-                CSRefine *refine = [CSRefine
-                                    refineWithTypeName:@"software_platform"
-                                    valueName:result.name];
+                CSRefine *refine = [[CSRefineType softwarePlatformRefineType]
+                                    refineWithValueName:result.name];
                 [refines addObject:refine];
             }
             

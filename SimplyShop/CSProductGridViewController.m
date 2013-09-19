@@ -15,7 +15,7 @@
 #import "CSProductSearchState.h"
 #import "CSProductGridDataSource.h"
 #import "CSPlaceholderView.h"
-#import "CSRefineSelectionViewController.h"
+#import "CSRefineMenuViewController.h"
 #import "UIView+CSKeyboardAwareness.h"
 #import "CSRefineBarView.h"
 #import "CSRefineBarState.h"
@@ -23,7 +23,7 @@
 
 @interface CSProductGridViewController ()
 <CSSearchBarControllerDelegate,
-CSRefineSelectionViewControllerDelegate,
+CSRefineMenuViewControllerDelegate,
 CSRefineBarViewDelegate>
 
 @property (strong, nonatomic) id<CSProductList> products;
@@ -210,58 +210,23 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
-#pragma mark - CSRefineSelectionViewControllerDelegate
+#pragma mark - CSRefineMenuViewControllerDelegate
 
-- (id<CSNarrow>)selectedNarrow
-{
-    return nil;
-}
-
-- (void)getNarrows:(void (^)(id<CSNarrowList>, NSError *))callback
-{
-    [self.searchState.slice getAuthorNarrows:^(id<CSNarrowListPage> result,
-                                               NSError *error) {
-        if (error) {
-            callback(nil, error);
-            return;
-        }
-        
-        callback(result.narrowList, nil);
-    }];
-}
-
-- (void)didSelectNarrowAtIndex:(NSUInteger)index
+- (void)refineMenuViewController:(CSRefineMenuViewController *)controller
+                 didSelectNarrow:(id<CSNarrow>)narrow
 {
     [self.placeholderView showLoadingView];
     [self.popover dismissPopoverAnimated:YES];
     self.popover = nil;
-    [self.searchState.slice getAuthorNarrows:^(id<CSNarrowListPage> listPage,
-                                               NSError *error) {
+
+    [narrow getSlice:^(id<CSSlice> result, NSError *error) {
         if (error) {
-            // TODO: report error
+            [self.placeholderView showErrorView];
             return;
         }
         
-        [listPage.narrowList getNarrowAtIndex:index
-                                     callback:^(id<CSNarrow> narrow,
-                                                NSError *error)
-        {
-            if (error) {
-                // TODO: report error
-                return;
-            }
-            
-            [narrow getSlice:^(id<CSSlice> result, NSError *error) {
-                if (error) {
-                    // TODO: report error
-                    return;
-                }
-                
-                self.searchState = [self.searchState stateWithSlice:result];
-            }];
-        }];
+        self.searchState = [self.searchState stateWithSlice:result];
     }];
-
 }
 
 #pragma mark - CSRefineBarViewDelegate
@@ -274,9 +239,10 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         return;
     }
     
-    CSRefineSelectionViewController *content = [[CSRefineSelectionViewController alloc] initWithNibName:@"CSRefineSelectionViewController" bundle:nil];
-    content.selectionDelegate = self;
-    content.navigationItem.title = @"Author";
+    CSRefineMenuViewController *content = [[CSRefineMenuViewController alloc] initWithNibName:@"CSRefineMenuViewController" bundle:nil];
+    content.menuDelegate = self;
+    content.slice = self.searchState.slice;
+    content.navigationItem.title = @"Refine";
     
     UINavigationController *nav = [[UINavigationController alloc]
                                    initWithRootViewController:content];

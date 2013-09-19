@@ -123,6 +123,9 @@
 		BEC6563917E9B3400088070A /* RefineButtonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6563717E9B3400088070A /* RefineButtonBg@2x.png */; };
 		BEC6563C17E9C0E20088070A /* CSRefineMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6563B17E9C0E20088070A /* CSRefineMenuButton.m */; };
 		BEC6564017E9C0FC0088070A /* CSRefineRemoveButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6563F17E9C0FC0088070A /* CSRefineRemoveButton.m */; };
+		BEC6564417EAF7FE0088070A /* CSRefineMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6564217EAF7FE0088070A /* CSRefineMenuViewController.m */; };
+		BEC6564517EAF7FE0088070A /* CSRefineMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEC6564317EAF7FE0088070A /* CSRefineMenuViewController.xib */; };
+		BEC6564817EAFA720088070A /* CSRefineType.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6564717EAFA720088070A /* CSRefineType.m */; };
 		BEDC02D6171312BC0023059E /* CSProductSummaryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02D5171312BC0023059E /* CSProductSummaryCell.xib */; };
 		BEDC02D9171317A90023059E /* CSProductSummariesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDC02D8171317A90023059E /* CSProductSummariesCell.m */; };
 		BEDC02DB17144DB20023059E /* CSRetailerSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEDC02DA17144DB10023059E /* CSRetailerSelectionCell.xib */; };
@@ -320,6 +323,11 @@
 		BEC6563B17E9C0E20088070A /* CSRefineMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineMenuButton.m; sourceTree = "<group>"; };
 		BEC6563E17E9C0FC0088070A /* CSRefineRemoveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineRemoveButton.h; sourceTree = "<group>"; };
 		BEC6563F17E9C0FC0088070A /* CSRefineRemoveButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineRemoveButton.m; sourceTree = "<group>"; };
+		BEC6564117EAF7FE0088070A /* CSRefineMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineMenuViewController.h; sourceTree = "<group>"; };
+		BEC6564217EAF7FE0088070A /* CSRefineMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineMenuViewController.m; sourceTree = "<group>"; };
+		BEC6564317EAF7FE0088070A /* CSRefineMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSRefineMenuViewController.xib; sourceTree = "<group>"; };
+		BEC6564617EAFA720088070A /* CSRefineType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRefineType.h; sourceTree = "<group>"; };
+		BEC6564717EAFA720088070A /* CSRefineType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRefineType.m; sourceTree = "<group>"; };
 		BED98BC91716D361007E8A9C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BEDC02D5171312BC0023059E /* CSProductSummaryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSProductSummaryCell.xib; sourceTree = "<group>"; };
 		BEDC02D7171317A80023059E /* CSProductSummariesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSProductSummariesCell.h; sourceTree = "<group>"; };
@@ -572,6 +580,8 @@
 				BE029CC817E710BF002B8276 /* CSRefine.m */,
 				BE029CCA17E71111002B8276 /* CSRefineBarState.h */,
 				BE029CCB17E71111002B8276 /* CSRefineBarState.m */,
+				BEC6564617EAFA720088070A /* CSRefineType.h */,
+				BEC6564717EAFA720088070A /* CSRefineType.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -739,6 +749,9 @@
 				BEF627F617E3108C00B5AF6C /* CSRefineSelectionViewController.xib */,
 				BEF627F917E3148400B5AF6C /* CSNarrowCell.h */,
 				BEF627FA17E3148400B5AF6C /* CSNarrowCell.m */,
+				BEC6564117EAF7FE0088070A /* CSRefineMenuViewController.h */,
+				BEC6564217EAF7FE0088070A /* CSRefineMenuViewController.m */,
+				BEC6564317EAF7FE0088070A /* CSRefineMenuViewController.xib */,
 			);
 			name = Refine;
 			sourceTree = "<group>";
@@ -875,6 +888,7 @@
 				BEC6563217E9B0060088070A /* RefineBarBg@2x.png in Resources */,
 				BEC6563517E9B2AC0088070A /* RefineRemoveBg@2x.png in Resources */,
 				BEC6563817E9B3400088070A /* RefineButtonBg@2x.png in Resources */,
+				BEC6564517EAF7FE0088070A /* CSRefineMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,6 +1008,8 @@
 				BEC6561A17E8AB1E0088070A /* CSExplicitBlockOperation.m in Sources */,
 				BEC6563C17E9C0E20088070A /* CSRefineMenuButton.m in Sources */,
 				BEC6564017E9C0FC0088070A /* CSRefineRemoveButton.m in Sources */,
+				BEC6564417EAF7FE0088070A /* CSRefineMenuViewController.m in Sources */,
+				BEC6564817EAFA720088070A /* CSRefineType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
