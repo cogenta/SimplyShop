@@ -14,6 +14,7 @@
 @class CSPlaceholderView;
 @class CSProductGridDataSource;
 @class CSRefineBarView;
+@class CSRefineBarController;
 
 @interface CSProductGridViewController : UIViewController
 <UICollectionViewDelegate>
@@ -22,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet CSPlaceholderView *placeholderView;
 @property (strong, nonatomic) IBOutlet CSProductGridDataSource *dataSource;
 @property (strong, nonatomic) IBOutlet CSRefineBarView *refineBarView;
+@property (strong, nonatomic) IBOutlet CSRefineBarController *refineBarController;
 
 - (void)setProducts:(id<CSProductList>)products;
 

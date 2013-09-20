@@ -16,15 +16,16 @@
 #import "CSProductGridDataSource.h"
 #import "CSPlaceholderView.h"
 #import "CSRefineMenuViewController.h"
+#import "CSRefineBarView.h"
 #import "UIView+CSKeyboardAwareness.h"
 #import "CSRefineBarView.h"
 #import "CSRefineBarState.h"
 #import "CSRefine.h"
+#import "CSRefineBarController.h"
 
 @interface CSProductGridViewController ()
 <CSSearchBarControllerDelegate,
-CSRefineMenuViewControllerDelegate,
-CSRefineBarViewDelegate>
+CSRefineBarControllerDelegate>
 
 @property (strong, nonatomic) id<CSProductList> products;
 
@@ -115,18 +116,8 @@ CSRefineBarViewDelegate>
             return;
         }
         
-        [CSRefineBarState getRefineBarStateForSlice:self.searchState.slice
-                                           callback:^(CSRefineBarState *state,
-                                                      NSError *error)
-        {
-            if (error) {
-                [self.placeholderView showErrorView];
-                return;
-            }
-            
-            self.refineBarView.state = state;
-            self.products = products;
-        }];
+        self.refineBarController.slice = self.searchState.slice;
+        self.products = products;
     }];
     
     id formatter = [CSProductSearchStateTitleFormatter instance];
@@ -210,64 +201,27 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
-#pragma mark - CSRefineMenuViewControllerDelegate
+#pragma mark - CSRefineBarControllerDelegate
 
-- (void)refineMenuViewController:(CSRefineMenuViewController *)controller
-                 didSelectNarrow:(id<CSNarrow>)narrow
+- (void)refineBarController:(CSRefineBarController *)controller
+didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
 {
     [self.placeholderView showLoadingView];
-    [self.popover dismissPopoverAnimated:YES];
-    self.popover = nil;
-
-    [narrow getSlice:^(id<CSSlice> result, NSError *error) {
-        if (error) {
-            [self.placeholderView showErrorView];
-            return;
-        }
-        
-        self.searchState = [self.searchState stateWithSlice:result];
-    }];
 }
 
-#pragma mark - CSRefineBarViewDelegate
-
-- (void)refineBarView:(CSRefineBarView *)bar didRequestRefineMenu:(id)sender
+- (void)refineBarController:(CSRefineBarController *)controller
+           didFailWithError:(NSError *)error
+      loadingSliceForNarrow:(id<CSNarrow>)narrow
 {
-    if (self.popover.popoverVisible) {
-        [self.popover dismissPopoverAnimated:YES];
-        self.popover = nil;
-        return;
-    }
-    
-    CSRefineMenuViewController *content = [[CSRefineMenuViewController alloc] initWithNibName:@"CSRefineMenuViewController" bundle:nil];
-    content.menuDelegate = self;
-    content.slice = self.searchState.slice;
-    content.navigationItem.title = @"Refine";
-    
-    UINavigationController *nav = [[UINavigationController alloc]
-                                   initWithRootViewController:content];
-    self.popover = [[UIPopoverController alloc] initWithContentViewController:nav];
-    
-    UIView *senderView = (UIView *)sender;
-    [self.popover  presentPopoverFromRect:senderView.bounds
-                                   inView:senderView
-                permittedArrowDirections:UIPopoverArrowDirectionUp
-                                 animated:YES];
+    [self.placeholderView showErrorView];
 }
 
-- (void)refineBarView:(CSRefineBarView *)bar didSelectRemoval:(CSRefine *)refine
+- (void)refineBarController:(CSRefineBarController *)controller
+      didFinishLoadingSlice:(id<CSSlice>)slice
+                  forNarrow:(id<CSNarrow>)narrow
 {
-    [self.placeholderView showLoadingView];
-    [refine getSliceWithoutRefine:self.searchState.slice
-                         callback:^(id<CSSlice> result, NSError *error)
-    {
-        if (error) {
-            [self.placeholderView showErrorView];
-            return;
-        }
-        
-        self.searchState = [self.searchState stateWithSlice:result];
-    }];
+    self.searchState = [self.searchState stateWithSlice:slice];
 }
+
 
 @end
