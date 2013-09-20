@@ -11,6 +11,8 @@
 @class CSAPI;
 @class CSPlaceholderView;
 @class CSProductGridDataSource;
+@class CSRefineBarView;
+@class CSRefineBarController;
 @protocol CSSlice;
 @protocol CSNarrow;
 
@@ -18,6 +20,9 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UICollectionView *gridView;
+@property (strong, nonatomic) IBOutlet UIView *productGrid;
+@property (strong, nonatomic) IBOutlet CSRefineBarView *refineBarView;
+@property (strong, nonatomic) IBOutlet CSRefineBarController *refineController;
 @property (weak, nonatomic) IBOutlet CSPlaceholderView *placeholderView;
 @property (weak, nonatomic) IBOutlet CSProductGridDataSource *gridDataSource;
 

@@ -112,6 +112,7 @@ CSRefineMenuViewControllerDelegate>
              return;
          }
          
+         self.slice = result;
          [self.delegate refineBarController:self
                       didFinishLoadingSlice:result
                                   forNarrow:nil];

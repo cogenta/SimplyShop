@@ -68,7 +68,7 @@
     view.translatesAutoresizingMaskIntoConstraints = YES;
     view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                              | UIViewAutoresizingFlexibleHeight);
-    [self addSubview:view];
+    [self insertSubview:view atIndex:0];
     self.activeView = view;
 }
 
@@ -151,7 +151,6 @@
     [self.loadingView removeFromSuperview];
     self.loadingView = nil;
 }
-
 
 - (void)hideAllPlaceholderViews
 {

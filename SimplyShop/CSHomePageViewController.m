@@ -21,6 +21,8 @@
 #import "CSProductGridDataSource.h"
 #import "CSProductSearchState.h"
 #import "CSProductSearchStateTitleFormatter.h"
+#import "CSRefineBarView.h"
+#import "CSRefineBarController.h"
 
 @protocol CSHomePageRow <NSObject>
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView;
@@ -67,7 +69,8 @@
     CSSliceRetailersCellDelegate,
     CSProductSummariesCellDelegate,
     CSCategoriesCellDelegate,
-    UICollectionViewDelegate
+    UICollectionViewDelegate,
+    CSRefineBarControllerDelegate
 >
 
 @property (strong, nonatomic) CSProductSummariesCell *topProductsCell;
@@ -83,6 +86,8 @@
 
 @property (strong, nonatomic) id<CSCategory> category;
 @property (strong, nonatomic) id<CSRetailer> retailer;
+
+@property (strong, nonatomic) id<CSProductSearchState> searchState;
 
 // TODO: do we need categoryNarrows and retailerNarrows
 
@@ -225,8 +230,9 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
         [self.gridView reloadData];
         
         if (self.products.count) {
-            [self.placeholderView setContentView:self.gridView];
+            [self.placeholderView setContentView:self.productGrid];
             [self.placeholderView showContentView];
+            self.refineBarView.hidden = NO;
         } else if (self.products == nil) {
             [self.placeholderView showLoadingView];
         } else {
@@ -235,6 +241,7 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
     } else {
         [self.placeholderView setContentView:self.tableView];
         [self.placeholderView showContentView];
+        self.refineBarView.hidden = YES;
         [self.tableView reloadData];
     }
     
@@ -363,6 +370,8 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
             [self setErrorState];
             return;
         }
+        
+        self.refineController.slice = self.slice;
         
         [self loadSelectedRetailerURLs:^(BOOL success, NSError *error) {
             if ( ! success) {
@@ -631,13 +640,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     NSAssert(self.likeList, nil);
     NSAssert(self.group || self.category || self.retailer, nil);
     CSProductGridViewController *vc = (id) segue.destinationViewController;
-    id<CSProductSearchState> searchState = [CSProductSearchState
-                                            stateWithSlice:self.slice
-                                            retailer:self.retailer
-                                            category:self.category
-                                            likes:self.likeList
-                                            query:q];
-    vc.searchState = searchState;
+    self.searchState = [CSProductSearchState stateWithSlice:self.slice
+                                                   retailer:self.retailer
+                                                   category:self.category
+                                                      likes:self.likeList
+                                                      query:q];
+    vc.searchState = self.searchState;
     vc.dataSource.priceContext = [[CSPriceContext alloc]
                                   initWithLikeList:self.likeList];
 
@@ -818,6 +826,9 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
 - (void)productSummariesCellDidTapSeeAllButton:(CSProductSummariesCell *)cell
 {
+    UIView *v = [self.refineController performSelector:@selector(view)];
+    v.backgroundColor = [UIColor redColor];
+    
     [self performSegueWithIdentifier:@"showTopProductsGrid" sender:cell];
 }
 
@@ -907,25 +918,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.searchBarController.delegate = self;
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+- (void)loadSearchState:(id<CSProductSearchState>)searchState
 {
-    NSString *query = searchBar.text;
-    if ( ! [query length]) {
-        query = nil;
-    }
-    
-    if ( ! query) {
-        [self showContent];
-        return;
-    }
-    
-    id<CSProductSearchState> searchState = [CSProductSearchState
-                                            stateWithSlice:self.slice
-                                            retailer:self.retailer
-                                            category:self.category
-                                            likes:self.likeList
-                                            query:query];
-    
+    NSString *searchText = searchState.query;
     id formatter = [CSProductSearchStateTitleFormatter instance];
     self.navigationItem.title = [searchState titleWithFormatter:formatter];
     
@@ -948,12 +943,70 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         self.gridDataSource.products = products;
         [self.gridView reloadData];
         if (products.count) {
-            [self.placeholderView setContentView:self.gridView];
+            self.searchState = searchState;
+            [self.placeholderView setContentView:self.productGrid];
+            self.refineBarView.hidden = NO;
             [self.placeholderView showContentView];
         } else {
             [self.placeholderView showEmptyView];
+            self.refineBarView.hidden = NO;
         }
     }];
+
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSString *query = searchBar.text;
+    if ( ! [query length]) {
+        query = nil;
+    }
+    
+    if ( ! query) {
+        [self showContent];
+        return;
+    }
+    
+    id<CSProductSearchState> searchState = [CSProductSearchState
+                                            stateWithSlice:self.slice
+                                            retailer:self.retailer
+                                            category:self.category
+                                            likes:self.likeList
+                                            query:query];
+
+    [self loadSearchState:searchState];
+}
+
+#pragma mark - CSRefineBarControllerDelegate
+
+- (void)refineBarController:(CSRefineBarController *)controller
+didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
+{
+    [self.placeholderView showLoadingView];
+}
+
+- (void)refineBarController:(CSRefineBarController *)controller
+      didFinishLoadingSlice:(id<CSSlice>)slice
+                  forNarrow:(id<CSNarrow>)narrow
+{
+    id<CSProductSearchState> searchState;
+    if (self.searchState) {
+        searchState = [self.searchState stateWithSlice:slice];
+    } else {
+        searchState = [CSProductSearchState stateWithSlice:self.slice
+                                                  retailer:self.retailer
+                                                  category:self.category
+                                                     likes:self.likeList
+                                                     query:nil];
+    }
+    [self loadSearchState:searchState];
+}
+
+- (void)refineBarController:(CSRefineBarController *)controller
+           didFailWithError:(NSError *)error
+      loadingSliceForNarrow:(id<CSNarrow>)narrow
+{
+    [self.placeholderView showEmptyView];
 }
 
 @end
