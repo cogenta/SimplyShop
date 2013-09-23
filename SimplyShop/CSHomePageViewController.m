@@ -299,7 +299,7 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
             }
             
             if (firstPage.count < 3) {
-                [self performSegueWithIdentifier:@"changeRetailerSelection"
+                [self performSegueWithIdentifier:@"showRetailerSelection"
                                           sender:self];
             }
         }];
