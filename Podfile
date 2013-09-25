@@ -1,13 +1,9 @@
 platform :ios, '6.0'
-pod 'CSApi', :path => '../CSApi/'
+pod 'CSApi'
 pod 'MBCategory'
 pod 'SDWebImage'
-pod 'PBWebViewController',
-    :git => 'git://github.com/wharris/PBWebViewController.git',
-    :branch => 'dismiss-popover'
-pod 'ARChromeActivity',
-    :git => 'git://github.com/wharris/ARChromeActivity.git',
-    :branch => 'set-activity-title'
+pod 'PBWebViewController'
+pod 'ARChromeActivity'
 pod 'TUSafariActivity'
 
 post_install do | installer |
