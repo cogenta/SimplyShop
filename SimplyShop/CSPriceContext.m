@@ -8,6 +8,7 @@
 
 #import "CSPriceContext.h"
 #import <NSArray+Functional/NSArray+Functional.h>
+#import "CSExplicitBlockOperation.h"
 
 @interface NSMutableArray (CSExpand)
 - (void)putObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
@@ -26,24 +27,16 @@
 
 @end
 
-dispatch_queue_t
-CSPriceContext_best_price_queue() {
-    static dispatch_queue_t q = NULL;
-    if (q) {
-        return q;
-    }
-    
-    q = dispatch_queue_create("com.cogenta.CSPriceContext.best_price_queue",
-                              NULL);
-    return q;
-}
-
 @interface CSPriceContext ()
 
 - (void)allPrices:(id<CSPriceList>)prices
          callback:(void (^)(NSArray *))callback;
-- (void)allLikes:(id<CSLikeList>)likes
-        callback:(void (^)(NSArray *))callback;
+- (void)allLikes:(void (^)(NSArray *))callback;
+
+- (void)allItemsInListWithCount:(NSUInteger)count
+                         getter:(void (^)(NSUInteger index,
+                                          void (^got)(id item)))getter
+                       callback:(void (^)(NSArray *))callback;
 
 @end
 
@@ -72,7 +65,7 @@ CSPriceContext_best_price_queue() {
         return;
     }
     
-    [self allLikes:self.likeList callback:^(NSArray *likesArray) {
+    [self allLikes:^(NSArray *likesArray) {
         NSArray *likedURLsArray = [likesArray mapUsingBlock:^id(id obj) {
             if ([obj respondsToSelector:@selector(likedURL)]) {
                 return [obj likedURL];
@@ -83,44 +76,42 @@ CSPriceContext_best_price_queue() {
         
         NSSet *likedURLs = [NSSet setWithArray:likedURLsArray];
         [self allPrices:prices callback:^(NSArray *priceArray) {
-            dispatch_async(CSPriceContext_best_price_queue(), ^{
-                id<CSPrice> bestPrice = nil;
-                BOOL bestPriceLiked = NO;
-                for (id<CSPrice> price in priceArray) {
-                    if ([self.retailer.URL isEqual:price.retailerURL]) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            callback(price);
-                        });
-                        return;
-                    }
-                    BOOL liked = [likedURLs containsObject:price.retailerURL];
-                    if ( ! bestPrice) {
-                        bestPrice = price;
-                        bestPriceLiked = liked;
-                        continue;
-                    }
-                    
-                    if (liked && ! bestPriceLiked) {
-                        bestPrice = price;
-                        bestPriceLiked = liked;
-                        continue;
-                    }
-                    
-                    if (bestPriceLiked && ! liked) {
-                        continue;
-                    }
-                    
-                    NSComparisonResult comparison = [[bestPrice effectivePrice]
-                                                     compare:[price effectivePrice]];
-                    if (comparison == NSOrderedDescending) {
-                        bestPrice = price;
-                        continue;
-                    }
+            id<CSPrice> bestPrice = nil;
+            BOOL bestPriceLiked = NO;
+            for (id<CSPrice> price in priceArray) {
+                if ([self.retailer.URL isEqual:price.retailerURL]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        callback(price);
+                    });
+                    return;
+                }
+                BOOL liked = [likedURLs containsObject:price.retailerURL];
+                if ( ! bestPrice) {
+                    bestPrice = price;
+                    bestPriceLiked = liked;
+                    continue;
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    callback(bestPrice);
-                });
+                if (liked && ! bestPriceLiked) {
+                    bestPrice = price;
+                    bestPriceLiked = liked;
+                    continue;
+                }
+                
+                if (bestPriceLiked && ! liked) {
+                    continue;
+                }
+                
+                NSComparisonResult comparison = [[bestPrice effectivePrice]
+                                                 compare:[price effectivePrice]];
+                if (comparison == NSOrderedDescending) {
+                    bestPrice = price;
+                    continue;
+                }
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                callback(bestPrice);
             });
         }];
     }];
@@ -128,6 +119,20 @@ CSPriceContext_best_price_queue() {
 
 - (void)allPrices:(id<CSPriceList>)prices callback:(void (^)(NSArray *))callback
 {
+    [self allItemsInListWithCount:[prices count]
+                           getter:^(NSUInteger index, void (^got)(id item)) {
+        [prices getPriceAtIndex:index callback:^(id<CSPrice> result,
+                                                 NSError *error) {
+            if (error) {
+                got(error);
+            } else {
+                got(result);
+            }
+        }];
+    } callback:callback];
+
+    return;
+    
     NSUInteger count = [prices count];
     if (count == 0) {
         callback([NSArray array]);
@@ -139,61 +144,82 @@ CSPriceContext_best_price_queue() {
     NSMutableArray *results = [[NSMutableArray alloc] initWithCapacity:count];
     
     for (NSUInteger i = 0; i < count; ++i) {
-        dispatch_async(CSPriceContext_best_price_queue(), ^{
-            [prices getPriceAtIndex:i callback:^(id<CSPrice> result,
-                                                 NSError *error) {
-                if (error) {
-                    [results putObject:error atIndexedSubscript:i];
-                } else {
-                    [results putObject:result atIndexedSubscript:i];
-                }
-                
-                pricesLeft--;
-                
-                if ( ! pricesLeft) {
-                    callback([NSArray arrayWithArray:results]);
-                }
-            }];
-        });
-    }
-}
-
-
-- (void)allLikes:(id<CSLikeList>)likes callback:(void (^)(NSArray *))callback
-{
-    NSUInteger count = [likes count];
-    if (count == 0) {
-        callback([NSArray array]);
-        return;
-    }
-    
-    __block NSUInteger likesLeft = count;
-    
-    NSMutableArray *results = [[NSMutableArray alloc] initWithCapacity:count];
-    
-    for (NSUInteger i = 0; i < count; ++i) {
-        [likes getLikeAtIndex:i callback:^(id<CSLike> result,
-                                           NSError *error) {
+        [prices getPriceAtIndex:i callback:^(id<CSPrice> result,
+                                             NSError *error) {
             if (error) {
                 [results putObject:error atIndexedSubscript:i];
             } else {
                 [results putObject:result atIndexedSubscript:i];
             }
             
-            likesLeft--;
+            pricesLeft--;
             
-            if ( ! likesLeft) {
+            if ( ! pricesLeft) {
                 callback([NSArray arrayWithArray:results]);
             }
         }];
     }
 }
 
+- (void)allLikes:(void (^)(NSArray *))callback
+{
+    [self allItemsInListWithCount:[_likeList count]
+                           getter:^(NSUInteger index, void (^got)(id item)) {
+        [_likeList getLikeAtIndex:index callback:^(id<CSLike> result,
+                                                   NSError *error) {
+            if (error) {
+                got(error);
+            } else {
+                got(result);
+            }
+        }];
+    } callback:callback];
+}
+
+- (void)allItemsInListWithCount:(NSUInteger)count
+                         getter:(void (^)(NSUInteger index,
+                                          void (^got)(id item)))getter
+                       callback:(void (^)(NSArray *))callback
+{
+    if (count == 0) {
+        callback([NSArray array]);
+        return;
+    }
+    
+    NSMutableArray *results = [[NSMutableArray alloc] initWithCapacity:count];
+    
+    NSOperation *returnOp = [NSBlockOperation blockOperationWithBlock:^{
+        callback([NSArray arrayWithArray:results]);
+    }];
+    
+    NSOperationQueue *q = [[NSOperationQueue alloc] init];
+    q.maxConcurrentOperationCount = count;
+    
+    NSOperationQueue *syncResultsQueue = [[NSOperationQueue alloc] init];
+    syncResultsQueue.maxConcurrentOperationCount = 1;
+    
+    for (NSUInteger i = 0; i < count; ++i) {
+        NSOperation *itemOp = [CSExplicitBlockOperation operationWithBlock:^(void (^done)()) {
+            getter(i, ^(id item) {
+                NSOperation *putOp = [NSBlockOperation blockOperationWithBlock:^{
+                    [results putObject:item atIndexedSubscript:i];
+                    done();
+                }];
+                [syncResultsQueue addOperation:putOp];
+            });
+        }];
+        [returnOp addDependency:itemOp];
+        [q addOperation:itemOp];
+    }
+    
+    [q addOperation:returnOp];
+}
+
 - (void)sortAndFilterPrices:(id<CSPriceList>)prices
                       block:(BOOL(^)(id<CSPrice>price, NSSet *likedURLs))blk
                    callback:(void (^)(NSArray *, NSError *))callback
 {
-    [self allLikes:self.likeList callback:^(NSArray *likesArray) {
+    [self allLikes:^(NSArray *likesArray) {
         NSArray *likedURLsArray = [likesArray mapUsingBlock:^id(id obj) {
             if ([obj respondsToSelector:@selector(likedURL)]) {
                 return [obj likedURL];
@@ -228,7 +254,11 @@ CSPriceContext_best_price_queue() {
                         block:^BOOL(id<CSPrice> price, NSSet *likedURLs)
     {
         return [likedURLs containsObject:price.retailerURL];
-    } callback:callback];
+    } callback:^(NSArray *result, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback(result, error);
+        });
+    }];
 }
 
 - (void)getOtherPrices:(id<CSPriceList>)prices
@@ -238,7 +268,11 @@ CSPriceContext_best_price_queue() {
                         block:^BOOL(id<CSPrice> price, NSSet *likedURLs)
      {
          return ! [likedURLs containsObject:price.retailerURL];
-     } callback:callback];
+     } callback:^(NSArray *result, NSError *error) {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             callback(result, error);
+         });
+     }];
 }
 
 @end
