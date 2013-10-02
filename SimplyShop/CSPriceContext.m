@@ -74,8 +74,13 @@ CSPriceContext_best_price_queue() {
     
     [self allLikes:self.likeList callback:^(NSArray *likesArray) {
         NSArray *likedURLsArray = [likesArray mapUsingBlock:^id(id obj) {
-            return [obj likedURL];
+            if ([obj respondsToSelector:@selector(likedURL)]) {
+                return [obj likedURL];
+            } else {
+                return [NSNull null];
+            }
         }];
+        
         NSSet *likedURLs = [NSSet setWithArray:likedURLsArray];
         [self allPrices:prices callback:^(NSArray *priceArray) {
             dispatch_async(CSPriceContext_best_price_queue(), ^{
@@ -190,7 +195,11 @@ CSPriceContext_best_price_queue() {
 {
     [self allLikes:self.likeList callback:^(NSArray *likesArray) {
         NSArray *likedURLsArray = [likesArray mapUsingBlock:^id(id obj) {
-            return [obj likedURL];
+            if ([obj respondsToSelector:@selector(likedURL)]) {
+                return [obj likedURL];
+            } else {
+                return [NSNull null];
+            }
         }];
         NSSet *likedURLs = [NSSet setWithArray:likedURLsArray];
         [self allPrices:prices callback:^(NSArray *prices) {
