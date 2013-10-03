@@ -647,7 +647,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                                                       query:q];
     vc.searchState = self.searchState;
     vc.dataSource.priceContext = [[CSPriceContext alloc]
-                                  initWithLikeList:self.likeList];
+                                  initWithLikeList:self.likeList
+                                  retailer:self.retailer];
 
 }
 
