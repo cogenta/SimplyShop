@@ -11,7 +11,7 @@
 #import "CSProductSearchStateTitleFormatter.h"
 #import "CSPriceContext.h"
 
-@interface CSProductSearchState ()
+@interface CSProductSearchState () <NSCoding>
 
 @property (readonly) id<CSRetailer> retailer;
 @property (readonly) id<CSCategory> category;
@@ -145,6 +145,28 @@
              [state.retailer.URL isEqual:self.retailer.URL]));
 }
 
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        _slice = [aDecoder decodeObjectForKey:@"slice"];
+        _retailer = [aDecoder decodeObjectForKey:@"retailer"];
+        _category = [aDecoder decodeObjectForKey:@"category"];
+        _likes = [aDecoder decodeObjectForKey:@"likes"];
+        _query = [aDecoder decodeObjectForKey:@"query"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.slice forKey:@"slice"];
+    [aCoder encodeObject:self.retailer forKey:@"retailer"]; //
+    [aCoder encodeObject:self.category forKey:@"category"]; //
+    [aCoder encodeObject:self.likes forKey:@"likes"]; //
+    [aCoder encodeObject:self.query forKey:@"query"];
+}
+
 @end
-
-

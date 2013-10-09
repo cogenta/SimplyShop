@@ -221,5 +221,18 @@ didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
     self.searchState = [self.searchState stateWithSlice:slice];
 }
 
+#pragma mark - Restoration
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.products forKey:@"products"];
+    [coder encodeObject:self.searchState forKey:@"searchState"];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    self.searchState = [coder decodeObjectForKey:@"searchState"];
+    self.products = [coder decodeObjectForKey:@"products"];
+}
 
 @end

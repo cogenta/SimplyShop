@@ -74,8 +74,6 @@
 >
 
 @property (strong, nonatomic) CSProductSummariesCell *topProductsCell;
-@property (strong, nonatomic) CSProductSummariesCell *categoryProductsCell;
-@property (strong, nonatomic) CSProductSummariesCell *retailerProductsCell;
 @property (strong, nonatomic) CSSliceRetailersCell *favoriteStoresCell;
 @property (strong, nonatomic) CSCategoriesCell *categoriesCell;
 @property (strong, nonatomic) NSArray *rows;
@@ -88,19 +86,6 @@
 @property (strong, nonatomic) id<CSRetailer> retailer;
 
 @property (strong, nonatomic) id<CSProductSearchState> searchState;
-
-// TODO: do we need categoryNarrows and retailerNarrows
-
-@property (strong, nonatomic) NSObject<CSProductList> *topProducts
-__attribute__((deprecated ("Use products instead")));
-@property (strong, nonatomic) NSObject<CSProductList> *categoryProducts
-__attribute__((deprecated ("Use products instead")));
-@property (strong, nonatomic) NSObject<CSProductList> *retailerProducts
-__attribute__((deprecated ("Use products instead")));
-@property (strong, nonatomic) NSObject<CSCategoryList> *categories
-__attribute__((deprecated ("Use categoryNarrows instead")));
-@property (strong, nonatomic) NSObject<CSRetailerList> *categoryRetailers
-__attribute__((deprecated ("Use retailerNarrows instead")));
 
 @property (strong, nonatomic) CSSearchBarController *searchBarController;
 @property (strong, nonatomic) id<CSAPIRequest> searchRequest;
@@ -131,6 +116,8 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 @property (strong, nonatomic) NSObject<CSUser> *user;
 - (void)loadUser:(void (^)(BOOL success, NSError *error))callback;
 
+@property (assign, nonatomic) BOOL wasPrepared;
+
 @end
 
 @implementation CSHomePageViewController
@@ -146,6 +133,10 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
 
 - (void)prepareRootDashboard
 {
+    if (self.wasPrepared) {
+        return;
+    }
+    
     BOOL isRoot = self.narrow == nil;
     
     self.topProductsCell = [[CSProductSummariesCell alloc]
@@ -166,6 +157,8 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
     self.categoriesCell.delegate = self;
     
     [self loadModel];
+    self.navigationItem.title = [self dashboardTitle];
+    self.wasPrepared = YES;
 }
 
 - (NSString *)dashboardTitle
@@ -195,15 +188,13 @@ __attribute__((deprecated ("Use retailerNarrows instead")));
     [self.placeholderView showLoadingView];
 
     [self addSearchToNavigationBar];
-    
-    [self prepareRootDashboard];
-    
-    self.navigationItem.title = [self dashboardTitle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self prepareRootDashboard];
+    
     if (self.rows) {
         [self.placeholderView showContentView];
     }
@@ -1008,6 +999,27 @@ didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
       loadingSliceForNarrow:(id<CSNarrow>)narrow
 {
     [self.placeholderView showEmptyView];
+}
+
+#pragma mark - Restoration
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super encodeRestorableStateWithCoder:coder];
+    [coder encodeObject:self.api forKey:@"api"];
+    [coder encodeObject:self.selectedRetailerURLs forKey:@"selectedRetailerURLs"];
+    [coder encodeObject:self.narrow forKey:@"narrow"];
+    [coder encodeObject:self.likeList forKey:@"likeList"];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+    self.api = [coder decodeObjectForKey:@"api"];
+    self.selectedRetailerURLs = [coder decodeObjectForKey:@"selectedRetailerURLs"];
+    self.narrow = [coder decodeObjectForKey:@"narrow"];
+    self.likeList = [coder decodeObjectForKey:@"likeList"];
+    [self prepareRootDashboard];
 }
 
 @end

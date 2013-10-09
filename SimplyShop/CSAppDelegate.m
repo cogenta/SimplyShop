@@ -32,16 +32,22 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [sharedCache removeAllCachedResponses];
     [NSURLCache setSharedURLCache:sharedCache];
     
-    api = [CSAPI apiWithBookmark:kAPIBookmark
-                        username:kAPIUsername
-                        password:kAPIPassword];
+    if ( ! api) {
+        api = [CSAPI apiWithBookmark:kAPIBookmark
+                            username:kAPIUsername
+                            password:kAPIPassword];
+    }
 
     [self.theme apply];
 
-    self.window = [[UIWindow alloc]
-                   initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor blackColor];
     
+    if (self.window.rootViewController) {
+        UINavigationController *nav = (id) self.window.rootViewController;
+        CSHomePageViewController *top = (id) nav.topViewController;
+        top.api = self.api;
+        return YES;
+    }
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard"
                                                          bundle:nil];
     UINavigationController *nav = [storyboard instantiateInitialViewController];
@@ -58,6 +64,41 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (NSObject<CSTheme> *)theme
 {
     return [[CSSimplyShopTheme alloc] init];
+}
+
+#pragma mark - Restoration
+
+#define kAppVersionRestorationKey @"com.cogenta.restoration.app_version"
+#define kAPIRestorationKey @"com.cogenta.restoration.api"
+
+- (BOOL)application:(UIApplication *)application
+shouldSaveApplicationState:(NSCoder *)coder
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *version = infoDictionary[(NSString *) kCFBundleVersionKey];
+    
+    [coder encodeObject:version forKey:kAppVersionRestorationKey];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application
+shouldRestoreApplicationState:(NSCoder *)coder
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *version = infoDictionary[(NSString *) kCFBundleVersionKey];
+
+    NSString *savedVersion = [coder decodeObjectForKey:kAppVersionRestorationKey];
+    return [version isEqualToString:savedVersion];
+}
+
+- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    api = [coder decodeObjectForKey:kAPIRestorationKey];
+}
+
+- (void)application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:api forKey:kAPIRestorationKey];
 }
 
 @end
