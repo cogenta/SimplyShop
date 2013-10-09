@@ -225,14 +225,14 @@ didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
 
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:self.products forKey:@"products"];
+    [super encodeRestorableStateWithCoder:coder];
     [coder encodeObject:self.searchState forKey:@"searchState"];
 }
 
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder
 {
+    [super decodeRestorableStateWithCoder:coder];
     self.searchState = [coder decodeObjectForKey:@"searchState"];
-    self.products = [coder decodeObjectForKey:@"products"];
 }
 
 @end

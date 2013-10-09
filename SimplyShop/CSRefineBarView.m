@@ -79,7 +79,7 @@ const static CGFloat kButtonGap = 9.0;
     }
     
     self.loading = YES;
-    [self addSubview:self.loadingView];
+    [self insertSubview:self.loadingView belowSubview:self.loadedView];
     self.hiddenView = self.loadedView;
     [self.loadedView removeFromSuperview];
 }
@@ -91,7 +91,7 @@ const static CGFloat kButtonGap = 9.0;
     }
     
     self.loading = NO;
-    [self addSubview:self.loadedView];
+    [self insertSubview:self.loadedView belowSubview:self.loadingView];
     self.hiddenView = self.loadingView;
     [self.loadingView removeFromSuperview];
 }

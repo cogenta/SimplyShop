@@ -44,8 +44,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     if (self.window.rootViewController) {
         UINavigationController *nav = (id) self.window.rootViewController;
-        CSHomePageViewController *top = (id) nav.topViewController;
-        top.api = self.api;
+        NSArray *viewControllers = nav.viewControllers;
+        if ( ! [viewControllers count]) {
+            return YES;
+        }
+        
+        CSHomePageViewController *bottom = viewControllers[0];
+        bottom.api = self.api;
         return YES;
     }
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard"
