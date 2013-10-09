@@ -223,6 +223,7 @@
         if (self.products.count) {
             [self.placeholderView setContentView:self.productGrid];
             [self.placeholderView showContentView];
+            self.refineController.slice = self.slice;
             self.refineBarView.hidden = NO;
         } else if (self.products == nil) {
             [self.placeholderView showLoadingView];
@@ -292,17 +293,19 @@
             if (firstPage.count < 3) {
                 [self performSegueWithIdentifier:@"showRetailerSelection"
                                           sender:self];
-            }
-        }];
-        
-        [self.group getSlice:^(id<CSSlice> slice, NSError *error) {
-            if (error) {
-                callback(NO, error);
                 return;
             }
             
-            self.slice = slice;
-            callback(YES, nil);
+            
+            [self.group getSlice:^(id<CSSlice> slice, NSError *error) {
+                if (error) {
+                    callback(NO, error);
+                    return;
+                }
+                
+                self.slice = slice;
+                callback(YES, nil);
+            }];
         }];
     }];
 }
@@ -912,6 +915,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)loadSearchState:(id<CSProductSearchState>)searchState
 {
+    self.slice = searchState.slice;
     NSString *searchText = searchState.query;
     id formatter = [CSProductSearchStateTitleFormatter instance];
     self.navigationItem.title = [searchState titleWithFormatter:formatter];
@@ -934,14 +938,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         
         self.gridDataSource.products = products;
         [self.gridView reloadData];
+        self.refineController.slice = self.slice;
+        self.refineBarView.hidden = NO;
+        self.searchState = searchState;
         if (products.count) {
-            self.searchState = searchState;
             [self.placeholderView setContentView:self.productGrid];
-            self.refineBarView.hidden = NO;
             [self.placeholderView showContentView];
         } else {
             [self.placeholderView showEmptyView];
-            self.refineBarView.hidden = NO;
         }
     }];
 
@@ -985,7 +989,7 @@ didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
     if (self.searchState) {
         searchState = [self.searchState stateWithSlice:slice];
     } else {
-        searchState = [CSProductSearchState stateWithSlice:self.slice
+        searchState = [CSProductSearchState stateWithSlice:slice
                                                   retailer:self.retailer
                                                   category:self.category
                                                      likes:self.likeList
@@ -1007,8 +1011,10 @@ didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
 {
     [super encodeRestorableStateWithCoder:coder];
     [coder encodeObject:self.api forKey:@"api"];
-    [coder encodeObject:self.selectedRetailerURLs forKey:@"selectedRetailerURLs"];
+    [coder encodeObject:self.slice forKey:@"slice"];
     [coder encodeObject:self.narrow forKey:@"narrow"];
+    
+    [coder encodeObject:self.selectedRetailerURLs forKey:@"selectedRetailerURLs"];
     [coder encodeObject:self.likeList forKey:@"likeList"];
 }
 
@@ -1016,8 +1022,10 @@ didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
 {
     [super decodeRestorableStateWithCoder:coder];
     self.api = [coder decodeObjectForKey:@"api"];
-    self.selectedRetailerURLs = [coder decodeObjectForKey:@"selectedRetailerURLs"];
+    self.slice = [coder decodeObjectForKey:@"slice"];
     self.narrow = [coder decodeObjectForKey:@"narrow"];
+    
+    self.selectedRetailerURLs = [coder decodeObjectForKey:@"selectedRetailerURLs"];
     self.likeList = [coder decodeObjectForKey:@"likeList"];
     [self prepareRootDashboard];
 }
