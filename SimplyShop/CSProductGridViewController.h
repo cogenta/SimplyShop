@@ -24,8 +24,6 @@
 @property (strong, nonatomic) IBOutlet CSProductGridDataSource *dataSource;
 @property (strong, nonatomic) IBOutlet CSRefineBarController *refineBarController;
 
-- (void)setProducts:(id<CSProductList>)products;
-
 @property (strong, nonatomic) id<CSProductSearchState> searchState;
 
 - (IBAction)doneShowProduct:(UIStoryboardSegue *)segue;
