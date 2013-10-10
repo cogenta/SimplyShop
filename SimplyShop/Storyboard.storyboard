@@ -509,7 +509,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BigX@2x.png" width="51" height="51"/>
+        <image name="BigX@2x.png" width="52" height="52"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
