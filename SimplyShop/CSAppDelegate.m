@@ -10,6 +10,8 @@
 #import "CSSimplyShopTheme.h"
 #import <CSApi/CSAPI.h>
 #import "CSHomePageViewController.h"
+#import <MBCategory/MBCategory.h>
+
 
 #define kAPIBookmark @"http://192.168.1.16:5000/apps/5166c038704679e1be1b2c6e"
 #define kAPIUsername @"224f32de-b1df-4bc7-9ef5-c71d8d9c7349"
@@ -40,6 +42,15 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
     [self.theme apply];
 
+    
+#ifdef LAUNCHIMAGE
+    UINavigationController *nav = [[UINavigationController alloc]
+                                   initWithRootViewController:nil];
+    self.window.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5"];
+    self.window.rootViewController = nav;
+    return YES;
+    
+#else
     self.window.backgroundColor = [UIColor blackColor];
     
     if (self.window.rootViewController) {
@@ -64,6 +75,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [self.window makeKeyAndVisible];
     
     return YES;
+#endif
 }
 
 - (NSObject<CSTheme> *)theme

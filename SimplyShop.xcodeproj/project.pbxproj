@@ -32,9 +32,6 @@
 		BE3D4DDB170331AA00644AD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4DD9170331AA00644AD6 /* InfoPlist.strings */; };
 		BE3D4DDD170331AA00644AD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4DDC170331AA00644AD6 /* main.m */; };
 		BE3D4DE1170331AA00644AD6 /* CSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3D4DE0170331AA00644AD6 /* CSAppDelegate.m */; };
-		BE3D4DE3170331AA00644AD6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4DE2170331AA00644AD6 /* Default.png */; };
-		BE3D4DE5170331AA00644AD6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4DE4170331AA00644AD6 /* Default@2x.png */; };
-		BE3D4DE7170331AA00644AD6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE3D4DE6170331AA00644AD6 /* Default-568h@2x.png */; };
 		BE3D4DEF170331AA00644AD6 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DEE170331AA00644AD6 /* SenTestingKit.framework */; };
 		BE3D4DF0170331AA00644AD6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD0170331AA00644AD6 /* UIKit.framework */; };
 		BE3D4DF1170331AA00644AD6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3D4DD2170331AA00644AD6 /* Foundation.framework */; };
@@ -129,6 +126,10 @@
 		BEAA82741807044B00D99CC9 /* BigRetailerBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA825E1807044900D99CC9 /* BigRetailerBackground.png */; };
 		BEAA82751807044B00D99CC9 /* BackButtonNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA825F1807044900D99CC9 /* BackButtonNormal.png */; };
 		BEAA82761807044B00D99CC9 /* AllPricesBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82601807044A00D99CC9 /* AllPricesBg.png */; };
+		BEAA828A18070E4800D99CC9 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA828918070E4800D99CC9 /* Default-Portrait~ipad.png */; };
+		BEAA828C18070E5E00D99CC9 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA828B18070E5E00D99CC9 /* Default-Portrait@2x~ipad.png */; };
+		BEAA828E18070E6B00D99CC9 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA828D18070E6B00D99CC9 /* Default-Landscape~ipad.png */; };
+		BEAA829018070E7D00D99CC9 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA828F18070E7D00D99CC9 /* Default-Landscape@2x~ipad.png */; };
 		BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E1E1768725800081E33 /* CSRetailersCell.m */; };
 		BEC1E2B7173BCFD400D12EF2 /* CSProductWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */; };
 		BEC1E2BD173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2BC173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m */; };
@@ -217,9 +218,6 @@
 		BE3D4DDE170331AA00644AD6 /* SimplyShop-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimplyShop-Prefix.pch"; sourceTree = "<group>"; };
 		BE3D4DDF170331AA00644AD6 /* CSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSAppDelegate.h; sourceTree = "<group>"; };
 		BE3D4DE0170331AA00644AD6 /* CSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSAppDelegate.m; sourceTree = "<group>"; };
-		BE3D4DE2170331AA00644AD6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		BE3D4DE4170331AA00644AD6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		BE3D4DE6170331AA00644AD6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BE3D4DED170331AA00644AD6 /* SimplyShopTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimplyShopTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3D4DEE170331AA00644AD6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BE3D4DF6170331AA00644AD6 /* SimplyShopTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimplyShopTests-Info.plist"; sourceTree = "<group>"; };
@@ -351,6 +349,10 @@
 		BEAA825E1807044900D99CC9 /* BigRetailerBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BigRetailerBackground.png; sourceTree = "<group>"; };
 		BEAA825F1807044900D99CC9 /* BackButtonNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackButtonNormal.png; sourceTree = "<group>"; };
 		BEAA82601807044A00D99CC9 /* AllPricesBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AllPricesBg.png; sourceTree = "<group>"; };
+		BEAA828918070E4800D99CC9 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "../Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		BEAA828B18070E5E00D99CC9 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		BEAA828D18070E6B00D99CC9 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		BEAA828F18070E7D00D99CC9 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		BEB28E1D1768725800081E33 /* CSRetailersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailersCell.h; sourceTree = "<group>"; };
 		BEB28E1E1768725800081E33 /* CSRetailersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailersCell.m; sourceTree = "<group>"; };
 		BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductWrapperTests.m; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 		BE3D4DD7170331AA00644AD6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BEAA829118070F8700D99CC9 /* Launch */,
 				BEF2CF79174A37C800EDEDA3 /* Icons */,
 				BE3D4E161703719200644AD6 /* Podfile */,
 				C59BE071388B42FB9540159A /* Pods.xcconfig */,
@@ -509,9 +512,6 @@
 				BE3D4DD9170331AA00644AD6 /* InfoPlist.strings */,
 				BE3D4DDC170331AA00644AD6 /* main.m */,
 				BE3D4DDE170331AA00644AD6 /* SimplyShop-Prefix.pch */,
-				BE3D4DE2170331AA00644AD6 /* Default.png */,
-				BE3D4DE4170331AA00644AD6 /* Default@2x.png */,
-				BE3D4DE6170331AA00644AD6 /* Default-568h@2x.png */,
 				BEC1E2E617427F7000D12EF2 /* Settings.bundle */,
 			);
 			name = "Supporting Files";
@@ -735,6 +735,17 @@
 			name = Product;
 			sourceTree = "<group>";
 		};
+		BEAA829118070F8700D99CC9 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				BEAA828F18070E7D00D99CC9 /* Default-Landscape@2x~ipad.png */,
+				BEAA828D18070E6B00D99CC9 /* Default-Landscape~ipad.png */,
+				BEAA828B18070E5E00D99CC9 /* Default-Portrait@2x~ipad.png */,
+				BEAA828918070E4800D99CC9 /* Default-Portrait~ipad.png */,
+			);
+			name = Launch;
+			sourceTree = "<group>";
+		};
 		BEB28E201768725F00081E33 /* Retailers */ = {
 			isa = PBXGroup;
 			children = (
@@ -908,9 +919,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE3D4DDB170331AA00644AD6 /* InfoPlist.strings in Resources */,
-				BE3D4DE3170331AA00644AD6 /* Default.png in Resources */,
-				BE3D4DE5170331AA00644AD6 /* Default@2x.png in Resources */,
-				BE3D4DE7170331AA00644AD6 /* Default-568h@2x.png in Resources */,
 				BE3D4E061703361800644AD6 /* Storyboard.storyboard in Resources */,
 				BE3D4E1317036D5700644AD6 /* BackButtonNormal@2x.png in Resources */,
 				BE3D4E1417036D5700644AD6 /* ButtonNormal@2x.png in Resources */,
@@ -990,6 +998,10 @@
 				BEAA82741807044B00D99CC9 /* BigRetailerBackground.png in Resources */,
 				BEAA82751807044B00D99CC9 /* BackButtonNormal.png in Resources */,
 				BEAA82761807044B00D99CC9 /* AllPricesBg.png in Resources */,
+				BEAA828A18070E4800D99CC9 /* Default-Portrait~ipad.png in Resources */,
+				BEAA828C18070E5E00D99CC9 /* Default-Portrait@2x~ipad.png in Resources */,
+				BEAA828E18070E6B00D99CC9 /* Default-Landscape~ipad.png in Resources */,
+				BEAA829018070E7D00D99CC9 /* Default-Landscape@2x~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
