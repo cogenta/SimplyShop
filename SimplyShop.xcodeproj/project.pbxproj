@@ -105,6 +105,30 @@
 		BE922C9F179FE70C00448365 /* UIView+CSKeyboardAwareness.m in Sources */ = {isa = PBXBuildFile; fileRef = BE922C9E179FE70C00448365 /* UIView+CSKeyboardAwareness.m */; };
 		BEA6DA37170EDD82001AC881 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA6DA36170EDD82001AC881 /* QuartzCore.framework */; };
 		BEA6DA3A170EE8C6001AC881 /* CSRoundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */; };
+		BEAA82481806FD1A00D99CC9 /* BigX.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82471806FD1A00D99CC9 /* BigX.png */; };
+		BEAA824A1806FDA400D99CC9 /* RefineButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82491806FDA400D99CC9 /* RefineButtonBg.png */; };
+		BEAA82611807044B00D99CC9 /* TitleBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA824B1807043A00D99CC9 /* TitleBarBg.png */; };
+		BEAA82621807044B00D99CC9 /* TileBackgroundSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA824C1807043B00D99CC9 /* TileBackgroundSelected.png */; };
+		BEAA82631807044B00D99CC9 /* TileBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA824D1807043C00D99CC9 /* TileBackground.png */; };
+		BEAA82641807044B00D99CC9 /* TabUnderline.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA824E1807043D00D99CC9 /* TabUnderline.png */; };
+		BEAA82651807044B00D99CC9 /* TabBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA824F1807043D00D99CC9 /* TabBottom.png */; };
+		BEAA82661807044B00D99CC9 /* TabArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82501807043E00D99CC9 /* TabArrow.png */; };
+		BEAA82671807044B00D99CC9 /* SelectedTabBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82511807043F00D99CC9 /* SelectedTabBg.png */; };
+		BEAA82681807044B00D99CC9 /* RefineRemoveBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82521807044000D99CC9 /* RefineRemoveBg.png */; };
+		BEAA82691807044B00D99CC9 /* RefineBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82531807044200D99CC9 /* RefineBarBg.png */; };
+		BEAA826A1807044B00D99CC9 /* ProductRightBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82541807044200D99CC9 /* ProductRightBg.png */; };
+		BEAA826B1807044B00D99CC9 /* NoStockBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82551807044300D99CC9 /* NoStockBg.png */; };
+		BEAA826C1807044B00D99CC9 /* NavigationBarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82561807044400D99CC9 /* NavigationBarBackground.png */; };
+		BEAA826D1807044B00D99CC9 /* InStockBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82571807044400D99CC9 /* InStockBg.png */; };
+		BEAA826E1807044B00D99CC9 /* GalleryFooter.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82581807044500D99CC9 /* GalleryFooter.png */; };
+		BEAA826F1807044B00D99CC9 /* GalleryBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82591807044600D99CC9 /* GalleryBg.png */; };
+		BEAA82701807044B00D99CC9 /* CallToAction.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA825A1807044600D99CC9 /* CallToAction.png */; };
+		BEAA82711807044B00D99CC9 /* ButtonNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA825B1807044700D99CC9 /* ButtonNormal.png */; };
+		BEAA82721807044B00D99CC9 /* ButtonDone.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA825C1807044800D99CC9 /* ButtonDone.png */; };
+		BEAA82731807044B00D99CC9 /* ButtonBuyNow.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA825D1807044800D99CC9 /* ButtonBuyNow.png */; };
+		BEAA82741807044B00D99CC9 /* BigRetailerBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA825E1807044900D99CC9 /* BigRetailerBackground.png */; };
+		BEAA82751807044B00D99CC9 /* BackButtonNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA825F1807044900D99CC9 /* BackButtonNormal.png */; };
+		BEAA82761807044B00D99CC9 /* AllPricesBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAA82601807044A00D99CC9 /* AllPricesBg.png */; };
 		BEB28E1F1768725800081E33 /* CSRetailersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB28E1E1768725800081E33 /* CSRetailersCell.m */; };
 		BEC1E2B7173BCFD400D12EF2 /* CSProductWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */; };
 		BEC1E2BD173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E2BC173BE02200D12EF2 /* SenTestCase+CSAsyncTestCase.m */; };
@@ -303,6 +327,30 @@
 		BEA6DA36170EDD82001AC881 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BEA6DA38170EE8C6001AC881 /* CSRoundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRoundImageView.h; sourceTree = "<group>"; };
 		BEA6DA39170EE8C6001AC881 /* CSRoundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRoundImageView.m; sourceTree = "<group>"; };
+		BEAA82471806FD1A00D99CC9 /* BigX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BigX.png; sourceTree = "<group>"; };
+		BEAA82491806FDA400D99CC9 /* RefineButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RefineButtonBg.png; sourceTree = "<group>"; };
+		BEAA824B1807043A00D99CC9 /* TitleBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitleBarBg.png; sourceTree = "<group>"; };
+		BEAA824C1807043B00D99CC9 /* TileBackgroundSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TileBackgroundSelected.png; sourceTree = "<group>"; };
+		BEAA824D1807043C00D99CC9 /* TileBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TileBackground.png; sourceTree = "<group>"; };
+		BEAA824E1807043D00D99CC9 /* TabUnderline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabUnderline.png; sourceTree = "<group>"; };
+		BEAA824F1807043D00D99CC9 /* TabBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabBottom.png; sourceTree = "<group>"; };
+		BEAA82501807043E00D99CC9 /* TabArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabArrow.png; sourceTree = "<group>"; };
+		BEAA82511807043F00D99CC9 /* SelectedTabBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SelectedTabBg.png; sourceTree = "<group>"; };
+		BEAA82521807044000D99CC9 /* RefineRemoveBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RefineRemoveBg.png; sourceTree = "<group>"; };
+		BEAA82531807044200D99CC9 /* RefineBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RefineBarBg.png; sourceTree = "<group>"; };
+		BEAA82541807044200D99CC9 /* ProductRightBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ProductRightBg.png; sourceTree = "<group>"; };
+		BEAA82551807044300D99CC9 /* NoStockBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NoStockBg.png; sourceTree = "<group>"; };
+		BEAA82561807044400D99CC9 /* NavigationBarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavigationBarBackground.png; sourceTree = "<group>"; };
+		BEAA82571807044400D99CC9 /* InStockBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = InStockBg.png; sourceTree = "<group>"; };
+		BEAA82581807044500D99CC9 /* GalleryFooter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GalleryFooter.png; sourceTree = "<group>"; };
+		BEAA82591807044600D99CC9 /* GalleryBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GalleryBg.png; sourceTree = "<group>"; };
+		BEAA825A1807044600D99CC9 /* CallToAction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CallToAction.png; sourceTree = "<group>"; };
+		BEAA825B1807044700D99CC9 /* ButtonNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonNormal.png; sourceTree = "<group>"; };
+		BEAA825C1807044800D99CC9 /* ButtonDone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonDone.png; sourceTree = "<group>"; };
+		BEAA825D1807044800D99CC9 /* ButtonBuyNow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBuyNow.png; sourceTree = "<group>"; };
+		BEAA825E1807044900D99CC9 /* BigRetailerBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BigRetailerBackground.png; sourceTree = "<group>"; };
+		BEAA825F1807044900D99CC9 /* BackButtonNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackButtonNormal.png; sourceTree = "<group>"; };
+		BEAA82601807044A00D99CC9 /* AllPricesBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AllPricesBg.png; sourceTree = "<group>"; };
 		BEB28E1D1768725800081E33 /* CSRetailersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRetailersCell.h; sourceTree = "<group>"; };
 		BEB28E1E1768725800081E33 /* CSRetailersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRetailersCell.m; sourceTree = "<group>"; };
 		BEC1E2B6173BCFD400D12EF2 /* CSProductWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSProductWrapperTests.m; sourceTree = "<group>"; };
@@ -505,29 +553,53 @@
 		BE3D4E0F17036D3700644AD6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BEAA82491806FDA400D99CC9 /* RefineButtonBg.png */,
 				BEC6563717E9B3400088070A /* RefineButtonBg@2x.png */,
+				BEAA82521807044000D99CC9 /* RefineRemoveBg.png */,
 				BEC6563417E9B2AC0088070A /* RefineRemoveBg@2x.png */,
+				BEAA82531807044200D99CC9 /* RefineBarBg.png */,
 				BEC6563117E9B0060088070A /* RefineBarBg@2x.png */,
+				BEAA82601807044A00D99CC9 /* AllPricesBg.png */,
 				BE8EB73817818CD900F93A3D /* AllPricesBg@2x.png */,
+				BEAA82541807044200D99CC9 /* ProductRightBg.png */,
 				BE052634174F6C8E0040AF65 /* ProductRightBg@2x.png */,
+				BEAA82511807043F00D99CC9 /* SelectedTabBg.png */,
 				BE052635174F6C8E0040AF65 /* SelectedTabBg@2x.png */,
+				BEAA825E1807044900D99CC9 /* BigRetailerBackground.png */,
 				BE052636174F6C8E0040AF65 /* BigRetailerBackground@2x.png */,
+				BEAA825D1807044800D99CC9 /* ButtonBuyNow.png */,
 				BE34F3CD173A96C600871FC1 /* ButtonBuyNow@2x.png */,
+				BEAA82571807044400D99CC9 /* InStockBg.png */,
 				BE08AFB217396FF7007184E0 /* InStockBg@2x.png */,
+				BEAA82551807044300D99CC9 /* NoStockBg.png */,
 				BE08AFB317396FF7007184E0 /* NoStockBg@2x.png */,
+				BEAA82471806FD1A00D99CC9 /* BigX.png */,
 				BE6E2F29173167EB00DCE47E /* BigX@2x.png */,
+				BEAA824B1807043A00D99CC9 /* TitleBarBg.png */,
 				BE6E2F2A173167EB00DCE47E /* TitleBarBg@2x.png */,
+				BEAA82591807044600D99CC9 /* GalleryBg.png */,
 				BE6E2F221731542700DCE47E /* GalleryBg@2x.png */,
+				BEAA82581807044500D99CC9 /* GalleryFooter.png */,
 				BE6E2F231731542700DCE47E /* GalleryFooter@2x.png */,
+				BEAA824F1807043D00D99CC9 /* TabBottom.png */,
 				BE73679C172ED9CC00B4691C /* TabBottom@2x.png */,
+				BEAA82501807043E00D99CC9 /* TabArrow.png */,
 				BE736793172E867700B4691C /* TabArrow@2x.png */,
+				BEAA824E1807043D00D99CC9 /* TabUnderline.png */,
 				BE736794172E867700B4691C /* TabUnderline@2x.png */,
+				BEAA825A1807044600D99CC9 /* CallToAction.png */,
 				BE3D4E221704A30300644AD6 /* CallToAction@2x.png */,
+				BEAA824C1807043B00D99CC9 /* TileBackgroundSelected.png */,
 				BE3D4E231704A30300644AD6 /* TileBackgroundSelected@2x.png */,
+				BEAA824D1807043C00D99CC9 /* TileBackground.png */,
 				BE3D4E1D1704651900644AD6 /* TileBackground@2x.png */,
+				BEAA825C1807044800D99CC9 /* ButtonDone.png */,
 				BE3D4E1817045F2C00644AD6 /* ButtonDone@2x.png */,
+				BEAA825F1807044900D99CC9 /* BackButtonNormal.png */,
 				BE3D4E1017036D5700644AD6 /* BackButtonNormal@2x.png */,
+				BEAA825B1807044700D99CC9 /* ButtonNormal.png */,
 				BE3D4E1117036D5700644AD6 /* ButtonNormal@2x.png */,
+				BEAA82561807044400D99CC9 /* NavigationBarBackground.png */,
 				BE3D4E1217036D5700644AD6 /* NavigationBarBackground@2x.png */,
 			);
 			name = Assets;
@@ -894,6 +966,30 @@
 				BEC6563517E9B2AC0088070A /* RefineRemoveBg@2x.png in Resources */,
 				BEC6563817E9B3400088070A /* RefineButtonBg@2x.png in Resources */,
 				BEC6564517EAF7FE0088070A /* CSRefineMenuViewController.xib in Resources */,
+				BEAA82481806FD1A00D99CC9 /* BigX.png in Resources */,
+				BEAA824A1806FDA400D99CC9 /* RefineButtonBg.png in Resources */,
+				BEAA82611807044B00D99CC9 /* TitleBarBg.png in Resources */,
+				BEAA82621807044B00D99CC9 /* TileBackgroundSelected.png in Resources */,
+				BEAA82631807044B00D99CC9 /* TileBackground.png in Resources */,
+				BEAA82641807044B00D99CC9 /* TabUnderline.png in Resources */,
+				BEAA82651807044B00D99CC9 /* TabBottom.png in Resources */,
+				BEAA82661807044B00D99CC9 /* TabArrow.png in Resources */,
+				BEAA82671807044B00D99CC9 /* SelectedTabBg.png in Resources */,
+				BEAA82681807044B00D99CC9 /* RefineRemoveBg.png in Resources */,
+				BEAA82691807044B00D99CC9 /* RefineBarBg.png in Resources */,
+				BEAA826A1807044B00D99CC9 /* ProductRightBg.png in Resources */,
+				BEAA826B1807044B00D99CC9 /* NoStockBg.png in Resources */,
+				BEAA826C1807044B00D99CC9 /* NavigationBarBackground.png in Resources */,
+				BEAA826D1807044B00D99CC9 /* InStockBg.png in Resources */,
+				BEAA826E1807044B00D99CC9 /* GalleryFooter.png in Resources */,
+				BEAA826F1807044B00D99CC9 /* GalleryBg.png in Resources */,
+				BEAA82701807044B00D99CC9 /* CallToAction.png in Resources */,
+				BEAA82711807044B00D99CC9 /* ButtonNormal.png in Resources */,
+				BEAA82721807044B00D99CC9 /* ButtonDone.png in Resources */,
+				BEAA82731807044B00D99CC9 /* ButtonBuyNow.png in Resources */,
+				BEAA82741807044B00D99CC9 /* BigRetailerBackground.png in Resources */,
+				BEAA82751807044B00D99CC9 /* BackButtonNormal.png in Resources */,
+				BEAA82761807044B00D99CC9 /* AllPricesBg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
