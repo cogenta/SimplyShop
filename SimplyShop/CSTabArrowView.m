@@ -8,8 +8,8 @@
 
 #import "CSTabArrowView.h"
 
-#define kArrowOffset (11.0 / 2.0)
-#define kArrowWidth (23.0 / 2.0)
+#define kArrowOffset (12.0 / 2.0)
+#define kArrowWidth (24.0 / 2.0)
 #define kArrowHeight (18.0 / 2.0)
 
 @interface CSTabArrowView ()

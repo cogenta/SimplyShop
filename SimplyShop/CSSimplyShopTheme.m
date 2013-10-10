@@ -52,7 +52,7 @@
 - (UIImage *)titleBarBackgroundImage
 {
     return [[UIImage imageNamed:@"TitleBarBg"]
-            resizableImageWithCapInsets:UIEdgeInsetsMake(4.5, 5.0, 1.0, 5.0)
+            resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 5.0, 1.0, 5.0)
             resizingMode:UIImageResizingModeStretch];
 }
 
