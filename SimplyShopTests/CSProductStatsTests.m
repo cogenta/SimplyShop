@@ -12,14 +12,6 @@
 #import <CSApi/CSAPI.h>
 #import "CSProductStats.h"
 
-@interface TestProduct : NSObject <CSProduct>
-
-@end
-
-@implementation TestProduct
-
-@end
-
 @interface CSProductStatsTests : SenTestCase
 
 @property (strong, nonatomic) id mockProduct;
@@ -34,7 +26,7 @@
 
 - (void)setUp
 {
-    mockProduct = [OCMockObject mockForClass:[TestProduct class]];
+    mockProduct = [OCMockObject mockForProtocol:@protocol(CSProduct)];
     product = mockProduct;
 }
 

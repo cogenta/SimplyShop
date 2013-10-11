@@ -77,6 +77,32 @@
     return [NSString stringWithFormat:@"<FakeList: things=%@>", self.things];
 }
 
+- (NSURL *)URL
+{
+    return nil;
+}
+
+- (id)etag
+{
+    return nil;
+}
+
+- (id<CSCredential>)credential
+{
+    return nil;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    return nil;
+}
+
+
 @end
 
 @interface FakePrice : NSObject <CSPrice>
@@ -144,6 +170,31 @@
 {
     return [NSString stringWithFormat:@"%@ at %@",
             self.effectivePrice, self.retailerURL];
+}
+
+- (NSURL *)URL
+{
+    return nil;
+}
+
+- (id)etag
+{
+    return nil;
+}
+
+- (id<CSCredential>)credential
+{
+    return nil;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    return nil;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    return;
 }
 
 @end
