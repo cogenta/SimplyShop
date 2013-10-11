@@ -162,8 +162,6 @@
 		BEF2CF85174A37DD00EDEDA3 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7D174A37DD00EDEDA3 /* Icon-Small-50@2x.png */; };
 		BEF2CF86174A37DD00EDEDA3 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7E174A37DD00EDEDA3 /* Icon-Small.png */; };
 		BEF2CF87174A37DD00EDEDA3 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF7F174A37DD00EDEDA3 /* Icon-Small@2x.png */; };
-		BEF2CF88174A37DD00EDEDA3 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF80174A37DD00EDEDA3 /* iTunesArtwork */; };
-		BEF2CF89174A37DD00EDEDA3 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = BEF2CF81174A37DD00EDEDA3 /* iTunesArtwork@2x */; };
 		BEF627F717E3108C00B5AF6C /* CSRefineSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF627F517E3108C00B5AF6C /* CSRefineSelectionViewController.m */; };
 		BEF627F817E3108C00B5AF6C /* CSRefineSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEF627F617E3108C00B5AF6C /* CSRefineSelectionViewController.xib */; };
 		BEF627FB17E3148400B5AF6C /* CSNarrowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF627FA17E3148400B5AF6C /* CSNarrowCell.m */; };
@@ -958,8 +956,6 @@
 				BEF2CF85174A37DD00EDEDA3 /* Icon-Small-50@2x.png in Resources */,
 				BEF2CF86174A37DD00EDEDA3 /* Icon-Small.png in Resources */,
 				BEF2CF87174A37DD00EDEDA3 /* Icon-Small@2x.png in Resources */,
-				BEF2CF88174A37DD00EDEDA3 /* iTunesArtwork in Resources */,
-				BEF2CF89174A37DD00EDEDA3 /* iTunesArtwork@2x in Resources */,
 				BE558EB6174E5ABC009FA3DA /* CSCategoryCell.xib in Resources */,
 				BE052637174F6C8E0040AF65 /* ProductRightBg@2x.png in Resources */,
 				BE052638174F6C8E0040AF65 /* SelectedTabBg@2x.png in Resources */,
