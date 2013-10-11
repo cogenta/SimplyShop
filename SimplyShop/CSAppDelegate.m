@@ -88,6 +88,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 #define kAppVersionRestorationKey @"com.cogenta.restoration.app_version"
 #define kAPIRestorationKey @"com.cogenta.restoration.api"
+#define kAPIBookmarkRestorationKey @"com.cogenta.restoration.apiBookmark"
 
 - (BOOL)application:(UIApplication *)application
 shouldSaveApplicationState:(NSCoder *)coder
@@ -96,6 +97,7 @@ shouldSaveApplicationState:(NSCoder *)coder
     NSString *version = infoDictionary[(NSString *) kCFBundleVersionKey];
     
     [coder encodeObject:version forKey:kAppVersionRestorationKey];
+    [coder encodeObject:kAPIBookmark forKey:kAPIBookmarkRestorationKey];
     return YES;
 }
 
@@ -105,8 +107,12 @@ shouldRestoreApplicationState:(NSCoder *)coder
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *version = infoDictionary[(NSString *) kCFBundleVersionKey];
 
-    NSString *savedVersion = [coder decodeObjectForKey:kAppVersionRestorationKey];
-    return [version isEqualToString:savedVersion];
+    NSString *savedBookmark = [coder decodeObjectForKey:
+                               kAPIBookmarkRestorationKey];
+    NSString *savedVersion = [coder decodeObjectForKey:
+                              kAppVersionRestorationKey];
+    return ([version isEqualToString:savedVersion] &&
+            [savedBookmark isEqualToString:kAPIBookmark]);
 }
 
 - (void)application:(UIApplication *)application
