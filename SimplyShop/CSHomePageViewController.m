@@ -1100,9 +1100,6 @@ didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
     [coder encodeObject:self.api forKey:@"api"];
     [coder encodeObject:self.slice forKey:@"slice"];
     [coder encodeObject:self.narrow forKey:@"narrow"];
-    
-    [coder encodeObject:self.selectedRetailerURLs forKey:@"selectedRetailerURLs"];
-    [coder encodeObject:self.likeList forKey:@"likeList"];
 }
 
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder
@@ -1111,9 +1108,6 @@ didStartLoadingSliceForNarrow:(id<CSNarrow>)narrow
     self.api = [coder decodeObjectForKey:@"api"];
     self.slice = [coder decodeObjectForKey:@"slice"];
     self.narrow = [coder decodeObjectForKey:@"narrow"];
-    
-    self.selectedRetailerURLs = [coder decodeObjectForKey:@"selectedRetailerURLs"];
-    self.likeList = [coder decodeObjectForKey:@"likeList"];
     [self prepareRootDashboard];
 }
 
