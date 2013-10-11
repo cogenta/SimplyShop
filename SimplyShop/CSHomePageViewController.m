@@ -631,8 +631,10 @@
 
 - (void)showMissingRetailer:(NSURL *)retailerURL
 {
+    NSString *msg = (@"One of your favorite stores cannot be found on the "
+                     "server and will be removed from your favorites.");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Store Gone"
-                                                    message:@"One of your favorite stores cannot be found on the server and will be removed from your favorites."
+                                                    message:msg
                                                    delegate:self
                                           cancelButtonTitle:@"Okay"
                                           otherButtonTitles:nil];
@@ -656,10 +658,11 @@
 
 - (void)setErrorState
 {
-    self.placeholderView.errorViewDetail = @"Failed to communicate with the server.";
+    NSString *msg = @"Failed to communicate with the server.";
+    self.placeholderView.errorViewDetail = msg;
     [self.placeholderView showErrorView];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                    message:@"Failed to communicate with the server."
+                                                    message:msg
                                                    delegate:self
                                           cancelButtonTitle:@"Retry"
                                           otherButtonTitles:nil];
@@ -687,10 +690,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     CSProductDetailViewController *vc = (id) segue.destinationViewController;
     if (self.retailer) {
-        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList
-                                                          retailer:self.retailer];
+        vc.priceContext = [[CSPriceContext alloc]
+                           initWithLikeList:self.likeList
+                           retailer:self.retailer];
     } else {
-        vc.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList];
+        vc.priceContext = [[CSPriceContext alloc]
+                           initWithLikeList:self.likeList];
     }
     
     NSDictionary *address = sender;
@@ -755,7 +760,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self saveRetailerSelection:modal.selectedRetailerURLs];
 }
 
-- (void)ensureFavoriteRetailersGroup:(void (^)(id<CSGroup> group, NSError *error))callback
+- (void)ensureFavoriteRetailersGroup:(void (^)(id<CSGroup> group,
+                                               NSError *error))callback
 {
     [self loadUser:^(BOOL success, NSError *error) {
         if ( ! success) {
@@ -774,8 +780,9 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
              
              NSObject<CSGroupList> *groups = firstPage.groupList;
              if (groups.count == 0) {
-                 [self.user createGroupWithChange:^(id<CSMutableGroup> mutableGroup) {
-                     mutableGroup.reference = @"favoriteRetailers";
+                 [self.user createGroupWithChange:^(id<CSMutableGroup> changes)
+                 {
+                     changes.reference = @"favoriteRetailers";
                  } callback:callback];
                  return;
              }
@@ -984,9 +991,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark - UICollectionViewDelegate
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *address = @{@"index": @(indexPath.row), @"collection": @"grid"};
+    NSDictionary *address = @{@"index": @(indexPath.row),
+                              @"collection": @"grid"};
     [self performSegueWithIdentifier:@"showProduct" sender:address];
 }
 
@@ -1007,11 +1016,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     id formatter = [CSProductSearchStateTitleFormatter instance];
     self.navigationItem.title = [searchState titleWithFormatter:formatter];
     
-    self.gridDataSource.priceContext = [[CSPriceContext alloc] initWithLikeList:self.likeList retailer:self.retailer];
+    self.gridDataSource.priceContext = [[CSPriceContext alloc]
+                                        initWithLikeList:self.likeList
+                                        retailer:self.retailer];
     
     [self.placeholderView showLoadingView];
     [self.searchRequest cancel];
-    self.searchRequest = [searchState getProducts:^(id<CSProductList> products, NSError *error) {
+    self.searchRequest = [searchState getProducts:^(id<CSProductList> products,
+                                                    NSError *error)
+    {
         self.searchRequest = nil;
         if (searchText != self.searchBarController.query &&
             ! [searchText isEqualToString:self.searchBarController.query]) {

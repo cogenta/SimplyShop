@@ -28,9 +28,10 @@
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:1024*1024*10
-                                                            diskCapacity:1024*1024*20
-                                                                diskPath:@"shared_cache"];
+    NSURLCache *sharedCache = [[NSURLCache alloc]
+                               initWithMemoryCapacity:1024*1024*10
+                               diskCapacity:1024*1024*20
+                               diskPath:@"shared_cache"];
     [sharedCache removeAllCachedResponses];
     [NSURLCache setSharedURLCache:sharedCache];
     
@@ -108,12 +109,14 @@ shouldRestoreApplicationState:(NSCoder *)coder
     return [version isEqualToString:savedVersion];
 }
 
-- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
+- (void)application:(UIApplication *)application
+didDecodeRestorableStateWithCoder:(NSCoder *)coder
 {
     api = [coder decodeObjectForKey:kAPIRestorationKey];
 }
 
-- (void)application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder
+- (void)application:(UIApplication *)application
+willEncodeRestorableStateWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:api forKey:kAPIRestorationKey];
 }
