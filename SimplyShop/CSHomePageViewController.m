@@ -23,6 +23,7 @@
 #import "CSProductSearchStateTitleFormatter.h"
 #import "CSRefineBarView.h"
 #import "CSRefineBarController.h"
+#import "CSExplicitBlockOperation.h"
 
 @protocol CSHomePageRow <NSObject>
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView;
@@ -95,7 +96,6 @@
 
 - (NSString *)dashboardTitle;
 
-- (void)loadCellsFromSlice;
 - (void)saveRetailerSelection:(NSSet *)selectedURLs;
 
 - (void)setErrorState;
@@ -108,7 +108,8 @@
 - (void)loadLikeList:(void (^)(BOOL success, NSError *error))callback;
 
 @property (strong, nonatomic) NSArray *selectedRetailerURLs;
-- (void)loadSelectedRetailerURLs:(void (^)(BOOL success, NSError *error))callback;
+- (void)loadSelectedRetailerURLs:(void (^)(BOOL success,
+                                           NSError *error))callback;
 
 @property (strong, nonatomic) NSObject<CSGroup> *group;
 - (void)loadGroup:(void (^)(BOOL success, NSError *error))callback;
@@ -197,8 +198,13 @@
     
     if (self.rows) {
         [self.placeholderView showContentView];
+    } else {
+        [self.placeholderView showLoadingView];
     }
-    [self addObserver:self forKeyPath:@"rows" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self
+           forKeyPath:@"rows"
+              options:NSKeyValueObservingOptionNew
+              context:NULL];
     [self.view becomeAwareOfKeyboard];
 }
 
@@ -245,7 +251,9 @@
                        context:(void *)context
 {
     if (object == self && [keyPath isEqualToString:@"rows"]) {
-        [self showContent];
+        [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+            [self showContent];
+        }]];
     }
 }
 
@@ -359,24 +367,186 @@
 
 - (void)loadModel
 {
-    [self loadSlice:^(BOOL success, NSError *error) {
-        if ( ! success) {
-            [self setErrorState];
-            return;
-        }
-        
-        self.refineController.slice = self.slice;
-        
+    __block NSError *firstError = nil;
+    NSOperationQueue *main = [NSOperationQueue mainQueue];
+
+    NSOperation *loadSliceOp = [CSExplicitBlockOperation
+                                operationWithBlock:^(void (^done)())
+    {
+        [self loadSlice:^(BOOL success, NSError *error) {
+            if ( ! success) {
+                firstError = firstError ?: error;
+            }
+            done();
+        }];
+    }];
+    
+    NSOperation *loadSelectedRetailersOp = [CSExplicitBlockOperation
+                                            operationWithBlock:^(void (^done)())
+    {
         [self loadSelectedRetailerURLs:^(BOOL success, NSError *error) {
             if ( ! success) {
-                [self setErrorState];
+                firstError = firstError ?: error;
+            }
+            done();
+        }];
+    }];
+
+    NSOperation *getCategoryNarrowsOp = [CSExplicitBlockOperation
+                                         operationWithBlock:^(void (^done)())
+    {
+        
+        [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result,
+                                         NSError *error)
+        {
+            [main addOperation:[NSBlockOperation blockOperationWithBlock:^{
+                
+                if (error) {
+                    firstError = firstError ?: error;
+                    done();
+                    return;
+                }
+                
+                self.categoryNarrows = result.narrowList;
+                self.categoriesCell.narrows = self.categoryNarrows;
+                done();
+            }]];
+        }];
+    }];
+    [getCategoryNarrowsOp addDependency:loadSliceOp];
+    
+    NSOperation *categoryOp = [CSExplicitBlockOperation
+                               operationWithBlock:^(void (^done)())
+    {
+        [self.slice getFiltersByCategory:^(id<CSCategory> category,
+                                           NSError *error)
+         {
+             [main addOperation:[NSBlockOperation blockOperationWithBlock:^{
+                 if (error) {
+                     firstError = firstError ?: error;
+                     done();
+                     return;
+                 }
+                 
+                 self.category = category;
+                 done();
+             }]];
+         }];
+    }];
+    [categoryOp addDependency:loadSliceOp];
+    
+    NSOperation *retailerOp = [CSExplicitBlockOperation
+                               operationWithBlock:^(void (^done)())
+    {
+        [self.slice getFiltersByRetailer:^(id<CSRetailer> retailer,
+                                           NSError *error)
+         {
+             [main addOperation:[NSBlockOperation blockOperationWithBlock:^{
+                 if (error) {
+                     firstError = firstError ?: error;
+                     done();
+                     return;
+                 }
+                 
+                 self.retailer = retailer;
+                 done();
+             }]];
+         }];
+    }];
+    [retailerOp addDependency:loadSliceOp];
+        
+    NSOperation *productsOp = [CSExplicitBlockOperation
+                               operationWithBlock:^(void (^done)())
+    {
+        [self.slice getProducts:^(id<CSProductListPage> firstPage,
+                                  NSError *error)
+         {
+             if (error) {
+                 firstError = firstError ?: error;
+                 done();
+                 return;
+             }
+             
+             self.products = firstPage.productList;
+             self.topProductsCell.products = self.products;
+             done();
+         }];
+    }];
+    [productsOp addDependency:loadSliceOp];
+    
+    NSOperation *retailerNarrowsOp = [CSExplicitBlockOperation
+                                      operationWithBlock:^(void (^done)())
+    {
+        [self.slice getRetailerNarrows:^(id<CSNarrowListPage> result,
+                                         NSError *error)
+        {
+            if (error) {
+                firstError = firstError ?: error;
+                done();
                 return;
             }
             
-            [self loadCellsFromSlice];
+            self.retailerNarrows = result.narrowList;
+            self.favoriteStoresCell.narrows = self.retailerNarrows;
+            done();
         }];
     }];
+    [retailerNarrowsOp addDependency:loadSliceOp];
+    
+    NSOperation *showContentOp = [NSBlockOperation blockOperationWithBlock:^{
+        [main addOperation:[NSBlockOperation blockOperationWithBlock:^{
+            if (firstError) {
+                self.rows = nil;
+                [self setErrorState];
+            } else {
+                NSMutableArray *rows = [[NSMutableArray alloc] init];
+                
+                if (self.slice.productsURL) {
+                    [rows addObject:[[CSHomePageRow alloc]
+                                     initWithCell:self.topProductsCell]];
+                }
+                
+                if (self.slice.categoryNarrowsURL &&
+                    self.categoryNarrows.count > 0) {
+                    [rows addObject:[[CSHomePageRow alloc]
+                                     initWithCell:self.categoriesCell]];
+                }
+                
+                if (self.slice.retailerNarrowsURL) {
+                    [rows addObject:[[CSHomePageRow alloc]
+                                     initWithCell:self.favoriteStoresCell]];
+                }
+                
+                self.navigationItem.title = [self dashboardTitle];
+                self.refineController.slice = self.slice;
+                self.rows = [NSArray arrayWithArray:rows];
+            }
+        }]];
+    }];
+    
+    // showContentOp should wait for all the operations that can discover an
+    // error.
+    [showContentOp addDependency:loadSliceOp];
+    [showContentOp addDependency:loadSelectedRetailersOp];
+    [showContentOp addDependency:getCategoryNarrowsOp];
+    [showContentOp addDependency:categoryOp];
+    [showContentOp addDependency:retailerOp];
+    [showContentOp addDependency:productsOp];
+    [showContentOp addDependency:retailerNarrowsOp];
+    
+    NSOperationQueue *q = [[NSOperationQueue alloc] init];
+    q.maxConcurrentOperationCount = 3;
+    
+    [q addOperation:loadSliceOp];
+    [q addOperation:loadSelectedRetailersOp];
+    [q addOperation:getCategoryNarrowsOp];
+    [q addOperation:categoryOp];
+    [q addOperation:retailerOp];
+    [q addOperation:productsOp];
+    [q addOperation:retailerNarrowsOp];
+    [q addOperation:showContentOp];
 }
+
 
 - (void)loadSelectedRetailerURLs:(void (^)(BOOL, NSError *))callback
 {
@@ -457,93 +627,6 @@
     self.likeList = nil;
     self.group = nil;
     [self loadModel];
-}
-
-- (void)loadCellsFromSlice
-{
-    [self.slice getCategoryNarrows:^(id<CSNarrowListPage> categoryNarrows,
-                                     NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        NSMutableArray *rows = [[NSMutableArray alloc] initWithCapacity:3];
-        
-        if (self.slice.productsURL) {
-            [rows addObject:[[CSHomePageRow alloc]
-                             initWithCell:self.topProductsCell]];
-        }
-        
-        if (self.slice.categoryNarrowsURL && categoryNarrows.count > 0) {
-            [rows addObject:[[CSHomePageRow alloc]
-                             initWithCell:self.categoriesCell]];
-        }
-        
-        if (self.slice.retailerNarrowsURL) {
-            [rows addObject:[[CSHomePageRow alloc]
-                             initWithCell:self.favoriteStoresCell]];
-        }
-        
-        self.rows = [NSArray arrayWithArray:rows];
-    }];
-    
-    [self.slice getFiltersByCategory:^(id<CSCategory> category,
-                                       NSError *error)
-    {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        [self.slice getFiltersByRetailer:^(id<CSRetailer> retailer,
-                                           NSError *error)
-        {
-            if (error) {
-                [self setErrorState];
-                return;
-            }
-            
-            self.retailer = retailer;
-            self.category = category;
-            
-            self.navigationItem.title = [self dashboardTitle];
-        }];
-    }];
-
-    [self.slice getProducts:^(id<CSProductListPage> firstPage,
-                              NSError *error)
-     {
-         if (error) {
-             [self setErrorState];
-             return;
-         }
-         
-         self.products = firstPage.productList;
-         self.topProductsCell.products = self.products;
-         [self showContent];
-     }];
-    
-    [self.slice getCategoryNarrows:^(id<CSNarrowListPage> result, NSError *error)
-     {
-         if (error) {
-             [self setErrorState];
-             return;
-         }
-         
-         self.categoryNarrows = result.narrowList;
-         self.categoriesCell.narrows = self.categoryNarrows;
-     }];
-    
-    [self.slice getRetailerNarrows:^(id<CSNarrowListPage> result, NSError *error) {
-        if (error) {
-            [self setErrorState];
-            return;
-        }
-        
-        self.retailerNarrows = result.narrowList;
-        self.favoriteStoresCell.narrows = self.retailerNarrows;
-    }];
 }
 
 - (void)showMissingRetailer:(NSURL *)retailerURL
@@ -632,7 +715,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
     
     NSAssert(self.likeList, nil);
-    NSAssert(self.group || self.category || self.retailer, nil);
     CSProductGridViewController *vc = (id) segue.destinationViewController;
     self.searchState = [CSProductSearchState stateWithSlice:self.slice
                                                    retailer:self.retailer
@@ -675,25 +757,32 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
 - (void)ensureFavoriteRetailersGroup:(void (^)(id<CSGroup> group, NSError *error))callback
 {
-    [self.user getGroupsWithReference:@"favoriteRetailers"
-                             callback:^(id<CSGroupListPage> firstPage,
-                                        NSError *error)
-     {
-         if (error) {
-             callback(nil, error);
-             return;
-         }
-         
-         NSObject<CSGroupList> *groups = firstPage.groupList;
-         if (groups.count == 0) {
-             [self.user createGroupWithChange:^(id<CSMutableGroup> mutableGroup) {
-                 mutableGroup.reference = @"favoriteRetailers";
-             } callback:callback];
-             return;
-         }
-         
-         [groups getGroupAtIndex:0 callback:callback];
-     }];
+    [self loadUser:^(BOOL success, NSError *error) {
+        if ( ! success) {
+            callback(nil, error);
+            return;
+        }
+        
+        [self.user getGroupsWithReference:@"favoriteRetailers"
+                                 callback:^(id<CSGroupListPage> firstPage,
+                                            NSError *error)
+         {
+             if (error) {
+                 callback(nil, error);
+                 return;
+             }
+             
+             NSObject<CSGroupList> *groups = firstPage.groupList;
+             if (groups.count == 0) {
+                 [self.user createGroupWithChange:^(id<CSMutableGroup> mutableGroup) {
+                     mutableGroup.reference = @"favoriteRetailers";
+                 } callback:callback];
+                 return;
+             }
+             
+             [groups getGroupAtIndex:0 callback:callback];
+         }];
+    }];
 }
 
 - (void)ensureFavoriteRetailersLikeList:(void (^)(id<CSLikeList> likeList,
@@ -724,8 +813,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     [self saveRetailerSelection:modal.selectedRetailerURLs];
 }
-
-
 
 - (void)saveRetailerSelection:(NSSet *)selectedURLs
 {
