@@ -1,5 +1,5 @@
 platform :ios, '6.0'
-pod 'CSApi', :git => 'https://github.com/cogenta/CSApi.git', :tag => '0.1.2'
+pod 'CSApi'
 pod 'MBCategory'
 pod 'SDWebImage'
 pod 'PBWebViewController'
