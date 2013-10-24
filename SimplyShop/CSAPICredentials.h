@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#define kAPIBookmark @"http://192.168.1.16:5000/apps/5166c038704679e1be1b2c6e"
-#define kAPIUsername @"224f32de-b1df-4bc7-9ef5-c71d8d9c7349"
-#define kAPIPassword @"0647e17d-8813-40b7-adbe-c9553312b1b6"
+#define kAPIBookmark \
+@"https://api.shopping.cogenta.com/apps/5264f04c7f7d44444980553b"
+#define kAPIUsername @"293957a9-0266-48b1-ab29-4dc8c9502f4a"
+#define kAPIPassword @"bdabe13b-63b7-43dc-ad51-a44ecdc32edb"
